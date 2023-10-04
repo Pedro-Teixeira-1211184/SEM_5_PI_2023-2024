@@ -1,6 +1,6 @@
 
-import uuid from 'uuid/v4';
-const { v4: uuidV4 } = require('uuid');
+//import uuid from 'uuid/v4';
+const uuid = require('uuid').v4
 import { Identifier } from './Identifier'
 
 export class UniqueEntityID extends Identifier<string | number>{
