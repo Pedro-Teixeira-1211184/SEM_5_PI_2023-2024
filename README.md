@@ -1,4 +1,4 @@
-<img style="float: right; bottom:10pc" src="/_images/logo_isep.png"/>
+<img style="float: right; bottom:10pc" src="/RobDroneGo/src/loaders/_images/logo_isep.png"/>
 
 #  <span style="color: red; text-decoration: underline">RobDroneGo</span>
 ## Main goal

@@ -3,74 +3,59 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import routes from '../api';
 import config from '../../config';
-import { Style } from 'util';
+import User from "../persistence/schemas/userSchema";
 
-export default ({ app }: { app: express.Application }) => {
-  /**
-   * Health Check endpoints
-   * @TODO Explain why they are here
-   */
-  app.get('/status', (req, res) => {
-    res.status(200).end();
-  });
-  app.head('/status', (req, res) => {
-    res.status(200).end();
-  });
+export default ({app}: { app: express.Application }) => {
+    app.enable('trust proxy');
+    app.use(cors());
+    app.use(require('method-override')());
+    app.use(bodyParser.json());
+    app.use(express.static('public'));
+    app.use(config.api.prefix, routes());
 
-  app.get('/', function(req,res){
-    res.send('<h1>Hello World</h1>');
-  })
-
-  // Useful if you're behind a reverse proxy (Heroku, Bluemix, AWS ELB, Nginx, etc)
-  // It shows the real origin IP in the heroku or Cloudwatch logs
-  app.enable('trust proxy');
-
-  // The magic package that prevents frontend developers going nuts
-  // Alternate description:
-  // Enable Cross Origin Resource Sharing to all origins by default
-  app.use(cors());
-
-  // Some sauce that always add since 2014
-  // "Lets you use HTTP verbs such as PUT or DELETE in places where the client doesn't support it."
-  // Maybe not needed anymore ?
-  app.use(require('method-override')());
-
-  // Middleware that transforms the raw string of req.body into json
-  app.use(bodyParser.json());
-  
-  app.use(express.static('public'));
-
-  // Load API routes
-  app.use(config.api.prefix, routes());
-
-
-  
-  /// catch 404 and forward to error handler
-  app.use((req, res, next) => {
-    const err = new Error('Not Found');
-    err['status'] = 404;
-    next(err);
-  });
-
-  /// error handlers
-  app.use((err, req, res, next) => {
-    /**
-     * Handle 401 thrown by express-jwt library
-     */
-    if (err.name === 'UnauthorizedError') {
-      return res
-        .status(err.status)
-        .send({ message: err.message })
-        .end();
-    }
-    return next(err);
-  });
-  app.use((err, req, res, next) => {
-    res.status(err.status || 500);
-    res.json({
-      errors: {
-        message: err.message,
-      },
+    // Rota padrão para a página de login
+    app.get('/', (req, res) => {
+        res.redirect('/login'); // Redireciona para a página de login ("/login")
     });
-  });
+
+    app.get('/login', (req, res) => {
+        res.sendFile(__dirname + '/html/login.html'); // Envia o arquivo "login.html" para o cliente
+    });
+
+    // Rota para a página do usuário após o login bem-sucedido
+    app.get('/userPage', (req, res) => {
+        // Certifique-se de que o arquivo "userPage.html" esteja no local correto
+        res.sendFile(__dirname + '/html/userPage.html');
+    });
+
+    // Outras rotas e middleware
+
+    /// catch 404 and forward to error handler
+    app.use((req, res, next) => {
+        const err = new Error('Not Found');
+        err['status'] = 404;
+        next(err);
+    });
+
+    /// error handlers
+    app.use((err, req, res, next) => {
+        /**
+         * Handle 401 thrown by express-jwt library
+         */
+        if (err.name === 'UnauthorizedError') {
+            return res
+                .status(err.status)
+                .send({message: err.message})
+                .end();
+        }
+        return next(err);
+    });
+    app.use((err, req, res, next) => {
+        res.status(err.status || 500);
+        res.json({
+            errors: {
+                message: err.message,
+            },
+        });
+    });
 };
