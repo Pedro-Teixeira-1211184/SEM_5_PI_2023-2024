@@ -1,0 +1,125 @@
+@startuml
+
+class Robot {
+    + int ID
+    + String tipo
+    + int nrSerie
+    + String codigo
+    + String nickname
+    + String marca
+}
+
+class TipoRobot {
+    + int ID
+    + String nome
+    + String tipoTarefa
+}
+
+class TipoTarefa {
+    + int ID
+    + String designação
+}
+
+class Tarefa {
+    + int ID
+    + String contacto
+    + tipoTarefa
+    + robotID
+}
+
+class PedidoVigilancia {
+    + int ID
+    + int tarefaID
+    + piso
+    + edificio
+}
+
+class PedidoPickUp {
+    + int ID
+    + int tarefaID
+    + String coordenadas
+}
+
+class Edificio {
+    + int ID
+    + String designacao
+    + String nome
+    + String dimensões
+    + String descricao
+}
+
+class Piso {
+    + int ID
+    + String edificio
+    + String descricao
+}
+
+class Sala {
+    + int ID
+    + String piso
+    + String categoria
+    + String descricao
+    + String nome
+    + String dimensões
+}
+
+class Parede {
+    + int ID
+    + String sala
+    + String orientacao
+    + String dimensões
+}
+
+class Porta {
+    + int ID
+    + String sala
+    + String orientacao
+    + String coordenadas
+}
+
+class Celula {
+    + int ID
+    + String piso
+    + String coordenadas
+    + String dimensao
+}
+
+class CategoriaSala {
+    + int ID
+    + String nome
+    + String descricao
+}
+
+class Elevador {
+    + int ID
+    + String piso
+    + String coordenadas
+    + String edificio
+}
+
+class Passagem {
+    + int ID
+    + String edificio1
+    + String edificio2
+    + String piso1
+    + String piso2
+    + String localizacao
+}
+
+Robot "1" -- "n" TipoRobot
+Robot "1" -- "n" TipoTarefa
+Tarefa "n" -- "1" TipoTarefa
+Tarefa "1" -- "1" PedidoVigilancia
+Tarefa "1" -- "1" PedidoPickUp
+Edificio "1" -- "n" Piso
+Piso "1" -- "n" Sala
+Sala "1" -- "n" Parede
+Sala "1" -- "n" Porta
+Piso "1" -- "n" Celula
+Sala "1" -- "n" CategoriaSala
+Edificio "1" -- "n" Elevador
+Edificio "1" -- "n" Passagem
+Piso "1" -- "n" Elevador
+Piso "1" -- "n" Passagem
+
+@enduml
