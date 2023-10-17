@@ -1,125 +1,153 @@
-@startuml
+@startuml Domain Model
 
-class Robot {
-    + int ID
-    + String tipo
-    + int nrSerie
-    + String codigo
-    + String nickname
-    + String marca
+hide methods 
+hide stereotypes 
+
+package "Robot" {
+entity "«root» Robot" {
+    <ID><VO> ID
+    <VO> codigo
+    <VO> nrSerie
+    <VO> nickname
+    <VO> marca
+}
 }
 
-class TipoRobot {
-    + int ID
-    + String nome
-    + String tipoTarefa
+package "TipoRobot" {
+entity "«root» TipoRobot" {
+    <ID><VO> ID
+    <VO> nome
+    <VO> tipoTarefa
 }
 
-class TipoTarefa {
-    + int ID
-    + String designação
 }
 
-class Tarefa {
-    + int ID
-    + String contacto
-    + tipoTarefa
-    + robotID
+package "TipoTarefa" {
+    entity "«root» TipoTarefa" {
+    <ID> ID
+    <VO> designação
+}
 }
 
-class PedidoVigilancia {
-    + int ID
-    + int tarefaID
-    + piso
-    + edificio
+package "Tarefa" {
+entity "«root» Tarefa"  {
+    <ID><VO> ID
+    <VO> contacto
+    <VO> tipoTarefa
+    <VO> robotID
 }
 
-class PedidoPickUp {
-    + int ID
-    + int tarefaID
-    + String coordenadas
+entity "«value object» Contacto" {
+    <VO> nome
+    <VO> email
+    <VO> telefone
 }
 
-class Edificio {
-    + int ID
-    + String designacao
-    + String nome
-    + String dimensões
-    + String descricao
+entity "«value object» PedidoVigilancia" {
+    <ID> ID
+    <VO> tarefaID
+    <VO> piso
+    <VO> edificio
 }
 
-class Piso {
-    + int ID
-    + String edificio
-    + String descricao
+entity "«value object» PedidoPickUp" {
+    <ID> ID
+    <VO> tarefaID
+    <VO> coordenadas
+}
 }
 
-class Sala {
-    + int ID
-    + String piso
-    + String categoria
-    + String descricao
-    + String nome
-    + String dimensões
+package "Edificio" {
+entity "«root» Edificio" {
+    <ID> ID
+    <VO> designacao
+    <VO> nome
+    <VO> dimensões
+    <VO> descricao
+}
 }
 
-class Parede {
-    + int ID
-    + String sala
-    + String orientacao
-    + String dimensões
+package "Piso" {
+entity "«root» Piso" {
+    <ID> ID
+    <VO> edificio
+    <VO> descricao
 }
 
-class Porta {
-    + int ID
-    + String sala
-    + String orientacao
-    + String coordenadas
+entity Celula {
+    <ID> ID
+    <VO> piso
+    <VO> coordenadas
+    <VO> dimensao
 }
 
-class Celula {
-    + int ID
-    + String piso
-    + String coordenadas
-    + String dimensao
+entity Elevador {
+    <ID> ID
+    <VO> piso
+    <VO> coordenadas
+    <VO> edificio
+}
 }
 
-class CategoriaSala {
-    + int ID
-    + String nome
-    + String descricao
+package "Sala" {
+entity "«root» Sala" {
+    <ID> ID
+    <VO> piso
+    <VO> categoria
+    <VO> descricao
+    <VO> nome
+    <VO> dimensões
 }
 
-class Elevador {
-    + int ID
-    + String piso
-    + String coordenadas
-    + String edificio
+entity Parede {
+    <ID> ID
+    <VO> sala
+    <VO> orientacao
+    <VO> dimensões
 }
 
-class Passagem {
-    + int ID
-    + String edificio1
-    + String edificio2
-    + String piso1
-    + String piso2
-    + String localizacao
+entity Porta {
+    <ID> ID
+    <VO> sala
+    <VO> orientacao
+    <VO> coordenadas
 }
 
-Robot "1" -- "n" TipoRobot
-Robot "1" -- "n" TipoTarefa
-Tarefa "n" -- "1" TipoTarefa
-Tarefa "1" -- "1" PedidoVigilancia
-Tarefa "1" -- "1" PedidoPickUp
-Edificio "1" -- "n" Piso
-Piso "1" -- "n" Sala
-Sala "1" -- "n" Parede
-Sala "1" -- "n" Porta
-Piso "1" -- "n" Celula
-Sala "1" -- "n" CategoriaSala
-Edificio "1" -- "n" Elevador
-Edificio "1" -- "n" Passagem
-Piso "1" -- "n" Elevador
-Piso "1" -- "n" Passagem
+
+entity CategoriaSala {
+    <ID> ID
+    <VO> nome
+    <VO> descricao
+}
+}
+
+package "Passagem" {
+entity "«root» Passagem" {
+    <ID> ID
+    <VO> edificio1
+    <VO> edificio2
+    <VO> piso1
+    <VO> piso2
+    <VO> localizacao
+}
+}
+
+"«root» Robot" "n" -- "1" "«root» TipoRobot" : is of 
+"«root» Robot" "1" -- "n" "«root» Tarefa" : does 
+"«root» TipoRobot" "1" -- "n" "«root» TipoTarefa" : can do
+"«root» Tarefa" "n" -- "1" "«root» TipoTarefa" : is of
+"«root» Tarefa" "1" -- "1" "«value object» PedidoVigilancia" : can be
+"«root» Tarefa" "1" -- "1" "«value object» PedidoPickUp" : can be
+"«root» Tarefa" "1" -- "1" "«value object» Contacto" : has
+"«root» Edificio" "1" -- "n" "«root» Piso" : has
+"«root» Piso" "1" -- "n" "«root» Sala" : has 
+"«root» Sala" "1" -- "n" Parede : has
+"«root» Sala" "1" -- "n" Porta : has
+"«root» Piso" "1" -- "n" Celula : has
+"«root» Sala" "1" -- "1" CategoriaSala : is of 
+"«root» Edificio" "1" -- "n" Elevador : has
+"«root» Edificio" "1" -- "n" "«root» Passagem" : has 
+"«root» Piso" "1" -- "n" Elevador : has
+"«root» Piso" "1" -- "n" Passagem : has
 
 @enduml
