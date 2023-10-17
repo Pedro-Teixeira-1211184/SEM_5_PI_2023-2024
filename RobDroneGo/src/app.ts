@@ -6,6 +6,8 @@ import express from 'express';
 
 import Logger from './loaders/logger';
 
+import 'dotenv/config';
+
 async function startServer() {
   const app = express();
 
