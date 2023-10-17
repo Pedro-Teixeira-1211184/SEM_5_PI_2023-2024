@@ -28,6 +28,20 @@ export default ({app}: { app: express.Application }) => {
         res.sendFile(__dirname + '/html/userPage.html');
     });
 
+  app.get('/status', (req, res) => {
+    res.status(200).end();
+  });
+
+  app.post('/status', (req, res) => {
+    if (res.status(200)) {
+      console.log("status ok");
+      res.end();
+    } else {
+      res.status(404).end();
+      console.log("status not ok");
+    }
+  });
+
     // Outras rotas e middleware
 
     /// catch 404 and forward to error handler
