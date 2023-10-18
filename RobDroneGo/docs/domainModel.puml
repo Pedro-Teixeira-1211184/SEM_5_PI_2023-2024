@@ -1,153 +1,199 @@
 @startuml Domain Model
 
-hide methods 
-hide stereotypes 
+hide methods
+hide stereotypes
 
-package "Robot" {
-entity "«root» Robot" {
-    <ID><VO> ID
-    <VO> codigo
-    <VO> nrSerie
-    <VO> nickname
-    <VO> marca
+package Robot {
+entity Robot <root> {
 }
-}
-
-package "TipoRobot" {
-entity "«root» TipoRobot" {
-    <ID><VO> ID
-    <VO> nome
-    <VO> tipoTarefa
+    class "id" as ID1 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
+    class "codigo" as codigo <<(v,#FF7700) code>> <<(v,#FF7700) value object>>{}
+    class "serialNr" as serialNr <<(v,#FF7700) serial number>> <<(v,#FF7700) value object>>{}
+    class "nickname" as nickname <<(v,#FF7700) nickname>> <<(v,#FF7700) value object>>{}
+    class "brand" as brand <<(v,#FF7700) brand>> <<(v,#FF7700) value object>>{}
 }
 
+package RobotType {
+entity RobotType <root> {
+}
+    class "id" as ID2 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
+    class "name" as name1 <<(v,#FF7700) name>> <<(v,#FF7700) value object>>{}
 }
 
-package "TipoTarefa" {
-    entity "«root» TipoTarefa" {
-    <ID> ID
-    <VO> designação
+package TaskType {
+    entity TaskType <root> {
 }
-}
-
-package "Tarefa" {
-entity "«root» Tarefa"  {
-    <ID><VO> ID
-    <VO> contacto
-    <VO> tipoTarefa
-    <VO> robotID
+    class "id" as ID3 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
+    class "designation" as designation1 <<(v,#FF7700) designation>> <<(v,#FF7700) value object>>{}
 }
 
-entity "«value object» Contacto" {
-    <VO> nome
-    <VO> email
-    <VO> telefone
+package Task {
+entity Task <root>  {
+}
+    class "id" as ID4 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
+    class "contact" as contact <<(v,#FF7700) contact>> <<(v,#FF7700) value object>>{}
 }
 
-entity "«value object» PedidoVigilancia" {
-    <ID> ID
-    <VO> tarefaID
-    <VO> piso
-    <VO> edificio
+package VigilanceRequest {
+entity VigilanceRequest <root> {
+}
+    class "id" as ID5 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
 }
 
-entity "«value object» PedidoPickUp" {
-    <ID> ID
-    <VO> tarefaID
-    <VO> coordenadas
+package PickUpRequest {
+entity PickUpRequest <root> {
 }
-}
-
-package "Edificio" {
-entity "«root» Edificio" {
-    <ID> ID
-    <VO> designacao
-    <VO> nome
-    <VO> dimensões
-    <VO> descricao
-}
+    class "id" as ID6 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
+    class "coordenates" as coordenates1 <<(v,#FF7700) coordenates>> <<(v,#FF7700) value object>>{}
 }
 
-package "Piso" {
-entity "«root» Piso" {
-    <ID> ID
-    <VO> edificio
-    <VO> descricao
+package Building {
+entity Building <root> {
+}
+    class "id" as ID7 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
+    class "designation" as designation <<(v,#FF7700) designation>> <<(v,#FF7700) value object>>{}
+    class "name" as name2 <<(v,#FF7700) name>> <<(v,#FF7700) value object>>{}
+    class "dimensions" as dimensions1 <<(v,#FF7700) dimensions>> <<(v,#FF7700) value object>>{}
+    class "designation" as designation2 <<(v,#FF7700) designation>> <<(v,#FF7700) value object>>{}
 }
 
-entity Celula {
-    <ID> ID
-    <VO> piso
-    <VO> coordenadas
-    <VO> dimensao
+package Floor {
+entity Floor <root> {
+}
+    class "id" as ID8 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
+    class "designation" as designation3 <<(v,#FF7700) designation>> <<(v,#FF7700) value object>>{}
 }
 
-entity Elevador {
-    <ID> ID
-    <VO> piso
-    <VO> coordenadas
-    <VO> edificio
+package Cell {
+entity Cell <root> {
 }
-}
-
-package "Sala" {
-entity "«root» Sala" {
-    <ID> ID
-    <VO> piso
-    <VO> categoria
-    <VO> descricao
-    <VO> nome
-    <VO> dimensões
+    class "id" as ID9 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
+    class "coordenates" as coordenates2 <<(v,#FF7700) coordenates>> <<(v,#FF7700) value object>>{}
+    class "dimensions" as dimensions2 <<(v,#FF7700) dimensions>> <<(v,#FF7700) value object>>{}
 }
 
-entity Parede {
-    <ID> ID
-    <VO> sala
-    <VO> orientacao
-    <VO> dimensões
+package Elevator {
+entity Elevator <root> {
+}
+    class "id" as ID10 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
+    class "coordenates" as coordenates3 <<(v,#FF7700) coordenates>> <<(v,#FF7700) value object>>{}
 }
 
-entity Porta {
-    <ID> ID
-    <VO> sala
-    <VO> orientacao
-    <VO> coordenadas
+package Room {
+entity Room <root> {
+}
+    class "id" as ID11 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
+    class "designation" as designation4 <<(v,#FF7700) designation>> <<(v,#FF7700) value object>>{}
+    class "name" as name3 <<(v,#FF7700) name>> <<(v,#FF7700) value object>>{}
+    class "dimensions" as dimensions3 <<(v,#FF7700) dimensions>> <<(v,#FF7700) value object>>{}
+}
+
+package Wall {
+entity Wall <root> {
+}
+    class "id" as ID12 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
+    class "orientation" as orientation1 <<(v,#FF7700) orientation>> <<(v,#FF7700) value object>>{}
+    class "dimensions" as dimensions4 <<(v,#FF7700) dimensions>> <<(v,#FF7700) value object>>{}
+}
+
+package Door {
+entity Door <root> {
+}
+    class "id" as ID13 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
+    class "orientation" as orientation2 <<(v,#FF7700) orientation>> <<(v,#FF7700) value object>>{}
+    class "coordenates" as coordenates4 <<(v,#FF7700) coordenates>> <<(v,#FF7700) value object>>{}
+}
+
+package CategoryRoom {
+entity CategoryRoom <root>{
+}
+    class "id" as ID14 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
+    class "name" as name4 <<(v,#FF7700) name>> <<(v,#FF7700) value object>>{}
+    class "designation" as designation5 <<(v,#FF7700) designation>> <<(v,#FF7700) value object>>{}
+}
+
+package Passageway {
+entity Passageway <root> {
+}
+    class "id" as ID15 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
+    class "localization" as localization <<(v,#FF7700) localization>> <<(v,#FF7700) value object>>{}
 }
 
 
-entity CategoriaSala {
-    <ID> ID
-    <VO> nome
-    <VO> descricao
-}
-}
 
-package "Passagem" {
-entity "«root» Passagem" {
-    <ID> ID
-    <VO> edificio1
-    <VO> edificio2
-    <VO> piso1
-    <VO> piso2
-    <VO> localizacao
-}
-}
 
-"«root» Robot" "n" -- "1" "«root» TipoRobot" : is of 
-"«root» Robot" "1" -- "n" "«root» Tarefa" : does 
-"«root» TipoRobot" "1" -- "n" "«root» TipoTarefa" : can do
-"«root» Tarefa" "n" -- "1" "«root» TipoTarefa" : is of
-"«root» Tarefa" "1" -- "1" "«value object» PedidoVigilancia" : can be
-"«root» Tarefa" "1" -- "1" "«value object» PedidoPickUp" : can be
-"«root» Tarefa" "1" -- "1" "«value object» Contacto" : has
-"«root» Edificio" "1" -- "n" "«root» Piso" : has
-"«root» Piso" "1" -- "n" "«root» Sala" : has 
-"«root» Sala" "1" -- "n" Parede : has
-"«root» Sala" "1" -- "n" Porta : has
-"«root» Piso" "1" -- "n" Celula : has
-"«root» Sala" "1" -- "1" CategoriaSala : is of 
-"«root» Edificio" "1" -- "n" Elevador : has
-"«root» Edificio" "1" -- "n" "«root» Passagem" : has 
-"«root» Piso" "1" -- "n" Elevador : has
-"«root» Piso" "1" -- "n" Passagem : has
+Robot "n" -- "1" RobotType : is of >
+RobotType "1" -- "n" TaskType : can do >
+Task "n" -- "1" TaskType : is of >
+Task "1" -- "1" VigilanceRequest : can be <
+Task "1" -- "1" PickUpRequest : can be <
+Floor "n" -- "1" Building : has >
+Room "n" -- "1" Floor : has >
+Wall "n" -- "1" Room : has >
+Room "1" -- "n" Door : has <
+Floor "1" -- "n" Cell : has <
+Room "1" -- "1" CategoryRoom : is of >
+Building "1" -- "n" Elevator : has <
+Building "1" -- "n" Passageway : has <
+Floor "1" -- "n" Elevator : has <
+Floor "1" -- "n" Passageway : has <
+
+
+Robot --> ID1
+Robot --> codigo
+Robot --> serialNr
+Robot --> nickname
+Robot --> brand
+
+RobotType --> ID2
+RobotType --> name1
+
+TaskType --> ID3
+TaskType --> designation1
+
+Task --> ID4
+Task --> contact
+
+VigilanceRequest --> ID5
+
+PickUpRequest --> ID6
+PickUpRequest --> coordenates1
+
+Building --> ID7
+Building --> designation2
+Building --> name2
+Building --> dimensions1
+
+Floor --> ID8
+Floor --> designation3
+
+Cell --> ID9
+Cell --> coordenates2
+Cell --> dimensions2
+
+Elevator --> ID10
+Elevator --> coordenates3
+
+Room --> ID11
+Room --> designation4
+Room --> name3
+Room --> dimensions3
+
+Wall --> ID12
+Wall --> orientation1
+Wall --> dimensions4
+
+Door --> ID13
+Door --> orientation2
+Door --> coordenates4
+
+CategoryRoom --> ID14
+CategoryRoom --> name4
+CategoryRoom --> designation5
+
+Passageway --> ID15
+Passageway --> localization
+
+
 
 @enduml
