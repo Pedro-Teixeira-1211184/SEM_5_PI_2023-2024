@@ -1,37 +1,36 @@
-@startuml Domain Model
+@startuml
 
 hide methods
-hide stereotypes
 
 package Robot {
 entity Robot <root> {
 }
     class "id" as ID1 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
-    class "codigo" as codigo <<(v,#FF7700) code>> <<(v,#FF7700) value object>>{}
-    class "serialNr" as serialNr <<(v,#FF7700) serial number>> <<(v,#FF7700) value object>>{}
-    class "nickname" as nickname <<(v,#FF7700) nickname>> <<(v,#FF7700) value object>>{}
-    class "brand" as brand <<(v,#FF7700) brand>> <<(v,#FF7700) value object>>{}
+    class "codigo" as codigo <<(v,#FF7700) value object>>{}
+    class "serialNr" as serialNr <<(v,#FF7700) value object>>{}
+    class "nickname" as nickname <<(v,#FF7700) value object>>{}
+    class "brand" as brand <<(v,#FF7700) value object>>{}
 }
 
 package RobotType {
 entity RobotType <root> {
 }
     class "id" as ID2 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
-    class "name" as name1 <<(v,#FF7700) name>> <<(v,#FF7700) value object>>{}
+    class "name" as name1 <<(v,#FF7700) value object>>{}
 }
 
 package TaskType {
     entity TaskType <root> {
 }
     class "id" as ID3 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
-    class "designation" as designation1 <<(v,#FF7700) designation>> <<(v,#FF7700) value object>>{}
+    class "designation" as designation1 <<(v,#FF7700) value object>>{}
 }
 
 package Task {
 entity Task <root>  {
 }
     class "id" as ID4 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
-    class "contact" as contact <<(v,#FF7700) contact>> <<(v,#FF7700) value object>>{}
+    class "contact" as contact <<(v,#FF7700) value object>>{}
 }
 
 package VigilanceRequest {
@@ -44,79 +43,78 @@ package PickUpRequest {
 entity PickUpRequest <root> {
 }
     class "id" as ID6 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
-    class "coordenates" as coordenates1 <<(v,#FF7700) coordenates>> <<(v,#FF7700) value object>>{}
+    class "coordenates" as coordenates1 <<(v,#FF7700) value object>>{}
 }
 
 package Building {
 entity Building <root> {
 }
     class "id" as ID7 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
-    class "designation" as designation <<(v,#FF7700) designation>> <<(v,#FF7700) value object>>{}
-    class "name" as name2 <<(v,#FF7700) name>> <<(v,#FF7700) value object>>{}
-    class "dimensions" as dimensions1 <<(v,#FF7700) dimensions>> <<(v,#FF7700) value object>>{}
-    class "designation" as designation2 <<(v,#FF7700) designation>> <<(v,#FF7700) value object>>{}
+    class "designation" as designation <<(v,#FF7700) value object>>{}
+    class "name" as name2 <<(v,#FF7700) value object>>{}
+    class "dimensions" as dimensions1 <<(v,#FF7700) value object>>{}
 }
 
 package Floor {
 entity Floor <root> {
 }
     class "id" as ID8 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
-    class "designation" as designation3 <<(v,#FF7700) designation>> <<(v,#FF7700) value object>>{}
+    class "designation" as designation3 <<(v,#FF7700) value object>>{}
 }
 
 package Cell {
 entity Cell <root> {
 }
     class "id" as ID9 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
-    class "coordenates" as coordenates2 <<(v,#FF7700) coordenates>> <<(v,#FF7700) value object>>{}
-    class "dimensions" as dimensions2 <<(v,#FF7700) dimensions>> <<(v,#FF7700) value object>>{}
+    class "coordenates" as coordenates2 <<(v,#FF7700) value object>>{}
+    class "dimensions" as dimensions2 <<(v,#FF7700) value object>>{}
 }
 
 package Elevator {
 entity Elevator <root> {
 }
     class "id" as ID10 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
-    class "coordenates" as coordenates3 <<(v,#FF7700) coordenates>> <<(v,#FF7700) value object>>{}
+    class "coordenates" as coordenates3 <<(v,#FF7700) value object>>{}
 }
 
 package Room {
 entity Room <root> {
 }
     class "id" as ID11 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
-    class "designation" as designation4 <<(v,#FF7700) designation>> <<(v,#FF7700) value object>>{}
-    class "name" as name3 <<(v,#FF7700) name>> <<(v,#FF7700) value object>>{}
-    class "dimensions" as dimensions3 <<(v,#FF7700) dimensions>> <<(v,#FF7700) value object>>{}
+    class "designation" as designation4 <<(v,#FF7700) value object>>{}
+    class "name" as name3 <<(v,#FF7700) value object>>{}
+    class "dimensions" as dimensions3 <<(v,#FF7700) value object>>{}
 }
 
 package Wall {
 entity Wall <root> {
 }
     class "id" as ID12 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
-    class "orientation" as orientation1 <<(v,#FF7700) orientation>> <<(v,#FF7700) value object>>{}
-    class "dimensions" as dimensions4 <<(v,#FF7700) dimensions>> <<(v,#FF7700) value object>>{}
+    class "orientation" as orientation1 <<(v,#FF7700) value object>>{}
+    class "dimensions" as dimensions4 <<(v,#FF7700) value object>>{}
 }
 
 package Door {
 entity Door <root> {
 }
     class "id" as ID13 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
-    class "orientation" as orientation2 <<(v,#FF7700) orientation>> <<(v,#FF7700) value object>>{}
-    class "coordenates" as coordenates4 <<(v,#FF7700) coordenates>> <<(v,#FF7700) value object>>{}
+    class "orientation" as orientation2 <<(v,#FF7700) value object>>{}
+    class "coordenates" as coordenates4 <<(v,#FF7700) value object>>{}
 }
 
 package CategoryRoom {
 entity CategoryRoom <root>{
 }
     class "id" as ID14 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
-    class "name" as name4 <<(v,#FF7700) name>> <<(v,#FF7700) value object>>{}
-    class "designation" as designation5 <<(v,#FF7700) designation>> <<(v,#FF7700) value object>>{}
+    class "name" as name4 <<(v,#FF7700) value object>>{}
+    class "designation" as designation5 <<(v,#FF7700) value object>>{}
 }
 
 package Passageway {
 entity Passageway <root> {
 }
     class "id" as ID15 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
-    class "localization" as localization <<(v,#FF7700) localization>> <<(v,#FF7700) value object>>{}
+    class "localization" as localization <<(v,#FF7700) value object>>{}
 }
 
 
@@ -160,7 +158,7 @@ PickUpRequest --> ID6
 PickUpRequest --> coordenates1
 
 Building --> ID7
-Building --> designation2
+Building --> designation
 Building --> name2
 Building --> dimensions1
 
