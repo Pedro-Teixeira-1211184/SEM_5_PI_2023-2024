@@ -1,98 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RobDroneGo
-  </title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: url("https://www.isep.ipp.pt/images/Catedra%20-%20z3.jpg") no-repeat center center fixed;
-      background-size: cover;
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RobDroneGo
+    </title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url("https://www.isep.ipp.pt/images/Catedra%20-%20z3.jpg") no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
 
 
-    .container {
-      background-color: beige;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      padding: 20px;
-      text-align: center;
-      width: 300px;
-    }
+        .container {
+            background-color: beige;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            width: 300px;
+        }
 
-    .login-form h1 {
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
+        .login-form h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
 
-    .input-container {
-      margin-bottom: 15px;
-      text-align: left;
-    }
+        .input-container {
+            margin-bottom: 15px;
+            text-align: left;
+        }
 
-    label {
-      display: block;
-      font-weight: bold;
-    }
+        label {
+            display: block;
+            font-weight: bold;
+        }
 
-    input {
-      width: 90%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 3px;
-      margin-top: 5px;
-    }
+        input {
+            width: 90%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            margin-top: 5px;
+        }
 
-    button {
-      width: 50%;
-      padding: 10px;
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      border-radius: 3px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
+        button {
+            width: 50%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
 
-    button:hover {
-      background-color: #0056b3;
-    }
+        button:hover {
+            background-color: #0056b3;
+        }
 
-  </style>
+    </style>
 </head>
 <body>
 <div class="container">
-  <form class="login-form" id="loginForm">
-    <h1>Login</h1>
-    <div class="input-container">
-      <label for="username">Nome de usuário</label>
-      <input type="text" id="username" name="username" placeholder="Digite seu nome de usuário" required>
-    </div>
-    <div class="input-container">
-      <label for="password">Senha</label>
-      <input type="password" id="password" name="password" placeholder="Digite sua senha" required>
-    </div>
-    <button type="submit">Entrar</button>
-  </form>
-  <script>
-    document.getElementById('loginForm').addEventListener('submit', function (event) {
-      event.preventDefault();
-
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-
-      const message = `Nome de Usuário: ${username}\nSenha: ${password}`;
-
-      alert(message);
-    });
-  </script>
+    <form class="login-form" id="loginForm">
+        <h1>Login</h1>
+        <div class="input-container">
+            <label for="username">Nome de usuário</label>
+            <input type="text" id="username" name="username" placeholder="Digite seu nome de usuário" required>
+        </div>
+        <div class="input-container">
+            <label for="password">Senha</label>
+            <input type="password" id="password" name="password" placeholder="Digite sua senha" required>
+        </div>
+        <button type="submit">Entrar</button>
+    </form>
 </div>
 </body>
 </html>

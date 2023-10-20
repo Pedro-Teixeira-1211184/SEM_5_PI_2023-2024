@@ -4,6 +4,7 @@ import cors from 'cors';
 import routes from '../api';
 import config from '../../config';
 import User from "../persistence/schemas/userSchema";
+import buildingRoute from "../api/routes/buildingRoute";
 
 export default ({app}: { app: express.Application }) => {
     app.enable('trust proxy');
@@ -22,25 +23,21 @@ export default ({app}: { app: express.Application }) => {
         res.sendFile(__dirname + '/html/login.html'); // Envia o arquivo "login.html" para o cliente
     });
 
-    // Rota para a página do usuário após o login bem-sucedido
-    app.get('/userPage', (req, res) => {
-        // Certifique-se de que o arquivo "userPage.html" esteja no local correto
-        res.sendFile(__dirname + '/html/userPage.html');
+    app.use('/buildings', buildingRoute());
+
+    app.get('/status', (req, res) => {
+        res.status(200).end();
     });
 
-  app.get('/status', (req, res) => {
-    res.status(200).end();
-  });
-
-  app.post('/status', (req, res) => {
-    if (res.status(200)) {
-      console.log("status ok");
-      res.end();
-    } else {
-      res.status(404).end();
-      console.log("status not ok");
-    }
-  });
+    app.post('/status', (req, res) => {
+        if (res.status(200)) {
+            console.log("status ok");
+            res.end();
+        } else {
+            res.status(404).end();
+            console.log("status not ok");
+        }
+    });
 
     // Outras rotas e middleware
 
