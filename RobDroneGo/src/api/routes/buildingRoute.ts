@@ -38,7 +38,12 @@ export default () => {
   }), (req, res, next) => {
     console.log("Updating a Building!");
     ctrl.updateBuilding(req, res, next);
-    });
+  });
+
+  route.get('/', (req, res, next) => {
+    console.log("Getting all Buildings!");
+    ctrl.getAll(req, res, next);
+  });
 
   return route;
 }

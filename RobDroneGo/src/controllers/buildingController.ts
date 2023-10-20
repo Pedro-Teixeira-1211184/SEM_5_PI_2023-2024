@@ -1,17 +1,18 @@
-import { Inject, Service } from 'typedi';
-import { Response, Request, NextFunction } from 'express';
+import {Inject, Service} from 'typedi';
+import e, {Response, Request, NextFunction} from 'express';
 import config from "../../config";
 import IBuildingService from "../services/IServices/IBuildingService";
 import IBuildingController from "./IControllers/IBuildingController";
 import IBuildingDTO from '../dto/IBuildingDTO';
-import { Result } from '../core/logic/Result';
+import {Result} from '../core/logic/Result';
 import {StatusCodes} from "http-status-codes";
 
 @Service()
 export default class BuildingController implements IBuildingController /* TODO: extends ../core/infra/BaseController */ {
   constructor(
     @Inject(config.services.building.name) private buildingServiceInstance: IBuildingService
-  ) { }
+  ) {
+  }
 
   public async createBuilding(req: Request, res: Response, next: NextFunction) {
     try {
@@ -23,8 +24,7 @@ export default class BuildingController implements IBuildingController /* TODO: 
 
       const buildingDTO = buildingOrError.getValue();
       return res.json(buildingDTO).status(StatusCodes.ACCEPTED);
-    }
-    catch (e) {
+    } catch (e) {
       return next(e);
     }
   };
@@ -39,8 +39,22 @@ export default class BuildingController implements IBuildingController /* TODO: 
 
       const buildingDTO = buildingOrError.getValue();
       return res.json(buildingDTO).status(StatusCodes.ACCEPTED);
+    } catch (e) {
+      return next(e);
     }
-    catch (e) {
+  }
+
+  public async getAll(req: Request, res: Response, next: NextFunction) {
+    try {
+
+      const buildings = await this.buildingServiceInstance.getAll();
+
+      if (buildings.isFailure) {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(buildings.error);
+      }
+
+      return res.json(buildings.getValue()).status(StatusCodes.ACCEPTED);
+    } catch (e) {
       return next(e);
     }
   }
