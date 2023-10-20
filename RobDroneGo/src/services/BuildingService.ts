@@ -43,8 +43,29 @@ export default class BuildingService implements IBuildingService {
   }
 
   //updateBuilding that uses the buildingRepo to update the building
-  // @ts-ignore
   public async updateBuilding(buildingDTO: IBuildingDTO): Promise<Result<IBuildingDTO>> {
-    // not implemented
+    try {
+      //Update the Building in the Repository
+      const updatedBuilding = await this.buildingRepo.update(buildingDTO.code, buildingDTO);
+      if (!updatedBuilding) {
+        console.log('Building not found');
+        return Result.fail<IBuildingDTO>('Building not found');
+      }
+
+      //Convert the updated building to DTO and return it in the result
+      const updatedBuildingDTO: IBuildingDTO = {
+        id: updatedBuilding.id,
+        name: updatedBuilding.name,
+        dimensions: updatedBuilding.dimensions,
+        code: updatedBuilding.code,
+        description: updatedBuilding.description
+      };
+
+      return Result.ok<IBuildingDTO>(updatedBuildingDTO);
+
+
+    } catch (error) {
+      throw error;
+    }
   }
 }

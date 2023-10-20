@@ -50,9 +50,10 @@ package Building {
 entity Building <root> {
 }
     class "id" as ID7 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
-    class "designation" as designation <<(v,#FF7700) value object>>{}
+    class "code" as designation <<(v,#FF7700) value object>>{}
     class "name" as name2 <<(v,#FF7700) value object>>{}
     class "dimensions" as dimensions1 <<(v,#FF7700) value object>>{}
+    class "description" as description2 <<(v,#FF7700) value object>>{}
 }
 
 package Floor {
@@ -161,6 +162,7 @@ Building --> ID7
 Building --> designation
 Building --> name2
 Building --> dimensions1
+Building --> description2
 
 Floor --> ID8
 Floor --> designation3

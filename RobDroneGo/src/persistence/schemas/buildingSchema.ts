@@ -4,9 +4,9 @@ import { IBuildingPersistence } from '../../dataschema/IBuildingPersistence';
 const BuildingSchema = new mongoose.Schema(
     {
         buildingID: { type: String, unique: true },
-        buildingName: { type: String, unique: true },
+        buildingCode: { type: String, unique: true },
         buildingDimensions: { type: String },
-        buildingDesignation: { type: String },
+        buildingName: { type: String },
         buildingDescription: { type: String }
     },
     {

@@ -1,7 +1,7 @@
 export interface IBuildingPersistence {
   id: string;
-  name: string;
+  code: string;
   dimensions: string;
-  designation: string;
+  name: string;
   description: string;
 }

@@ -14,9 +14,10 @@ export default () => {
 
   route.post('/', celebrate({
     body: Joi.object({
-      name: Joi.string().required().error(new Error('Invalid building name')),
-      designation: Joi.string().required().error(new Error('Invalid building designation')),
+      code: Joi.string().required().max(5).error(new Error('Invalid building code')),
+      //dimensions: obrigatório e deve ser do tipo string composta por (número)x(número)
       dimensions: Joi.string().required().error(new Error('Invalid building dimensions')),
+      name: Joi.string().max(50).allow('').allow(null).error(new Error('Invalid building name')),
       //description: opcional e com limite de 255 caracteres
       description: Joi.string().max(255).allow('').allow(null).error(new Error('Invalid building description')),
     })
@@ -24,5 +25,20 @@ export default () => {
     console.log("Creating a Building!");
     ctrl.createBuilding(req, res, next);
   });
+
+  route.put('/', celebrate({
+    body: Joi.object({
+      code: Joi.string().required().max(5).error(new Error('Invalid building code')),
+      //dimensions: obrigatório e deve ser do tipo string composta por (número)x(número)
+      dimensions: Joi.string().required().error(new Error('Invalid building dimensions')),
+      name: Joi.string().max(50).allow('').allow(null).error(new Error('Invalid building name')),
+      //description: opcional e com limite de 255 caracteres
+      description: Joi.string().max(255).allow('').allow(null).error(new Error('Invalid building description')),
+    })
+  }), (req, res, next) => {
+    console.log("Updating a Building!");
+    ctrl.updateBuilding(req, res, next);
+    });
+
   return route;
 }

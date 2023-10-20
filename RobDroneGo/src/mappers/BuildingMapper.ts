@@ -11,11 +11,11 @@ export class BuildingMapper extends Mapper<Building> {
     public static toDTO(building: Building): IBuildingDTO {
         return {
             buildingID: building.id.toString(),
-            buildingName: building.name,
-            buildingDimensions: building.dimensions,
-            buildingDesignation: building.designation,
-            buildingDescription: building.description
-        } as IBuildingDTO;
+            buildingDimensions: building.dimensions.toString(),
+            buildingCode: building.code.toString(),
+            buildingName: building.name.toString(),
+            buildingDescription: building.description.toString()
+        } as unknown as IBuildingDTO;
     }
 
 
@@ -23,9 +23,9 @@ export class BuildingMapper extends Mapper<Building> {
         const buildingOrError = Building.create(
             {
                 buildingID: raw.buildingID,
-                buildingName: raw.buildingName,
+                buildingCode: raw.buildingCode,
                 buildingDimensions: raw.buildingDimensions,
-                buildingDesignation: raw.buildingDesignation,
+                buildingName: raw.buildingName,
                 buildingDescription: raw.buildingDescription
             },
             new UniqueEntityID(raw.domainId)
@@ -39,9 +39,9 @@ export class BuildingMapper extends Mapper<Building> {
     public static toPersistence(building: Building): any {
         return {
             buildingID: building.id.toString(),
-            buildingName: building.name,
+            buildingCode: building.code,
             buildingDimensions: building.dimensions,
-            buildingDesignation: building.designation,
+            buildingName: building.name,
             buildingDescription: building.description
         }
     }
