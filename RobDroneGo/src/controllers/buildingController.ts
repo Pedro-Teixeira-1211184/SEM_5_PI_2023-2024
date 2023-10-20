@@ -5,6 +5,7 @@ import IBuildingService from "../services/IServices/IBuildingService";
 import IBuildingController from "./IControllers/IBuildingController";
 import IBuildingDTO from '../dto/IBuildingDTO';
 import { Result } from '../core/logic/Result';
+import {StatusCodes} from "http-status-codes";
 
 @Service()
 export default class BuildingController implements IBuildingController /* TODO: extends ../core/infra/BaseController */ {
@@ -17,11 +18,11 @@ export default class BuildingController implements IBuildingController /* TODO: 
       const buildingOrError = await this.buildingServiceInstance.createBuilding(req.body as IBuildingDTO) as Result<IBuildingDTO>;
 
       if (buildingOrError.isFailure) {
-        return res.status(402).send();
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json("Building already exists");
       }
 
       const buildingDTO = buildingOrError.getValue();
-      return res.json(buildingDTO).status(201);
+      return res.json(buildingDTO).status(StatusCodes.ACCEPTED);
     }
     catch (e) {
       return next(e);
