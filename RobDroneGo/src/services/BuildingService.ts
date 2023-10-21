@@ -47,22 +47,16 @@ export default class BuildingService implements IBuildingService {
     try {
       //Update the Building in the Repository
       const updatedBuilding = await this.buildingRepo.update(buildingDTO.code, buildingDTO);
-      if (!updatedBuilding) {
+
+      if (updatedBuilding == null) {
         console.log('Building not found');
         return Result.fail<IBuildingDTO>('Building not found');
       }
 
       //Convert the updated building to DTO and return it in the result
-      const updatedBuildingDTO: IBuildingDTO = {
-        id: updatedBuilding.id,
-        name: updatedBuilding.name,
-        dimensions: updatedBuilding.dimensions,
-        code: updatedBuilding.code,
-        description: updatedBuilding.description
-      };
+      const updatedBuildingDTO = BuildingMapper.toDTO(updatedBuilding);
 
       return Result.ok<IBuildingDTO>(updatedBuildingDTO);
-
 
     } catch (error) {
       throw error;
@@ -74,11 +68,6 @@ export default class BuildingService implements IBuildingService {
     if (buildings.length == 0) {
       return Result.fail<IBuildingDTO[]>("No buildings found");
     }
-    const buildingsDTO: IBuildingDTO[] = [];
-    buildings.forEach(building => {
-        buildingsDTO.push(BuildingMapper.toDTO(building));
-      }
-    );
-    return Result.ok<IBuildingDTO[]>(buildingsDTO);
+    return Result.ok<IBuildingDTO[]>(buildings);
   }
 }

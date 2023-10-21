@@ -20,6 +20,8 @@ export default () => {
       name: Joi.string().max(50).allow('').allow(null).error(new Error('Invalid building name')),
       //description: opcional e com limite de 255 caracteres
       description: Joi.string().max(255).allow('').allow(null).error(new Error('Invalid building description')),
+      maxFloors: Joi.string().required().error(new Error('Invalid building maxFloors')),
+      minFloors: Joi.string().required().error(new Error('Invalid building minFloors'))
     })
   }), (req, res, next) => {
     console.log("Creating a Building!");
@@ -34,6 +36,8 @@ export default () => {
       name: Joi.string().max(50).allow('').allow(null).error(new Error('Invalid building name')),
       //description: opcional e com limite de 255 caracteres
       description: Joi.string().max(255).allow('').allow(null).error(new Error('Invalid building description')),
+      maxFloors: Joi.string().required().error(new Error('Invalid building maxFloors')),
+      minFloors: Joi.string().required().error(new Error('Invalid building minFloors'))
     })
   }), (req, res, next) => {
     console.log("Updating a Building!");

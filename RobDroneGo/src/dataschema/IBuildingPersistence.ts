@@ -4,4 +4,6 @@ export interface IBuildingPersistence {
   dimensions: string;
   name: string;
   description: string;
+  maxFloors: string;
+  minFloors: string;
 }

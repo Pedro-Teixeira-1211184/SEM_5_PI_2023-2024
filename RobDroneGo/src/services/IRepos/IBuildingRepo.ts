@@ -9,6 +9,6 @@ export default interface IBuildingRepo extends Repo<Building> {
   findByDomainId(buildingId: string): Promise<Building>;
   delete(building: Building): Promise<void>;
   exists(building: Building): Promise<boolean>;
-  update(buildingCode: string, updatedFields: Partial<IBuildingDTO>): Promise<IBuildingPersistence | null>;
-  getAll(): Promise<Building[]>;
+  update(buildingCode: string, updatedFields: Partial<IBuildingDTO>): Promise<Building | null>;
+  getAll(): Promise<IBuildingDTO[]>;
 }

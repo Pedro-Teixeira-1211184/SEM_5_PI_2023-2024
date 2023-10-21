@@ -14,7 +14,9 @@ export class BuildingMapper extends Mapper<Building> {
       dimensions: building.dimensions.toString(),
       code: building.code.toString(),
       name: building.name.toString(),
-      description: building.description.toString()
+      description: building.description.toString(),
+      maxFloors: building.maxFloors.toString(),
+      minFloors: building.minFloors.toString()
     } as IBuildingDTO;
   }
 
@@ -26,10 +28,13 @@ export class BuildingMapper extends Mapper<Building> {
         code: raw.buildingCode,
         dimensions: raw.buildingDimensions,
         name: raw.buildingName,
-        description: raw.buildingDescription
+        description: raw.buildingDescription,
+        maxFloors: raw.buildingMaxFloors,
+        minFloors: raw.buildingMinFloors
       },
       new UniqueEntityID(raw.domainId)
     );
+
 
     buildingOrError.isFailure ? console.log(buildingOrError.error) : '';
 
@@ -42,7 +47,9 @@ export class BuildingMapper extends Mapper<Building> {
       buildingCode: building.code,
       buildingDimensions: building.dimensions,
       buildingName: building.name,
-      buildingDescription: building.description
+      buildingDescription: building.description,
+      buildingMaxFloors: building.maxFloors,
+      buildingMinFloors: building.minFloors
     }
   }
 }

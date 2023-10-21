@@ -74,26 +74,35 @@ export default class BuildingRepo implements IBuildingRepo {
   }
 
 
-  public async update(buildingCode: string, updatedFields: Partial<IBuildingDTO>): Promise<IBuildingPersistence | null> {
+  public async update(buildingCode: string, updatedFields: Partial<IBuildingDTO>): Promise<Building | null> {
     try {
       const query: FilterQuery<IBuildingPersistence> = {buildingCode: buildingCode};
-      return await this.buildingSchema.findOneAndUpdate(query, updatedFields, {new: true})
+      const find = await this.buildingSchema.findOne(query as FilterQuery<IBuildingPersistence & Document>);
+      const building = BuildingMapper.toDomain(find);
+      building.dimensions = updatedFields.dimensions;
+      building.name = updatedFields.name;
+      building.description = updatedFields.description;
+      building.maxFloors = updatedFields.maxFloors;
+      building.minFloors = updatedFields.minFloors;
+      const rawBuilding = BuildingMapper.toPersistence(building);
+      await this.buildingSchema.replaceOne(query as FilterQuery<IBuildingPersistence & Document>, rawBuilding);
+      return building;
     } catch (error) {
       throw error;
     }
   }
 
-  public async getAll(): Promise<Building[]> {
+  public async getAll(): Promise<IBuildingDTO[]> {
     try {
       const query = {} as FilterQuery<IBuildingPersistence & Document>;
       const buildingRecord = await this.buildingSchema.find(query);
-      const buildingArray: Building[] = [];
+      const buildingArray: IBuildingDTO[] = [];
 
       if (buildingRecord.length === 0) {
         return [];
       } else {
         for (let i = 0; i < buildingRecord.length; i++) {
-          buildingArray[i] = BuildingMapper.toDomain(buildingRecord[i]);
+          buildingArray[i] = BuildingMapper.toDTO(BuildingMapper.toDomain(buildingRecord[i]));
         }
         return buildingArray;
       }
