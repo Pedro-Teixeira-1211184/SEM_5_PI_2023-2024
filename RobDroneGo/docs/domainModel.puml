@@ -60,7 +60,8 @@ package Floor {
 entity Floor <root> {
 }
     class "id" as ID8 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
-    class "designation" as designation3 <<(v,#FF7700) value object>>{}
+    class "number" as number1 <<(v,#FF7700) value object>>{}
+    class "description" as designation3 <<(v,#FF7700) value object>>{}
 }
 
 package Cell {
@@ -166,6 +167,7 @@ Building --> description2
 
 Floor --> ID8
 Floor --> designation3
+Floor --> number1
 
 Cell --> ID9
 Cell --> coordenates2

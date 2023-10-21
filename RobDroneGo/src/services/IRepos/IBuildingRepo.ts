@@ -7,6 +7,7 @@ import IBuildingDTO from "../../dto/IBuildingDTO";
 export default interface IBuildingRepo extends Repo<Building> {
   save(building: Building): Promise<Building>;
   findByDomainId(buildingId: string): Promise<Building>;
+  findByCode(buildingCode: string): Promise<Building>;
   delete(building: Building): Promise<void>;
   exists(building: Building): Promise<boolean>;
   update(buildingCode: string, updatedFields: Partial<IBuildingDTO>): Promise<Building | null>;

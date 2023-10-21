@@ -3,6 +3,7 @@ import {celebrate, Joi} from 'celebrate';
 
 import {Container} from 'typedi';
 import IBuildingController from '../../controllers/IControllers/IBuildingController';
+import IFloorController from '../../controllers/IControllers/IFloorController';
 
 import config from "../../../config";
 
@@ -11,6 +12,7 @@ const route = Router();
 export default () => {
 
   const ctrl = Container.get(config.controllers.building.name) as IBuildingController;
+  const floorCtrl = Container.get(config.controllers.floor.name) as IFloorController;
 
   route.post('/', celebrate({
     body: Joi.object({
@@ -26,6 +28,17 @@ export default () => {
   }), (req, res, next) => {
     console.log("Creating a Building!");
     ctrl.createBuilding(req, res, next);
+  });
+
+  route.post('/floors', celebrate({
+    body: Joi.object({
+      buildingCode: Joi.string().required().max(5).error(new Error('Invalid building code')),
+      number: Joi.string().required().error(new Error('Invalid floor number')),
+      description: Joi.string().max(255).allow('').allow(null).error(new Error('Invalid floor description'))
+    })
+  }), (req, res, next) => {
+    console.log("Creating a Floor!");
+    floorCtrl.createFloor(req, res, next);
   });
 
   route.put('/', celebrate({

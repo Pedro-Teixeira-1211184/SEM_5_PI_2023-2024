@@ -70,4 +70,24 @@ export default class BuildingService implements IBuildingService {
     }
     return Result.ok<IBuildingDTO[]>(buildings);
   }
+
+  public async getBuildingByCode(buildingCode: string): Promise<Result<IBuildingDTO>> {
+    try {
+      //Get the building from the Repository
+      const building = await this.buildingRepo.findByCode(buildingCode);
+
+      if (building == null) {
+        console.log('Building not found');
+        return Result.fail<IBuildingDTO>('Building not found');
+      }
+
+      //Convert the building to DTO and return it in the result
+      const buildingDTO = BuildingMapper.toDTO(building);
+
+      return Result.ok<IBuildingDTO>(buildingDTO);
+
+    } catch (error) {
+      throw error;
+    }
+  }
 }

@@ -92,6 +92,19 @@ export default class BuildingRepo implements IBuildingRepo {
     }
   }
 
+  public async findByCode(buildingCode: string): Promise<Building> {
+    try {
+      const query = {buildingCode: buildingCode};
+      return this.buildingSchema.findOne(query as FilterQuery<IBuildingPersistence & Document>)
+        .then((building) => {
+          if (building == null) return null;
+          return BuildingMapper.toDomain(building);
+        })
+    } catch (error) {
+      throw error;
+    }
+  }
+
   public async getAll(): Promise<IBuildingDTO[]> {
     try {
       const query = {} as FilterQuery<IBuildingPersistence & Document>;
