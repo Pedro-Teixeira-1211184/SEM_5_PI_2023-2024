@@ -1,0 +1,61 @@
+@startuml
+
+autonumber
+participant "RobDroneGo UI" as UI
+participant "RobDroneGo" as API
+participant ":buildingController" as BC
+participant ":buildingService" as BS
+participant ":buildingRepository" as BR
+participant ":buildingMapper" as BM
+participant ":buildingDTO" as DTO
+participant "b:building" as B
+participant ":buildingSchema" as BSchema
+
+
+activate UI
+activate API
+UI -> API : .post(/building)
+API -> BC : createBuilding(req, res, next)
+activate BC
+BC -> BS : buildingOrError = createBuilding(req.body as buldingDTO)
+activate BS
+BS -> B : buildingOrError = create(buildingDTO)
+activate B
+B --> BS : building
+deactivate B
+BS -> BR : building = save(building)
+activate BR
+BR -> BM : rawBuilding = toPersistence(building)
+activate BM
+BM --> BR : building form to save
+deactivate BM
+BR -> BSchema : buildingCreated = create(rawBuilding)
+activate BSchema
+BSchema --> BR : building saved
+deactivate BSchema
+deactivate BM
+BR -> BM : building = toDomain(buildingCreated)
+activate BM
+BM -> B : create(buildingCreated)
+activate B
+B --> BM : building
+deactivate B
+BM --> BR : building form to return
+deactivate BM
+BR --> BS : building
+deactivate BR
+BS -> BM : buildingDTOResult = toDTO(building)
+activate BM
+BM -> DTO : buildingDTO = toDTO(building)
+activate DTO
+DTO --> BM : buildingDTO
+deactivate DTO
+BM --> BS : buildingDTO
+deactivate BM
+BS --> BC : buildingDTO
+deactivate BS
+BC --> API : buildingDTO and status 201
+deactivate BC
+API --> UI : buildingDTO and status 201
+
+@enduml
