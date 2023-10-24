@@ -40,7 +40,7 @@ The members of the group:
 
 | Student Nr.	                     | Name			               |
 |----------------------------------|-----------------------|
-| **[1211184](1211184/README.md)** | Pedro Teixeira        |
+| **[1211184](wiki/1211184/README.md)** | Pedro Teixeira        |
 | **[1211188](1211188/readme.md)** | Tomás Oliveira						  |
 | **[1211173](1211221/readme.md)** | Leonor Curado	       |
 
