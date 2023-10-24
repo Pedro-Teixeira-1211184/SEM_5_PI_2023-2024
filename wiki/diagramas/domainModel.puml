@@ -10,6 +10,7 @@ entity Robot <root> {
     class "serialNr" as serialNr <<(v,#FF7700) value object>>{}
     class "nickname" as nickname <<(v,#FF7700) value object>>{}
     class "brand" as brand <<(v,#FF7700) value object>>{}
+    class "isActive" as status1 <<(v,#FF7700) value object>>{}
 }
 
 package RobotType {
@@ -144,6 +145,7 @@ Robot --> codigo
 Robot --> serialNr
 Robot --> nickname
 Robot --> brand
+Robot --> status1
 
 RobotType --> ID2
 RobotType --> name1

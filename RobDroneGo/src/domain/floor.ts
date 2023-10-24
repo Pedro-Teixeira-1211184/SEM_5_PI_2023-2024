@@ -2,9 +2,9 @@ import {AggregateRoot} from "../core/domain/AggregateRoot";
 import {UniqueEntityID} from "../core/domain/UniqueEntityID";
 
 import {Result} from "../core/logic/Result";
-import {BuildingId} from "./buildingId";
 
 import IFloorDTO from "../dto/IFloorDTO";
+import {FloorId} from "./floorId";
 
 interface FloorProps {
   buildingCode: string;
@@ -17,8 +17,8 @@ export class Floor extends AggregateRoot<FloorProps> {
     return this._id;
   }
 
-  get floorId(): BuildingId {
-    return new BuildingId(this.floorId.toValue());
+  get floorId(): FloorId {
+    return new FloorId(this.floorId.toValue());
   }
 
   get buildingCode(): string {

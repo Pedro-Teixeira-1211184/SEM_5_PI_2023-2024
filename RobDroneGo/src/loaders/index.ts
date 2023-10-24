@@ -6,108 +6,132 @@ import Logger from './logger';
 import config from '../../config';
 
 export default async ({expressApp}) => {
-  const mongoConnection = await mongooseLoader();
-  Logger.info('✌️ DB loaded and connected!');
+    const mongoConnection = await mongooseLoader();
+    Logger.info('✌️ DB loaded and connected!');
 
-  const userSchema = {
-    // compare with the approach followed in repos and services
-    name: 'userSchema',
-    schema: '../persistence/schemas/userSchema',
-  };
+    const userSchema = {
+        // compare with the approach followed in repos and services
+        name: 'userSchema',
+        schema: '../persistence/schemas/userSchema',
+    };
 
-  const roleSchema = {
-    // compare with the approach followed in repos and services
-    name: 'roleSchema',
-    schema: '../persistence/schemas/roleSchema',
-  };
+    const roleSchema = {
+        // compare with the approach followed in repos and services
+        name: 'roleSchema',
+        schema: '../persistence/schemas/roleSchema',
+    };
 
-  const buildingSchema = {
-    name: 'buildingSchema',
-    schema: '../persistence/schemas/buildingSchema',
-  }
+    const buildingSchema = {
+        name: 'buildingSchema',
+        schema: '../persistence/schemas/buildingSchema',
+    }
 
-  const floorSchema = {
-    name: 'floorSchema',
-    schema: '../persistence/schemas/floorSchema',
-  }
+    const floorSchema = {
+        name: 'floorSchema',
+        schema: '../persistence/schemas/floorSchema',
+    }
 
-  const roleController = {
-    name: config.controllers.role.name,
-    path: config.controllers.role.path
-  }
+    const robotSchema = {
+        name: 'robotSchema',
+        schema: '../persistence/schemas/robotSchema',
+    }
 
-  const buildingController = {
-    name: config.controllers.building.name,
-    path: config.controllers.building.path
-  }
+    const roleController = {
+        name: config.controllers.role.name,
+        path: config.controllers.role.path
+    }
 
-  const floorController = {
-    name: config.controllers.floor.name,
-    path: config.controllers.floor.path
-  }
+    const buildingController = {
+        name: config.controllers.building.name,
+        path: config.controllers.building.path
+    }
 
-  const roleRepo = {
-    name: config.repos.role.name,
-    path: config.repos.role.path
-  }
+    const floorController = {
+        name: config.controllers.floor.name,
+        path: config.controllers.floor.path
+    }
 
-  const userRepo = {
-    name: config.repos.user.name,
-    path: config.repos.user.path
-  }
+    const robotController = {
+        name: config.controllers.robot.name,
+        path: config.controllers.robot.path
+    }
 
-  const buildingRepo = {
-    name: config.repos.building.name,
-    path: config.repos.building.path
-  }
+    const roleRepo = {
+        name: config.repos.role.name,
+        path: config.repos.role.path
+    }
 
-  const floorRepo = {
-    name: config.repos.floor.name,
-    path: config.repos.floor.path
-  }
+    const userRepo = {
+        name: config.repos.user.name,
+        path: config.repos.user.path
+    }
 
-  const roleService = {
-    name: config.services.role.name,
-    path: config.services.role.path
-  }
+    const buildingRepo = {
+        name: config.repos.building.name,
+        path: config.repos.building.path
+    }
 
-  const buildingService = {
-    name: config.services.building.name,
-    path: config.services.building.path
-  }
+    const floorRepo = {
+        name: config.repos.floor.name,
+        path: config.repos.floor.path
+    }
 
-  const floorService = {
-    name: config.services.floor.name,
-    path: config.services.floor.path
-  }
+    const robotRepo = {
+        name: config.repos.robot.name,
+        path: config.repos.robot.path
+    }
 
-  await dependencyInjectorLoader({
-    mongoConnection,
-    schemas: [
-      userSchema,
-      roleSchema,
-      buildingSchema,
-      floorSchema
-    ],
-    controllers: [
-      roleController,
-      buildingController,
-      floorController
-    ],
-    repos: [
-      roleRepo,
-      userRepo,
-      buildingRepo,
-      floorRepo
-    ],
-    services: [
-      roleService,
-      buildingService,
-      floorService
-    ]
-  });
-  Logger.info('✌️ Schemas, Controllers, Repositories, Services, etc. loaded');
+    const roleService = {
+        name: config.services.role.name,
+        path: config.services.role.path
+    }
 
-  await expressLoader({app: expressApp});
-  Logger.info('✌️ Express loaded');
+    const buildingService = {
+        name: config.services.building.name,
+        path: config.services.building.path
+    }
+
+    const floorService = {
+        name: config.services.floor.name,
+        path: config.services.floor.path
+    }
+
+    const robotService = {
+        name: config.services.robot.name,
+        path: config.services.robot.path
+    }
+
+    await dependencyInjectorLoader({
+        mongoConnection,
+        schemas: [
+            userSchema,
+            roleSchema,
+            buildingSchema,
+            floorSchema,
+            robotSchema
+        ],
+        controllers: [
+            roleController,
+            buildingController,
+            floorController,
+            robotController
+        ],
+        repos: [
+            roleRepo,
+            userRepo,
+            buildingRepo,
+            floorRepo,
+            robotRepo
+        ],
+        services: [
+            roleService,
+            buildingService,
+            floorService,
+            robotService
+        ]
+    });
+    Logger.info('✌️ Schemas, Controllers, Repositories, Services, etc. loaded');
+
+    await expressLoader({app: expressApp});
+    Logger.info('✌️ Express loaded');
 };
