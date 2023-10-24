@@ -1,0 +1,10 @@
+@startuml
+actor "User" as OE
+
+activate OE
+activate ":UI"
+OE -> ":UI" : 1 : requests all buildings
+":UI" --> OE : returns json with buildings
+
+
+@enduml

@@ -72,6 +72,7 @@ Para modelar/representar visualmente, tanto o que foi implementado como as ideia
 ### Vista de Processos
 
 **[SSD US150](diagramas/nivel1/UC150.md)**
+**[SSD US160](diagramas/nivel1/UC160.md)**
 
 #### (outros SSD arquiteturalmente relevantes)
 
@@ -85,6 +86,7 @@ Para modelar/representar visualmente, tanto o que foi implementado como as ideia
 ### Vista de Processos
 
 **[SSD US150](diagramas/nivel2/UC150.md)**
+**[SSD US160](diagramas/nivel2/UC160.md)**
 
 #### (outros SSD arquiteturalmente relevantes)
 [...]
@@ -116,6 +118,7 @@ A alternativa Onion será a adotada.
 ### Vista de Processos
 
 **[SSD US150](diagramas/nivel3/UC150.md)**
+**[SSD US160](diagramas/nivel3/UC160.md)**
 
 #### (outros SSD arquiteturalmente relevantes)
 [...]

@@ -1,0 +1,45 @@
+@startuml
+
+autonumber
+participant "RobDroneGo UI" as UI
+participant "RobDroneGo" as API
+participant ":buildingController" as BC
+participant ":buildingService" as BS
+participant ":buildingRepository" as BR
+participant ":buildingMapper" as BM
+participant ":buildingDTO" as DTO
+participant "b:building" as B
+participant ":buildingSchema" as BSchema
+
+
+activate UI
+activate API
+UI -> API : .get(/building)
+API -> BC : getAll(req, res, next)
+activate BC
+BC -> BS : buildings = getAll()
+activate BS
+BS -> BR : buildings = getAll()
+activate BR
+BR -> BSchema : buildingRecord = find(query)
+activate BSchema
+BSchema --> BR : all buildings
+deactivate BSchema
+loop
+BR -> BM : buildingArray = toDTO(buildingCreated)
+activate BM
+BM -> DTO 
+activate DTO
+BM <-- DTO
+deactivate DTO
+end 
+BR --> BS : buildingArray
+deactivate BR
+BS --> BC : buildingArray
+deactivate BS
+BC --> API : buildingArray and status 200
+deactivate BC
+API --> UI : buildingArray and status 200
+
+
+@enduml

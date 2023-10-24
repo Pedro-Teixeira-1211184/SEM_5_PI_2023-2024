@@ -1,0 +1,11 @@
+@startuml
+participant "RobDroneGo UI" as UI
+participant "RobDroneGo" as API
+
+activate UI
+activate API
+UI -> API : 1 : .get(/building)
+API -> API : 1.1 : get all buildings from database
+API --> UI : 2 : response status
+
+@enduml
