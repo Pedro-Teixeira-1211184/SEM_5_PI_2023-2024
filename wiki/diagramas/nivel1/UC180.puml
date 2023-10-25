@@ -1,0 +1,10 @@
+@startuml
+actor "User" as OE
+
+activate OE
+activate ":UI"
+OE -> ":UI" : 1 : requests all buildings with min x and max y floors
+":UI" --> OE : returns json with buildings
+
+
+@enduml

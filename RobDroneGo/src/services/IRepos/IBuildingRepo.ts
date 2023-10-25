@@ -12,4 +12,5 @@ export default interface IBuildingRepo extends Repo<Building> {
   exists(building: Building): Promise<boolean>;
   update(buildingCode: string, updatedFields: Partial<IBuildingDTO>): Promise<Building | null>;
   getAll(): Promise<IBuildingDTO[]>;
+  findByMinMaxFloors(min: number, max: number): Promise<IBuildingDTO[]>;
 }
