@@ -6,4 +6,5 @@ export default interface IBuildingService {
   updateBuilding(buildingDTO: IBuildingDTO): Promise<Result<IBuildingDTO>>;
   getBuildingByCode(buildingCode: string): Promise<Result<IBuildingDTO>>;
   getAll(): Promise<Result<Array<IBuildingDTO>>>;
+  findByMinMaxFloors(min: number, max: number): Promise<Result<Array<IBuildingDTO>>>;
 }

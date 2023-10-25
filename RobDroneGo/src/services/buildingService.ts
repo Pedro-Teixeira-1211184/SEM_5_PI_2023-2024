@@ -90,4 +90,23 @@ export default class BuildingService implements IBuildingService {
       throw error;
     }
   }
+
+
+
+  public async findByMinMaxFloors(minFloors: number, maxFloors: number): Promise<Result<IBuildingDTO[]>> {
+    try{
+      const buildings = await this.buildingRepo.findByMinMaxFloors(minFloors, maxFloors);
+    
+    if (buildings.length == 0) {
+      return Result.fail<IBuildingDTO[]>("No buildings found");
+    }
+    return Result.ok<IBuildingDTO[]>(buildings);
+  
+
+  } catch (error) {
+    throw error;
+  }
+  }
+
+
 }

@@ -12,4 +12,5 @@ export default interface IBuildingRepo extends Repo<Robot> {
   exists(building: Robot): Promise<boolean>;
   update(buildingCode: string, updatedFields: Partial<IBuildingDTO>): Promise<Robot | null>;
   getAll(): Promise<IBuildingDTO[]>;
+  findByMinMaxFloors(min: number, max: number): Promise<IBuildingDTO[]>;
 }
