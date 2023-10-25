@@ -1,0 +1,45 @@
+@startuml
+
+autonumber
+participant "RobDroneGo UI" as UI
+participant "RobDroneGo" as API
+participant ":FloorController" as FC
+participant ":FloorService" as FS
+participant ":FloorRepository" as FR
+participant ":floorMapper" as FM
+participant ":floorDTO" as DTO
+participant "f:floor" as F
+participant ":floorSchema" as FSchema
+
+
+activate UI
+activate API
+UI -> API : .get(/floor)
+API -> FC : getAll(req, res, next)
+activate FC
+FC -> FS : floors = getAllByBuilding()
+activate FS
+FS -> FR : floors = getAllByBuilding()
+activate FR
+FR -> FSchema : floorRecord = find(query)
+activate FSchema
+FSchema --> FR : all floors by building
+deactivate FSchema
+loop
+FR -> FM : floorsArray = toDTO(floorCreated)
+activate FM
+FM -> DTO
+activate DTO
+FM <-- DTO
+deactivate DTO
+end
+FR --> FS : floorsArray
+deactivate FR
+FS --> FC : floorsArray
+deactivate FS
+FC --> API : floorsArray and status 200
+deactivate FC
+API --> UI : floorsArray and status 200
+
+
+@enduml
