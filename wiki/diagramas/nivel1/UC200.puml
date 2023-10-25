@@ -1,0 +1,16 @@
+@startuml
+actor "User" as OE
+
+activate OE
+OE -> ":UI" : 1 : starts the node edition process
+activate ":UI"
+":UI" --> OE : 1.1 : requests data (number, description)
+deactivate ":UI"
+OE -> ":UI" : 2 : inserts the data (number, description)
+activate ":UI"
+":UI" --> OE : 2.1 : Shows data of the Floor
+
+
+deactivate ":UI"
+
+@enduml

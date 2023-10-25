@@ -1,0 +1,61 @@
+@startuml
+
+autonumber
+participant "RobDroneGo UI" as UI
+participant "RobDroneGo" as API
+participant ":floorController" as FC
+participant ":floorService" as FS
+participant ":floorRepository" as FR
+participant ":floorMapper" as FM
+participant ":floorDTO" as DTO
+participant "f:floor" as F
+participant ":floorSchema" as FSchema
+
+
+
+activate UI
+activate API
+UI -> API : .put(/floor)
+API -> FC : createFloor(req, res, next)
+activate FC
+FC -> FS : floorOrError = updateFloor(req.body as floorDTO)
+activate FS
+FS -> FR : updatedFloor = update(floorDTO.code, floorDTO)
+activate FR
+FR -> FSchema : find = findOne(query)
+activate FSchema
+FSchema --> FR : floor found
+deactivate FSchema
+FR -> FM : floor = toDomain(floorCreated)
+activate FM
+FM -> F : create(buildingCreated)
+activate F
+F --> FM : floor
+deactivate F
+FM --> FR : floor
+deactivate FM
+FR -> FR : update floor object
+activate FR
+deactivate FR
+FR -> FM : toPersistence(floor)
+activate FM
+FM --> FR : persistence floor
+deactivate FM
+FR -> FSchema : replaceOne(query, rawFloor)
+activate FSchema
+FSchema --> FR : updated floor
+deactivate FSchema
+FR --> FS : updated floor
+deactivate FR
+FS -> FM : updatedFloorDTO = toDTO(updatedFloorDTO)
+activate FM
+FM --> FS : updatedFloorDTO
+deactivate FM
+FS --> FC : updatedFloorDTO
+deactivate FS
+FC --> API : updatedFloorDTO and status 201
+deactivate FC
+API --> UI : updatedFloorDTO and status 201
+
+
+@enduml
