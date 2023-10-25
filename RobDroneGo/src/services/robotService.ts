@@ -31,8 +31,11 @@ export default class RobotService implements IRobotService {
                 return Result.fail<IRobotDTO>('RobotType does not exist');
             }
 
-            robotDTO.isActive = true;
-            const robotOrError= await Robot.create(robotDTO);
+            if (robotDTO.isActive === undefined) {
+                robotDTO.isActive = true;
+            }
+
+            const robotOrError = await Robot.create(robotDTO);
             if (robotOrError.isFailure) {
                 return Result.fail<IRobotDTO>(robotOrError.errorValue());
             }
@@ -56,7 +59,7 @@ export default class RobotService implements IRobotService {
 
     public async createRobotType(robotTypeDTO: IRobotTypeDTO): Promise<Result<IRobotTypeDTO>> {
         try {
-            const robotTypeOrError= await RobotType.create(robotTypeDTO);
+            const robotTypeOrError = await RobotType.create(robotTypeDTO);
             if (robotTypeOrError.isFailure) {
                 return Result.fail<IRobotTypeDTO>(robotTypeOrError.errorValue());
             }
@@ -74,10 +77,41 @@ export default class RobotService implements IRobotService {
 
             return Result.ok<IRobotTypeDTO>(robotTypeDTOResult)
 
-        }catch (e) {
+        } catch (e) {
             throw e;
         }
     }
 
+    public async updateRobot(robot_id: string, body: IRobotDTO): Promise<Result<IRobotDTO>> {
+        try {
+            const robot = await this.robotRepo.findByDomainId(robot_id);
+
+            if (robot === null) {
+                return Result.fail<IRobotDTO>('Robot does not exist');
+            }
+
+            if (body.isActive === undefined) {
+                robot.isActive = !robot.isActive;
+            } else {
+                robot.isActive = body.isActive;
+            }
+
+            const mapped = RobotMapper.toPersistence(robot)
+            const mapped2 = RobotMapper.toDomain(mapped)
+
+            const robotOrError = await this.robotRepo.update(mapped2, robot_id);
+
+            if (robotOrError === null) {
+                return Result.fail<IRobotDTO>('Robot already exists');
+            }
+
+            const robotDTOResult = RobotMapper.toDTO(robotOrError);
+
+            return Result.ok<IRobotDTO>(robotDTOResult)
+
+        } catch (e) {
+            throw e;
+        }
+    }
 
 }

@@ -7,4 +7,5 @@ export default interface IRobotRepo extends Repo<Robot> {
   findByDomainId(robotId: string): Promise<Robot>;
   delete(robot: Robot): Promise<void>;
   exists(robot: Robot): Promise<boolean>;
+  update(robot: Robot, id: string): Promise<Robot>;
 }

@@ -36,5 +36,14 @@ export default () => {
         }
     );
 
+    route.patch('/:nickname', celebrate({
+        body: Joi.object({
+            isActive: Joi.boolean().error(new Error('Invalid robot status'))
+        })
+    }), (req, res, next) => {
+        console.log("Updating a robot!");
+        ctrl.updateRobot(req, res, next);
+    });
+
     return route;
 }

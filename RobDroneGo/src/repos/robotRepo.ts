@@ -5,55 +5,96 @@ import {IRobotPersistence} from "../dataschema/IRobotPersistence";
 import IRobotRepo from "../services/IRepos/IRobotRepo";
 import {Robot} from "../domain/robot";
 import {IBuildingPersistence} from "../dataschema/IBuildingPersistence";
-import {FloorMapper} from "../mappers/FloorMapper";
 import {RobotMapper} from "../mappers/RobotMapper";
+import e from "express";
+
 
 
 @Service()
 export default class RobotRepo implements IRobotRepo {
 
-    constructor(
-        @Inject('robotSchema') private robotSchema: Model<IRobotPersistence & Document>,
-    ) {
-    }
+  constructor(
+    @Inject('robotSchema') private robotSchema: Model<IRobotPersistence & Document>,
+  ) {
+  }
 
-    private createBaseQuery(): any {
-        return {
-            where: {},
-        }
+  private createBaseQuery(): any {
+    return {
+      where: {},
     }
+  }
 
-    delete(robot: Robot): Promise<void> {
-        return Promise.resolve(undefined);
-    }
+  delete(robot: Robot): Promise<void> {
+    return Promise.resolve(undefined);
+  }
 
-    public async exists(robot: Robot): Promise<boolean> {
-        try {
-            //determines if the floor exists in the database by his number and buildingCode
-            const query = {code: robot.code, serialNumber: robot.serialNumber};
-            const floorDocument = await this.robotSchema.findOne(query as FilterQuery<IRobotPersistence & Document>);
-            return floorDocument == null;
-        } catch (error) {
-            throw error;
-        }
+  public async exists(robot: Robot): Promise<boolean> {
+    try {
+      //determines if the floor exists in the database by his number and buildingCode
+      const query = {robotCode: robot.code, robotNickname: robot.nickname};
+      const floorDocument = await this.robotSchema.findOne(query as FilterQuery<IRobotPersistence & Document>);
+      return floorDocument == null;
+    } catch (error) {
+      throw error;
     }
+  }
 
-    findByDomainId(robotId: string): Promise<Robot> {
-        return Promise.resolve(undefined);
+  public async findByDomainId(robotId: string): Promise<Robot> {
+    try {
+      const query = {_id: robotId};
+      return this.robotSchema.findOne(query as FilterQuery<IRobotPersistence & Document>)
+        .then((document) => {
+          if (document != null) {
+            return RobotMapper.toDomain(document);
+          }
+          return null;
+        });
+    } catch (e) {
+      throw e;
     }
+  }
 
-    public async save(robot: Robot): Promise<Robot> {
-        try {
-            //determines if the floor exists in the database by his number and buildingCode
-            if (await this.exists(robot)) {
-                const robotDocument = await this.robotSchema.create(RobotMapper.toPersistence(robot));
-                return RobotMapper.toDomain(robotDocument);
-            } else {
-                return null;
-            }
-        } catch (error) {
-            throw error;
-        }
+  public async findByNickname(nickname: string): Promise<Robot> {
+    try {
+      const query = {robotNickname: nickname.toString()};
+      console.log(nickname);
+      const floorDocument = await this.robotSchema.findOne(query as FilterQuery<IRobotPersistence & Document>);
+      console.log(floorDocument);
+      if (floorDocument != null) {
+        return RobotMapper.toDomain(floorDocument);
+      }
+      return null;
+    }catch (e) {
+      throw e;
     }
+  }
+
+  public async save(robot: Robot): Promise<Robot> {
+    try {
+      //determines if the floor exists in the database by his number and buildingCode
+      if (await this.exists(robot)) {
+        const robotDocument = await this.robotSchema.create(RobotMapper.toPersistence(robot));
+        return RobotMapper.toDomain(robotDocument);
+      } else {
+        return null;
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async update(robot: Robot, id: string): Promise<Robot> {
+    try {
+      const query: FilterQuery<IBuildingPersistence> = {_id: id.toString()};
+      const find = await this.robotSchema.findOne(query as FilterQuery<IBuildingPersistence & Document>);
+      const robot1 = RobotMapper.toDomain(find);
+      robot1.isActive = robot.isActive;
+      const rawRobot = RobotMapper.toPersistence(robot1);
+      await this.robotSchema.replaceOne(query as FilterQuery<IBuildingPersistence & Document>, rawRobot);
+      return robot1;
+    }catch (e) {
+      throw e;
+    }
+  }
 
 }
