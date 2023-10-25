@@ -7,13 +7,19 @@ import {Result} from "../core/logic/Result";
 import {Robot} from "../domain/robot";
 import {RobotMapper} from "../mappers/RobotMapper";
 
+import IRobotTypeDTO from "../dto/IRobotTypeDTO";
+import {RobotTypeMapper} from "../mappers/RobotTypeMapper";
+import {RobotType} from "../domain/robotType";
+import IRobotTypeRepo from "./IRepos/IRobotTypeRepo";
+
 
 @Service()
 
 export default class RobotService implements IRobotService {
 
     constructor(
-        @Inject(config.repos.robot.name) private robotRepo: IRobotRepo
+        @Inject(config.repos.robot.name) private robotRepo: IRobotRepo,
+        @Inject(config.repos.robotType.name) private robotTypeRepo: IRobotTypeRepo
     ) {
     }
 
@@ -39,6 +45,31 @@ export default class RobotService implements IRobotService {
             return Result.ok<IRobotDTO>(robotDTOResult)
 
         } catch (e) {
+            throw e;
+        }
+    }
+
+    public async createRobotType(robotTypeDTO: IRobotTypeDTO): Promise<Result<IRobotTypeDTO>> {
+        try {
+            const robotTypeOrError= await RobotType.create(robotTypeDTO);
+            if (robotTypeOrError.isFailure) {
+                return Result.fail<IRobotTypeDTO>(robotTypeOrError.errorValue());
+            }
+
+            const robotTypeResult = robotTypeOrError.getValue();
+
+            //save robotType
+            const robotTypeCreated = await this.robotTypeRepo.save(robotTypeResult);
+
+            if (robotTypeCreated === null) {
+                return Result.fail<IRobotTypeDTO>('This type of robot already exists!');
+            }
+
+            const robotTypeDTOResult = RobotTypeMapper.toDTO(robotTypeCreated);
+
+            return Result.ok<IRobotTypeDTO>(robotTypeDTOResult)
+
+        }catch (e) {
             throw e;
         }
     }

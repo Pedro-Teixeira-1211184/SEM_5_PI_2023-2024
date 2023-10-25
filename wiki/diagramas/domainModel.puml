@@ -17,7 +17,7 @@ package RobotType {
 entity RobotType <root> {
 }
     class "id" as ID2 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
-    class "name" as name1 <<(v,#FF7700) value object>>{}
+    class "designation" as name1 <<(v,#FF7700) value object>>{}
 }
 
 package TaskType {

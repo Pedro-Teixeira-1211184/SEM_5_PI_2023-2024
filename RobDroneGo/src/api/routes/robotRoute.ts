@@ -26,5 +26,15 @@ export default () => {
         ctrl.createRobot(req, res, next);
     });
 
+    route.post('/types', celebrate({
+            body: Joi.object({
+                designation: Joi.string().required().max(25).error(new Error('robotType is required!')),
+            })
+        }), (req, res, next) => {
+            console.log("Creating a robot type!");
+            ctrl.createRobotType(req, res, next);
+        }
+    );
+
     return route;
 }

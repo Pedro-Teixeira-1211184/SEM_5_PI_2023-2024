@@ -36,6 +36,11 @@ export default async ({expressApp}) => {
         schema: '../persistence/schemas/robotSchema',
     }
 
+    const robotTypeSchema = {
+        name: 'robotTypeSchema',
+        schema: '../persistence/schemas/robotTypeSchema',
+    }
+
     const roleController = {
         name: config.controllers.role.name,
         path: config.controllers.role.path
@@ -81,6 +86,11 @@ export default async ({expressApp}) => {
         path: config.repos.robot.path
     }
 
+    const robotTypeRepo = {
+        name: config.repos.robotType.name,
+        path: config.repos.robotType.path
+    }
+
     const roleService = {
         name: config.services.role.name,
         path: config.services.role.path
@@ -108,7 +118,8 @@ export default async ({expressApp}) => {
             roleSchema,
             buildingSchema,
             floorSchema,
-            robotSchema
+            robotSchema,
+            robotTypeSchema
         ],
         controllers: [
             roleController,
@@ -121,7 +132,8 @@ export default async ({expressApp}) => {
             userRepo,
             buildingRepo,
             floorRepo,
-            robotRepo
+            robotRepo,
+            robotTypeRepo
         ],
         services: [
             roleService,
