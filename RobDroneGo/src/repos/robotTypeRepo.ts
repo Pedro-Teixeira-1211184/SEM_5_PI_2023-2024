@@ -4,11 +4,7 @@ import {Document, FilterQuery, Model} from "mongoose";
 import IRobotTypeRepo from "../services/IRepos/IRobotTypeRepo";
 import {IRobotTypePersistence} from "../dataschema/IRobotTypePersistence";
 import {RobotType} from "../domain/robotType";
-import {IBuildingPersistence} from "../dataschema/IBuildingPersistence";
-import {IFloorPersistence} from "../dataschema/IFloorPersistence";
-import {FloorMapper} from "../mappers/FloorMapper";
 import {RobotTypeMapper} from "../mappers/RobotTypeMapper";
-import {fromPairs} from "lodash";
 
 
 @Service()
@@ -35,6 +31,19 @@ export default class RobotTypeRepo implements IRobotTypeRepo {
             const query = {robotTypeDesignation: robotType.designation};
             const typeDocument = await this.robotTypeSchema.findOne(query as FilterQuery<IRobotTypePersistence & Document>);
             return typeDocument == null;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    public async findByDesignation(designation: string): Promise<RobotType> {
+        try {
+            const query = {robotTypeDesignation: designation};
+            return this.robotTypeSchema.findOne(query as FilterQuery<IRobotTypePersistence & Document>)
+                .then((type) => {
+                    if (type == null) return null;
+                    return RobotTypeMapper.toDomain(type);
+                })
         } catch (error) {
             throw error;
         }

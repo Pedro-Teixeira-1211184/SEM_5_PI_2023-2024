@@ -25,7 +25,7 @@ export class RobotMapper extends Mapper<Robot> {
         const robot = Robot.create(
             {
                 id: raw.robotID,
-                robotType: raw.robotType,
+                robotType: raw.robotRobotType,
                 code: raw.robotCode,
                 serialNumber: raw.robotSerialNumber,
                 nickname: raw.robotNickname,

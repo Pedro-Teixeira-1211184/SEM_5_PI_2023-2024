@@ -25,6 +25,12 @@ export default class RobotService implements IRobotService {
 
     public async createRobot(robotDTO: IRobotDTO): Promise<Result<IRobotDTO>> {
         try {
+            //check if robotType exists
+            const robotType = await this.robotTypeRepo.findByDesignation(robotDTO.robotType);
+            if (robotType === null) {
+                return Result.fail<IRobotDTO>('RobotType does not exist');
+            }
+
             robotDTO.isActive = true;
             const robotOrError= await Robot.create(robotDTO);
             if (robotOrError.isFailure) {
@@ -41,7 +47,6 @@ export default class RobotService implements IRobotService {
             }
 
             const robotDTOResult = RobotMapper.toDTO(robotCreated);
-
             return Result.ok<IRobotDTO>(robotDTOResult)
 
         } catch (e) {
