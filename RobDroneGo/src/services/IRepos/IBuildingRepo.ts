@@ -1,15 +1,15 @@
 import { Repo } from "../../core/infra/Repo";
-import { Robot } from "../../domain/building";
+import { Building } from "../../domain/building";
 import {IBuildingPersistence} from "../../dataschema/IBuildingPersistence";
 import IBuildingDTO from "../../dto/IBuildingDTO";
 
 
-export default interface IBuildingRepo extends Repo<Robot> {
-  save(building: Robot): Promise<Robot>;
-  findByDomainId(buildingId: string): Promise<Robot>;
-  findByCode(buildingCode: string): Promise<Robot>;
-  delete(building: Robot): Promise<void>;
-  exists(building: Robot): Promise<boolean>;
-  update(buildingCode: string, updatedFields: Partial<IBuildingDTO>): Promise<Robot | null>;
+export default interface IBuildingRepo extends Repo<Building> {
+  save(building: Building): Promise<Building>;
+  findByDomainId(buildingId: string): Promise<Building>;
+  findByCode(buildingCode: string): Promise<Building>;
+  delete(building: Building): Promise<void>;
+  exists(building: Building): Promise<boolean>;
+  update(buildingCode: string, updatedFields: Partial<IBuildingDTO>): Promise<Building | null>;
   getAll(): Promise<IBuildingDTO[]>;
 }
