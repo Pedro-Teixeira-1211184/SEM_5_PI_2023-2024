@@ -15,8 +15,8 @@ export class BuildingMapper extends Mapper<Building> {
       code: building.code.toString(),
       name: building.name.toString(),
       description: building.description.toString(),
-      maxFloors: building.maxFloors.toString(),
-      minFloors: building.minFloors.toString()
+      maxFloors: building.maxFloors.valueOf(),
+      minFloors: building.minFloors.valueOf()
     } as IBuildingDTO;
   }
 

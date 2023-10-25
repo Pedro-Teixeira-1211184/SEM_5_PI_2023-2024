@@ -11,8 +11,8 @@ interface BuildingProps {
   name: string;
   dimensions: string;
   description: string;
-  maxFloors: string;
-  minFloors: string;
+  maxFloors: number;
+  minFloors: number;
 }
 
 export class Building extends AggregateRoot<BuildingProps> {
@@ -56,19 +56,19 @@ export class Building extends AggregateRoot<BuildingProps> {
     this.props.description = value;
   }
 
-  get maxFloors(): string {
+  get maxFloors(): number {
     return this.props.maxFloors;
   }
 
-  set maxFloors(value: string) {
+  set maxFloors(value: number) {
     this.props.maxFloors = value;
   }
 
-  get minFloors(): string {
+  get minFloors(): number {
     return this.props.minFloors;
   }
 
-  set minFloors(value: string) {
+  set minFloors(value: number) {
     this.props.minFloors = value;
   }
 
