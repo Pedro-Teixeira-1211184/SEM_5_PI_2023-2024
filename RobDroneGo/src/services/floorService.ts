@@ -40,5 +40,19 @@ export default class FloorService implements IFloorService {
     }
   }
 
+  public async findFloorsByBuildingCode(buildingCode: string): Promise<Result<IFloorDTO[]>> {
+    try {
+      const floors = await this.floorRepo.findFloorsByBuildingCode(buildingCode);
+
+      if (floors.length == 0) {
+        return Result.fail<IFloorDTO[]>('No floors found');
+      }
+
+      return Result.ok<IFloorDTO[]>(floors)
+    } catch (e) {
+      throw e;
+    }
+  }
+
 
 }

@@ -67,5 +67,10 @@ export default () => {
     });
 
 
+    /*route.get('/floor/:buildingCode', (req, res, next) => {
+        console.log("Getting all Floors by Building Code!");
+        ctrl.findFloorsByBuildingCode(req, res, next);
+    });*/
+
     return route;
 }

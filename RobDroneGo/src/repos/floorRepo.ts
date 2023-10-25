@@ -6,6 +6,7 @@ import {FloorMapper} from "../mappers/FloorMapper";
 import {IFloorPersistence} from "../dataschema/IFloorPersistence";
 import {Floor} from "../domain/floor";
 import {IBuildingPersistence} from "../dataschema/IBuildingPersistence";
+import IFloorDTO from '../dto/IFloorDTO';
 
 
 @Service()
@@ -68,5 +69,29 @@ export default class FloorRepo implements IFloorRepo {
       throw error;
     }
   }
+
+
+  public async findFloorsByBuildingCode(buildingCode: string): Promise<IFloorDTO[]> {
+    try {
+      const query = {floorBuildingCode: buildingCode} as FilterQuery<IFloorPersistence & Document>;
+      const floorRecord = await this.floorSchema.find(query as FilterQuery<IFloorPersistence & Document>);
+      const floorArray: IFloorDTO[] = [];
+
+      if(floorRecord.length == 0){
+        return [];
+      }else{
+        for(let i = 0; i < floorRecord.length; i++){
+          floorArray[i] = FloorMapper.toDTO(FloorMapper.toDomain(floorRecord[i]));
+        }
+        return floorArray;
+      }
+
+    } catch (error) {
+      console.log('Error in FloorRepo.findFloorsByBuildingCode(): ', error);
+      throw error;
+    }
+  }
+
+
 
 }
