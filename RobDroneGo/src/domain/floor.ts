@@ -8,7 +8,7 @@ import {FloorId} from "./floorId";
 
 interface FloorProps {
   buildingCode: string;
-  number: string;
+  number: number;
   description: string;
 }
 
@@ -29,11 +29,11 @@ export class Floor extends AggregateRoot<FloorProps> {
     this.props.buildingCode = value;
   }
 
-  get number(): string {
+  get number(): number {
     return this.props.number;
   }
 
-  set number(value: string) {
+  set number(value: number) {
     this.props.number = value;
   }
 

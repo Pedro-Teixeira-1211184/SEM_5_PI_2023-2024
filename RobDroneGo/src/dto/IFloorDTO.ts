@@ -1,6 +1,6 @@
 export default interface IFloorDTO {
   id: string;
   buildingCode: string;
-  number: string;
+  number: number;
   description: string;
 }

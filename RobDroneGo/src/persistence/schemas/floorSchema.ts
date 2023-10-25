@@ -5,7 +5,7 @@ const FloorSchema = new mongoose.Schema(
   {
     floorID: { type: String, unique: true },
     floorBuildingCode: { type: String, required: true },
-    floorNumber: { type: String, required: true },
+    floorNumber: { type: Number, required: true },
     floorDescription: { type: String, required: true },
   },
   {

@@ -27,7 +27,7 @@ export default class FloorController implements IFloorController /* TODO: extend
             }
 
             //check if floor number is valid
-            if (Number(req.body.number) > Number(buildingOrError.getValue().maxFloors)) {
+            if (Number(req.body.number) > buildingOrError.getValue().maxFloors) {
                 console.log("Floor number is invalid!");
                 return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send("Floor number is higher than maximum number of floors!");
             }

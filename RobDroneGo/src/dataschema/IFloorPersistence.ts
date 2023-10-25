@@ -1,6 +1,6 @@
 export interface IFloorPersistence {
   id: string;
   buildingCode: string;
-  number: string;
+  number: number;
   description: string;
 }

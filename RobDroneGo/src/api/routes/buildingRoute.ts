@@ -32,7 +32,7 @@ export default () => {
     route.post('/floors', celebrate({
         body: Joi.object({
             buildingCode: Joi.string().required().max(5).error(new Error('Invalid building code')),
-            number: Joi.string().required().error(new Error('Invalid floor number')),
+            number: Joi.number().integer().required().error(new Error('Invalid floor number')),
             description: Joi.string().max(255).allow('').allow(null).error(new Error('Invalid floor description'))
         })
     }), (req, res, next) => {
