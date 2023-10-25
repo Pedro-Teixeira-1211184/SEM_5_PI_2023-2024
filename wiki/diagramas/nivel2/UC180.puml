@@ -1,11 +1,11 @@
 @startuml
-'https://plantuml.com/sequence-diagram
+participant "RobDroneGo UI" as UI
+participant "RobDroneGo" as API
 
-autonumber
+activate UI
+activate API
+UI -> API : 1 : .get(/building)
+API -> API : 1.1 : get all buildings from database with min x and max y floors
+API --> UI : 2 : response status
 
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
-
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
 @enduml
