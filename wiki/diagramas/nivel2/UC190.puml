@@ -1,0 +1,11 @@
+@startuml
+participant "RobDroneGo UI" as UI
+participant "RobDroneGo" as API
+
+activate UI
+activate API
+UI -> API : 1 : .post(/building/floor)
+API -> API : 1.1 : handles request body, \n creates floor object and DTO \n and saves it to the database
+API --> UI : 2 : response status
+
+@enduml

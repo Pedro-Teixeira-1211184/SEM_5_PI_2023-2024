@@ -38,7 +38,7 @@ TBD
 ### Vista de Implementação - Vista Física
 TBD
 
-## Nível 3 (MDR)
+## Nível 3 (RobDroneGo)
 ### Vista Lógica - Vista de Implementação
 TBD
 
@@ -46,20 +46,6 @@ TBD
 TBD
 
 ## Nível 3 (UI)
-### Vista Lógica - Vista de Implementação
-TBD
-
-### Vista de Implementação - Vista Física
-TBD
-
-## Nível 3 (MDV)
-### Vista Lógica - Vista de Implementação
-TBD
-
-### Vista de Implementação - Vista Física
-TBD
-
-## Nível 3 (Planeamento)
 ### Vista Lógica - Vista de Implementação
 TBD
 

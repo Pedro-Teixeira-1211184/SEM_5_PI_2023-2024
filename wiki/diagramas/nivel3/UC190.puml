@@ -1,0 +1,78 @@
+@startuml
+
+autonumber
+participant "RobDroneGo UI" as UI
+participant "RobDroneGo" as API
+participant ":floorController" as BC
+participant ":buildingService" as BS
+participant ":floorService" as BFS
+participant ":buildingRepository" as BR
+participant ":buildingMapper" as BM
+participant ":floorMapper" as FM
+participant ":buildingDTO" as DTO
+participant ":floorDTO" as DTO2
+participant "f:floor" as B
+participant ":buildingSchema" as BSchema
+participant ":floorSchema" as BSchema2
+
+
+activate UI
+activate API
+UI -> API : .post(/building)
+API -> BC : createFloor(req, res, next)
+activate BC
+BC -> BS : buildingOrError = getBuildingByCode(req.body.buildingCode)
+activate BS
+BS -> BR : findByCode(buildingCode)
+activate BR
+BR -> BSchema : findOne(query)
+activate BSchema
+BSchema --> BR : building
+deactivate BSchema
+BR -> BM : toDomain(building)
+activate BM
+BM --> BR : building
+deactivate BM
+BR --> BS : building
+deactivate BR
+BS -> BM : toDTO(building)
+activate BM
+BM --> BS : buildingDTO
+deactivate BM
+BS --> BC : buildingDTO
+deactivate BS
+BC -> BFS : createFloor(req.body as IFloorDTO)
+activate BFS
+BFS -> B : create(floorDTO)
+activate B
+B --> BFS : floor
+deactivate B
+BFS -> BR : floorCreated = save(floor)
+activate BR
+BR -> FM : toPersistence(floor)
+activate FM
+FM --> BR : persistenceFloor
+deactivate FM
+BR -> BSchema2 : create(persistenceFloor)
+activate BSchema2
+BSchema2 --> BR : persistenceFloor
+deactivate BSchema2
+BR -> FM : toDomain(floorDocument)
+activate FM
+FM --> BR : floor
+deactivate FM
+BR --> BFS : floor
+deactivate BR
+BFS -> BM : toDTO(floor)
+activate BM
+BM --> BFS : floorDTO
+deactivate BM
+BFS --> BC : floorDTO
+deactivate BFS
+BC --> API : floorDTO and status 201
+deactivate BC
+API --> UI : floorDTO and status 201
+
+
+
+@enduml
