@@ -61,5 +61,11 @@ export default () => {
         ctrl.getAll(req, res, next);
     });
 
+    route.get('/', (req, res, next) => {
+        console.log("Getting all Buildings by Floor Range!");
+        ctrl.findByMinMaxFloors(req, res, next);
+    });
+
+
     return route;
 }
