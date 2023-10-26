@@ -6,6 +6,7 @@ import IBuildingController from "./IControllers/IBuildingController";
 import IBuildingDTO from '../dto/IBuildingDTO';
 import {Result} from '../core/logic/Result';
 import {StatusCodes} from "http-status-codes";
+import { min } from 'lodash';
 
 @Service()
 export default class BuildingController implements IBuildingController /* TODO: extends ../core/infra/BaseController */ {
@@ -61,10 +62,14 @@ export default class BuildingController implements IBuildingController /* TODO: 
 
   public async findByMinMaxFloors(req: Request, res: Response, next: NextFunction) {
     try {
-      const {minFloors, maxFloors} = req.body;
+      const range = req.params.range;
+      const splitrange = range.split('-');
+      const minFloors = Number(splitrange[0]);
+      const maxFloors = Number(splitrange[1]);
+
       if(minFloors > maxFloors) return res.status(StatusCodes.BAD_REQUEST).json("minFloors must be less than maxFloors");
 
-      const buildings = await this.buildingServiceInstance.findByMinMaxFloors(req.body.minFloors, req.body.maxFloors);
+      const buildings = await this.buildingServiceInstance.findByMinMaxFloors(minFloors, maxFloors);
 
       if (buildings.isFailure) {
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(buildings.error);
@@ -72,6 +77,7 @@ export default class BuildingController implements IBuildingController /* TODO: 
 
       return res.json(buildings.getValue()).status(StatusCodes.ACCEPTED);
     } catch (e) {
+      console.log('Error in BuildingController.findByMinMaxFloors(): ', e);
       return next(e);
     }
   }
