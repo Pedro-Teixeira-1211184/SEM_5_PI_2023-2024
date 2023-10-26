@@ -92,7 +92,6 @@ export default class BuildingService implements IBuildingService {
   }
 
 
-
   public async findByMinMaxFloors(minFloors: number, maxFloors: number): Promise<Result<IBuildingDTO[]>> {
     try{
       const buildings = await this.buildingRepo.findByMinMaxFloors(minFloors, maxFloors);
@@ -104,6 +103,7 @@ export default class BuildingService implements IBuildingService {
   
 
   } catch (error) {
+    console.log('Error in BuildingService.findByMinMaxFloors(): ', error);
     throw error;
   }
   }

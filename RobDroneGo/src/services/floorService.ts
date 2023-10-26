@@ -50,6 +50,7 @@ export default class FloorService implements IFloorService {
 
       return Result.ok<IFloorDTO[]>(floors)
     } catch (e) {
+      console.log('Error in floorService.findFloorsByBuildingCode', e);
       throw e;
     }
   }

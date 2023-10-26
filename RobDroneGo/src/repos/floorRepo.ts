@@ -74,7 +74,7 @@ export default class FloorRepo implements IFloorRepo {
   public async findFloorsByBuildingCode(buildingCode: string): Promise<IFloorDTO[]> {
     try {
       const query = {floorBuildingCode: buildingCode} as FilterQuery<IFloorPersistence & Document>;
-      const floorRecord = await this.floorSchema.find(query as FilterQuery<IFloorPersistence & Document>);
+      const floorRecord = await this.floorSchema.find(query);
       const floorArray: IFloorDTO[] = [];
 
       if(floorRecord.length == 0){
