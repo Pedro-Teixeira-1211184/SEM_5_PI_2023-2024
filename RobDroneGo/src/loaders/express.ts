@@ -6,6 +6,7 @@ import config from '../../config';
 import User from "../persistence/schemas/userSchema";
 import buildingRoute from "../api/routes/buildingRoute";
 import robotRoute from "../api/routes/robotRoute";
+import passagewayRoute from '../api/routes/passagewayRoute';
 
 export default ({app}: { app: express.Application }) => {
     app.enable('trust proxy');
@@ -26,6 +27,7 @@ export default ({app}: { app: express.Application }) => {
 
     app.use('/buildings', buildingRoute());
     app.use('/robots', robotRoute());
+    app.use('/passageway', passagewayRoute());
 
     app.get('/status', (req, res) => {
         res.status(200).end();

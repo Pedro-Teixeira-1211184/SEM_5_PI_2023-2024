@@ -21,6 +21,11 @@ export default async ({expressApp}) => {
         schema: '../persistence/schemas/roleSchema',
     };
 
+    const passagewaySchema = {
+        name: 'passagewaySchema',
+        schema: '../persistence/schemas/passagewaySchema',
+    };
+
     const buildingSchema = {
         name: 'buildingSchema',
         schema: '../persistence/schemas/buildingSchema',
@@ -61,6 +66,11 @@ export default async ({expressApp}) => {
         path: config.controllers.robot.path
     }
 
+    const passagewayController = {
+        name: config.controllers.passageway.name,
+        path: config.controllers.passageway.path
+    }
+
     const roleRepo = {
         name: config.repos.role.name,
         path: config.repos.role.path
@@ -91,6 +101,11 @@ export default async ({expressApp}) => {
         path: config.repos.robotType.path
     }
 
+    const passagewayRepo = {
+        name: config.repos.passageway.name,
+        path: config.repos.passageway.path
+    }
+
     const roleService = {
         name: config.services.role.name,
         path: config.services.role.path
@@ -111,9 +126,15 @@ export default async ({expressApp}) => {
         path: config.services.robot.path
     }
 
+    const passagewayService = {
+        name: config.services.passageway.name,
+        path: config.services.passageway.path
+    }
+
     await dependencyInjectorLoader({
         mongoConnection,
         schemas: [
+            passagewaySchema,
             userSchema,
             roleSchema,
             buildingSchema,
@@ -122,12 +143,14 @@ export default async ({expressApp}) => {
             robotTypeSchema
         ],
         controllers: [
+            passagewayController,
             roleController,
             buildingController,
             floorController,
             robotController
         ],
         repos: [
+            passagewayRepo,
             roleRepo,
             userRepo,
             buildingRepo,
@@ -136,6 +159,7 @@ export default async ({expressApp}) => {
             robotTypeRepo
         ],
         services: [
+            passagewayService,
             roleService,
             buildingService,
             floorService,

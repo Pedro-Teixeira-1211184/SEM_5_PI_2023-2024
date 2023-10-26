@@ -60,6 +60,10 @@ export default {
         robotType: {
             name: "RobotTypeController",
             path: "../controllers/robotTypeController"
+        },
+        passageway: {
+            name: "PassagewayController",
+            path: "../controllers/passagewayController"
         }
     },
 
@@ -87,6 +91,10 @@ export default {
         robotType: {
             name: "RobotTypeRepo",
             path: "../repos/robotTypeRepo"
+        },
+        passageway: {
+            name: "PassagewayRepo",
+            path: "../repos/passagewayRepo"
         }
     },
 
@@ -106,6 +114,10 @@ export default {
         robot: {
             name: "RobotService",
             path: "../services/robotService"
+        },
+        passageway: {
+            name: "PassagewayService",
+            path: "../services/passagewayService"
         }
     },
 };
