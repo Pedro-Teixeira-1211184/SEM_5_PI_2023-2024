@@ -82,7 +82,7 @@ Para modelar/representar visualmente, tanto o que foi implementado como as ideia
 ### Vista Lógica
 
 ![N2-VL](diagramas/nivel2/N2-VL.png)
-(diagrama a ser atualizado)
+
 
 ### Vista de Processos
 
@@ -111,7 +111,8 @@ De facto, deve-se ter em consideração os requisitos não funcionais ["Physical
 ### Vista Lógica
 
 Vista baseada numa arquitetura por camadas concêntricas (Onion):
-![N3-VL-MDR-alt2](diagramas/nivel3/MDR/N3-VL-MDR-alt2.png)
+
+![N3-VL-MDR-alt2](diagramas/nivel3/N3-VL.png)
 
 ### Vista de Processos
 
