@@ -135,7 +135,6 @@ Room "1" -- "n" Door : has <
 Floor "1" -- "n" Cell : has <
 Room "1" -- "1" CategoryRoom : is of >
 Building "1" -- "n" Elevator : has <
-Building "1" -- "n" Passageway : has <
 Floor "1" -- "n" Elevator : has <
 Floor "1" -- "n" Passageway : has <
 

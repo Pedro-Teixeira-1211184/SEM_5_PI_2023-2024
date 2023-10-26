@@ -67,7 +67,6 @@ Para modelar/representar visualmente, tanto o que foi implementado como as ideia
 ### Vista Lógica
 
 ![N1-VL](diagramas/nivel1/N1-VL.png)
-(diagrama a ser atualizado)
 
 ### Vista de Processos
 
