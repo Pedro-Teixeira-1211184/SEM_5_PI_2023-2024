@@ -96,27 +96,22 @@ Para modelar/representar visualmente, tanto o que foi implementado como as ideia
 
 ### Vista de Implementação
 ![N2-VL](diagramas/nivel2/N2-VI.png)
-(diagrama a ser atualizado)
+
 
 ### Vista Física
 
 Uma proposta muito simplificada. 
 ![N2-VL](diagramas/nivel2/N2-VF.png)
-(diagrama a ser atualizado)
 
 
 De facto, deve-se ter em consideração os requisitos não funcionais ["Physical Contraints"](Background.md#Physical_Constraints).
 
 ## Nível 3 (RobDroneGo)
-(Nota: trocar MDR por RobDroneGo, a ideia dos diagramas é a mesma)
+
 ### Vista Lógica
-Alternativa baseada numa arquitetura por camadas sobrepostas:
-![N3-VL-MDR-alt1](diagramas/nivel3/MDR/N3-VL-MDR-alt1.png)
 
-Alternativa baseada numa arquitetura por camadas concêntricas (Onion):
+Vista baseada numa arquitetura por camadas concêntricas (Onion):
 ![N3-VL-MDR-alt2](diagramas/nivel3/MDR/N3-VL-MDR-alt2.png)
-
-A alternativa Onion será a adotada.
 
 ### Vista de Processos
 
@@ -129,17 +124,14 @@ A alternativa Onion será a adotada.
 [...]
 
 ### Vista de Implementação
-![N3-VI-MDR-alt2](diagramas/nivel3/MDR/N3-VI-MDR-alt2.png)
-
-Alguns detalhes mais (se existissem pais do que 4 níveis, podia ser considerado nível 4):
-
-![N3.1-VI-MDR-alt2](diagramas/nivel3/MDR/N3.1-VI-MDR-alt2.png)
+![N3-VI-MDR-alt2](diagramas/nivel3/N3-VI.png)
 
 ### Vista Física
 
 Por agora, não existe necessidade de ser representada.
 
 ## Nível 3 (UI)
+Ainda não implementada neste sprint.
 ### Vista Lógica
 TBD
 

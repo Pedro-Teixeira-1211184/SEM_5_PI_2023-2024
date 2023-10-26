@@ -74,7 +74,7 @@ export default class FloorRepo implements IFloorRepo {
   public async findFloorsByBuildingCode(buildingCode: string): Promise<IFloorDTO[]> {
     try {
       const query = {floorBuildingCode: buildingCode} as FilterQuery<IFloorPersistence & Document>;
-      const floorRecord = await this.floorSchema.find(query as FilterQuery<IFloorPersistence & Document>);
+      const floorRecord = await this.floorSchema.find(query);
       const floorArray: IFloorDTO[] = [];
 
       if(floorRecord.length == 0){
@@ -92,6 +92,21 @@ export default class FloorRepo implements IFloorRepo {
     }
   }
 
+  public async update(buildingCode: string, floorNumber: number, updatedFields: Partial<IFloorDTO>): Promise<Floor | null> {
+    try {
+      const query: FilterQuery<IFloorPersistence> = {floorBuildingCode: buildingCode, floorNumber: floorNumber};
+      const find = await this.floorSchema.findOne(query as FilterQuery<IFloorPersistence & Document>);
+      const floor = FloorMapper.toDomain(find);
+      floor.buildingCode = updatedFields.buildingCode;
+      floor.number = updatedFields.number;
+      floor.description = updatedFields.description;
+      const rawFloor = FloorMapper.toPersistence(floor);
+      await this.floorSchema.replaceOne(query as FilterQuery<IFloorPersistence & Document>, rawFloor);
+      return floor;
+    } catch (error) {
+      throw error;
+    }
+  }
 
 
 }

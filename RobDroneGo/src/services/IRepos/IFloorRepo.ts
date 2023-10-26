@@ -9,4 +9,5 @@ export default interface IFloorRepo extends Repo<Floor> {
   delete(floor: Floor): Promise<void>;
   exists(floor: Floor): Promise<boolean>;
   findFloorsByBuildingCode(buildingCode: string): Promise<IFloorDTO[]>;
+  update(buildingCode: string, floorNumber: number, updatedFields: Partial<IFloorDTO>): Promise<Floor | null>;
 }

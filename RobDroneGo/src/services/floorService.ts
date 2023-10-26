@@ -50,9 +50,25 @@ export default class FloorService implements IFloorService {
 
       return Result.ok<IFloorDTO[]>(floors)
     } catch (e) {
+      console.log('Error in floorService.findFloorsByBuildingCode', e);
       throw e;
     }
   }
 
+  public async updateFloor(floorDTO: IFloorDTO): Promise<Result<IFloorDTO>> {
+    try {
+      const updatedFloor = await this.floorRepo.update(floorDTO.buildingCode, floorDTO.number, floorDTO);
+      if (updatedFloor == null) {
+        console.log('Floor not found');
+        return Result.fail<IFloorDTO>('Floor not found');
+      }
+
+      const updatedFloorDTO = FloorMapper.toDTO(updatedFloor);
+
+      return Result.ok<IFloorDTO>(updatedFloorDTO);
+    } catch (e) {
+      throw e;
+    }
+  }
 
 }

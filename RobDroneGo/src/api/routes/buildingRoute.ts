@@ -61,16 +61,16 @@ export default () => {
         ctrl.getAll(req, res, next);
     });
 
-    route.get('/', (req, res, next) => {
+    route.get('/buildingsByFloorRange/:range', (req, res, next) => {
         console.log("Getting all Buildings by Floor Range!");
         ctrl.findByMinMaxFloors(req, res, next);
     });
 
 
-    /*route.get('/floor/:buildingCode', (req, res, next) => {
+    route.get('/floor/:buildingCode', (req, res, next) => {
         console.log("Getting all Floors by Building Code!");
-        ctrl.findFloorsByBuildingCode(req, res, next);
-    });*/
+        floorCtrl.findFloorsByBuildingCode(req, res, next);
+    });
 
     return route;
 }
