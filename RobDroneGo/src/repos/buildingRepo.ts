@@ -65,7 +65,7 @@ export default class BuildingRepo implements IBuildingRepo {
   public async exists(building: Building): Promise<boolean> {
     try {
       //determines if the building exists by its unique name
-      const query = {buildingName: building.name.toString()};
+      const query = {buildingCode: building.code.toString()};
       const buildingDocument = await this.buildingSchema.findOne(query as FilterQuery<IBuildingPersistence & Document>);
       return buildingDocument == null;
     } catch (error) {
