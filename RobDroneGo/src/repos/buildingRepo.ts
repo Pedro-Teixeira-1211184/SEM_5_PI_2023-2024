@@ -126,9 +126,10 @@ export default class BuildingRepo implements IBuildingRepo {
   }
 
   public async findByMinMaxFloors(minFloors: number, maxFloors: number): Promise<IBuildingDTO[]> {
-  
+
   try{
-    const query = {minFloors: minFloors, maxFloors: maxFloors} as FilterQuery<IBuildingPersistence & Document>;
+    //building with min floors higher than the minFloors and max floors lower than the maxFloors
+    const query = {buildingMinFloors: {$gte: minFloors}, buildingMaxFloors: {$lte: maxFloors}} as FilterQuery<IBuildingPersistence & Document>;
     const buildingRecord = await this.buildingSchema.find(query);
     const buildingArray: IBuildingDTO[] = [];
 
