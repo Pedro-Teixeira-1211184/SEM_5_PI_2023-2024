@@ -86,7 +86,7 @@ entity Room <root> {
     class "id" as ID11 <<(v,#FF7700) identity>> <<(v,#FF7700) value object>>{}
     class "designation" as designation4 <<(v,#FF7700) value object>>{}
     class "name" as name3 <<(v,#FF7700) value object>>{}
-    class "dimensions" as dimensions3 <<(v,#FF7700) value object>>{}
+    class "localization" as localization1 <<(v,#FF7700) value object>>{}
 }
 
 package Wall {
@@ -180,7 +180,7 @@ Elevator --> coordenates3
 Room --> ID11
 Room --> designation4
 Room --> name3
-Room --> dimensions3
+Room --> localization1
 
 Wall --> ID12
 Wall --> orientation1

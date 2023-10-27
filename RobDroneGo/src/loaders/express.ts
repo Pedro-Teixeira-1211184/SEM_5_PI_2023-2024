@@ -3,10 +3,10 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import routes from '../api';
 import config from '../../config';
-import User from "../persistence/schemas/userSchema";
 import buildingRoute from "../api/routes/buildingRoute";
 import robotRoute from "../api/routes/robotRoute";
 import passagewayRoute from '../api/routes/passagewayRoute';
+import roomRoute from '../api/routes/roomRoute';
 
 export default ({app}: { app: express.Application }) => {
     app.enable('trust proxy');
@@ -28,6 +28,7 @@ export default ({app}: { app: express.Application }) => {
     app.use('/buildings', buildingRoute());
     app.use('/robots', robotRoute());
     app.use('/passageways', passagewayRoute());
+    app.use('/rooms', roomRoute());
 
     app.get('/status', (req, res) => {
         res.status(200).end();
