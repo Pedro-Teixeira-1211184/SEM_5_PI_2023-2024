@@ -4,6 +4,7 @@ import {celebrate, Joi} from 'celebrate';
 import {Container} from 'typedi';
 import IBuildingController from '../../controllers/IControllers/IBuildingController';
 import IFloorController from '../../controllers/IControllers/IFloorController';
+import IElevatorController from '../../controllers/IControllers/IElevatorController';
 
 import config from "../../../config";
 
@@ -13,6 +14,7 @@ export default () => {
 
     const ctrl = Container.get(config.controllers.building.name) as IBuildingController;
     const floorCtrl = Container.get(config.controllers.floor.name) as IFloorController;
+    const elevatorCtrl = Container.get(config.controllers.elevator.name) as IElevatorController;
 
     route.post('/', celebrate({
         body: Joi.object({
@@ -67,10 +69,23 @@ export default () => {
     });
 
 
-    route.get('/floor/:buildingCode', (req, res, next) => {
+    route.get('/floorsbyBuildingCode/:buildingCode', (req, res, next) => {
         console.log("Getting all Floors by Building Code!");
         floorCtrl.findFloorsByBuildingCode(req, res, next);
     });
 
+
+    route.post('/elevators', celebrate({ 
+        body: Joi.object({
+            buildingCode: Joi.string().required().max(5).error(new Error('Invalid building code')),
+            floorNumbers: Joi.string().required().error(new Error('Invalid floor number')),
+            coordenates: Joi.string().required().error(new Error('Invalid coordenates')),
+        })
+    }), (req, res, next) => {
+        console.log("Creating a Elevator!");
+        elevatorCtrl.createElevator(req, res, next);
+    }
+    );   
+   
     return route;
 }

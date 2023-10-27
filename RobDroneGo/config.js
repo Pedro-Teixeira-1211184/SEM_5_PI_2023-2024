@@ -64,7 +64,11 @@ export default {
         passageway: {
             name: "PassagewayController",
             path: "../controllers/passagewayController"
-        }
+        },
+        elevator: {
+            name: "ElevatorController",
+            path: "../controllers/elevatorController"
+        },
     },
 
     repos: {
@@ -95,7 +99,11 @@ export default {
         passageway: {
             name: "PassagewayRepo",
             path: "../repos/passagewayRepo"
-        }
+        },
+        elevator: {
+            name: "ElevatorRepo",
+            path: "../repos/elevatorRepo"
+        },
     },
 
     services: {
@@ -118,6 +126,10 @@ export default {
         passageway: {
             name: "PassagewayService",
             path: "../services/passagewayService"
-        }
+        },
+        elevator: {
+            name: "ElevatorService",
+            path: "../services/elevatorService"
+        },
     },
 };

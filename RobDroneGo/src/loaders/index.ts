@@ -46,6 +46,11 @@ export default async ({expressApp}) => {
         schema: '../persistence/schemas/robotTypeSchema',
     }
 
+    const elevatorSchema = {
+        name: 'elevatorSchema',
+        schema: '../persistence/schemas/elevatorSchema',
+    }
+
     const roleController = {
         name: config.controllers.role.name,
         path: config.controllers.role.path
@@ -69,6 +74,11 @@ export default async ({expressApp}) => {
     const passagewayController = {
         name: config.controllers.passageway.name,
         path: config.controllers.passageway.path
+    }
+
+    const elevatorController = {
+        name: config.controllers.elevator.name,
+        path: config.controllers.elevator.path
     }
 
     const roleRepo = {
@@ -106,6 +116,11 @@ export default async ({expressApp}) => {
         path: config.repos.passageway.path
     }
 
+    const elevatorRepo = {
+        name: config.repos.elevator.name,
+        path: config.repos.elevator.path
+    }
+
     const roleService = {
         name: config.services.role.name,
         path: config.services.role.path
@@ -131,6 +146,11 @@ export default async ({expressApp}) => {
         path: config.services.passageway.path
     }
 
+    const elevatorService = {
+        name: config.services.elevator.name,
+        path: config.services.elevator.path
+    }
+
     await dependencyInjectorLoader({
         mongoConnection,
         schemas: [
@@ -140,14 +160,16 @@ export default async ({expressApp}) => {
             buildingSchema,
             floorSchema,
             robotSchema,
-            robotTypeSchema
+            robotTypeSchema,
+            elevatorSchema
         ],
         controllers: [
             passagewayController,
             roleController,
             buildingController,
             floorController,
-            robotController
+            robotController,
+            elevatorController
         ],
         repos: [
             passagewayRepo,
@@ -156,14 +178,16 @@ export default async ({expressApp}) => {
             buildingRepo,
             floorRepo,
             robotRepo,
-            robotTypeRepo
+            robotTypeRepo,
+            elevatorRepo
         ],
         services: [
             passagewayService,
             roleService,
             buildingService,
             floorService,
-            robotService
+            robotService,
+            elevatorService
         ]
     });
     Logger.info('✌️ Schemas, Controllers, Repositories, Services, etc. loaded');
