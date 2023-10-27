@@ -9,3 +9,5 @@
 [UML-2020] "UML - Unified Modeling Language"; [Online]. Available: http://uml.org. [Accessed 2020-12-06].
 
 [UMLDiagrams-2020] "The Unified Modeling Language"; [Online]. Available: https://www.uml-diagrams.org. [Accessed 2020-12-06].
+
+[Tapas Pal-2018] "Understanding Onion Architecture"; [Online]. Available: https://www.codeguru.com/csharp/understanding-onion-architecture/. [Accessed 2023-10-27]

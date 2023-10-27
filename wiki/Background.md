@@ -21,13 +21,29 @@
 		- [Mapping Requirements to Architecture](#mapping-requirements-to-architecture)
 
 # Architecture Background
->Architecture Background provides information about the software architecture, by:
->- describing the background and rationale for the software architecture;
->- explaining the constraints and influences that led to the current architecture;
->- describing the major architectural approaches that have been utilized in the architecture.
+>The Software Architecture for the RobDroneGo system  is designed as a prototype to address three 
+different modules: 
+>1. Device Management
+>2. Task Request Management
+>3. Planning and Execution of a Task
+>
+>To implement the modules referred to above, this system follows the Onion Architecture, as requested.
+>The chosen architecture ensures that the system follows the rationale, which includes:
+>* Scalability: the system must be able to support growth.
+>* Maintainability: maintenance must be simplified to ensure that ongoing operations and features aren't compromised
+>
+>Since the Onion Architecture pattern has been chosen for this system, the developed application is separated
+into 4 fundamental concentric layers:
+> * Core Domain Layer: represents the business and behavior objects. It holds all application domain objects.
+> * Repository Layer: consists of the data access pattern by typically adding interfaces that communicate with the 
+database providing object saving and retrieving behaviour.
+> * Services Layer: used to communicate between repository and UI layers.
+> * UI Layer: keeps peripheral concerns like UI and tests, it has not been implemented as for the first sprint of the project.
+
   
 ## Problem Background
 >The sub-parts of this section explain the constraints that provided the significant influence over the architecture.
+>
 
 ### System Overview
 > This section describes the general function and purpose for the system or subsystem whose architecture is described in this SAD.
