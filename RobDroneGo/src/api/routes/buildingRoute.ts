@@ -69,13 +69,13 @@ export default () => {
     });
 
 
-    route.get('/floorsbyBuildingCode/:buildingCode', (req, res, next) => {
+    route.get('/floors/:buildingCode', (req, res, next) => {
         console.log("Getting all Floors by Building Code!");
         floorCtrl.findFloorsByBuildingCode(req, res, next);
     });
 
 
-    route.post('/elevators', celebrate({ 
+    route.post('/elevators', celebrate({
         body: Joi.object({
             buildingCode: Joi.string().required().max(5).error(new Error('Invalid building code')),
             floorNumbers: Joi.string().required().error(new Error('Invalid floor number')),
@@ -85,7 +85,7 @@ export default () => {
         console.log("Creating a Elevator!");
         elevatorCtrl.createElevator(req, res, next);
     }
-    );   
-   
+    );
+
     return route;
 }
