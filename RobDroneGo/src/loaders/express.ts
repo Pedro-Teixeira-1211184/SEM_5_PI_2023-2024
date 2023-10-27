@@ -27,7 +27,7 @@ export default ({app}: { app: express.Application }) => {
 
     app.use('/buildings', buildingRoute());
     app.use('/robots', robotRoute());
-    app.use('/passageway', passagewayRoute());
+    app.use('/passageways', passagewayRoute());
 
     app.get('/status', (req, res) => {
         res.status(200).end();

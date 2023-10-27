@@ -17,6 +17,7 @@ export default class PassagewayController implements IPassagewayController /* TO
 
   public async createPassageway(req: Request, res: Response, next: NextFunction) {
     try {
+
       const passagewayOrError = await this.passagewayServiceInstance.createPassageway(req.body as IPassagewayDTO) as Result<IPassagewayDTO>;
 
       if (passagewayOrError.isFailure) {
@@ -25,8 +26,9 @@ export default class PassagewayController implements IPassagewayController /* TO
 
       const passagewayDTO = passagewayOrError.getValue();
       return res.json(passagewayDTO).status(StatusCodes.ACCEPTED);
+      
     } catch (e) {
       return next(e);
     }
   };
-} 
+}

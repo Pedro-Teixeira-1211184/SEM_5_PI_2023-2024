@@ -40,8 +40,8 @@ export class PassagewayMapper extends Mapper<Passageway> {
   public static toPersistence(passageway: Passageway): any {
     return {
       passagewayID: passageway.id.toString(),
-      passagewayfloorID1: passageway.floorID1,
-      passagewayfloorID2: passageway.floorID2,
+      passagewayFloorID1: passageway.floorID1,
+      passagewayFloorID2: passageway.floorID2,
       passagewayLocalization1: passageway.localization1,
       passagewayLocalization2: passageway.localization2
     }
