@@ -9,7 +9,7 @@ import IPassagewayDTO from "../dto/IPassagewayDTO";
 interface PassagewayProps {
     floorID1: string;
     floorID2: string;
-    localization1: string; 
+    localization1: string;
     localization2: string;
 }
 
@@ -34,8 +34,8 @@ export class Passageway extends AggregateRoot<PassagewayProps> {
         return this.props.localization1;
     }
 
-    set localization2(value: string) {
-        this.props.localization2 = value;
+    get localization2(): string {
+        return this.props.localization2;
     }
 
     private constructor(props: PassagewayProps, id?: UniqueEntityID) {
@@ -47,7 +47,7 @@ export class Passageway extends AggregateRoot<PassagewayProps> {
         const floorID2 = passagewayDTO.floorID2;
         const localization1 = passagewayDTO.localization1;
         const localization2 = passagewayDTO.localization2;
-    
+
         const passageway = new Passageway({
           floorID1: floorID1,
           floorID2: floorID2,
@@ -56,5 +56,5 @@ export class Passageway extends AggregateRoot<PassagewayProps> {
         }, id);
         return Result.ok<Passageway>(passageway);
       }
-    
+
 }

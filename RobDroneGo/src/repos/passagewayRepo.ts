@@ -30,9 +30,9 @@ export default class PassagewayRepo implements IPassagewayRepo {
 
         const rawPassageway: any = PassagewayMapper.toPersistence(passageway);
 
-        const PassagewayCreated = await this.passagewaySchema.create(rawPassageway);
+        const passagewayCreated = await this.passagewaySchema.create(rawPassageway);
 
-        return PassagewayMapper.toDomain(PassagewayCreated);
+        return PassagewayMapper.toDomain(passagewayCreated);
       } else {
         console.log('Passageway already exists');
         return null;
@@ -44,8 +44,8 @@ export default class PassagewayRepo implements IPassagewayRepo {
 
 public async exists(passageway: Passageway): Promise<boolean> {
     try {
-      //determines if the Passageway exists by its unique id
-      const query = {_id: passageway.id.toString()};
+      //determines if the Passageway exists by their floorID1 and floorID2
+      const query = {passagewayFloorID1: passageway.floorID1, passagewayFloorID2: passageway.floorID2};
       const PassagewayDocument = await this.passagewaySchema.findOne(query as FilterQuery<IPassagewayPersistence & Document>);
       return PassagewayDocument == null;
     } catch (error) {

@@ -26,7 +26,7 @@ export default class PassagewayController implements IPassagewayController /* TO
 
       const passagewayDTO = passagewayOrError.getValue();
       return res.json(passagewayDTO).status(StatusCodes.ACCEPTED);
-      
+
     } catch (e) {
       return next(e);
     }
