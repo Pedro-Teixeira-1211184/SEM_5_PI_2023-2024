@@ -29,13 +29,6 @@ export default class ElevatorController implements IElevatorController /* TODO: 
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(buildingOrError.errorValue());
       }
 
-      /*const requestedFloors = req.body.floorNumbers.split(",");
-      const floorOrError = await this.floorServiceInstance.findFloorsByBuildingCode(req.body.buildingCode) as Result<IFloorDTO[]>;
-      const floorNumbers = floorOrError.getValue().map(floor => floor.number.toString());
-      if (floorOrError.getValue().length == 0 || requestedFloors.contains(floorNumbers)){
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send("Invalid floor numbers");
-      }*/
-
       const elevatorOrError = await this.elevatorServiceInstance.createElevator(req.body as IElevatorDTO) as Result<IElevatorDTO>;
 
       if (elevatorOrError.isFailure) {

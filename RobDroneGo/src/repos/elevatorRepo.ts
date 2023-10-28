@@ -25,7 +25,7 @@ export default class ElevatorRepo implements IElevatorRepo {
 
   public async exists(elevator: Elevator): Promise<boolean> { //TODO: check if exists by buildingCode and floorNumbers
     try {
-      const query = {elevatorID: elevator.id.toString()};
+      const query = {buildingCode: elevator.buildingCode};
       const elevatorRecord = await this.elevatorSchema.findOne(query as FilterQuery<IElevatorPersistence & Document>);
       return elevatorRecord == null;
     } catch (error) {
