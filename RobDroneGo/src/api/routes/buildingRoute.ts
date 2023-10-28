@@ -74,6 +74,16 @@ export default () => {
         floorCtrl.findFloorsByBuildingCode(req, res, next);
     });
 
+    route.put('/floors', celebrate({
+        body: Joi.object({
+            buildingCode: Joi.string().required().max(5).error(new Error('Invalid building code')),
+            number: Joi.number().required().error(new Error('Invalid floor number')),
+            description: Joi.string().max(255).allow('').allow(null).error(new Error('Invalid floor description'))
+        })
+    }), (req, res, next) => {
+        console.log("Updating a Floor!");
+        floorCtrl.updateFloor(req, res, next);
+    });
 
     route.post('/elevators', celebrate({
         body: Joi.object({
