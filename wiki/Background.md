@@ -46,15 +46,39 @@ database providing object saving and retrieving behaviour.
 >
 
 ### System Overview
-> This section describes the general function and purpose for the system or subsystem whose architecture is described in this SAD.
-
-(To be completed)
-
+> RobDroneGo consists of a robot and drone task monitoring system, developed as the prototype which could evolve to 
+support various users requesting different tasks for the devices, such as:
+> 1. Object delivery
+> 2. Hallways and campus video vigilance
+> 3. Hallway cleaning
+> 4. Window cleaning
+>
+> The system is prepared to support users with different roles:
+>* System Administrator - manages users and respective permissions
+>* Fleet manager - manages robots and drone data and task types
+>* Campus manager - manages path and map data
+>* User (student, teacher, employee) - asks for task execution
 
 ### Context
-> This section describes the goals and major contextual factors for the software architecture. The section includes a description of the role software architecture plays in the life cycle, the relationship to system engineering results and artifacts, and any other relevant factors.
-
-(To be completed)
+> The architecture used for the development of the system provides the possibility to work in different modules without 
+affecting directly the already functional/existent ones. 
+> It is also important for the creation of diagrams of level 1, 2 and 3.
+> 
+> The isolation of layers and how they can communicate with each other without compromising either helps with system scalability
+and maintainability:
+> 
+> Maintainability: 
+> 
+> * **Clean separation** between the core business logic and the infrastructure
+> * **Testability** is easily automated
+> * Easily **Adapted** due to the low coupling between classes
+> * Easily **Maintained and Understood** code by following the right principles for coding and designing 
+>
+> Scalability:
+> 
+> * **Modular structure** - each layer has a specific purpose
+> * **Isolation of concerns** - changes made within outer layers do not compromise the core domain layer
+> * **Dependency Inversion** - the application service behaviour is controlled by the upper layers
 
 ### Driving Requirements
 > This section lists the functional requirements, quality attributes and design constraints. It may point to a separate requirements document.
@@ -106,8 +130,11 @@ n/a
 
 ### Architectural Approaches
 > This section provides a rationale for the major design decisions embodied by the software architecture. It describes any design approaches applied to the software architecture, including the use of architectural styles or design patterns, when the scope of those approaches transcends any single architectural view. The section also provides a rationale for the selection of those approaches. It also describes any significant alternatives that were seriously considered and why they were ultimately rejected. The section describes any relevant COTS issues, including any associated trade studies.
+> * Core Domain Layer: 
+> * Repository Layer: 
+> * Services Layer: 
+> * UI Layer: not applied for the first sprint.
 
-(To be completed)
 
 ### Analysis Results
 > This section describes the results of any quantitative or qualitative analyses that have been performed that provide evidence that the software architecture is fit for purpose. If an Architecture Tradeoff Analysis Method evaluation has been performed, it is included in the analysis sections of its final report. This section refers to the results of any other relevant trade studies, quantitative modeling, or other analysis results.
