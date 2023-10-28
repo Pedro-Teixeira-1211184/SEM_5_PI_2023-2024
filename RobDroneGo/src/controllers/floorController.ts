@@ -59,6 +59,22 @@ export default class FloorController implements IFloorController /* TODO: extend
         }
     }
 
+    public async findFloorsByPassageways(req: Request, res: Response, next: NextFunction) {
+        try {
+            const floorOrError = await this.floorServiceInstance.findFloorsByBuildingCode(req.params.buildingCode) as Result<IFloorDTO[]>;
+            if (floorOrError.isFailure) {
+                return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(floorOrError.errorValue());
+            }
+            const floorResult = floorOrError.getValue();
+            const passagewaysInFloors = await this.floorServiceInstance.findFloorsByPassageways(floorResult);
+            const floorsResult = passagewaysInFloors.getValue();
+            return res.status(StatusCodes.OK).json(floorsResult);
+        } catch (e) {
+            return next(e);
+        }
+    }
+
+
     public async updateFloor(req: Request, res: Response, next: NextFunction) {
     try{
         const floorOrError = await this.floorServiceInstance.updateFloor(req.body as IFloorDTO) as Result<IFloorDTO>;
