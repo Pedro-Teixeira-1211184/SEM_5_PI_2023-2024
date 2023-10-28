@@ -1,0 +1,78 @@
+@startuml
+
+autonumber
+participant "RobDroneGo UI" as UI
+participant "RobDroneGo" as API
+participant ":elevatorController" as EC
+participant ":buildingService" as BS
+participant ":elevatorService" as ES
+participant ":buildingRepository" as BR
+participant ":buildingMapper" as BM
+participant ":elevatorMapper" as EM
+participant ":buildingDTO" as DTO
+participant ":elevatorDTO" as EDTO
+participant "e:elevator" as E
+participant ":buildingSchema" as BSchema
+participant ":elevatorSchema" as ESchema
+
+
+activate UI
+activate API
+UI -> API : .post(/building/elevators)
+API -> EC : createElevator(req, res, next)
+activate EC
+EC -> BS : buildingOrError = getBuildingByCode(req.body.buildingCode)
+activate BS
+BS -> BR : findByCode(buildingCode)
+activate BR
+BR -> BSchema : findOne(query)
+activate BSchema
+BSchema --> BR : building
+deactivate BSchema
+BR -> BM : toDomain(building)
+activate BM
+BM --> BR : building
+deactivate BM
+BR --> BS : building
+deactivate BR
+BS -> BM : toDTO(building)
+activate BM
+BM --> BS : buildingDTO
+deactivate BM
+BS --> EC : buildingDTO
+deactivate BS
+EC -> ES : createElevator(req.body as IElevatorDTO)
+activate ES
+ES -> E : create(elevatorDTO)
+activate E
+E --> ES : elevator
+deactivate E
+ES -> BR : elevatorCreated = save(elevator)
+activate BR
+BR -> EM : toPersistence(elevator)
+activate EM
+EM --> BR : persistenceelevator
+deactivate EM
+BR -> ESchema : create(persistenceElevator)
+activate ESchema
+ESchema --> BR : persistenceElevator
+deactivate ESchema
+BR -> EM : toDomain(elevatorDocument)
+activate EM
+EM --> BR : elevator
+deactivate EM
+BR --> ES : elevator
+deactivate BR
+ES -> BM : toDTO(elevator)
+activate EM
+EM --> ES : elevatorDTO
+deactivate EM
+ES --> EC : elevatorDTO
+deactivate ES
+EC --> API : elevatorDTO and status 201
+deactivate EC
+API --> UI : elevatorDTO and status 201
+
+
+
+@enduml
