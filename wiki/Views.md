@@ -75,6 +75,7 @@ To visually model/represent both what has been implemented and the ideas and alt
 **[SSD US190](diagramas/nivel1/UC190.md)**
 **[SSD US200](diagramas/nivel1/UC200.md)**
 **[SSD US210](diagramas/nivel1/UC210.md)**
+**[SSD US230](diagramas/nivel1/UC230.md)**
 **[SSD US240](diagramas/nivel1/UC240.md)**
 **[SSD US270](diagramas/nivel1/UC270.md)**
 **[SSD US350](diagramas/nivel1/UC350.md)**
@@ -99,6 +100,7 @@ To visually model/represent both what has been implemented and the ideas and alt
 **[SSD US190](diagramas/nivel2/UC190.md)**
 **[SSD US200](diagramas/nivel2/UC200.md)**
 **[SSD US210](diagramas/nivel2/UC210.md)**
+**[SSD US230](diagramas/nivel2/UC230.md)**
 **[SSD US240](diagramas/nivel2/UC240.md)**
 **[SSD US270](diagramas/nivel2/UC270.md)**
 **[SSD US350](diagramas/nivel2/UC350.md)**
