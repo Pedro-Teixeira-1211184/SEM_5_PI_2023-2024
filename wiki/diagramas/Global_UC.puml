@@ -1,0 +1,46 @@
+@startuml
+
+ actor "Fleet Manager" as FManager
+ actor "Campus Manager" as CManager
+
+usecase UC150 as "Create Building"
+usecase UC160 as "Edit a Building"
+usecase UC170 as "List all Buildings"
+usecase UC180 as "List buildings with min and max floors"
+usecase UC190 as "Create floor of a building"
+usecase UC200 as "Edit information of a building's floor"
+usecase UC210 as "List all floors of a building"
+usecase UC220 as "List a building's floor with passageways to other buildings"
+usecase UC230 as "Load as floor's map"
+usecase UC240 as "Create passageway between buildings"
+usecase UC250 as "Edit a passageway between buildings"
+usecase UC260 as "List passageways between two buildings"
+usecase UC270 as "Create an elevator in a building"
+usecase UC310 as "Create a building's floor's room"
+usecase UC350 as "Create a new type of robot"
+usecase UC360 as "Create a new robot"
+usecase UC370 as "Inhibit a Robot"
+
+left to right direction
+ FManager --> UC150
+ FManager --> UC160
+ FManager --> UC170
+ FManager --> UC180
+ FManager --> UC190
+ FManager --> UC200
+ FManager --> UC210
+ FManager --> UC220
+ FManager --> UC230
+ FManager --> UC240
+ FManager --> UC250
+ FManager --> UC260
+ FManager --> UC270
+ FManager --> UC310
+
+ CManager --> UC350
+ CManager --> UC360
+ CManager --> UC370
+
+
+
+@enduml

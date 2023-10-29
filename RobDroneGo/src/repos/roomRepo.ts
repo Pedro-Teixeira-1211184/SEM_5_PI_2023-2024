@@ -71,4 +71,14 @@ export default class RoomRepo implements IRoomRepo {
       throw error;
     }
   }
+
+  public async findByName(roomName: string): Promise<Room> {
+    const query = {roomName: roomName};
+    const roomRecord = await this.roomSchema.findOne(query as FilterQuery<IRoomPersistence & Document>);
+    if (roomRecord == null) {
+      return null;
+    } else {
+      return RoomMapper.toDomain(roomRecord);
+    }
+  }
 }

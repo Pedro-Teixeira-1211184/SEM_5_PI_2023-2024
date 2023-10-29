@@ -9,6 +9,7 @@ import {IPassagewayPersistence} from "../dataschema/IPassagewayPersistence";
 import IFloorDTO from '../dto/IFloorDTO';
 
 
+
 @Service()
 export default class PassagewayRepo implements IPassagewayRepo {
 
@@ -129,7 +130,7 @@ public async exists(passageway: Passageway): Promise<boolean> {
       if (findpassageway == null){
         console.log('Passageway not found');
         return null;
-      } 
+      }
       const passageway = PassagewayMapper.toDomain(findpassageway);
       passageway.floorID1 = updatedFields.floorID1;
       passageway.floorID2 = updatedFields.floorID2;
@@ -138,6 +139,28 @@ public async exists(passageway: Passageway): Promise<boolean> {
       const rawPassageway = PassagewayMapper.toPersistence(passageway);
       await this.passagewaySchema.replaceOne(query as FilterQuery<IPassagewayPersistence & Document>, rawPassageway);
       return passageway;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async findPassagewayByFloorID1AndFloorID2(floorID1: string): Promise<Passageway[]> {
+    try {
+      const query: FilterQuery<IPassagewayPersistence> = {
+        $or: [{
+          passagewayFloorID1: floorID1,
+        }, {passagewayFloorID2: floorID1}]
+      } as FilterQuery<IPassagewayPersistence & Document>;
+      const passagewayDocument = await this.passagewaySchema.find(query as FilterQuery<IPassagewayPersistence & Document>);
+      const passagewayArray: Passageway[] = [];
+      if (passagewayDocument == null) {
+        return [];
+      } else {
+        for (let i = 0; i < passagewayDocument.length; i++) {
+          passagewayArray[i] = PassagewayMapper.toDomain(passagewayDocument[i]);
+        }
+        return passagewayArray;
+      }
     } catch (error) {
       throw error;
     }

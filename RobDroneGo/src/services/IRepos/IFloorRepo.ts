@@ -9,8 +9,10 @@ export default interface IFloorRepo extends Repo<Floor> {
   findByDomainId(floorId: string): Promise<Floor>;
   delete(floor: Floor): Promise<void>;
   exists(floor: Floor): Promise<boolean>;
+  existsByBCodeAndNumber(buildingCode: string, floorNumber: number): Promise<boolean>;
   findFloorsByBuildingCode(buildingCode: string): Promise<IFloorDTO[]>;
+  findByBCodeAndNumber(buildingCode: string,  number: number): Promise<Floor>;
   /*findFloorsByPassageways(floorArray: IFloorDTO[]): Promise<IFloorDTO[]>;*/
   /*findWherePassagewaysLeads(passageway: IFloorDTO[]): Promise<string[]>;*/
-  update(buildingCode: string, floorNumber: number, updatedFields: Partial<IFloorDTO>): Promise<Floor | null>;
+  update(buildingCode: string, number: number, updatedFields: Partial<IFloorDTO>): Promise<Floor | null>;
 }

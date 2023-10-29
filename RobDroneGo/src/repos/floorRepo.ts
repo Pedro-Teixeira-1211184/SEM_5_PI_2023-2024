@@ -8,8 +8,6 @@ import {Floor} from "../domain/floor";
 import {IBuildingPersistence} from "../dataschema/IBuildingPersistence";
 import IFloorDTO from '../dto/IFloorDTO';
 import {IPassagewayPersistence} from '../dataschema/IPassagewayPersistence';
-import {BuildingMapper} from "../mappers/BuildingMapper";
-import {floor} from "lodash";
 
 
 
@@ -40,7 +38,7 @@ export default class FloorRepo implements IFloorRepo {
     try {
       //determines if the floor exists in the database by his number and buildingCode
       const query = {floorNumber: floor.number, floorBuildingCode: floor.buildingCode};
-      const floorDocument = await this.floorSchema.findOne(query as FilterQuery<IBuildingPersistence & Document>);
+      const floorDocument = await this.floorSchema.findOne(query as FilterQuery<IFloorPersistence & Document>);
       return floorDocument == null;
     } catch (error) {
       throw error;
@@ -50,7 +48,7 @@ export default class FloorRepo implements IFloorRepo {
   public async findByDomainId(floorId: string): Promise<Floor> {
     try {
       const query = {floorID: floorId};
-      const floorRecord = await this.floorSchema.findOne(query as FilterQuery<IBuildingPersistence & Document>);
+      const floorRecord = await this.floorSchema.findOne(query as FilterQuery<IFloorPersistence & Document>);
       if (floorRecord == null) {
         return null;
       }
@@ -66,7 +64,7 @@ export default class FloorRepo implements IFloorRepo {
       if (await this.exists(floor)) {
         const floorDocument = await this.floorSchema.create(FloorMapper.toPersistence(floor));
         return FloorMapper.toDomain(floorDocument);
-      }else {
+      } else {
         return null;
       }
     } catch (error) {
@@ -81,10 +79,10 @@ export default class FloorRepo implements IFloorRepo {
       const floorRecord = await this.floorSchema.find(query);
       const floorArray: IFloorDTO[] = [];
 
-      if(floorRecord.length == 0){
+      if (floorRecord.length == 0) {
         return [];
-      }else{
-        for(let i = 0; i < floorRecord.length; i++){
+      } else {
+        for (let i = 0; i < floorRecord.length; i++) {
           floorArray[i] = FloorMapper.toDTO(FloorMapper.toDomain(floorRecord[i]));
         }
         return floorArray;
@@ -103,22 +101,22 @@ export default class FloorRepo implements IFloorRepo {
       const passagewayRecord = await this.floorSchema.find(query);
       const floorArrayResult: IFloorDTO[] = [];
       console.log('passagewayRecord: ', passagewayRecord)
-      if(passagewayRecord.length == 0){
+      if (passagewayRecord.length == 0) {
         return [];
       }
       for (let i = 0; i < passagewayRecord.length; i++) {
-          for (let j = 0; j < floorArray.length; j++) {
-              console.log('passagewayRecord[i]: ', passagewayRecord[i].id);
-              console.log('floorArray[i]: ', floorArray[i].id);
-              if (passagewayRecord[i].id == floorArray[j].id) {
-                  let k = 0;
-                  floorArrayResult[k]= FloorMapper.toDTO(FloorMapper.toDomain(passagewayRecord[i]));
-                  k++;
+        for (let j = 0; j < floorArray.length; j++) {
+          console.log('passagewayRecord[i]: ', passagewayRecord[i].id);
+          console.log('floorArray[i]: ', floorArray[i].id);
+          if (passagewayRecord[i].id == floorArray[j].id) {
+            let k = 0;
+            floorArrayResult[k] = FloorMapper.toDTO(FloorMapper.toDomain(passagewayRecord[i]));
+            k++;
           }
+        }
+        console.log('floorArrayResult: ', floorArrayResult);
+        return floorArrayResult;
       }
-      console.log('floorArrayResult: ', floorArrayResult);
-      return floorArrayResult;
-    }
     } catch (error) {
       console.log('Error in passagewayRepo.getFloorsWithPassageways(): ', error);
       throw error;
@@ -136,6 +134,28 @@ export default class FloorRepo implements IFloorRepo {
       const rawFloor = FloorMapper.toPersistence(floor);
       await this.floorSchema.replaceOne(query as FilterQuery<IFloorPersistence & Document>, rawFloor);
       return floor;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async existsByBCodeAndNumber(buildingCode: string,  number: number): Promise<boolean> {
+    try {
+      //determines if the floor exists in the database by his number and buildingCode
+      const query = {floorNumber: number, floorBuildingCode: buildingCode};
+      const floorDocument = await this.floorSchema.findOne(query as FilterQuery<IFloorPersistence & Document>);
+      return floorDocument == null;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async findByBCodeAndNumber(buildingCode: string,  number: number): Promise<Floor> {
+    try {
+      //determines if the floor exists in the database by his number and buildingCode
+      const query = {floorNumber: number, floorBuildingCode: buildingCode};
+      const floorDocument = await this.floorSchema.findOne(query as FilterQuery<IFloorPersistence & Document>);
+      return FloorMapper.toDomain(floorDocument);
     } catch (error) {
       throw error;
     }
