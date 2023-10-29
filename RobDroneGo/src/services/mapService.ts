@@ -19,6 +19,16 @@ export default class MapService implements IMapService {
 
   public async createMap(mapDTO: IMapDTO): Promise<Result<IMapDTO>> {
     try {
+
+      //validate map info
+      /*
+      const isValid = await this.validateFloorInfo(mapDTO);
+      if(isValid.isFailure){
+        return Result.fail<IMapDTO>(isValid.errorValue());
+      }
+
+       */
+
       const mapOrError = await Map.create(mapDTO);
       if (mapOrError.isFailure) {
         return Result.fail<IMapDTO>(mapOrError.errorValue());
@@ -39,6 +49,16 @@ export default class MapService implements IMapService {
       throw e;
     }
   }
+/*
+  public async validateFloorInfo(mapDTO: IMapDTO): Promise<Result<IMapDTO>> {
+    try{
+
+    }catch (e) {
+      throw e;
+    }
+  }
+
+ */
 
 
 }

@@ -8,9 +8,9 @@ import {Floor} from "../domain/floor";
 import {IBuildingPersistence} from "../dataschema/IBuildingPersistence";
 import IFloorDTO from '../dto/IFloorDTO';
 import {IPassagewayPersistence} from '../dataschema/IPassagewayPersistence';
-import IPassagewayDTO from '../dto/IPassagewayDTO';
-import { PassagewayMapper } from '../mappers/PassagewayMapper';
-import { floor } from 'lodash';
+import {BuildingMapper} from "../mappers/BuildingMapper";
+import {floor} from "lodash";
+
 
 
 @Service()
@@ -49,12 +49,12 @@ export default class FloorRepo implements IFloorRepo {
 
   public async findByDomainId(floorId: string): Promise<Floor> {
     try {
-      const query = {_id: floorId};
-      return this.floorSchema.findOne(query as FilterQuery<IFloorPersistence & Document>)
-        .then((floor) => {
-          if (floor == null) return null;
-          return FloorMapper.toDomain(floor);
-        })
+      const query = {floorID: floorId};
+      const floorRecord = await this.floorSchema.findOne(query as FilterQuery<IBuildingPersistence & Document>);
+      if (floorRecord == null) {
+        return null;
+      }
+      return FloorMapper.toDomain(floorRecord);
     } catch (error) {
       throw error;
     }
@@ -113,7 +113,7 @@ export default class FloorRepo implements IFloorRepo {
               if (passagewayRecord[i].id == floorArray[j].id) {
                   let k = 0;
                   floorArrayResult[k]= FloorMapper.toDTO(FloorMapper.toDomain(passagewayRecord[i]));
-                  k++;  
+                  k++;
           }
       }
       console.log('floorArrayResult: ', floorArrayResult);

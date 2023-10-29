@@ -21,7 +21,7 @@ export default class MapController implements IMapController /* TODO: extends ..
       const mapOrError = await this.mapServiceInstance.createMap(req.body as IMapDTO) as Result<IMapDTO>;
 
       if (mapOrError.isFailure) {
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json("Map already exists");
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(mapOrError.errorValue());
       }
 
       const mapDTO = mapOrError.getValue();

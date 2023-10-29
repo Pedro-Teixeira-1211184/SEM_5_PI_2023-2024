@@ -5,6 +5,7 @@ import IMapRepo from "../services/IRepos/IMapRepo";
 import {Map} from "../domain/map";
 import {IMapPersistence} from "../dataschema/IMapPersistence";
 import {MapMapper} from "../mappers/MapMapper";
+import {IBuildingPersistence} from "../dataschema/IBuildingPersistence";
 
 
 @Service()
@@ -23,15 +24,25 @@ export default class MapRepo implements IMapRepo {
 
   public async save(map: Map): Promise<Map> {
     try {
-      const floorDocument = await this.mapSchema.create(MapMapper.toPersistence(map));
-      return MapMapper.toDomain(floorDocument);
+      if (await this.exists(map)) {
+        const mapDocument = await this.mapSchema.create(MapMapper.toPersistence(map));
+        return MapMapper.toDomain(mapDocument);
+      } else {
+        return null;
+      }
     } catch (e) {
       throw e;
     }
   }
 
-  exists(map: Map): Promise<boolean> {
-    return Promise.resolve(false);
+  public async exists(map: Map): Promise<boolean> {
+    try {
+      const query = {mapFloorID: map.floorID};
+      const mapDocument = await this.mapSchema.findOne(query as FilterQuery<IMapPersistence & Document>);
+      return mapDocument == null;
+    } catch (e) {
+      throw e;
+    }
   }
 
 }

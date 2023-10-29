@@ -20,7 +20,7 @@ export default class RoomController implements IRoomController /* TODO: extends 
       const RoomOrError = await this.RoomServiceInstance.createRoom(req.body as IRoomDTO) as Result<IRoomDTO>;
 
       if (RoomOrError.isFailure) {
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json("Room already exists");
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(RoomOrError.errorValue());
       }
 
       const RoomDTO = RoomOrError.getValue();
