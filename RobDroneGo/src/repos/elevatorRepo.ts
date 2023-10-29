@@ -8,6 +8,7 @@ import IElevatorDTO from '../dto/IElevatorDTO';
 import {Document, FilterQuery, Model} from "mongoose";
 import {IElevatorPersistence} from "../dataschema/IElevatorPersistence";
 
+
 @Service()
 export default class ElevatorRepo implements IElevatorRepo {
 
@@ -35,39 +36,52 @@ export default class ElevatorRepo implements IElevatorRepo {
 
   public async save(elevator: Elevator): Promise<Elevator> {
 
-    try{
-        if(await this.exists(elevator)){
-            const rawElevator: any = ElevatorMapper.toPersistence(elevator);
+    try {
+      if (await this.exists(elevator)) {
+        const rawElevator: any = ElevatorMapper.toPersistence(elevator);
 
-            const elevatorCreated = await this.elevatorSchema.create(rawElevator);
+        const elevatorCreated = await this.elevatorSchema.create(rawElevator);
 
-            return ElevatorMapper.toDomain(elevatorCreated);
-        }else{
-            console.log('Elevator already exists'); 
-            return null;
-        }
-    }catch(error){
-        throw error;
+        return ElevatorMapper.toDomain(elevatorCreated);
+      } else {
+        console.log('Elevator already exists');
+        return null;
+      }
+    } catch (error) {
+      throw error;
     }
-}
+  }
 
-    public async delete(elevator: Elevator): Promise<void> {
-        try{
-            const query = {buildingCode: elevator.buildingCode.toString(), floorNumbers: elevator.floorNumbers.toString()};
-            await this.elevatorSchema.deleteOne(query as FilterQuery<IElevatorPersistence & Document>);
-        }catch(error){
-            throw error;
-        }
+  public async delete(elevator: Elevator): Promise<void> {
+    try {
+      const query = {buildingCode: elevator.buildingCode.toString(), floorNumbers: elevator.floorNumbers.toString()};
+      await this.elevatorSchema.deleteOne(query as FilterQuery<IElevatorPersistence & Document>);
+    } catch (error) {
+      throw error;
     }
+  }
 
 
-    public async findByDomainId(elevatorId: string): Promise<Elevator> {
-        try{
-            const query = {elevatorID: elevatorId};
-            const elevatorRecord = await this.elevatorSchema.findOne(query as FilterQuery<IElevatorPersistence & Document>);
-            return ElevatorMapper.toDomain(elevatorRecord);
-        }catch(error){
-            throw error;
-        }
+  public async findByDomainId(elevatorId: string): Promise<Elevator> {
+    try {
+      const query = {elevatorID: elevatorId};
+      const elevatorRecord = await this.elevatorSchema.findOne(query as FilterQuery<IElevatorPersistence & Document>);
+      return ElevatorMapper.toDomain(elevatorRecord);
+    } catch (error) {
+      throw error;
     }
+  }
+
+  public async findByBuildingCode(buildingCode: string): Promise<Elevator> {
+    try {
+      const query = {buildingCode: buildingCode};
+      const elevatorRecord = await this.elevatorSchema.findOne(query as FilterQuery<IElevatorPersistence & Document>);
+      if (elevatorRecord == null) {
+        return null;
+      }
+      return ElevatorMapper.toDomain(elevatorRecord);
+    } catch (error) {
+      throw error;
+    }
+  }
 }

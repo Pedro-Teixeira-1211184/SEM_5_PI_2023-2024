@@ -22,11 +22,11 @@ export class RoomMapper extends Mapper<Room> {
   public static toDomain(raw: any | Model<IRoomPersistence & Document>): Room {
     const RoomOrError = Room.create(
       {
-        id: raw.RoomID,
-        floorID: raw.RoomfloorID,
-        designation: raw.Roomdesignation,
-        name: raw.RoomName,
-        localization: raw.RoomDimensions,
+        id: raw.roomID,
+        floorID: raw.roomFloorID,
+        designation: raw.roomDesignation,
+        name: raw.roomName,
+        localization: raw.roomLocalization,
       },
       new UniqueEntityID(raw.domainId)
     );

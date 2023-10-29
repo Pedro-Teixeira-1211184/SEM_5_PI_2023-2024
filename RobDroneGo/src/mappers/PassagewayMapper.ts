@@ -25,8 +25,8 @@ export class PassagewayMapper extends Mapper<Passageway> {
         id: raw.passagewayID,
         floorID1: raw.passagewayFloorID1,
         floorID2: raw.passagewayFloorID2,
-        localization1: raw.passagewaylocalization1,
-        localization2: raw.passagewaylocalization2
+        localization1: raw.passagewayLocalization1,
+        localization2: raw.passagewayLocalization2
       },
       new UniqueEntityID(raw.domainId)
     );
