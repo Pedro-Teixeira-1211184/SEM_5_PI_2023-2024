@@ -9,4 +9,5 @@ export default interface IPassagewayRepo extends Repo<Passageway> {
   findFloorsInPassageways(floorId: string): Promise<boolean>;
   /*getPassagewaysInFloors(floorId: string): Promise<IPassagewayDTO>;*/
   findByDomainId(floorId: string): Promise<Passageway>;
+  update(floorID1: string, floorID2: string, updatedFields: Partial<IPassagewayDTO>): Promise<Passageway | null>;
 }

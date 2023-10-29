@@ -26,16 +26,32 @@ export class Passageway extends AggregateRoot<PassagewayProps> {
         return this.props.floorID1;
     }
 
+    set floorID1(value: string) {
+        this.props.floorID1 = value;
+    }
+
     get floorID2(): string {
         return this.props.floorID2;
+    }
+
+    set floorID2(value: string) {
+        this.props.floorID2 = value;
     }
 
     get localization1(): string {
         return this.props.localization1;
     }
 
+    set localization1(value: string) {
+        this.props.localization1 = value;
+    }
+
     get localization2(): string {
         return this.props.localization2;
+    }
+
+    set localization2(value: string) {
+        this.props.localization2 = value;
     }
 
     private constructor(props: PassagewayProps, id?: UniqueEntityID) {
