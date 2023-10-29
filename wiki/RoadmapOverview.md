@@ -11,15 +11,15 @@
 ## Purpose and Scope of the SAD
 > This section explains the SAD's overall purpose and scope, the criteria for deciding which design decisions are architectural (and therefore documented in the SAD), and which design decisions are non-architectural (and therefore documented elsewhere).
 
-A arquitetura de software dum sistema é a estrutura ou estruturas desse sistema, que inclui elementos do software e suas proprieades visíveis externamente, e as relações entre ele (Bass 2012).
+The software architecture of a system is the structure or structures of that system, which includes software elements and their externally visible properties, as well as the relationships between them (Bass 2012).
 
-Este SAD descreve a arquitetura de software do sistema a desenvolver para gestão e planeamento de tarefas para robots e drones que permite que os utilizadores requisitem uma dada tarefa a ser executado por um dado robot ou drone a uma certa hora e local.
+This SAD describes the software architecture of the system to be developed for task management and planning for robots and drones, allowing users to request a specific task to be executed by a particular robot or drone at a certain time and location.
 
-Este SAD é desenvolvido num contexto académico de ensino-aprendizagem (no 5º semestre da LEI no ano letivo 2023-2024), em que várias competências estão a ser adquiridas ao longo do semestre pelos/as estudantes, ao mesmo tempo que desenvolvem o sistema.
+This SAD is developed in an academic teaching and learning context (in the 5th semester of the LEI program for the academic year 2023-2024), where various competencies are being acquired by students throughout the semester while simultaneously developing the system.
 
-Porque visa suportar o processo de ensino-aprendizagem, não tem como objetivo ser completo ou descrever a melhor arquitetura possível, mas servir de guia e exemplo, em linha com as competências a adquirir em cada iteração/sprint do projeto.
+Because it aims to support the teaching and learning process, its goal is not to be comprehensive or describe the best possible architecture but to serve as a guide and example, in line with the competencies to be acquired in each iteration/sprint of the project.
 
-Embora os/as estudantes sejam destinatários principais do SAD, as competências a adquirir pelos/as estudantes nas várias UC do semestre permitem-lhe desempenhar diferentes papéis (diferentes partes interessadas/destinatários), e.g. eliciadores (de requisitos), analistas, arquitetos de software, programadores/"testers", administradores e operadores (ops) e utilizadores.
+Although students are the primary audience for this SAD, the competencies to be acquired by students in various courses throughout the semester enable them to play different roles (different stakeholders/recipients), such as requirements elicitors, analysts, software architects, programmers/testers, administrators, operators (ops), and users.
 
 ## How the SAD Is Organized
 >This section provides a narrative description of the seven major sections of the SAD and the overall contents of each. Readers seeking specific information can use this section to help them locate it more quickly.
@@ -31,7 +31,7 @@ Embora os/as estudantes sejam destinatários principais do SAD, as competências
 > 5. Referenced Materials, provides look-up information for documents that are cited elsewhere in this SAD.
 > 6. Glossary and Acronyms is an index of architectural elements and relations giving their definition, and where each is used in this SAD.
 
-Este DAS/SAD adota a estrutura proposta acima.
+This SAD adopts the above referenced structure.
 
 ## How a View Is Documented
 >1. Primary Presentation
@@ -59,8 +59,8 @@ Este DAS/SAD adota a estrutura proposta acima.
 > 5. Parent View
 >	- If the current view is the refinement of another view, indicate which one
 
-Neste DAS/SAD será adotado a notação UML, nomeadamente (mas não exclusivamente) diagramas de componentes, de sequência, de pacotes e de nós. Tal, garante 1.1, 1.2 e 1.3.
+In this DAS/SAD, the UML notation will be adopted, specifically (but not exclusively) component diagrams, sequence diagrams, package diagrams, and node diagrams. This ensures 1.1, 1.2, and 1.3.
 
-A organização das vistas pela combinação do modelo C4 (diferentes níveis de abstração/granularidade) e modelo 4+1 vistas (vários pontos de vista da arquitetura) permite desde logo endereçar o requisito 1.4.
+The organization of views through the combination of the C4 model (different levels of abstraction/granularity) and the 4+1 views model (various architectural perspectives) immediately addresses requirement 1.4.
 
-Pela adoção do modelo C4, o requisito 1.5 é endereçado.
+By adopting the C4 model, requirement 1.5 is also addressed.

@@ -43,7 +43,7 @@ database providing object saving and retrieving behaviour.
   
 ## Problem Background
 >The sub-parts of this section explain the constraints that provided the significant influence over the architecture.
->
+>The architecture chosen was adopted purely by teachers request
 
 ### System Overview
 > RobDroneGo consists of a robot and drone task monitoring system, developed as the prototype which could evolve to 
@@ -85,30 +85,45 @@ and maintainability:
 
 #### Functional requirements
 
-(To be completed)
+>* Creation of types of Robots
+>* Creation of Robots
+>* Inhibiting Robots
+>* Creation of Buildings
+>* Editing of a Specific Building
+>* Listing all Buildings
+>* Creation of a building's Floors
+>* Editing a specific Floor
+>* Listing all floors of a Building
+>* Listing a building's floors with passageways to other buildings
+>* Load a floor's Map
+>* Creation of a passageway between buildings
+>* Editing a specific passageway
+>* Listing passageways between two buildings
+>* Create a building's elevator
+>* Create a building's floor's room
+>* 
 
-<inserir aqui o modelo de casos de uso/>
+![Global Use Case Diagram](diagramas/Global_UC.png)
 
 #### Quality attributes
-Os atributos de qualidade são categorizados e sistematizados segundo o modelo [FURPS+](https://pt.wikipedia.org/wiki/FURPS).
+Quality attributes are categorized and systematized following the [FURPS+](https://pt.wikipedia.org/wiki/FURPS) model.
 
-##### Funcionalidade
-1. Cada sistema só poderá aceder aos dados que lhe dizem respeito.
-2. Deve ser auditada e verificada a integridade da informação a que os sistemas acedem.
-3. Com vista à necessidade de saber e necessidade de conhecer, toda a informação deve estar protegida de acessos indevidos. Ou seja, o princípio de minimização de acesso ao que é essencial para cada utilizador/aplicação, criação de túneis para transferência de informação, avaliação da integridade de dados e aplicações, e encriptação/minimização dos dados.
-4. É necessário ter especial atenção com a privacidade e proteção de dados à luz do RGPD. Assim é necessário que o sistema cumpra a legislação em vigor e, em especial, disponibilize as informações legais e informe o utilizador aquando do seu registo, bem como permita aceder e cancelar a sua conta nos casos e nas condições legalmente permitidas.
+##### Functionality
+1. Each system can only access data relevant to it.
+2. The integrity of the information that systems access must be audited and verified.
+3. In view of the principles of "need to know" and "need to know," all information must be protected from unauthorized access. In other words, the principle of minimizing access to what is essential for each user/application, creating tunnels for information transfer, assessing data and application integrity, and encrypting/minimizing data.
+4. It is essential to pay special attention to privacy and data protection in accordance with the General Data Protection Regulation (GDPR). Therefore, the system must comply with current legislation and, in particular, provide legal information and inform the user during registration, as well as allow access to and deletion of their account under legally permissible conditions.
+##### Usability
 
-##### Usabilidade
+5. Within the scope of the current project, user administration can be done directly in the database without the need for a user management module.
 
-5.  No âmbito do projeto atual, a administração de utilizadores pode ser efetuada diretamente na base de dados não sendo necessário um módulo de gestão de utilizadores.
-
-##### Confiabilidade (Reliability)
+##### Reliability
 n/a
 
-##### Desempenho (Performance)
+##### Performance
 n/a
 
-##### Suportabilidade
+##### Supportability
 6. (To be completed)
 
 ##### Design constraints
@@ -130,16 +145,16 @@ n/a
 
 ### Architectural Approaches
 > This section provides a rationale for the major design decisions embodied by the software architecture. It describes any design approaches applied to the software architecture, including the use of architectural styles or design patterns, when the scope of those approaches transcends any single architectural view. The section also provides a rationale for the selection of those approaches. It also describes any significant alternatives that were seriously considered and why they were ultimately rejected. The section describes any relevant COTS issues, including any associated trade studies.
-> * Core Domain Layer: 
-> * Repository Layer: 
-> * Services Layer: 
+> * Core Domain Layer: Core, DataSchema, Domain, Persistence
+> * Repository Layer: Repos
+> * Services Layer: Services, Controllers
 > * UI Layer: not applied for the first sprint.
 
 
 ### Analysis Results
 > This section describes the results of any quantitative or qualitative analyses that have been performed that provide evidence that the software architecture is fit for purpose. If an Architecture Tradeoff Analysis Method evaluation has been performed, it is included in the analysis sections of its final report. This section refers to the results of any other relevant trade studies, quantitative modeling, or other analysis results.
 
-Não existem por agora resultados de análise ou avaliação. Estudos qualitativos acerca dos estilos/padrões adotados (nomeadamente Onion em MDR e MDV, mas também Dependency Injection na UI), permitem empiricamente advogar que a manutenibilidade, evolutabilidade e testabilidade do software são elevadas, ao mesmo tempo que permitem atingir as funcionalidades desejadas.
+There are currently no analysis or evaluation results available. Qualitative studies on the adopted styles/patterns (particularly Onion in MDR and MDV, as well as Dependency Injection in the UI) empirically suggest that the software's maintainability, scalability, and testability are high, while also enabling the achievement of the desired functionalities.
 
 ### Mapping Requirements to Architecture
 > This section describes the requirements (original or derived) addressed by the software architecture, with a short statement about where in the architecture each requirement is addressed.
