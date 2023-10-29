@@ -24,12 +24,11 @@ export default class PassagewayRepo implements IPassagewayRepo {
     }
   }
 
-  public async save(passageway: Passageway): Promise<Passageway> {
-
-
+public async save(passageway: Passageway): Promise<Passageway> {
     try {
       if (await this.exists(passageway)) {
-        const passagewayCreated = await this.passagewaySchema.create(PassagewayMapper.toPersistence(passageway));
+        const rawPassageway = PassagewayMapper.toPersistence(passageway);
+        const passagewayCreated = await this.passagewaySchema.create(rawPassageway);
         return PassagewayMapper.toDomain(passagewayCreated);
       } else {
         console.log('Passageway already exists');
@@ -84,16 +83,20 @@ public async exists(passageway: Passageway): Promise<boolean> {
     }
   }
 
- /* public async getPassagewaysInFloors(floorId: string): Promise<IPassagewayDTO> {
+  public async getPassagewaysInFloors(floorId: string): Promise<IPassagewayDTO[]> {
     try {
       const query = {$or: [{passagewayFloorID1: floorId}, {passagewayFloorID2: floorId}]} as FilterQuery<IPassagewayPersistence & Document>;
+      let result1: IPassagewayDTO[] = [];
       const passageways = await this.passagewaySchema.find(query);
-      const result = PassagewayMapper.toDTO(PassagewayMapper.toDomain(passageways));
-      return result;
+      for (let i = 0; i < passageways.length; i++) {
+        const result = PassagewayMapper.toDTO(PassagewayMapper.toDomain(passageways[i]));
+        result1.push(result);
+      }
+      return result1;
     } catch (error) {
       throw error;
     }
-  }*/
+  }
 
   public async getPassagewaysInBuildings(floors1: Array<IFloorDTO>, floors2: Array<IFloorDTO>): Promise<Array<IPassagewayDTO>> {
     try {
@@ -102,13 +105,11 @@ public async exists(passageway: Passageway): Promise<boolean> {
         for (let j = 0; j < floors2.length; j++) {
           const query = {$or: [{passagewayFloorID1: floors1[i].id} && {passagewayFloorID2: floors2[j].id}]} as FilterQuery<IPassagewayPersistence & Document>;
           const passageways = await this.passagewaySchema.find(query);
-          console.log('passageways: ', passageways);
           if (passageways.length != 0) {
             result1.push(PassagewayMapper.toDTO(PassagewayMapper.toDomain(passageways)));
           }
           const query1 = {$or: [{passagewayFloorID1: floors2[i].id} && {passagewayFloorID2: floors1[j].id}]} as FilterQuery<IPassagewayPersistence & Document>;
           const passageways1 = await this.passagewaySchema.find(query1);
-          console.log('passageways1: ', passageways1);
           if (passageways1.length != 0) {
             for (let k = 0; k < passageways1.length; k++) {
               result1.push(PassagewayMapper.toDTO(PassagewayMapper.toDomain(passageways1[k])));
@@ -116,7 +117,6 @@ public async exists(passageway: Passageway): Promise<boolean> {
         }
       }
     }
-      console.log('result1: ', result1);
       return result1;
     } catch (error) {
     throw error;
