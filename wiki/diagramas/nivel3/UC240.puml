@@ -1,0 +1,61 @@
+@startuml
+
+autonumber
+participant "RobDroneGo UI" as UI
+participant "RobDroneGo" as API
+participant ":passagewayController" as PC
+participant ":passagewayService" as PS
+participant ":passagewayRepository" as PR
+participant ":passagewayMapper" as PM
+participant ":passagewayDTO" as DTO
+participant "p:passageway" as P
+participant ":passagewaySchema" as PSchema
+
+
+activate UI
+activate API
+UI -> API : .post(/passageway)
+API -> PC : createpassageway(req, res, next)
+activate PC
+PC -> PS : passagewayOrError = createpassageway(req.body as IPassagewayDTO)
+activate PS
+PS -> PC : passagewayOrError = create(passagewayDTO)
+activate P
+P --> PS : passageway
+deactivate P
+PS -> PR : passageway = save(passageway)
+activate PR
+PR -> PM : rawpassageway = toPersistence(passageway)
+activate PM
+PM --> PR : passageway form to save
+deactivate PM
+PR -> PSchema : passagewayCreated = create(rawpassageway)
+activate PSchema
+PSchema --> PR : passageway saved
+deactivate PSchema
+deactivate PM
+PR -> PM : passageway = toDomain(passagewayCreated)
+activate PM
+PM -> P : create(passagewayCreated)
+activate P
+P --> PM : passageway
+deactivate P
+PM --> PR : passageway structure to return
+deactivate PM
+PR --> PS : passageway
+deactivate PR
+PS -> PM : passagewayDTOResult = toDTO(passageway)
+activate PM
+PM -> DTO : passagewayDTO = toDTO(passageway)
+activate DTO
+DTO --> PM : passagewayDTO
+deactivate DTO
+PM --> PS : passagewayDTO
+deactivate PM
+PS --> PC : passagewayDTO
+deactivate PS
+PC --> API : passagewayDTO and status 201
+deactivate PC
+API --> UI : passagewayDTO and status 201
+
+@enduml

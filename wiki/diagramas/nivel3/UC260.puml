@@ -1,0 +1,95 @@
+@startuml
+
+autonumber
+participant "RobDroneGo UI" as UI
+participant "RobDroneGo" as API
+participant ":passagewayController" as PC
+participant ":passagewayService" as PS
+participant ":passagewayRepository" as PR
+participant ":passagewayMapper" as PM
+participant ":passagewayDTO" as DTO
+participant "p:passageway" as P
+participant ":passagewaychema" as PSchema
+participant ":floorService" as FS
+participant ":floorRepository" as FR
+participant ":floorMapper" as FM
+participant ":floorDTO" as DTO2
+participant "f:floor" as F
+participant ":floorSchema" as FSchema
+
+
+
+activate UI
+activate API
+UI -> API : .get(/passageways/passagewasBetweenBuildings/:buildingCode1/:buildingCode2)
+API -> PC : getPassagewaysInBuildings(req, res, next)
+activate PC
+PC -> FS : floorOrError = findFloorsByBuildingCode(req.params.buildingCode1)
+activate FS
+FS -> FR : floors = findFloorsByBuildingCode(buildingCode)
+activate FR
+FR -> FSchema : find = find(query)
+activate FSchema
+FSchema --> FR : floors found
+deactivate FSchema
+loop
+FR -> FM : floor = toDomain(rawFloor)
+activate FM
+FM -> F : create(floor)
+activate F
+F --> FM : floor
+deactivate F
+FM --> FR : floor
+deactivate FM
+end
+FR --> FS : floors
+deactivate FR
+FS --> PC : floors
+PC -> FS : floorOrError = findFloorsByBuildingCode(req.params.buildingCode2)
+FS -> FR : floors = findFloorsByBuildingCode(buildingCode)
+activate FR
+FR -> FSchema : find = find(query)
+activate FSchema
+FSchema --> FR : floors found
+deactivate FSchema
+loop
+FR -> FM : floor = toDomain(rawFloor)
+activate FM
+FM -> F : create(floor)
+activate F
+F --> FM : floor
+deactivate F
+FM --> FR : floor
+deactivate FM
+end
+FR --> FS : floors
+deactivate FR
+FS --> PC : floors
+deactivate FS
+PC --> PS : passagewaysOrError = findPassagewaysBetweenFloors(floorsBuildiing1,floorsBuilding2)
+activate PS
+PS -> PR : passageways = findPassagewaysBetweenFloors(floorsBuildiing1,floorsBuilding2)
+activate PR
+loop
+PR -> PSchema : find = find(query)
+activate PSchema
+PSchema --> PR : passageways found
+deactivate PSchema
+PR -> PM : passageway = toDomain(rawPassageway)
+activate PM
+PM -> P : create(passageway)
+activate P
+P --> PM : passageway
+deactivate P
+PM --> PR : passageway
+end
+PR --> PS : passageways
+deactivate PR
+PS --> PC : passageways
+deactivate PS
+PC --> API : passageways and status 200
+deactivate PC
+API --> UI : passageways and status 200
+deactivate API
+
+@enduml

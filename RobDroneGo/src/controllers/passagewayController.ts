@@ -64,6 +64,7 @@ export default class PassagewayController implements IPassagewayController /* TO
       return next(e);
     }
   };
+  
   public async updatePassageway(req: Request, res: Response, next: NextFunction) {
     try{ const passagewayOrError = await this.passagewayServiceInstance.updatePassageway(req.body as IPassagewayDTO) as Result<IPassagewayDTO>;
 

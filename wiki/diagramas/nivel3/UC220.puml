@@ -1,0 +1,65 @@
+@startuml
+
+autonumber
+participant "RobDroneGo UI" as UI
+participant "RobDroneGo" as API
+participant ":FloorController" as FC
+participant ":FloorService" as FS
+participant ":FloorRepository" as FR
+participant ":floorMapper" as FM
+participant ":floorDTO" as DTO
+participant "f:floor" as F
+participant ":floorSchema" as FSchema
+participant ":PassagewayService" as PS
+participant ":PassagewayRepository" as PR
+participant ":passagewayMapper" as PM
+participant ":passagewayDTO" as PDTO
+participant "p:passageway" as P
+participant ":passagewaySchema" as PSchema
+
+
+activate UI
+activate API
+UI -> API : .get(/floor)
+API -> FC : findFloorsByBuildingCode(req, res, next)
+activate FC
+FC -> FS : floors[] = findFloorsByBuildingCode(req.params.buildingCode)
+activate FS
+FS -> FR : floors[] = findFloorsByBuildingCode(buildingCode)
+activate FR
+FR -> FSchema : floors[] = find(query)
+activate FSchema
+FSchema --> FR : all floors by building
+deactivate FSchema
+loop
+FR -> FM : floorsArray = toDTO(floorCreated)
+activate FM
+FM -> DTO
+activate DTO
+FM <-- DTO
+deactivate DTO
+deactivate FM
+end
+FR --> FS : floorsArray
+deactivate FR
+FS --> FC : floorsArray
+deactivate FS
+loop
+FC --> PS : boolean = findFloorsInPassageways(floorsArray[i].id)
+activate PS
+PS -> PR : boolean = findPassagewaysByFloorId(floorId)
+activate PR
+PR -> PSchema : passageways[] = find(query)
+activate PSchema
+PSchema --> PR : every passageway by floor
+deactivate PSchema
+PR -> PS : result
+deactivate PR
+PS --> FC : result
+deactivate PS
+end
+FC --> API : floorsArray and status 200
+deactivate FC
+API --> UI : floorsArray and status 200
+
+@enduml

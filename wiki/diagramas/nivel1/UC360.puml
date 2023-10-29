@@ -1,0 +1,15 @@
+@startuml
+actor "User" as OE
+
+activate OE
+OE -> ":UI" : 1 : starts the node creation process
+activate ":UI"
+":UI" --> OE : 1.1 : requests data (robotType,code,serialNumber,nickname,brand,isActive)
+deactivate ":UI"
+OE -> ":UI" : 2 : inserts the data (robotType,code,serialNumber,nickname,brand,isActive)
+activate ":UI"
+":UI" --> OE : 2.1 : shows data of the robot
+
+deactivate ":UI"
+
+@enduml

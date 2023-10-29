@@ -9,6 +9,7 @@ import IFloorDTO from "../dto/IFloorDTO";
 import {Result} from "../core/logic/Result";
 import IBuildingDTO from "../dto/IBuildingDTO";
 import IPassagewayService from "../services/IServices/IPassagewayService";
+import IPassagewayDTO from '../dto/IPassagewayDTO';
 
 @Service()
 export default class FloorController implements IFloorController /* TODO: extends ../core/infra/BaseController */ {
@@ -82,16 +83,33 @@ export default class FloorController implements IFloorController /* TODO: extend
                 return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send("No passageways found in building!");
             }
 
-           /* const passagewaysInBuilding: IPassagewayDTO[] = [];
+            /*
+            const passagewaysInBuilding: IPassagewayDTO[] = [];
+            let k = 0;
 
-            for (let i = 0; i < floorsInBuilding.length; i++) {
-                const aux = await this.passagewayServiceInstance.getPassagewaysInFloors(floorsInBuilding[i].id);
+            for (let i = 0; i < getFloorsWithPassageway.length; i++) {
+                const aux = await this.passagewayServiceInstance.getPassagewaysInFloors(getFloorsWithPassageway[i].id) as Result<IPassagewayDTO[]>;
                 if (aux.isSuccess) {
-                    console.log("aux: ", aux.getValue());
-                    passagewaysInBuilding.push(aux.getValue());
+                    const aux1 = aux.getValue();
+                    passagewaysInBuilding.push(aux1[k]);
+                    k++;
+                    console.log("aux1: ", aux1[k]);
                 }
             }
-            */
+            
+            for (let i = 0; i < passagewaysInBuilding.length; i++) {
+                const aux2 = passagewaysInBuilding[i].floorID1;
+                const aux3 = passagewaysInBuilding[i].floorID2;
+                for (let j = 0; j < getFloorsWithPassageway.length; j++) {
+                    if (aux2 == getFloorsWithPassageway[j].id) {
+                        const buildingWithPassage = this.floorServiceInstance.getBuildingcodeByFloor(aux3);
+                    }
+                    else{
+                        const buildingWithPassage = this.floorServiceInstance.getBuildingcodeByFloor(aux2);
+                    }
+                }
+            }*/
+        
             return res.status(StatusCodes.OK).json(getFloorsWithPassageway);
         } catch (e) {
             return next(e);

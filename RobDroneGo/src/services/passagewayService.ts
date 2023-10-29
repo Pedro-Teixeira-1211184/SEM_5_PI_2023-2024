@@ -89,6 +89,22 @@ export default class PassagewayService implements IPassagewayService {
       throw e;
     }
   }
+
+  public async getPassagewaysInFloors(floorId: string): Promise<Result<IPassagewayDTO[]>> {
+    try {
+      const passagewaysInFloor = await this.PassagewayRepo.getPassagewaysInFloors(floorId);
+
+      if (passagewaysInFloor == null) {
+        return Result.fail<IPassagewayDTO[]>('No passageways found');
+      }
+
+      return Result.ok<IPassagewayDTO[]>(passagewaysInFloor)
+    } catch (e) {
+      console.log('Error in PassagewayService.getPassagewaysInFloors', e);
+      throw e;
+    }
+  }
+
   public async updatePassageway(PassagewayDTO: IPassagewayDTO): Promise<Result<IPassagewayDTO>> {
     try{
       const updatedPassageway = await this.PassagewayRepo.update(PassagewayDTO.floorID1, PassagewayDTO.floorID2, PassagewayDTO);

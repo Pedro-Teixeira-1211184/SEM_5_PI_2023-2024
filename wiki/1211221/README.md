@@ -1,4 +1,4 @@
-# Student: Pedro Teixeira - 1211221
+# Student: Leonor Curado - 1211221
 
 ## Developed Tasks
 

@@ -8,7 +8,7 @@ export default interface IPassagewayRepo extends Repo<Passageway> {
   delete(passageway: Passageway): Promise<void>;
   exists(passageway: Passageway): Promise<boolean>;
   findFloorsInPassageways(floorId: string): Promise<boolean>;
-  /*getPassagewaysInFloors(floorId: string): Promise<IPassagewayDTO>;*/
+  getPassagewaysInFloors(floorId: string): Promise<IPassagewayDTO[]>;
   findByDomainId(floorId: string): Promise<Passageway>;
   getPassagewaysInBuildings(floors1: Array<IFloorDTO>, floors2: Array<IFloorDTO>): Promise<Array<IPassagewayDTO>>;
   update(floorID1: string, floorID2: string, updatedFields: Partial<IPassagewayDTO>): Promise<Passageway | null>;
