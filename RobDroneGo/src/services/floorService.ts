@@ -55,21 +55,6 @@ export default class FloorService implements IFloorService {
     }
   }
 
-  public async findFloorsByPassageways(floorArray: IFloorDTO[]): Promise<Result<IFloorDTO[]>> {
-    try {
-      const floors = await this.floorRepo.findFloorsByPassageways(floorArray);
-
-      if (floors.length == 0) {
-        return Result.fail<IFloorDTO[]>('No floors found');
-      }
-
-      return Result.ok<IFloorDTO[]>(floors)
-    } catch (e) {
-      console.log('Error in floorService.findFloorsByBuildingCode', e);
-      throw e;
-    }
-  }
-
   public async updateFloor(floorDTO: IFloorDTO): Promise<Result<IFloorDTO>> {
     try {
       const updatedFloor = await this.floorRepo.update(floorDTO.buildingCode, floorDTO.number, floorDTO);

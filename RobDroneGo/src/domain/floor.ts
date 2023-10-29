@@ -61,6 +61,5 @@ export class Floor extends AggregateRoot<FloorProps> {
     }, id);
     return Result.ok<Floor>(floor);
   }
-
 }
 

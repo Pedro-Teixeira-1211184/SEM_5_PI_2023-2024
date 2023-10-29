@@ -46,7 +46,7 @@ export default () => {
         body: Joi.object({
             code: Joi.string().required().max(5).error(new Error('Invalid building code')),
             //dimensions: obrigatório e deve ser do tipo string composta por (número)x(número)
-          dimensions: Joi.string().required().regex(new RegExp('^[0-9]+[*][0-9]+$')).error(new Error('Invalid building dimensions')),
+            dimensions: Joi.string().required().regex(new RegExp('^[0-9]+[*][0-9]+$')).error(new Error('Invalid building dimensions')),
             name: Joi.string().max(50).allow('').allow(null).error(new Error('Invalid building name')),
             //description: opcional e com limite de 255 caracteres
             description: Joi.string().max(255).allow('').allow(null).error(new Error('Invalid building description')),

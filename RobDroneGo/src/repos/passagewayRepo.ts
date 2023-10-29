@@ -75,4 +75,25 @@ public async exists(passageway: Passageway): Promise<boolean> {
       throw error;
     }
   }
+
+  public async findFloorsInPassageways(floorId: string): Promise<boolean> {
+    try {
+      const query = {$or: [{passagewayFloorID1: floorId}, {passagewayFloorID2: floorId}]} as FilterQuery<IPassagewayPersistence & Document>;
+      const passageways = await this.passagewaySchema.find(query);
+      return passageways.length > 0;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+ /* public async getPassagewaysInFloors(floorId: string): Promise<IPassagewayDTO> {
+    try {
+      const query = {$or: [{passagewayFloorID1: floorId}, {passagewayFloorID2: floorId}]} as FilterQuery<IPassagewayPersistence & Document>;
+      const passageways = await this.passagewaySchema.find(query);
+      const result = PassagewayMapper.toDTO(PassagewayMapper.toDomain(passageways));
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }*/
 }
