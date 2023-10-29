@@ -4,7 +4,16 @@ import {IMapPersistence} from "../../dataschema/IMapPersistence";
 const MapSchema = new mongoose.Schema(
   {
     mapID: { type: String, unique: true },
-    mapFloorID: { type: String, unique: true, required: true },
+    mapBuildingCode: { type: String, required: true },
+    mapFloorNumber: { type: Number, required: true },
+    mapSize: {
+      width: { type: Number, required: true },
+      height: { type: Number, required: true }
+    },
+    mapMap: { type: Array, required: true },
+    mapRooms: { type: Array, required: true },
+    mapPassageways: { type: Array, required: true },
+    mapElevator: { type: Object, required: true }
   },
   {
     timestamps: true

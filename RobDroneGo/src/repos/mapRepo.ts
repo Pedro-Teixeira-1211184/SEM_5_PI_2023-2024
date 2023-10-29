@@ -37,7 +37,7 @@ export default class MapRepo implements IMapRepo {
 
   public async exists(map: Map): Promise<boolean> {
     try {
-      const query = {mapFloorID: map.floorID};
+      const query = {mapBuildingCode: map.buildingCode, mapFloorNumber: map.floorNumber};
       const mapDocument = await this.mapSchema.findOne(query as FilterQuery<IMapPersistence & Document>);
       return mapDocument == null;
     } catch (e) {

@@ -7,7 +7,13 @@ import IMapDTO from "../dto/IMapDTO";
 import {MapId} from "./mapId";
 
 interface MapProps {
-  floorID: string;
+  buildingCode: string;
+  floorNumber: number;
+  size: { width: number, height: number };
+  map: number[][];
+  rooms: { name: string, dimensions: string, door: string }[];
+  passageways: { start: string, end: string, localization: string }[];
+  elevator: { localization: string };
 }
 
 export class Map extends AggregateRoot<MapProps> {
@@ -19,8 +25,32 @@ export class Map extends AggregateRoot<MapProps> {
     return new MapId(this.mapID.toValue());
   }
 
-  get floorID(): string {
-    return this.props.floorID;
+  get buildingCode(): string {
+    return this.props.buildingCode;
+  }
+
+  get floorNumber(): number {
+    return this.props.floorNumber;
+  }
+
+  get size(): { width: number, height: number } {
+    return this.props.size;
+  }
+
+  get map(): number[][] {
+    return this.props.map;
+  }
+
+  get rooms(): { name: string, dimensions: string, door: string }[] {
+    return this.props.rooms;
+  }
+
+  get passageways(): { start: string, end: string, localization: string }[] {
+    return this.props.passageways;
+  }
+
+  get elevator(): { localization: string } {
+    return this.props.elevator;
   }
 
   private constructor(props: MapProps, id?: UniqueEntityID) {
@@ -28,10 +58,22 @@ export class Map extends AggregateRoot<MapProps> {
   }
 
   public static create(mapDTO: IMapDTO, id?: UniqueEntityID): Result<Map> {
-    const floorID = mapDTO.floorID;
+    const buildingCode = mapDTO.buildingCode;
+    const floorNumber = mapDTO.floorNumber;
+    const size = mapDTO.size;
+    const map1 = mapDTO.map;
+    const rooms = mapDTO.rooms;
+    const passageways = mapDTO.passageways;
+    const elevator = mapDTO.elevator;
 
     const map = new Map({
-      floorID: floorID,
+      buildingCode: buildingCode,
+      floorNumber: floorNumber,
+      size: size,
+      map: map1,
+      rooms: rooms,
+      passageways: passageways,
+      elevator: elevator
     }, id);
     return Result.ok<Map>(map);
   }

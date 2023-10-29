@@ -19,46 +19,34 @@ export default class MapService implements IMapService {
 
   public async createMap(mapDTO: IMapDTO): Promise<Result<IMapDTO>> {
     try {
-
-      //validate map info
-      /*
-      const isValid = await this.validateFloorInfo(mapDTO);
-      if(isValid.isFailure){
-        return Result.fail<IMapDTO>(isValid.errorValue());
-      }
-
-       */
-
-      const mapOrError = await Map.create(mapDTO);
+      const mapOrError = Map.create(mapDTO);
       if (mapOrError.isFailure) {
         return Result.fail<IMapDTO>(mapOrError.errorValue());
       }
-
-      const mapResult = mapOrError.getValue();
-
-      //save floor
-      const mapCreated = await this.mapRepo.save(mapResult);
-
-      if (mapCreated === null) {
-        return Result.fail<IMapDTO>('Floor already exists');
+      const map = mapOrError.getValue();
+      const mapExists = await this.mapRepo.exists(map);
+      if (!mapExists) {
+        return Result.fail<IMapDTO>("Map already exists.");
       }
+      const mapDocument = await this.mapRepo.save(map);
+      mapDTO = MapMapper.toDTO(mapDocument);
 
-      const floorDTOResult = MapMapper.toDTO(mapResult) as IMapDTO;
-      return Result.ok<IMapDTO>(floorDTOResult)
+      return Result.ok<IMapDTO>(mapDTO);
     } catch (e) {
       throw e;
     }
   }
-/*
-  public async validateFloorInfo(mapDTO: IMapDTO): Promise<Result<IMapDTO>> {
-    try{
 
-    }catch (e) {
-      throw e;
+  /*
+    public async validateFloorInfo(mapDTO: IMapDTO): Promise<Result<IMapDTO>> {
+      try{
+
+      }catch (e) {
+        throw e;
+      }
     }
-  }
 
- */
+   */
 
 
 }
