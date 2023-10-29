@@ -26,15 +26,15 @@ export default () => {
           name: Joi.string().required().error(new Error('Invalid room name')),
           dimensions: Joi.string().required().error(new Error('Invalid room dimensions')),
           door: Joi.string().required().error(new Error('Invalid room door')),
-        })).required().error(new Error('Invalid rooms')),
+        })).error(new Error('Invalid rooms')),
         passageways: Joi.array().items(Joi.object({
           start: Joi.string().required().error(new Error('Invalid passageway start')),
           end: Joi.string().required().error(new Error('Invalid passageway end')),
           localization: Joi.string().required().error(new Error('Invalid passageway localization')),
-        })).required().error(new Error('Invalid passageways')),
+        })).error(new Error('Invalid passageways')),
         elevator: Joi.object({
           localization: Joi.string().required().error(new Error('Invalid elevator localization')),
-        }).required().error(new Error('Invalid elevator'))
+        }).error(new Error('Invalid elevator'))
       })
     }), (req, res, next)  => {
       console.log("Creating a Map!");
