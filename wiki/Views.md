@@ -76,7 +76,10 @@ Para modelar/representar visualmente, tanto o que foi implementado como as ideia
 **[SSD US190](diagramas/nivel1/UC190.md)**
 **[SSD US200](diagramas/nivel1/UC200.md)**
 **[SSD US210](diagramas/nivel1/UC210.md)**
+**[SSD US240](diagramas/nivel1/UC240.md)**
 **[SSD US270](diagramas/nivel1/UC270.md)**
+**[SSD US350](diagramas/nivel1/UC350.md)**
+**[SSD US370](diagramas/nivel1/UC370.md)**
 
 
 
@@ -97,7 +100,10 @@ Para modelar/representar visualmente, tanto o que foi implementado como as ideia
 **[SSD US190](diagramas/nivel2/UC190.md)**
 **[SSD US200](diagramas/nivel2/UC200.md)**
 **[SSD US210](diagramas/nivel2/UC210.md)**
+**[SSD US240](diagramas/nivel2/UC240.md)**
 **[SSD US270](diagramas/nivel2/UC270.md)**
+**[SSD US350](diagramas/nivel2/UC350.md)**
+**[SSD US370](diagramas/nivel2/UC370.md)**
 
 #### (outros SSD arquiteturalmente relevantes)
 [...]
@@ -130,7 +136,10 @@ Vista baseada numa arquitetura por camadas concêntricas (Onion):
 **[SSD US190](diagramas/nivel3/UC190.md)**
 **[SSD US200](diagramas/nivel3/UC200.md)**
 **[SSD US210](diagramas/nivel3/UC210.md)**
+**[SSD US240](diagramas/nivel3/UC240.md)**
 **[SSD US270](diagramas/nivel3/UC270.md)**
+**[SSD US350](diagramas/nivel3/UC350.md)**
+**[SSD US370](diagramas/nivel3/UC370.md)**
 
 #### (outros SSD arquiteturalmente relevantes)
 [...]
