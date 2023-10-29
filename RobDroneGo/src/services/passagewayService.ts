@@ -89,4 +89,19 @@ export default class PassagewayService implements IPassagewayService {
       throw e;
     }
   }
+  public async updatePassageway(PassagewayDTO: IPassagewayDTO): Promise<Result<IPassagewayDTO>> {
+    try{
+      const updatedPassageway = await this.PassagewayRepo.update(PassagewayDTO.floorID1, PassagewayDTO.floorID2, PassagewayDTO);
+      if (updatedPassageway == null) {
+        console.log('Passageway not found');
+        return Result.fail<IPassagewayDTO>('Passageway not found');
+      }
+
+      const updatedPassagewayDTO = PassagewayMapper.toDTO(updatedPassageway);
+      return Result.ok<IPassagewayDTO>(updatedPassagewayDTO);
+    } catch (e) {
+      throw e;
+    }
+  }
+
 }

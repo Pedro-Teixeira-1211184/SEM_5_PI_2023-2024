@@ -24,10 +24,19 @@ export default () => {
         ctrl.createPassageway(req, res, next);
     });
 
-    route.get('/passagewaysBetweenBuildings/:buildingCode1/:buildingCode2', (req, res, next) => {
-        console.log("Getting all passageways between these 2 buildings!");
-        ctrl.getPassagewaysInBuildings(req, res, next);
+
+    route.put('/', celebrate({
+        body: Joi.object({
+            floorID1: Joi.string().required().error(new Error('Invalid floorID code')),
+            floorID2: Joi.string().required().error(new Error('Invalid floorID code')),
+            localization1: Joi.string().regex(new RegExp('^[(][0-9]+[,][0-9]+[)][;][(][0-9]+[,][0-9]+[)]$')).required().error(new Error('Invalid localization1')),
+            localization2: Joi.string().regex(new RegExp('^[(][0-9]+[,][0-9]+[)][;][(][0-9]+[,][0-9]+[)]$')).required().error(new Error('Invalid localization2'))
+        })
+    }), (req, res, next) => {
+        console.log("Updating a passageway!");
+        ctrl.updatePassageway(req, res, next);
     });
 
+    
     return route;
 }

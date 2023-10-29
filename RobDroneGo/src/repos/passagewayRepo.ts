@@ -3,10 +3,9 @@ import {Inject, Service} from 'typedi';
 import IPassagewayRepo from "../services/IRepos/IPassagewayRepo";
 import {Passageway} from "../domain/passageway";
 import {PassagewayMapper} from "../mappers/PassagewayMapper";
-
+import IPassagewayDTO from "../dto/IPassagewayDTO";
 import {Document, FilterQuery, Model} from "mongoose";
 import {IPassagewayPersistence} from "../dataschema/IPassagewayPersistence";
-import IPassagewayDTO from '../dto/IPassagewayDTO';
 import IFloorDTO from '../dto/IFloorDTO';
 
 
@@ -118,6 +117,27 @@ public async exists(passageway: Passageway): Promise<boolean> {
     }
       console.log('result1: ', result1);
       return result1;
+    } catch (error) {
+    throw error;
+    }
+  }
+
+  public async update(floorID1: string, floorID2: string, updatedFields: Partial<IPassagewayDTO>): Promise<Passageway | null>{
+    try {
+      const query: FilterQuery<IPassagewayPersistence> = {$or: [{passagewayFloorID1: floorID1, passagewayFloorID2: floorID2}, {passagewayFloorID1: floorID2, passagewayFloorID2: floorID1}]} as FilterQuery<IPassagewayPersistence & Document>;
+      const findpassageway = await this.passagewaySchema.findOne(query as FilterQuery<IPassagewayPersistence & Document>);
+      if (findpassageway == null){
+        console.log('Passageway not found');
+        return null;
+      } 
+      const passageway = PassagewayMapper.toDomain(findpassageway);
+      passageway.floorID1 = updatedFields.floorID1;
+      passageway.floorID2 = updatedFields.floorID2;
+      passageway.localization1 = updatedFields.localization1;
+      passageway.localization2 = updatedFields.localization2;
+      const rawPassageway = PassagewayMapper.toPersistence(passageway);
+      await this.passagewaySchema.replaceOne(query as FilterQuery<IPassagewayPersistence & Document>, rawPassageway);
+      return passageway;
     } catch (error) {
       throw error;
     }

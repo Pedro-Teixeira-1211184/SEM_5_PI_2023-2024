@@ -28,7 +28,7 @@ FSchema --> FR : floor found
 deactivate FSchema
 FR -> FM : floor = toDomain(floorCreated)
 activate FM
-FM -> F : create(buildingCreated)
+FM -> F : create(floorCreated)
 activate F
 F --> FM : floor
 deactivate F
