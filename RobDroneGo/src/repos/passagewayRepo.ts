@@ -6,6 +6,8 @@ import {PassagewayMapper} from "../mappers/PassagewayMapper";
 
 import {Document, FilterQuery, Model} from "mongoose";
 import {IPassagewayPersistence} from "../dataschema/IPassagewayPersistence";
+import IPassagewayDTO from '../dto/IPassagewayDTO';
+import IFloorDTO from '../dto/IFloorDTO';
 
 
 @Service()
@@ -27,11 +29,7 @@ export default class PassagewayRepo implements IPassagewayRepo {
 
     try {
       if (await this.exists(passageway)) {
-
-        const rawPassageway: any = PassagewayMapper.toPersistence(passageway);
-
-        const passagewayCreated = await this.passagewaySchema.create(rawPassageway);
-
+        const passagewayCreated = await this.passagewaySchema.create(PassagewayMapper.toPersistence(passageway));
         return PassagewayMapper.toDomain(passagewayCreated);
       } else {
         console.log('Passageway already exists');
@@ -96,4 +94,32 @@ public async exists(passageway: Passageway): Promise<boolean> {
       throw error;
     }
   }*/
+
+  public async getPassagewaysInBuildings(floors1: Array<IFloorDTO>, floors2: Array<IFloorDTO>): Promise<Array<IPassagewayDTO>> {
+    try {
+      let result1: IPassagewayDTO[] = [];
+      for(let i = 0; i < floors1.length; i++) {
+        for (let j = 0; j < floors2.length; j++) {
+          const query = {$or: [{passagewayFloorID1: floors1[i].id} && {passagewayFloorID2: floors2[j].id}]} as FilterQuery<IPassagewayPersistence & Document>;
+          const passageways = await this.passagewaySchema.find(query);
+          console.log('passageways: ', passageways);
+          if (passageways.length != 0) {
+            result1.push(PassagewayMapper.toDTO(PassagewayMapper.toDomain(passageways)));
+          }
+          const query1 = {$or: [{passagewayFloorID1: floors2[i].id} && {passagewayFloorID2: floors1[j].id}]} as FilterQuery<IPassagewayPersistence & Document>;
+          const passageways1 = await this.passagewaySchema.find(query1);
+          console.log('passageways1: ', passageways1);
+          if (passageways1.length != 0) {
+            for (let k = 0; k < passageways1.length; k++) {
+              result1.push(PassagewayMapper.toDTO(PassagewayMapper.toDomain(passageways1[k])));
+            }
+        }
+      }
+    }
+      console.log('result1: ', result1);
+      return result1;
+    } catch (error) {
+      throw error;
+    }
+  }
 }

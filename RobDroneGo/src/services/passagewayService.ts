@@ -7,6 +7,7 @@ import IPassagewayService from "./IServices/IPassagewayService";
 import {Result} from "../core/logic/Result";
 import {PassagewayMapper} from "../mappers/PassagewayMapper";
 import IFloorRepo from "./IRepos/IFloorRepo";
+import IFloorDTO from '../dto/IFloorDTO';
 
 
 @Service()
@@ -70,6 +71,21 @@ export default class PassagewayService implements IPassagewayService {
       return Result.ok<boolean>(floorExistsInPassageways)
     } catch (e) {
       console.log('Error in PassagewayService.findFloorsInPassageways', e);
+      throw e;
+    }
+  }
+
+  public async getPassagewaysInBuildings(floors1: Array<IFloorDTO>, floors2: Array<IFloorDTO>): Promise<Result<Array<IPassagewayDTO>>> {
+    try {
+      const passagewaysInBuildings = await this.PassagewayRepo.getPassagewaysInBuildings(floors1, floors2);
+
+      if (passagewaysInBuildings.length == 0) {
+        return Result.fail<Array<IPassagewayDTO>>('No passageways found');
+      }
+
+      return Result.ok<Array<IPassagewayDTO>>(passagewaysInBuildings)
+    } catch (e) {
+      console.log('Error in PassagewayService.getPassagewaysInBuildings', e);
       throw e;
     }
   }

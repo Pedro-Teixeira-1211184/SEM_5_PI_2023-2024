@@ -24,5 +24,10 @@ export default () => {
         ctrl.createPassageway(req, res, next);
     });
 
+    route.get('/passagewaysBetweenBuildings/:buildingCode1/:buildingCode2', (req, res, next) => {
+        console.log("Getting all passageways between these 2 buildings!");
+        ctrl.getPassagewaysInBuildings(req, res, next);
+    });
+
     return route;
 }
