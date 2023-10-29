@@ -7,6 +7,10 @@ import {IFloorPersistence} from "../dataschema/IFloorPersistence";
 import {Floor} from "../domain/floor";
 import {IBuildingPersistence} from "../dataschema/IBuildingPersistence";
 import IFloorDTO from '../dto/IFloorDTO';
+import {IPassagewayPersistence} from '../dataschema/IPassagewayPersistence';
+import {BuildingMapper} from "../mappers/BuildingMapper";
+import {floor} from "lodash";
+
 
 
 @Service()
@@ -45,12 +49,12 @@ export default class FloorRepo implements IFloorRepo {
 
   public async findByDomainId(floorId: string): Promise<Floor> {
     try {
-      const query = {_id: floorId};
-      return this.floorSchema.findOne(query as FilterQuery<IFloorPersistence & Document>)
-        .then((floor) => {
-          if (floor == null) return null;
-          return FloorMapper.toDomain(floor);
-        })
+      const query = {floorID: floorId};
+      const floorRecord = await this.floorSchema.findOne(query as FilterQuery<IBuildingPersistence & Document>);
+      if (floorRecord == null) {
+        return null;
+      }
+      return FloorMapper.toDomain(floorRecord);
     } catch (error) {
       throw error;
     }
@@ -88,6 +92,35 @@ export default class FloorRepo implements IFloorRepo {
 
     } catch (error) {
       console.log('Error in FloorRepo.findFloorsByBuildingCode(): ', error);
+      throw error;
+    }
+  }
+
+  public async findFloorsByPassageways(floorArray: IFloorDTO[]): Promise<IFloorDTO[]> {
+    try {
+      //query where passagewayFloorID1 is equal to floorArray[i].id or passagewayFloorID2 is equal to floorArray[i].id
+      const query = {$or: [{passagewayFloorID1: {$in: floorArray}}, {passagewayFloorID2: {$in: floorArray}}]} as FilterQuery<IPassagewayPersistence & Document>;
+      const passagewayRecord = await this.floorSchema.find(query);
+      const floorArrayResult: IFloorDTO[] = [];
+      console.log('passagewayRecord: ', passagewayRecord)
+      if(passagewayRecord.length == 0){
+        return [];
+      }
+      for (let i = 0; i < passagewayRecord.length; i++) {
+          for (let j = 0; j < floorArray.length; j++) {
+              console.log('passagewayRecord[i]: ', passagewayRecord[i].id);
+              console.log('floorArray[i]: ', floorArray[i].id);
+              if (passagewayRecord[i].id == floorArray[j].id) {
+                  let k = 0;
+                  floorArrayResult[k]= FloorMapper.toDTO(FloorMapper.toDomain(passagewayRecord[i]));
+                  k++;
+          }
+      }
+      console.log('floorArrayResult: ', floorArrayResult);
+      return floorArrayResult;
+    }
+    } catch (error) {
+      console.log('Error in passagewayRepo.getFloorsWithPassageways(): ', error);
       throw error;
     }
   }

@@ -36,7 +36,7 @@ export default () => {
         }
     );
 
-    route.patch('/:nickname', celebrate({
+    route.patch('/:robot_id', celebrate({
         body: Joi.object({
             isActive: Joi.boolean().error(new Error('Invalid robot status'))
         })

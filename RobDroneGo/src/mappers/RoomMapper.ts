@@ -39,11 +39,11 @@ export class RoomMapper extends Mapper<Room> {
 
   public static toPersistence(Room: Room): any {
     return {
-      RoomID: Room.id.toString(),
-      RoomfloorID: Room.floorID,
-      Roomdesignation: Room.designation,
-      RoomName: Room.name,
-      RoomLocalization: Room.localizatilon,
+      roomID: Room.id.toString(),
+      roomFloorID: Room.floorID,
+      roomDesignation: Room.designation,
+      roomName: Room.name,
+      roomLocalization: Room.localizatilon,
     }
   }
 }

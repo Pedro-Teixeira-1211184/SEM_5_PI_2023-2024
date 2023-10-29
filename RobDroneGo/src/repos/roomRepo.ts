@@ -64,7 +64,7 @@ export default class RoomRepo implements IRoomRepo {
   public async exists(room: Room): Promise<boolean> {
     try {
       //determines if the Room exists by its unique name
-      const query = {roomCode: room.name.toString()};
+      const query = {roomName: room.name.toString()};
       const RoomDocument = await this.roomSchema.findOne(query as FilterQuery<IRoomPersistence & Document>);
       return RoomDocument == null;
     } catch (error) {

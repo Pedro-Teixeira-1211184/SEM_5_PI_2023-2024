@@ -1,0 +1,85 @@
+autonumber
+
+participant "RobDroneGo UI" as UI
+participant "RobDroneGo" as API
+participant ":robotController" as EC
+participant ":robotService" as BS
+participant ":robotRepository" as BR
+participant ":robotMapper" as BM
+participant ":robotDTO" as DTO
+participant "r:robot" as E
+participant ":robotSchema" as BSchema
+
+activate UI
+UI -> API: .post('/robots/:robot_id')
+activate API
+API -> EC: updateRobot(req, res, next)
+activate EC
+EC -> BS: robotOrError = updateRobot(req.params.robot_id, req.body)
+activate BS
+BS -> BR: robot = findByDomainId(robot_id)
+activate BR
+BR -> BSchema: robot = findOne(query)
+activate BSchema
+BSchema --> BR: find
+deactivate BSchema
+BR -> BM: robotTypeMapper.toDomain(find)
+activate BM
+BM -> E
+activate E
+E --> BM: robot
+deactivate E
+BM -> BR: robot
+deactivate BM
+BR -> BS: robot
+deactivate BR
+BS -> BS: robot.isActive = !robot.isActive
+BS -> BM: mapped = toPersistence(robot)
+activate BM
+BM --> BS: persistence
+deactivate BM
+BS -> BM: mapped2 = toDomain(mapped)
+activate BM
+BM -> E
+activate E
+E --> BM: robot
+deactivate E
+BM --> BS: robot
+deactivate BM
+BS -> BR: robotOrError = update(mapped2, robot_id)
+activate BR
+BR -> BSchema: find = findOne(query)
+activate BSchema
+BSchema --> BR: find
+deactivate BSchema
+BR -> BM: robot1 = toDomain(find)
+activate BM
+BM -> E
+activate E
+E --> BM: robot
+deactivate E
+BM -> BR: robot
+BR -> BR: robot1.isActive = robot.isActive
+BR -> BM: rawRobot = toPersistence(robot1)
+BM --> BR: persistence
+deactivate BM
+BR -> BSchema: replaceOne(query, rawRobot)
+activate BSchema
+BSchema --> BR: replaced
+deactivate BSchema
+BR --> BS: robot1
+deactivate BR
+BS -> BM: robotDTOResult = toDTO(robotOrError)
+activate BM
+BM -> DTO
+activate DTO
+DTO --> BM: robotDTO
+deactivate DTO
+BM --> BS: robotDTOResult
+deactivate BM
+BS -> EC: robotDTOResult
+deactivate BS
+EC --> API: robotDTO and status 201
+deactivate EC
+API --> UI: robotDTO and status 201
+

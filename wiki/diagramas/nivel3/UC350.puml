@@ -1,0 +1,57 @@
+autonumber
+
+participant "RobDroneGo UI" as UI
+participant "RobDroneGo" as API
+participant ":robotController" as EC
+participant ":robotService" as BS
+participant ":robotRepository" as BR
+participant ":robotTypeMapper" as BM
+participant ":robotTypeDTO" as DTO
+participant "r:robotType" as E
+participant ":robotSchema" as BSchema
+
+activate UI
+UI -> API: .post('/robots/types')
+activate API
+API -> EC: createRobotType(req, res, next)
+activate EC
+EC -> BS: robotTypeOrError = createRobotType(req.body)
+activate BS
+BS -> E: robotTypeOrError = create(robotTypeDTO)
+activate E
+E --> BS: robot type
+deactivate E
+BS -> BR: robotTypeCreated = save(robotTypeResult)
+activate BR
+BR -> BR: exists(robotType)
+BR -> BM: toPersistence(robotType)
+activate BM
+BM --> BR: persistence robot type
+deactivate BM
+BR -> BSchema: floorDocument = create(persistence)
+activate BSchema
+BSchema --> BR: saved robot type
+deactivate BSchema
+BR -> BM: robot = toDomain(floorDocument)
+activate BM
+BM -> E
+activate E
+E --> BM: robot type
+deactivate E
+BM --> BR: robot type
+deactivate BM
+BR --> BS: robot type
+deactivate BR
+BS -> BM: robotTypeDTOResult = toDTO(robotTypeCreated)
+activate BM
+BM -> DTO
+activate DTO
+DTO --> BM: robot type DTO
+deactivate DTO
+BM --> BS: robot type DTO
+deactivate BM
+BS --> EC: robot type DTO
+deactivate BS
+EC --> API: robot type DTO and status 201
+deactivate EC
+API --> UI: robot type DTO and status 201

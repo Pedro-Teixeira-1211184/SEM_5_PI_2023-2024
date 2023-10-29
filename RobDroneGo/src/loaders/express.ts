@@ -7,6 +7,7 @@ import buildingRoute from "../api/routes/buildingRoute";
 import robotRoute from "../api/routes/robotRoute";
 import passagewayRoute from '../api/routes/passagewayRoute';
 import roomRoute from '../api/routes/roomRoute';
+import mapRoute from "../api/routes/mapRoute";
 
 export default ({app}: { app: express.Application }) => {
     app.enable('trust proxy');
@@ -29,6 +30,7 @@ export default ({app}: { app: express.Application }) => {
     app.use('/robots', robotRoute());
     app.use('/passageways', passagewayRoute());
     app.use('/rooms', roomRoute());
+    app.use('/maps', mapRoute());
 
     app.get('/status', (req, res) => {
         res.status(200).end();

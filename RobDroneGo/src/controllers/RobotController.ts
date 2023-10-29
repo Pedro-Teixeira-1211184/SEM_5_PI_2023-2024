@@ -48,7 +48,7 @@ export default class RobotController implements IRobotController /* TODO: extend
 
   public async updateRobot(req: Request, res: Response, next: NextFunction) {
       try {
-      const robotOrError = await this.robotServiceInstance.updateRobot(req.params.nickname, req.body as IRobotDTO) as Result<IRobotDTO>;
+      const robotOrError = await this.robotServiceInstance.updateRobot(req.params.robot_id, req.body as IRobotDTO) as Result<IRobotDTO>;
       if (robotOrError.isFailure) {
         console.log(robotOrError.errorValue());
         return res.status(StatusCodes.BAD_REQUEST).json(robotOrError.errorValue());
