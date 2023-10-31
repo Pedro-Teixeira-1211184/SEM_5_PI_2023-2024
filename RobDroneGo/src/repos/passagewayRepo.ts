@@ -142,4 +142,17 @@ export default class PassagewayRepo implements IPassagewayRepo {
             throw error;
         }
     }
+
+  public async findByFloorCodes(floorCode1: string, floorCode2: string): Promise<Passageway> {
+    try {
+      const query = {$or: [{passagewayFloorCode1: floorCode1, passagewayFloorCode2: floorCode2}, {passagewayFloorCode1: floorCode2, passagewayFloorCode2: floorCode1}]} as FilterQuery<IPassagewayPersistence & Document>;
+      const find = await this.passagewaySchema.findOne(query as FilterQuery<IPassagewayPersistence & Document>);
+      if (find == null) {
+        return null;
+      }
+      return PassagewayMapper.toDomain(find);
+    }catch (error) {
+      throw error;
+    }
+  }
 }
