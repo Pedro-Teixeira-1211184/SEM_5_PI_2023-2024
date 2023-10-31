@@ -11,7 +11,7 @@ export class ElevatorMapper extends Mapper<Elevator> {
   public static toDTO(elevator: Elevator): IElevatorDTO {
     return {
       id: elevator.id.toString(),
-      coordenates: elevator.coordenates.toString(),
+      coordenates: elevator.coordenates,
       buildingCode: elevator.buildingCode.toString(),
       floorNumbers: elevator.floorNumbers.toString()
     } as IElevatorDTO;
@@ -42,4 +42,4 @@ export class ElevatorMapper extends Mapper<Elevator> {
             elevatorFloorNumbers: elevator.floorNumbers
         }
     }
-}    
+}
