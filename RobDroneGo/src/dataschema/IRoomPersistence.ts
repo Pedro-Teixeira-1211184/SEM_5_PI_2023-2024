@@ -1,7 +1,6 @@
 export interface IRoomPersistence {
     id: string;
-    floorID: string;
+    floorCode: string;
     designation: string;
     name: string;
-    localization: string;
 }

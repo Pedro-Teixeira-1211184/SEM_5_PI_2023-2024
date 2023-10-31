@@ -7,10 +7,9 @@ import {RoomId} from "./roomId";
 import IRoomDTO from "../dto/IRoomDTO";
 
 interface RoomProps {
-    floorID: string;
+    floorCode: string;
     designation: string;
     name: string;
-    localization: string;
 }
 
 export class Room extends AggregateRoot<RoomProps> {
@@ -30,20 +29,12 @@ export class Room extends AggregateRoot<RoomProps> {
     this.props.name = value;
   }
 
-  get localizatilon(): string {
-    return this.props.localization;
+  get floorCode(): string {
+    return this.props.floorCode;
   }
 
-  set localization(value: string) {
-    this.props.localization = value;
-  }
-
-  get floorID(): string {
-    return this.props.floorID;
-  }
-
-  set floorID(value: string) {
-    this.props.floorID = value;
+  set floorCode(value: string) {
+    this.props.floorCode = value;
   }
 
   get designation(): string {
@@ -60,16 +51,14 @@ export class Room extends AggregateRoot<RoomProps> {
 
   public static create(RoomDTO: IRoomDTO, id?: UniqueEntityID): Result<Room> {
     const name = RoomDTO.name;
-    const localizatilon = RoomDTO.localization;
     const designation = RoomDTO.designation;
-    const floorID = RoomDTO.floorID;
-    
+    const floorCode = RoomDTO.floorCode;
+
 
     const room = new Room({
       name: name,
-      localization: localizatilon,
-      designation: designation,
-      floorID: floorID,
+      floorCode: floorCode,
+      designation: designation
     }, id);
     return Result.ok<Room>(room);
   }

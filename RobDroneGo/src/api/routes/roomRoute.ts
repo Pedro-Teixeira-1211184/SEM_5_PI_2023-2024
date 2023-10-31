@@ -14,10 +14,10 @@ export default () => {
 
     route.post('/', celebrate({
         body: Joi.object({
-            floorID: Joi.string().required().error(new Error('Invalid floorID code')),
+            floorCode: Joi.string().required().error(new Error('Invalid floorCode code')),
             designation: Joi.string().required().error(new Error('Invalid room designation')),
             name: Joi.string().required().error(new Error('Invalid room name')),
-            localization: Joi.string().regex(new RegExp('^[(][0-9]+[,][0-9]+[)][;][(][0-9]+[,][0-9]+[)]$')).required().error(new Error('Invalid localization')),
+            localization: Joi.string().regex(new RegExp('^[(][0-9]+[,][0-9]+[)][;][(][0-9]+[,][0-9]+[)]$')).error(new Error('Invalid localization')),
         })
     }), (req, res, next) => {
         console.log("Creating a Room!");
