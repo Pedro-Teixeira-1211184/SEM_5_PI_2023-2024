@@ -133,31 +133,11 @@ export default class PassagewayRepo implements IPassagewayRepo {
             const passageway = PassagewayMapper.toDomain(findpassageway);
             passageway.floorCode1 = updatedFields.floorCode1;
             passageway.floorCode2 = updatedFields.floorCode2;
+            passageway.localization1 = updatedFields.localization1;
+            passageway.localization2 = updatedFields.localization2;
             const rawPassageway = PassagewayMapper.toPersistence(passageway);
             await this.passagewaySchema.replaceOne(query as FilterQuery<IPassagewayPersistence & Document>, rawPassageway);
             return passageway;
-        } catch (error) {
-            throw error;
-        }
-    }
-
-    public async findPassagewayByFloorID1AndFloorID2(floorID1: string): Promise<Passageway[]> {
-        try {
-            const query: FilterQuery<IPassagewayPersistence> = {
-                $or: [{
-                    passagewayFloorID1: floorID1,
-                }, {passagewayFloorID2: floorID1}]
-            } as FilterQuery<IPassagewayPersistence & Document>;
-            const passagewayDocument = await this.passagewaySchema.find(query as FilterQuery<IPassagewayPersistence & Document>);
-            const passagewayArray: Passageway[] = [];
-            if (passagewayDocument == null) {
-                return [];
-            } else {
-                for (let i = 0; i < passagewayDocument.length; i++) {
-                    passagewayArray[i] = PassagewayMapper.toDomain(passagewayDocument[i]);
-                }
-                return passagewayArray;
-            }
         } catch (error) {
             throw error;
         }
