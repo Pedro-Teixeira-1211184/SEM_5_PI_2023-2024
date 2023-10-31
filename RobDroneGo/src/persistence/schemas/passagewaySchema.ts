@@ -4,10 +4,8 @@ import {IPassagewayPersistence} from '../../dataschema/IPassagewayPersistence';
 const PassagewaySchema = new mongoose.Schema(
   {
     passagewayID: {type: String, unique: true},
-    passagewayFloorID1: {type: String, required: true},
-    passagewayFloorID2: {type: String, required: true},
-    passagewayLocalization1: {type: String, required: true},
-    passagewayLocalization2: {type: String, required: true}
+    passagewayFloorCode1: {type: String, required: true},
+    passagewayFloorCode2: {type: String, required: true},
   },
   {
     timestamps: true

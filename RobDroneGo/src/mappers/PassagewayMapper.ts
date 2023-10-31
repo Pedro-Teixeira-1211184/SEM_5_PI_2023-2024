@@ -11,10 +11,8 @@ export class PassagewayMapper extends Mapper<Passageway> {
   public static toDTO(passageway: Passageway): IPassagewayDTO {
     return {
       id: passageway.id.toString(),
-      floorID1: passageway.floorID1,
-      floorID2: passageway.floorID2,
-      localization1: passageway.localization1,
-      localization2: passageway.localization2
+      floorCode1: passageway.floorCode1,
+      floorCode2: passageway.floorCode2
       } as IPassagewayDTO;
   }
 
@@ -23,10 +21,8 @@ export class PassagewayMapper extends Mapper<Passageway> {
     const passagewayOrError = Passageway.create(
       {
         id: raw.passagewayID,
-        floorID1: raw.passagewayFloorID1,
-        floorID2: raw.passagewayFloorID2,
-        localization1: raw.passagewayLocalization1,
-        localization2: raw.passagewayLocalization2
+        floorCode1: raw.passagewayFloorCode1,
+        floorCode2: raw.passagewayFloorCode2
       },
       new UniqueEntityID(raw.domainId)
     );
@@ -40,10 +36,8 @@ export class PassagewayMapper extends Mapper<Passageway> {
   public static toPersistence(passageway: Passageway): any {
     return {
       passagewayID: passageway.id.toString(),
-      passagewayFloorID1: passageway.floorID1.toString(),
-      passagewayFloorID2: passageway.floorID2.toString(),
-      passagewayLocalization1: passageway.localization1.toString(),
-      passagewayLocalization2: passageway.localization2.toString()
+      passagewayFloorCode1: passageway.floorCode1.toString(),
+      passagewayFloorCode2: passageway.floorCode2.toString()
     }
   }
 }

@@ -7,10 +7,8 @@ import { PassagewayId } from "./passagewayId";
 import IPassagewayDTO from "../dto/IPassagewayDTO";
 
 interface PassagewayProps {
-    floorID1: string;
-    floorID2: string;
-    localization1: string;
-    localization2: string;
+    floorCode1: string;
+    floorCode2: string;
 }
 
 export class Passageway extends AggregateRoot<PassagewayProps> {
@@ -22,53 +20,34 @@ export class Passageway extends AggregateRoot<PassagewayProps> {
         return new PassagewayId(this.passagewayId.toValue());
     }
 
-    get floorID1(): string {
-        return this.props.floorID1;
+    get floorCode1():string{
+        return this.props.floorCode1;
     }
 
-    set floorID1(value: string) {
-        this.props.floorID1 = value;
+    get floorCode2():string{
+        return this.props.floorCode2;
     }
 
-    get floorID2(): string {
-        return this.props.floorID2;
+    set floorCode1(floorCode: string){
+        this.props.floorCode1 = floorCode;
     }
 
-    set floorID2(value: string) {
-        this.props.floorID2 = value;
+    set floorCode2(floorCode: string){
+        this.props.floorCode2 = floorCode;
     }
 
-    get localization1(): string {
-        return this.props.localization1;
-    }
-
-    set localization1(value: string) {
-        this.props.localization1 = value;
-    }
-
-    get localization2(): string {
-        return this.props.localization2;
-    }
-
-    set localization2(value: string) {
-        this.props.localization2 = value;
-    }
 
     private constructor(props: PassagewayProps, id?: UniqueEntityID) {
         super(props, id);
     }
 
     public static create(passagewayDTO: IPassagewayDTO, id?: UniqueEntityID): Result<Passageway> {
-        const floorID1 = passagewayDTO.floorID1;
-        const floorID2 = passagewayDTO.floorID2;
-        const localization1 = passagewayDTO.localization1;
-        const localization2 = passagewayDTO.localization2;
+        const floorCode1 = passagewayDTO.floorCode1;
+        const floorCode2 = passagewayDTO.floorCode2;
 
         const passageway = new Passageway({
-          floorID1: floorID1,
-          floorID2: floorID2,
-          localization1: localization1,
-          localization2: localization2
+          floorCode1: floorCode1,
+          floorCode2: floorCode2,
         }, id);
         return Result.ok<Passageway>(passageway);
       }
