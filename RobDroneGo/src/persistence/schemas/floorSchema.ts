@@ -1,12 +1,13 @@
 import mongoose from 'mongoose';
-import { IFloorPersistence } from '../../dataschema/IFloorPersistence';
+import {IFloorPersistence} from '../../dataschema/IFloorPersistence';
 
 const FloorSchema = new mongoose.Schema(
   {
-    floorID: { type: String, unique: true },
-    floorBuildingCode: { type: String, required: true },
-    floorNumber: { type: Number, required: true },
-    floorDescription: { type: String, required: true },
+    floorID: {type: String, unique: true},
+    floorBuildingCode: {type: String, required: true},
+    floorNumber: {type: Number, required: true},
+    floorCode: {type: String, required: true, unique: true},
+    floorDescription: {type: String, required: true},
   },
   {
     timestamps: true
@@ -14,5 +15,5 @@ const FloorSchema = new mongoose.Schema(
 );
 
 
-FloorSchema.index({ floorID: 1 }, { unique: true });
+FloorSchema.index({floorID: 1}, {unique: true});
 export default mongoose.model<IFloorPersistence & mongoose.Document>('Floor', FloorSchema);

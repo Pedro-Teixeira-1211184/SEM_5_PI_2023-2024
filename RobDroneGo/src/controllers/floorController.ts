@@ -3,6 +3,7 @@ import {Response, Request, NextFunction} from 'express';
 import config from "../../config";
 import IBuildingService from "../services/IServices/IBuildingService";
 import IFloorController from "./IControllers/IFloorController";
+// @ts-ignore
 import {StatusCodes} from "http-status-codes";
 import IFloorService from "../services/IServices/IFloorService";
 import IFloorDTO from "../dto/IFloorDTO";
@@ -77,7 +78,7 @@ export default class FloorController implements IFloorController /* TODO: extend
                 if (boolean) {
                     getFloorsWithPassageway.push(floorsInBuilding[i]);
                 }
-            }  
+            }
 
             if (getFloorsWithPassageway.length == 0) {
                 return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send("No passageways found in building!");
@@ -96,7 +97,7 @@ export default class FloorController implements IFloorController /* TODO: extend
                     console.log("aux1: ", aux1[k]);
                 }
             }
-            
+
             for (let i = 0; i < passagewaysInBuilding.length; i++) {
                 const aux2 = passagewaysInBuilding[i].floorID1;
                 const aux3 = passagewaysInBuilding[i].floorID2;
@@ -109,7 +110,7 @@ export default class FloorController implements IFloorController /* TODO: extend
                     }
                 }
             }*/
-        
+
             return res.status(StatusCodes.OK).json(getFloorsWithPassageway);
         } catch (e) {
             return next(e);
@@ -127,8 +128,8 @@ export default class FloorController implements IFloorController /* TODO: extend
         return res.json(floorDTO).status(StatusCodes.ACCEPTED);
     }catch(e){
         return next(e);
-    }    
     }
-    
+    }
+
 }
 
