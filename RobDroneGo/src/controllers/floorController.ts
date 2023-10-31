@@ -74,8 +74,8 @@ export default class FloorController implements IFloorController /* TODO: extend
             const getFloorsWithPassageway: IFloorDTO[] = [];
 
             for ( let i = 0; i < floorsInBuilding.length; i++) {
-                const boolean = this.passagewayServiceInstance.findFloorsInPassageways(floorsInBuilding[i].id);
-                if (boolean) {
+                const boolean = await this.passagewayServiceInstance.findFloorsInPassageways(floorsInBuilding[i].code);
+                if (boolean.isSuccess) {
                     getFloorsWithPassageway.push(floorsInBuilding[i]);
                 }
             }

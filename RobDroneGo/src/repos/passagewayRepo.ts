@@ -74,7 +74,7 @@ export default class PassagewayRepo implements IPassagewayRepo {
 
     public async findFloorsInPassageways(floorId: string): Promise<boolean> {
         try {
-            const query = {$or: [{passagewayFloorID1: floorId}, {passagewayFloorID2: floorId}]} as FilterQuery<IPassagewayPersistence & Document>;
+            const query = {$or: [{passagewayFloorCode1: floorId}, {passagewayFloorCode2: floorId}]} as FilterQuery<IPassagewayPersistence & Document>;
             const passageways = await this.passagewaySchema.find(query);
             return passageways.length > 0;
         } catch (error) {

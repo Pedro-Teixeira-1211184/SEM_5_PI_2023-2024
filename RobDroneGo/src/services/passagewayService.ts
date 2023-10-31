@@ -60,9 +60,9 @@ export default class PassagewayService implements IPassagewayService {
 
   }
 
-  public async findFloorsInPassageways(floorId: string): Promise<Result<boolean>> {
+  public async findFloorsInPassageways(floorCode: string): Promise<Result<boolean>> {
     try {
-      const floorExistsInPassageways = await this.PassagewayRepo.findFloorsInPassageways(floorId);
+      const floorExistsInPassageways = await this.PassagewayRepo.findFloorsInPassageways(floorCode);
 
       if (floorExistsInPassageways == false) {
         return Result.fail<boolean>('No passageways found');
