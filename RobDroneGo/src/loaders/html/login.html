@@ -69,15 +69,15 @@
 </head>
 <body>
 <div class="container">
-    <form class="login-form" id="loginForm">
+    <form class="login-form" id="loginForm" action="/login" method="post">
         <h1>Login</h1>
         <div class="input-container">
-            <label for="username">Nome de usuário</label>
-            <input type="text" id="username" name="username" placeholder="Digite seu nome de usuário" required>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Type your username" required>
         </div>
         <div class="input-container">
-            <label for="password">Senha</label>
-            <input type="password" id="password" name="password" placeholder="Digite sua senha" required>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Type your password" required>
         </div>
         <button type="submit">Entrar</button>
     </form>
