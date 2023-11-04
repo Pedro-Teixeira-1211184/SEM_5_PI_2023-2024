@@ -28,10 +28,16 @@ export default ({app}: { app: express.Application }) => {
   });
 
   app.post('/login', (req, res) => {
-    console.log(req.body);
-    res.redirect('/'); // Redireciona para a página inicial ("/")
+    if (req.body.email == 'admin' && req.body.password == 'admin') {
+      res.redirect('/me'); // Redireciona para a página inicial ("/index"
+    } else {
+      res.redirect('/login'); // Redireciona para a página de login ("/login")
+    }
   });
 
+  app.get('/me', (req, res) => {
+    res.sendFile(__dirname + '/html/index.html'); // Envia o arquivo "index.html" para o cliente (página inicial)
+  });
 
   app.use('/buildings', buildingRoute());
   app.use('/robots', robotRoute());
