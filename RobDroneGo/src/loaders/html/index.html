@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      /*use rga*/
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    .topnav {
+      background-color: #333;
+      overflow: hidden;
+    }
+
+    .topnav a {
+      float: right;
+      display: block;
+      color: #fff;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 20px;
+    }
+
+    .topnav a:hover {
+      color: black;
+    }
+
+    .sidebar {
+      height: 100%;
+      width: 250px;
+      position: fixed;
+      top: 0;
+      left: -250px;
+      background-color: #333;
+      padding-top: 20px;
+      transition: left 0.3s;
+    }
+
+    .sidebar a {
+      padding: 15px 25px;
+      text-decoration: none;
+      font-size: 20px;
+      color: #fff;
+      display: block;
+      transition: 0.2s;
+    }
+
+    .sidebar a:hover {
+      color: #55acee;
+    }
+
+    #menu-button {
+      position: fixed;
+      top: 5px;
+      left: 20px;
+      font-size: 30px;
+      cursor: pointer;
+      color: #fff;
+    }
+
+    #menu-button:hover {
+      color: #55acee;
+    }
+
+    #toggle-sidebar-button {
+      position: fixed;
+      top: 5px;
+      left: 70px;
+      font-size: 30px;
+      cursor: pointer;
+      color: #fff;
+      display: none;
+    }
+
+    #toggle-sidebar-button:hover {
+      color: #55acee;
+    }
+
+    #content {
+      margin-left: 0;
+      padding: 15px;
+      transition: margin-left 0.3s;
+    }
+
+    .logout {
+      width: 100%; /* Make the width 100% of the sidebar */
+      text-decoration: none;
+      font-size: 20px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #d9534f; /* Red color */
+    }
+
+    .logout:hover {
+      background-color: #c9302c; /* Red color */
+    }
+
+    .logout a:hover {
+      color: black;
+      text-decoration: none;
+    }
+
+    .logout img {
+      width: 30px;
+      height: 30px;
+      margin-right: 10px;
+    }
+
+    .bottom-logout {
+      position: absolute;
+      bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+<div class="topnav">
+  <a href="#">Home</a>
+  <a href="#">About</a>
+  <a href="#">Services</a>
+  <a href="#">Contact</a>
+</div>
+<div id="menu-button">&#9776;</div>
+<div id="toggle-sidebar-button">&#8592;</div>
+<div class="sidebar">
+  <a href="#">Menu 1</a>
+  <a href="#">Menu 2</a>
+  <a href="#">Menu 3</a>
+  <a href="#">Menu 4</a>
+  <div class="logout bottom-logout">
+    <img src="../_images/logout_icon.png" alt="Logout">
+    <a href="#">Logout</a>
+  </div>
+</div>
+<div id="content">
+  <h1>Content</h1>
+  <p>This is the main content of your page. It will be displayed here.</p>
+</div>
+
+<script>
+  var sidebar = document.querySelector('.sidebar');
+  var content = document.getElementById('content');
+  var toggleSidebarButton = document.getElementById('toggle-sidebar-button');
+
+  document.getElementById('menu-button').addEventListener('click', function () {
+    if (sidebar.style.left === '-250px') {
+      sidebar.style.left = '0';
+      content.style.marginLeft = '250px';
+      toggleSidebarButton.style.left = '270px';
+      toggleSidebarButton.style.display = 'block';
+    } else {
+      sidebar.style.left = '-250px';
+      content.style.marginLeft = '0';
+      toggleSidebarButton.style.display = 'none';
+    }
+  });
+
+  toggleSidebarButton.addEventListener('click', function () {
+    sidebar.style.left = '-250px';
+    content.style.marginLeft = '0';
+    toggleSidebarButton.style.display = 'none';
+  });
+</script>
+</body>
+</html>

@@ -94,7 +94,7 @@ export default () => {
         body: Joi.object({
             buildingCode: Joi.string().required().max(5).error(new Error('Invalid building code')),
             floorNumbers: Joi.string().required().error(new Error('Invalid floor number')),
-            coordenates: Joi.string().required().error(new Error('Invalid coordenates')),
+            coordenates: Joi.string().error(new Error('Invalid coordenates')),
         })
     }), (req, res, next) => {
         console.log("Creating a Elevator!");

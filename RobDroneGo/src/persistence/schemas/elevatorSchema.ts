@@ -5,8 +5,8 @@ const ElevatorSchema = new mongoose.Schema(
     {
         elevatorID: { type: String, unique: true },
         elevatorCoordenates: { type: String },
-        elevatorBuildingCode: { type: String },
-        elevatorFloorNumbers: { type: String }
+        elevatorBuildingCode: { type: String, required: true },
+        elevatorFloorNumbers: { type: String, required: true }
     },
     {
         timestamps: true

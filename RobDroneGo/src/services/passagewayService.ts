@@ -33,12 +33,12 @@ export default class PassagewayService implements IPassagewayService {
 
       //very if the floors exist
 
-      const floor1 = await this.FloorRepo.findByDomainId(PassagewayResult.floorID1);
+      const floor1 = await this.FloorRepo.findByDomainId(PassagewayResult.floorCode1);
 
       if (floor1 == null) {
         return Result.fail<IPassagewayDTO>('Floor1 not found');
       }
-      const floor2 = await this.FloorRepo.findByDomainId(PassagewayResult.floorID2);
+      const floor2 = await this.FloorRepo.findByDomainId(PassagewayResult.floorCode2);
 
       if (floor2 == null) {
         return Result.fail<IPassagewayDTO>('Floor2 not found');
@@ -60,9 +60,9 @@ export default class PassagewayService implements IPassagewayService {
 
   }
 
-  public async findFloorsInPassageways(floorId: string): Promise<Result<boolean>> {
+  public async findFloorsInPassageways(floorCode: string): Promise<Result<boolean>> {
     try {
-      const floorExistsInPassageways = await this.PassagewayRepo.findFloorsInPassageways(floorId);
+      const floorExistsInPassageways = await this.PassagewayRepo.findFloorsInPassageways(floorCode);
 
       if (floorExistsInPassageways == false) {
         return Result.fail<boolean>('No passageways found');
@@ -90,24 +90,9 @@ export default class PassagewayService implements IPassagewayService {
     }
   }
 
-  public async getPassagewaysInFloors(floorId: string): Promise<Result<IPassagewayDTO[]>> {
-    try {
-      const passagewaysInFloor = await this.PassagewayRepo.getPassagewaysInFloors(floorId);
-
-      if (passagewaysInFloor == null) {
-        return Result.fail<IPassagewayDTO[]>('No passageways found');
-      }
-
-      return Result.ok<IPassagewayDTO[]>(passagewaysInFloor)
-    } catch (e) {
-      console.log('Error in PassagewayService.getPassagewaysInFloors', e);
-      throw e;
-    }
-  }
-
   public async updatePassageway(PassagewayDTO: IPassagewayDTO): Promise<Result<IPassagewayDTO>> {
     try{
-      const updatedPassageway = await this.PassagewayRepo.update(PassagewayDTO.floorID1, PassagewayDTO.floorID2, PassagewayDTO);
+      const updatedPassageway = await this.PassagewayRepo.update(PassagewayDTO.floorCode1, PassagewayDTO.floorCode2, PassagewayDTO);
       if (updatedPassageway == null) {
         console.log('Passageway not found');
         return Result.fail<IPassagewayDTO>('Passageway not found');

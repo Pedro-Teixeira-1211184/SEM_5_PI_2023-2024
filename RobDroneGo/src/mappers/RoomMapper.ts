@@ -12,10 +12,9 @@ export class RoomMapper extends Mapper<Room> {
   public static toDTO(Room: Room): IRoomDTO {
     return {
       id: Room.id.toString(),
-      floorID: Room.floorID.toString(),
+      floorCode: Room.floorCode.toString(),
       designation: Room.designation.toString(),
       name: Room.name.toString(),
-      localization: Room.localizatilon.toString(),
     } as IRoomDTO;
   }
 
@@ -23,10 +22,9 @@ export class RoomMapper extends Mapper<Room> {
     const RoomOrError = Room.create(
       {
         id: raw.roomID,
-        floorID: raw.roomFloorID,
+        floorCode: raw.roomFloorCode,
         designation: raw.roomDesignation,
         name: raw.roomName,
-        localization: raw.roomLocalization,
       },
       new UniqueEntityID(raw.domainId)
     );
@@ -40,10 +38,9 @@ export class RoomMapper extends Mapper<Room> {
   public static toPersistence(Room: Room): any {
     return {
       roomID: Room.id.toString(),
-      roomFloorID: Room.floorID,
+      roomFloorCode: Room.floorCode,
       roomDesignation: Room.designation,
-      roomName: Room.name,
-      roomLocalization: Room.localizatilon,
+      roomName: Room.name
     }
   }
 }
