@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<body>
+<div class="topnav">
+  <a href="#">Home</a>
+  <a href="#">About</a>
+  <a href="#">Services</a>
+  <a href="#">Contact</a>
+</div>
+<div (click)="handleClick()" id="menu-button">&#9776;</div>
+<div (click)="closeSidebar()" id="toggle-sidebar-button">&#8592;</div>
+<div class="sidebar" id="sidebar">
+  <a href="#">Menu 1</a>
+  <a href="#">Menu 2</a>
+  <a href="#">Menu 3</a>
+  <a href="#">Menu 4</a>
+  <div class="logout bottom-logout">
+    <img src="../../assets/_images/logout_icon.png" alt="Logout">
+    <a href="#">Logout</a>
+  </div>
+</div>
+<div id="content">
+  <h1>Content</h1>
+  <p>This is the main content of your page. It will be displayed here.</p>
+</div>
+</body>
+</html>
