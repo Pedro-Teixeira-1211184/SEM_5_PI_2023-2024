@@ -1,0 +1,106 @@
+@startuml
+
+autonumber
+participant "RobDroneGo UI" as UI
+participant "RobDroneGo" as API
+participant ":MapController" as FC
+participant ":MapService" as FS
+participant ":MapRepository" as MR
+participant ":FloorRepository" as FR
+participant ":BuildingRepository" as BR
+participant ":RoomRepository" as RR
+participant ":PassagewayRepository" as PR
+participant ":ElevatorRepository" as ER
+participant ":MapMapper" as MM
+participant ":MapDTO" as mapDTO
+participant ":mapSchema" as m
+participant ":buildingSchema" as BS
+participant ":floorSchema" as FSc
+participant ":roomSchema" as RSc
+participant ":passagewaySchema" as PSc
+participant ":elevatorSchema" as ESc
+participant "m:map" as m
+
+
+activate UI
+activate API
+UI -> API : .patch(/maps)
+API -> FC : createMap(req, res, next)
+activate FC
+FC -> FS : createMap(req.body as IMapDTO)
+activate FS
+FS -> BR : findByCode(mapDTO.buildingCode)
+activate BR
+BR -> BS : findOne(query)
+activate BS
+BS --> BR : query result
+deactivate BS
+BR --> FS : building
+deactivate BR
+FS -> FS : validate building
+FS -> FR : existsByBCodeAndNumber\n(mapDTO.buildingCode, mapDTO.floorNumber)
+activate FR
+FR -> FSc : findOne(query)
+activate FSc
+FSc --> FR : query result
+deactivate FSc
+FR --> FS : floor
+deactivate FR
+FS -> FS : validate floor
+loop for every room
+FS -> RR : findByName(room.name)
+activate RR
+RR -> RSc : findOne(query)
+activate RSc
+RSc --> RR : query result
+deactivate RSc
+RR --> FS : room
+deactivate RR
+FS -> FS : validate room
+end loop
+loop for every passageway
+FS -> PR : findByFloorCodes(passageway.start, passageway.end)
+activate PR
+PR -> PSc : findOne(query)
+activate PSc
+PSc --> PR : query result
+deactivate PSc
+PR --> FS : passageway
+deactivate PR
+FS -> FS : validate passageway
+end loop
+FS -> ER: findByBuildingCode(mapDTO.buildingCode)
+activate ER
+ER -> ESc : findOne(query)
+activate ESc
+ESc --> ER : query result
+deactivate ESc
+ER --> FS : elevator
+deactivate ER
+FS -> FS : validate elevator
+FS -> m : create(mapDTO)
+activate m
+m --> FS : map
+deactivate m
+FS -> MR : save(map)
+activate MR
+MR -> MR : exists(map)
+MR -> MM : toDomain(mapDocument)
+activate MM
+MM --> MR : map
+deactivate MM
+MR -> MM : mapDTO = toDTO(mapDocument)
+activate MM
+MM --> MR : mapDTO
+deactivate MM
+MR --> FS : mapDTO
+deactivate MR
+FS -> FC : mapDTO
+deactivate FS
+FC -> API : mapDTO as json and status 201
+deactivate FC
+API -> UI : mapDTO as json and status 201
+
+
+
+@enduml
