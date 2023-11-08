@@ -7,6 +7,7 @@ import IPassagewayDTO from "../dto/IPassagewayDTO";
 import {Document, FilterQuery, Model} from "mongoose";
 import {IPassagewayPersistence} from "../dataschema/IPassagewayPersistence";
 import IFloorDTO from '../dto/IFloorDTO';
+import e from 'express';
 
 
 @Service()
@@ -25,10 +26,17 @@ export default class PassagewayRepo implements IPassagewayRepo {
 
     public async save(passageway: Passageway): Promise<Passageway> {
         try {
+            console.log(passageway.floorCode1.substring(0,1) == passageway.floorCode2.substring(0,1));
             if (await this.exists(passageway)) {
-                const rawPassageway = PassagewayMapper.toPersistence(passageway);
-                const passagewayCreated = await this.passagewaySchema.create(rawPassageway);
-                return PassagewayMapper.toDomain(passagewayCreated);
+                if (passageway.floorCode1.substring(0,1) != passageway.floorCode2.substring(0,1)){
+                    const rawPassageway = PassagewayMapper.toPersistence(passageway);
+                    const passagewayCreated = await this.passagewaySchema.create(rawPassageway);
+                    return PassagewayMapper.toDomain(passagewayCreated);
+                }
+                else {
+                    console.log('Passageway cannot be created between floors of the same building');
+                    return null;
+                }
             } else {
                 console.log('Passageway already exists');
                 return null;
@@ -102,16 +110,24 @@ export default class PassagewayRepo implements IPassagewayRepo {
             let result1: IPassagewayDTO[] = [];
             for (let i = 0; i < floors1.length; i++) {
                 for (let j = 0; j < floors2.length; j++) {
-                    const query = {$or: [{passagewayFloorID1: floors1[i].id} && {passagewayFloorID2: floors2[j].id}]} as FilterQuery<IPassagewayPersistence & Document>;
+                    const query = {$and: [{floorCode1: floors1[i].code} , {floorCode2: floors2[j].code}]} as FilterQuery<IPassagewayPersistence & Document>;
                     const passageways = await this.passagewaySchema.find(query);
                     if (passageways.length != 0) {
-                        result1.push(PassagewayMapper.toDTO(PassagewayMapper.toDomain(passageways)));
+                        for (let k = 0; k < passageways.length; k++) {
+                            const result = PassagewayMapper.toDomain(passageways[k]);
+                            if (result.floorCode1 != null && result.floorCode2 != null && result1.find(element => element.floorCode1 == result.floorCode1 && element.floorCode2 == result.floorCode2) == null) {
+                                result1.push(PassagewayMapper.toDTO(result));
+                            }
+                        }
                     }
-                    const query1 = {$or: [{passagewayFloorID1: floors2[i].id} && {passagewayFloorID2: floors1[j].id}]} as FilterQuery<IPassagewayPersistence & Document>;
+                    const query1 = {$and: [{floorCode1: floors2[i].code} , {floorCode2: floors1[j].code}]} as FilterQuery<IPassagewayPersistence & Document>;
                     const passageways1 = await this.passagewaySchema.find(query1);
                     if (passageways1.length != 0) {
                         for (let k = 0; k < passageways1.length; k++) {
-                            result1.push(PassagewayMapper.toDTO(PassagewayMapper.toDomain(passageways1[k])));
+                            const result = PassagewayMapper.toDomain(passageways1[k]);
+                            if (result.floorCode1 != null && result.floorCode2 != null && result1.find(element => element.floorCode1 == result.floorCode1 && element.floorCode2 == result.floorCode2) == null) {
+                                result1.push(PassagewayMapper.toDTO(result));
+                            }
                         }
                     }
                 }
