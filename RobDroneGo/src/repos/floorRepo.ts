@@ -160,5 +160,17 @@ export default class FloorRepo implements IFloorRepo {
         }
     }
 
+    public async findFloorByCode(floorCode: string): Promise<Floor> {
+        try {
+            const query = {floorCode: floorCode};
+            const floorRecord = await this.floorSchema.findOne(query as FilterQuery<IFloorPersistence & Document>);
+            if (floorRecord == null) {
+                return null;
+            }
+            return FloorMapper.toDomain(floorRecord);
+        } catch (error) {
+            throw error;
+        }
+    }
 
 }

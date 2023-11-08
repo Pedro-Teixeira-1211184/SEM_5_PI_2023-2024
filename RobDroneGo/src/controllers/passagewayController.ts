@@ -66,7 +66,18 @@ export default class PassagewayController implements IPassagewayController /* TO
   };
   
   public async updatePassageway(req: Request, res: Response, next: NextFunction) {
-    try{ const passagewayOrError = await this.passagewayServiceInstance.updatePassageway(req.body as IPassagewayDTO) as Result<IPassagewayDTO>;
+    try{ 
+      const floorOrError = await this.floorServiceInstance.findFloorByCode(req.body.floorCode1) as Result<IFloorDTO>;
+      const floorOrError1 = await this.floorServiceInstance.findFloorByCode(req.body.floorCode2) as Result<IFloorDTO>;
+      if (floorOrError.isFailure) {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json("Unable to find floor1");
+      }
+
+      if (floorOrError1.isFailure) {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json("Unable to find floor2");
+      }
+
+      const passagewayOrError = await this.passagewayServiceInstance.updatePassageway(req.body as IPassagewayDTO) as Result<IPassagewayDTO>;
 
       if(passagewayOrError.isFailure){
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(passagewayOrError.error);

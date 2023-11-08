@@ -138,10 +138,9 @@ export default class PassagewayRepo implements IPassagewayRepo {
         }
     }
 
-    public async update(floorID1: string, floorID2: string, updatedFields: Partial<IPassagewayDTO>): Promise<Passageway | null> {
+    public async update(floorCode1: string, floorCode2: string, updatedFields: Partial<IPassagewayDTO>): Promise<Passageway | null> {
         try {
-            const query: FilterQuery<IPassagewayPersistence> = {$or: [{passagewayFloorID1: floorID1, passagewayFloorID2: floorID2}, {passagewayFloorID1: floorID2, passagewayFloorID2: floorID1}]} as FilterQuery<IPassagewayPersistence & Document>;
-            const findpassageway = await this.passagewaySchema.findOne(query as FilterQuery<IPassagewayPersistence & Document>);
+            const findpassageway = await this.findByFloorCodes(floorCode1, floorCode2);
             if (findpassageway == null) {
                 console.log('Passageway not found');
                 return null;
@@ -152,7 +151,8 @@ export default class PassagewayRepo implements IPassagewayRepo {
             passageway.localization1 = updatedFields.localization1;
             passageway.localization2 = updatedFields.localization2;
             const rawPassageway = PassagewayMapper.toPersistence(passageway);
-            await this.passagewaySchema.replaceOne(query as FilterQuery<IPassagewayPersistence & Document>, rawPassageway);
+            const query = {$or: [{passagewayFloorCode1: floorCode1, passagewayFloorCode2: floorCode2}, {passagewayFloorCode1: floorCode2, passagewayFloorCode2: floorCode1}]} as FilterQuery<IPassagewayPersistence & Document>;
+            await this.passagewaySchema.replaceOne(query, rawPassageway);
             return passageway;
         } catch (error) {
             throw error;

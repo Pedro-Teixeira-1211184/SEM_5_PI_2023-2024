@@ -15,4 +15,5 @@ export default interface IFloorRepo extends Repo<Floor> {
   /*findFloorsByPassageways(floorArray: IFloorDTO[]): Promise<IFloorDTO[]>;*/
   /*findWherePassagewaysLeads(passageway: IFloorDTO[]): Promise<string[]>;*/
   update(buildingCode: string, number: number, updatedFields: Partial<IFloorDTO>): Promise<Floor | null>;
+  findFloorByCode(floorCode: string): Promise<Floor>;
 }
