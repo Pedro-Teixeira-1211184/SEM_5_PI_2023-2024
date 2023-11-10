@@ -36,11 +36,10 @@ export default class MapService implements IMapService {
       }
 
       //check size
-      const buildingDimensions = building.dimensions.split("*");
-      const width = parseInt(buildingDimensions[0]);
-      const height = parseInt(buildingDimensions[1]);
-      if (mapDTO.size.width - 1 != width || mapDTO.size.height - 1 != height) {
-        return Result.fail<IMapDTO>("Map size exceeds building dimensions.");
+      const length = parseInt(building.dimensions.length.toString());
+      const width = parseInt(building.dimensions.width.toString());
+      if (mapDTO.size.width - 1 != width || mapDTO.size.length - 1 != length) {
+        return Result.fail<IMapDTO>("Map size does not match building size.");
       }
       //verify if floor exists
       const floorExists = await this.floorRepo.existsByBCodeAndNumber(mapDTO.buildingCode, mapDTO.floorNumber);

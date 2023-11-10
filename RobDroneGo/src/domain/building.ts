@@ -9,7 +9,7 @@ import IBuildingDTO from "../dto/IBuildingDTO";
 interface BuildingProps {
   code: string;
   name: string;
-  dimensions: string;
+  dimensions: { length: number, width: number };
   description: string;
   maxFloors: number;
   minFloors: number;
@@ -32,11 +32,11 @@ export class Building extends AggregateRoot<BuildingProps> {
     this.props.name = value;
   }
 
-  get dimensions(): string {
+  get dimensions(): { length: number, width: number } {
     return this.props.dimensions;
   }
 
-  set dimensions(value: string) {
+  set dimensions(value: { length: number, width: number }) {
     this.props.dimensions = value;
   }
 

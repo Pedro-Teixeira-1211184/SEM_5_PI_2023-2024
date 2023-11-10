@@ -19,7 +19,10 @@ export default () => {
     route.post('/', celebrate({
         body: Joi.object({
             code: Joi.string().required().max(5).error(new Error('Invalid building code')),
-            dimensions: Joi.string().required().regex(new RegExp('^[0-9]+[*][0-9]+$')).error(new Error('Invalid building dimensions')),
+          dimensions: Joi.object({
+            length: Joi.number().required().error(new Error('Invalid length')),
+            width: Joi.number().required().error(new Error('Invalid width')),
+          }).required().error(new Error('Invalid size')),
             name: Joi.string().max(50).allow('').allow(null).error(new Error('Invalid building name')),
             //description: opcional e com limite de 255 caracteres
             description: Joi.string().max(255).allow('').allow(null).error(new Error('Invalid building description')),

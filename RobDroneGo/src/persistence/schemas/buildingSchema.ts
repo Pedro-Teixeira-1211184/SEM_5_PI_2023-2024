@@ -5,7 +5,10 @@ const BuildingSchema = new mongoose.Schema(
     {
         buildingID: { type: String, unique: true },
         buildingCode: { type: String, unique: true },
-        buildingDimensions: { type: String },
+        buildingDimensions: {
+          length: {type: Number, required: true},
+          width: {type: Number, required: true}
+        },
         buildingName: { type: String },
         buildingDescription: { type: String },
         buildingMaxFloors: { type: Number },

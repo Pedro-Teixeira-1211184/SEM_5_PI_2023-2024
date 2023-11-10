@@ -9,7 +9,7 @@ import {MapId} from "./mapId";
 interface MapProps {
   buildingCode: string;
   floorNumber: number;
-  size: { width: number, height: number };
+  size: { length: number, width: number };
   map: number[][];
   rooms: { name: string, dimensions: string, door: string }[];
   passageways: { start: string, end: string, localization: string }[];
@@ -33,7 +33,8 @@ export class Map extends AggregateRoot<MapProps> {
     return this.props.floorNumber;
   }
 
-  get size(): { width: number, height: number } {
+
+  get size(): { length: number, width: number } {
     return this.props.size;
   }
 

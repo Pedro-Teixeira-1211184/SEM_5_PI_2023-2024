@@ -11,7 +11,7 @@ export class BuildingMapper extends Mapper<Building> {
   public static toDTO(building: Building): IBuildingDTO {
     return {
       id: building.id.toString(),
-      dimensions: building.dimensions.toString(),
+      dimensions: building.dimensions,
       code: building.code.toString(),
       name: building.name.toString(),
       description: building.description.toString(),
