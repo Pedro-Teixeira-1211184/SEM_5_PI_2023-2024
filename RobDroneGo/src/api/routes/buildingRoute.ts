@@ -5,7 +5,6 @@ import {Container} from 'typedi';
 import IBuildingController from '../../controllers/IControllers/IBuildingController';
 import IFloorController from '../../controllers/IControllers/IFloorController';
 import IElevatorController from '../../controllers/IControllers/IElevatorController';
-
 import config from "../../../config";
 
 const route = Router();

@@ -8,6 +8,7 @@ import robotRoute from "../api/routes/robotRoute";
 import passagewayRoute from '../api/routes/passagewayRoute';
 import roomRoute from '../api/routes/roomRoute';
 import mapRoute from "../api/routes/mapRoute";
+import userRoute from "../api/routes/userRoute";
 
 export default ({app}: { app: express.Application }) => {
   app.enable('trust proxy');

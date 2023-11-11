@@ -1,18 +1,17 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { Container } from 'typedi';
 
-import AuthService from '../../services/userService';
-import { IUserDTO } from '../../dto/IUserDTO';
-
 import middlewares from '../middlewares';
 import { celebrate, Joi } from 'celebrate';
 import winston = require('winston');
-
-var user_controller = require('../../controllers/userController');
+import config from "../../../config";
+import IUserController from '../../controllers/IControllers/IUserController';
 
 const route = Router();
 
 export default (app: Router) => {
+  const ctrl = Container.get(config.controllers.user.name) as IUserController;
+
   app.use('/auth', route);
 
   route.post(
@@ -27,26 +26,9 @@ export default (app: Router) => {
       }),
     }),
     async (req: Request, res: Response, next: NextFunction) => {
-      const logger = Container.get('logger') as winston.Logger;
-      logger.debug('Calling Sign-Up endpoint with body: %o', req.body )
-
-      try {
-        const authServiceInstance = Container.get(AuthService);
-        const userOrError = await authServiceInstance.SignUp(req.body as IUserDTO);
-
-        if (userOrError.isFailure) {
-          logger.debug(userOrError.errorValue())
-          return res.status(401).send(userOrError.errorValue());
-        }
-    
-        const {userDTO, token} = userOrError.getValue();
-
-        return res.status(201).json({ userDTO, token });
-      } catch (e) {
-        //logger.error('🔥 error: %o', e);
-        return next(e);
-      }
-    },
+      console.log("Creating a User!");
+      ctrl.signUp(req, res, next);
+    }
   );
 
   route.post(
@@ -58,23 +40,8 @@ export default (app: Router) => {
       }),
     }),
     async (req: Request, res: Response, next: NextFunction) => {
-      const logger = Container.get('logger') as winston.Logger;
-      logger.debug('Calling Sign-In endpoint with body: %o', req.body)
-      try {
-        const { email, password } = req.body;
-        const authServiceInstance = Container.get(AuthService);
-        const result = await authServiceInstance.SignIn(email, password);
-        
-        if( result.isFailure )
-          return res.json().status(403);
-
-        const { userDTO, token } = result.getValue();
-        return res.json({ userDTO, token }).status(200);
-
-      } catch (e) {
-        logger.error('🔥 error: %o',  e );
-        return next(e);
-      }
+        console.log("Signing in a User!");
+        ctrl.signIn(req, res, next);
     },
   );
 
@@ -99,7 +66,4 @@ export default (app: Router) => {
     }
   });
 
-  app.use('/users', route);
-
-  route.get('/me', middlewares.isAuth, middlewares.attachCurrentUser, user_controller.getMe);
 };

@@ -3,39 +3,17 @@ import mongoose from 'mongoose';
 
 const User = new mongoose.Schema(
   {
-    domainId: { 
-      type: String,
-      unique: true
-    },
+    domainId: {type: String, unique: true},
 
-    firstName: {
-      type: String,
-      required: [true, 'Please enter first name'],
-      index: true,
-    },
+    firstName: {type: String, required: [true, 'Please enter first name']},
 
-    lastName: {
-      type: String,
-      required: [true, 'Please enter last name'],
-      index: true,
-    },
+    lastName: {type: String, required: [true, 'Please enter last name']},
 
-    email: {
-      type: String,
-      lowercase: true,  
-      unique: true,
-      index: true,
-    },
+    email: {type: String, lowercase: true, unique: true},
 
-    password: String,
+    password: {type: String, required: [true, 'Please enter password']},
 
-    salt: String,
-
-    role: {
-      type: String,
-      default: 'user',
-    },
-  },
+    role: {type: String, default: 'user'}},
   { timestamps: true },
 );
 

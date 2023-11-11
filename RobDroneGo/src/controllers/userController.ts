@@ -1,28 +1,43 @@
-import { Response, Request } from 'express';
+import {Inject, Service} from "typedi";
+import config from "../../config";
+import IUserController from "./IControllers/IUserController";
+import IUserService from "../services/IServices/IUserService";
+import {NextFunction, Request, Response} from "express";
+import {IUserDTO} from "../dto/IUserDTO";
+import {Result} from "../core/logic/Result";
 
-import { Container} from 'typedi';
+@Service()
+export default class UserController implements IUserController /* TODO: extends ../core/infra/BaseController */ {
+    constructor(
+        @Inject(config.services.user.name) private userServiceInstance: IUserService
+    ) {
+    }
 
-import config from '../../config';
+    public async signUp(req: Request, res: Response, next: NextFunction) {
+        try {
+            const userOrError = await this.userServiceInstance.SignUp(req.body) as Result<IUserDTO>;
+            if (userOrError.isFailure) {
+                console.log(userOrError.errorValue());
+                return res.status(403).json(userOrError.errorValue());
+            }
 
-import IUserRepo from '../services/IRepos/IUserRepo';
+            const userDTO = userOrError.getValue();
+            return res.status(201).json(userDTO);
+        } catch (e) {
+            return next(e);
+        }
+    }
 
-import { UserMap } from "../mappers/UserMap";
-import { IUserDTO } from '../dto/IUserDTO';
+    public async signIn(req: Request, res: Response, next: NextFunction) {
+        try {
+            const params = {
+                email: req.body.email,
+                password: req.body.password
+            };
+            const userOrError = await this.userServiceInstance.SignIn(params.email, params.password) as Result<IUserDTO>;
+        } catch (e) {
+            return next(e);
+        }
+    }
 
-
-exports.getMe = async function(req, res: Response) {
-  
-    // NB: a arquitetura ONION não está a ser seguida aqui
-
-    const userRepo = Container.get(config.repos.user.name) as IUserRepo
-
-    if( !req.token || req.token == undefined )
-        return res.json( new Error("Token inexistente ou inválido")).status(401);
-
-    const user = await userRepo.findById( req.token.id );
-    if (!user)
-        return res.json( new Error("Utilizador não registado")).status(401);
-
-    const userDTO = UserMap.toDTO( user ) as IUserDTO;
-    return res.json( userDTO ).status(200);
 }
