@@ -5,4 +5,8 @@ export default interface IUserService {
   SignUp(userDTO: IUserDTO): Promise<Result<IUserDTO>>;
 
   SignIn(email: string, password: string): Promise<Result<IUserDTO>>;
+
+  IsSignedIn(): Promise<IUserDTO>;
+
+  Logout(): Promise<void>;
 }
