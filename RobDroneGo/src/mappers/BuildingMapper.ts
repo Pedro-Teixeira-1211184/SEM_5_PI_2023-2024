@@ -12,11 +12,11 @@ export class BuildingMapper extends Mapper<Building> {
     return {
       id: building.id.toString(),
       dimensions: building.dimensions,
-      code: building.code.toString(),
-      name: building.name.toString(),
-      description: building.description.toString(),
-      maxFloors: building.maxFloors.valueOf(),
-      minFloors: building.minFloors.valueOf()
+      code: building.code,
+      name: building.name,
+      description: building.description,
+      maxFloors: building.maxFloors,
+      minFloors: building.minFloors
     } as IBuildingDTO;
   }
 

@@ -14,6 +14,8 @@ export class HomeComponent implements OnInit {
   auth: AuthService = inject(AuthService);
   isCampusManager: boolean = false;
   isAdministrator: boolean = false;
+  home_body: boolean = true;
+  createBuilding: boolean = false;
 
   constructor(auth: AuthService) {
     this.isCampusManagerQuery().then((isCampusManager) => {
@@ -79,4 +81,13 @@ export class HomeComponent implements OnInit {
     return x === Constants.default.ADMIN_ROLE;
   }
 
+  clear() {
+    this.home_body = true;
+    this.createBuilding = false;
+  }
+
+  buildingCreateForm() {
+    this.home_body = false;
+    this.createBuilding = true;
+  }
 }

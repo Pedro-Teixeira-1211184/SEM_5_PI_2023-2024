@@ -20,7 +20,7 @@ export default class BuildingController implements IBuildingController /* TODO: 
       const buildingOrError = await this.buildingServiceInstance.createBuilding(req.body as IBuildingDTO) as Result<IBuildingDTO>;
 
       if (buildingOrError.isFailure) {
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json("Building already exists");
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(buildingOrError.error);
       }
 
       const buildingDTO = buildingOrError.getValue();

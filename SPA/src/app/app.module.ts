@@ -7,13 +7,15 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { BuildingComponent } from './component/building/building.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PageNotFoundComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    BuildingComponent
   ],
   imports: [
     BrowserModule,

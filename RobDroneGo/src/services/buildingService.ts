@@ -19,6 +19,10 @@ export default class BuildingService implements IBuildingService {
 
   public async createBuilding(buildingDTO: IBuildingDTO): Promise<Result<IBuildingDTO>> {
     try {
+      //if maxFloors is less than minFloors, return error
+      if (buildingDTO.maxFloors < buildingDTO.minFloors) {
+        return Result.fail<IBuildingDTO>('Max floors cannot be less than min floors');
+      }
 
       const buildingOrError = await Building.create(buildingDTO);
       if (buildingOrError.isFailure) {
@@ -31,7 +35,7 @@ export default class BuildingService implements IBuildingService {
       const buildingCreated = await this.buildingRepo.save(buildingResult);
 
       if (buildingCreated === null) {
-        return Result.fail<IBuildingDTO>('Building not created');
+        return Result.fail<IBuildingDTO>('Building already exists');
       }
 
       const buildingDTOResult = BuildingMapper.toDTO(buildingResult) as IBuildingDTO;
@@ -95,12 +99,12 @@ export default class BuildingService implements IBuildingService {
   public async findByMinMaxFloors(minFloors: number, maxFloors: number): Promise<Result<IBuildingDTO[]>> {
     try{
       const buildings = await this.buildingRepo.findByMinMaxFloors(minFloors, maxFloors);
-    
+
     if (buildings.length == 0) {
       return Result.fail<IBuildingDTO[]>("No buildings found");
     }
     return Result.ok<IBuildingDTO[]>(buildings);
-  
+
 
   } catch (error) {
     console.log('Error in BuildingService.findByMinMaxFloors(): ', error);
