@@ -42,6 +42,11 @@ input {
   margin-top: 5px;
 }
 
+input:hover{
+  border-color: #007bff;
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+}
+
 button {
   width: 50%;
   padding: 10px;
@@ -55,4 +60,11 @@ button {
 
 button:hover {
   background-color: #0056b3;
+}
+
+.validation-error {
+  color: #dc3545;
+  margin: 0.4em;
+  border-left: 3px solid #dc3545;
+  padding-left: 0.2em;
 }

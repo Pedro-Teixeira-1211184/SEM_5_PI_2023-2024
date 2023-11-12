@@ -1,56 +1,82 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
+import * as Constants from "../../utils/Constants";
+import {AuthService} from "../services/auth.service";
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.component.html',
-    styleUrls: ['./home.component.css']
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-    public sidebarOpen = false;
-    public title = 'SPA';
+  public sidebarOpen = false;
+  public title = 'SPA';
+  protected readonly Constants = Constants;
+  auth: AuthService = inject(AuthService);
+  isCampusManager: boolean = false;
+  isAdministrator: boolean = false;
 
-    constructor() {
+  constructor(auth: AuthService) {
+    this.isCampusManagerQuery().then((isCampusManager) => {
+      this.isCampusManager = isCampusManager;
+    });
+    this.isAdministratorQuery().then((isAdministrator) => {
+      this.isAdministrator = isAdministrator;
+    });
+  }
+
+  ngOnInit(): void {
+  }
+
+  public openSidebar(): void {
+    const sidebar = document.querySelector('.sidebar') as HTMLElement;
+    const content = document.getElementById('content') as HTMLElement;
+    const toggleSidebarButton = document.getElementById('toggle-sidebar-button') as HTMLElement;
+
+    if (!sidebar || !content || !toggleSidebarButton) {
+      return;
     }
 
-    ngOnInit(): void {
+    if (!this.sidebarOpen) {
+      sidebar.style.left = '0';
+      content.style.marginLeft = '250px';
+      toggleSidebarButton.style.left = '270px';
+      toggleSidebarButton.style.display = 'block';
+    } else {
+      sidebar.style.left = '-250px';
+      content.style.marginLeft = '0';
+      toggleSidebarButton.style.display = 'none';
     }
 
-    public handleClick(): void {
-        const sidebar = document.querySelector('.sidebar') as HTMLElement;
-        const content = document.getElementById('content') as HTMLElement;
-        const toggleSidebarButton = document.getElementById('toggle-sidebar-button') as HTMLElement;
+    this.sidebarOpen = !this.sidebarOpen;
+  }
 
-        if (!sidebar || !content || !toggleSidebarButton) {
-            return;
-        }
+  public closeSidebar(): void {
+    const sidebar = document.querySelector('.sidebar') as HTMLElement;
+    const content = document.getElementById('content') as HTMLElement;
+    const toggleSidebarButton = document.getElementById('toggle-sidebar-button') as HTMLElement;
 
-        if (!this.sidebarOpen) {
-            sidebar.style.left = '0';
-            content.style.marginLeft = '250px';
-            toggleSidebarButton.style.left = '270px';
-            toggleSidebarButton.style.display = 'block';
-        } else {
-            sidebar.style.left = '-250px';
-            content.style.marginLeft = '0';
-            toggleSidebarButton.style.display = 'none';
-        }
-
-        this.sidebarOpen = !this.sidebarOpen;
+    if (!sidebar || !content || !toggleSidebarButton) {
+      return;
     }
 
-    public closeSidebar(): void {
-        const sidebar = document.querySelector('.sidebar') as HTMLElement;
-        const content = document.getElementById('content') as HTMLElement;
-        const toggleSidebarButton = document.getElementById('toggle-sidebar-button') as HTMLElement;
+    sidebar.style.left = '-250px';
+    content.style.marginLeft = '0';
+    toggleSidebarButton.style.display = 'none';
+    this.sidebarOpen = false;
+  }
 
-        if (!sidebar || !content || !toggleSidebarButton) {
-            return;
-        }
+  public async logout(): Promise<void> {
+    await this.auth.logout();
+  }
 
-        sidebar.style.left = '-250px';
-        content.style.marginLeft = '0';
-        toggleSidebarButton.style.display = 'none';
-        this.sidebarOpen = false;
-    }
+  public async isCampusManagerQuery(): Promise<boolean> {
+    const x = await this.auth.authenticatedUserRole();
+    return x === Constants.default.CAMPUS_MANAGER_ROLE;
+  }
+
+  public async isAdministratorQuery(): Promise<boolean> {
+    const x = await this.auth.authenticatedUserRole();
+    return x === Constants.default.ADMIN_ROLE;
+  }
 
 }
