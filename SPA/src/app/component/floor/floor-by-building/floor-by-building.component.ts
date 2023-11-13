@@ -22,7 +22,7 @@ export class FloorByBuildingComponent implements OnInit{
         alert('Please choose a building');
         return;
       }
-      
+      this.floors = await this.service.getFloorsByBuildingCode(this.buildingCode?.value).pipe(map((res: any) => res.data)).toPromise();
     }catch(e){
       console.log(e);
     }
