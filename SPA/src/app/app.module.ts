@@ -10,6 +10,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { BuildingComponent } from './component/building/building.component';
 import { FloorComponent } from './component/floor/floor.component';
 import { EditBuildingComponent } from './component/building/edit-building/edit-building.component';
+import { ListBuildingComponent } from './component/building/list-building/list-building.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { EditBuildingComponent } from './component/building/edit-building/edit-b
     HomeComponent,
     BuildingComponent,
     FloorComponent,
-    EditBuildingComponent
+    EditBuildingComponent,
+    ListBuildingComponent
   ],
   imports: [
     BrowserModule,
