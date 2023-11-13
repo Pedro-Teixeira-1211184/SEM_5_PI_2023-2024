@@ -15,6 +15,7 @@ export class FloorComponent implements OnInit {
 
   public async submit() {
     try{
+      console.log(this.floorForm);
       if (this.floorForm.invalid) {
         alert('Please fill all the fields');
         return;
@@ -22,7 +23,6 @@ export class FloorComponent implements OnInit {
       const response = await this.service.createFloor(
         this.buildingCode?.value,
         this.number?.value,
-        this.code?.value,
         this.description?.value
       );
     }catch(e){
@@ -30,11 +30,20 @@ export class FloorComponent implements OnInit {
     }
   }
 
+  /*public async getFloorsByBuildingCode(buildingCode: string) {
+    try{
+      const response = await this.service.getFloorsByBuildingCode(buildingCode);
+      const json = await response.json();
+      return json;
+    }catch(e){
+      console.log(e);
+    }
+  }*/
+
   ngOnInit(): void {
     this.floorForm = new FormGroup({
       buildingCode: new FormControl('', [Validators.required]),
       number: new FormControl('', [Validators.required]),
-      code: new FormControl('', [Validators.required]),
       description: new FormControl()
     });
   }
@@ -45,10 +54,6 @@ export class FloorComponent implements OnInit {
 
   get number() {
     return this.floorForm.get('number');
-  }
-
-  get code() {
-    return this.floorForm.get('code');
   }
 
   get description() {

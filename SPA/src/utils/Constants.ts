@@ -10,7 +10,8 @@ export default class Constants {
 
 
   //floor
-  public static readonly API_FLOOR_CREATE_URL = Constants.API_BASE_URL + 'floors';
+  public static readonly API_FLOOR_CREATE_URL = Constants.API_BASE_URL + 'buildings/floors';
+  public static readonly API_FLOOR_GET_BY_BUILDING_CODE_URL = Constants.API_BASE_URL + 'buildings/floors/:buildingCode';
 
   public static CAMPUS_MANAGER_ROLE = 'Campus manager';
   public static ADMIN_ROLE = 'Admin';

@@ -85,6 +85,7 @@ export class HomeComponent implements OnInit {
   clear() {
     this.home_body = true;
     this.createBuilding = false;
+    this.createFloor = false;
   }
 
   buildingCreateForm() {
@@ -94,6 +95,7 @@ export class HomeComponent implements OnInit {
 
   floorCreateForm() {
     this.home_body = false;
+    this.createBuilding = false;
     this.createFloor = true;
   }
 }

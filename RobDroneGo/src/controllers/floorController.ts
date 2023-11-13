@@ -27,19 +27,19 @@ export default class FloorController implements IFloorController /* TODO: extend
             const buildingOrError = await this.buildingServiceInstance.getBuildingByCode(req.body.buildingCode) as Result<IBuildingDTO>;
 
             if (buildingOrError.isFailure) {
-                return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(buildingOrError.errorValue());
+                return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(buildingOrError.errorValue());
             }
 
             //check if floor number is valid
             if (Number(req.body.number) > buildingOrError.getValue().maxFloors) {
                 console.log("Floor number is invalid!");
-                return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send("Floor number is higher than maximum number of floors!");
+                return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json("Floor number is higher than maximum number of floors!");
             }
 
             const floorOrError = await this.floorServiceInstance.createFloor(req.body as IFloorDTO) as Result<IFloorDTO>;
             if (floorOrError.isFailure) {
                 console.log("Floor not created!");
-                return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(floorOrError.errorValue());
+                return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(floorOrError.errorValue());
             }
 
             const floorResult = floorOrError.getValue();
