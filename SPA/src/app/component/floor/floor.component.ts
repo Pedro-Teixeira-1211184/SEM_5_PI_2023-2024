@@ -2,6 +2,7 @@ import {Component, inject, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {FloorService} from "../../services/floor/floor.service";
 
+
 @Component({
   selector: 'app-floor',
   templateUrl: './floor.component.html',
@@ -29,16 +30,6 @@ export class FloorComponent implements OnInit {
       console.log(e);
     }
   }
-
-  /*public async getFloorsByBuildingCode(buildingCode: string) {
-    try{
-      const response = await this.service.getFloorsByBuildingCode(buildingCode);
-      const json = await response.json();
-      return json;
-    }catch(e){
-      console.log(e);
-    }
-  }*/
 
   ngOnInit(): void {
     this.floorForm = new FormGroup({

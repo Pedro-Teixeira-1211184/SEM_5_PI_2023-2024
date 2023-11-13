@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
   home_body: boolean = true;
   createBuilding: boolean = false;
   createFloor: boolean = false;
+  floorsByBuildingCode: boolean = false;
 
   constructor(auth: AuthService) {
     this.isCampusManagerQuery().then((isCampusManager) => {
@@ -97,5 +98,12 @@ export class HomeComponent implements OnInit {
     this.home_body = false;
     this.createBuilding = false;
     this.createFloor = true;
+  }
+
+  floorsByBuildingCodeList() {
+    this.home_body = false;
+    this.createBuilding = false;
+    this.createFloor = false;
+    this.floorsByBuildingCode = true;
   }
 }

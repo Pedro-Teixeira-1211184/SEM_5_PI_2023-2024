@@ -53,7 +53,7 @@ export default class FloorController implements IFloorController /* TODO: extend
         try {
             const floorOrError = await this.floorServiceInstance.findFloorsByBuildingCode(req.params.buildingCode) as Result<IFloorDTO[]>;
             if (floorOrError.isFailure) {
-                return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(floorOrError.errorValue());
+                return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(floorOrError.errorValue());
             }
 
             const floorResult = floorOrError.getValue();

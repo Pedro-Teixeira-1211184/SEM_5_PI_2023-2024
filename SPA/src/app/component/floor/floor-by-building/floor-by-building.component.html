@@ -1,0 +1,21 @@
+<form class="floor-form" id="getFloorsForm" (ngSubmit)="getFloorsByBuildingCode()" [formGroup]="floorForm" #formDir="ngForm">
+  <h1>Get Floors by Building Code</h1>
+  <div class="input-container">
+    <label for="buildingCode">Building Code</label>
+    <input type="text" id="buildingCode" formControlName="buildingCode" placeholder="Enter Building code" required>
+    <div *ngIf="!buildingCode && formDir.submitted" class="validation-error">
+      <p>Building Code is required!</p>
+    </div>
+  </div>
+  <button type="submit">Get Floors</button>
+</form>
+
+<div *ngIf="floors && floors.length > 0">
+  <h2>Floors:</h2>
+  <ul>
+    <li *ngFor="let floor of floors">{{ floor | json }}</li>
+  </ul>
+</div>
+<div *ngIf="floors && floors.length === 0">
+  <p>No floors found</p>
+</div>

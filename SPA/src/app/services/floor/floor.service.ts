@@ -36,7 +36,7 @@ export class FloorService {
 
     }
 
-    /*public getFloorsByBuildingCode(buildingCode: string): Observable<any[]> {
+    public getFloorsByBuildingCode(buildingCode: string): Observable<any[]> {
         const response = fetch(Constants.API_FLOOR_GET_BY_BUILDING_CODE_URL + buildingCode, {
             method: 'GET',
             headers: {
@@ -45,7 +45,7 @@ export class FloorService {
         });
 
         return from(response.then(res => res.json()));
-    }*/ 
+    }
 
 
     private async getResponse(hasDescription: boolean, buildingCode: string, number: number, description: string) {
