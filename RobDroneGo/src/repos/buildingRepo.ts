@@ -78,6 +78,7 @@ export default class BuildingRepo implements IBuildingRepo {
     try {
       const query: FilterQuery<IBuildingPersistence> = {buildingCode: buildingCode};
       const find = await this.buildingSchema.findOne(query as FilterQuery<IBuildingPersistence & Document>);
+      if (find == null) return null;
       const building = BuildingMapper.toDomain(find);
       building.dimensions = updatedFields.dimensions;
       building.name = updatedFields.name;

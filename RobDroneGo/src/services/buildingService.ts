@@ -49,6 +49,11 @@ export default class BuildingService implements IBuildingService {
   //updateBuilding that uses the buildingRepo to update the building
   public async updateBuilding(buildingDTO: IBuildingDTO): Promise<Result<IBuildingDTO>> {
     try {
+
+      if (buildingDTO.maxFloors < buildingDTO.minFloors) {
+        return Result.fail<IBuildingDTO>('Max floors cannot be less than min floors');
+      }
+
       //Update the Building in the Repository
       const updatedBuilding = await this.buildingRepo.update(buildingDTO.code, buildingDTO);
 

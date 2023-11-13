@@ -12,12 +12,14 @@
 <div (click)="closeSidebar()" id="toggle-sidebar-button">&#8592;</div>
 <div *ngIf="isCampusManager" class="sidebar" id="sidebar">
   <a (click)="buildingCreateForm()" >Create building</a>
+  <a (click)="buildingEditForm()">Edit building</a>
   <a (click)="floorCreateForm()">Create floor</a>
   <a (click)="floorsByBuildingCodeList()">Get floors by building</a>
+  <a href="#">Menu 3</a>
   <a href="#">Menu 4</a>
   <button class="logout bottom-logout">
     <img src="../../assets/_images/logout_icon.png" alt="Logout">
-    <a (click)="logout()" >Logout</a>
+    <a (click)="logout()">Logout</a>
   </button>
 </div>
 <div *ngIf="isAdministrator" class="sidebar" id="sidebar">
@@ -27,7 +29,7 @@
   <a href="#">Menu 8</a>
   <button class="logout bottom-logout">
     <img src="../../assets/_images/logout_icon.png" alt="Logout">
-    <a (click)="logout()" >Logout</a>
+    <a (click)="logout()">Logout</a>
   </button>
 </div>
 <div *ngIf="home_body" id="content">
@@ -42,6 +44,8 @@
 </div>
 <div *ngIf="floorsByBuildingCode" id="content">
   <app-floor-by-building></app-floor-by-building>
+<div *ngIf="editBuilding" id="content">
+  <app-edit-building></app-edit-building>
 </div>
 </body>
 </html>

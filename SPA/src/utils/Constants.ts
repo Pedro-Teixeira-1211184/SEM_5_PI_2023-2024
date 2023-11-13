@@ -7,6 +7,8 @@ export default class Constants {
 
   //building
   public static readonly API_BUILDING_CREATE_URL = Constants.API_BASE_URL + 'buildings';
+  public static readonly API_BUILDING_EDIT_URL = Constants.API_BASE_URL + 'buildings';
+  public static readonly API_BUILDING_GET_ALL_URL = Constants.API_BASE_URL + 'buildings';
 
 
   //floor
