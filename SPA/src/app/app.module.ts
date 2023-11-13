@@ -8,6 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { BuildingComponent } from './component/building/building.component';
+import { FloorComponent } from './component/floor/floor.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { BuildingComponent } from './component/building/building.component';
     PageNotFoundComponent,
     LoginComponent,
     HomeComponent,
-    BuildingComponent
+    BuildingComponent,
+    FloorComponent
   ],
   imports: [
     BrowserModule,

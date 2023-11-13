@@ -8,6 +8,10 @@ export default class Constants {
   //building
   public static readonly API_BUILDING_CREATE_URL = Constants.API_BASE_URL + 'buildings';
 
+
+  //floor
+  public static readonly API_FLOOR_CREATE_URL = Constants.API_BASE_URL + 'floors';
+
   public static CAMPUS_MANAGER_ROLE = 'Campus manager';
   public static ADMIN_ROLE = 'Admin';
 

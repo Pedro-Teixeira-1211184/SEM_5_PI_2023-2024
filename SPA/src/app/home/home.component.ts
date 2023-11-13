@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit {
   isAdministrator: boolean = false;
   home_body: boolean = true;
   createBuilding: boolean = false;
+  createFloor: boolean = false;
 
   constructor(auth: AuthService) {
     this.isCampusManagerQuery().then((isCampusManager) => {
@@ -89,5 +90,10 @@ export class HomeComponent implements OnInit {
   buildingCreateForm() {
     this.home_body = false;
     this.createBuilding = true;
+  }
+
+  floorCreateForm() {
+    this.home_body = false;
+    this.createFloor = true;
   }
 }
