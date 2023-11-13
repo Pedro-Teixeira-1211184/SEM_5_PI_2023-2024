@@ -32,8 +32,8 @@ export default class PassagewayService implements IPassagewayService {
       const PassagewayResult = PassagewayOrError.getValue();
 
       //very if the floors exist
-
       const floor1 = await this.FloorRepo.findByDomainId(PassagewayResult.floorCode1);
+
 
       if (floor1 == null) {
         return Result.fail<IPassagewayDTO>('Floor1 not found');
@@ -43,7 +43,7 @@ export default class PassagewayService implements IPassagewayService {
       if (floor2 == null) {
         return Result.fail<IPassagewayDTO>('Floor2 not found');
       }
-
+  
       //save Passageway
       const PassagewayCreated = await this.PassagewayRepo.save(PassagewayResult);
 
@@ -57,7 +57,6 @@ export default class PassagewayService implements IPassagewayService {
     } catch (e) {
       throw e;
     }
-
   }
 
   public async findFloorsInPassageways(floorCode: string): Promise<Result<boolean>> {

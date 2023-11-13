@@ -24,7 +24,7 @@ export default class PassagewayController implements IPassagewayController /* TO
       const passagewayOrError = await this.passagewayServiceInstance.createPassageway(req.body as IPassagewayDTO) as Result<IPassagewayDTO>;
 
       if (passagewayOrError.isFailure) {
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json("passageway already exists");
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(passagewayOrError.error);
       }
 
       const passagewayDTO = passagewayOrError.getValue();

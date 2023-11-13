@@ -7,7 +7,6 @@ import IPassagewayDTO from "../dto/IPassagewayDTO";
 import {Document, FilterQuery, Model} from "mongoose";
 import {IPassagewayPersistence} from "../dataschema/IPassagewayPersistence";
 import IFloorDTO from '../dto/IFloorDTO';
-import e from 'express';
 
 
 @Service()
@@ -26,7 +25,6 @@ export default class PassagewayRepo implements IPassagewayRepo {
 
     public async save(passageway: Passageway): Promise<Passageway> {
         try {
-            console.log(passageway.floorCode1.substring(0,1) == passageway.floorCode2.substring(0,1));
             if (await this.exists(passageway)) {
                 if (passageway.floorCode1.substring(0,1) != passageway.floorCode2.substring(0,1)){
                     const rawPassageway = PassagewayMapper.toPersistence(passageway);
@@ -110,6 +108,7 @@ export default class PassagewayRepo implements IPassagewayRepo {
             let result1: IPassagewayDTO[] = [];
             for (let i = 0; i < floors1.length; i++) {
                 for (let j = 0; j < floors2.length; j++) {
+                    console.log(floors1[i].code);
                     const query = {$and: [{floorCode1: floors1[i].code} , {floorCode2: floors2[j].code}]} as FilterQuery<IPassagewayPersistence & Document>;
                     const passageways = await this.passagewaySchema.find(query);
                     if (passageways.length != 0) {
@@ -120,6 +119,10 @@ export default class PassagewayRepo implements IPassagewayRepo {
                             }
                         }
                     }
+                }
+            }
+                for (let i = 0; i < floors2.length; i++) {
+                    for (let j = 0; j < floors1.length; j++) {
                     const query1 = {$and: [{floorCode1: floors2[i].code} , {floorCode2: floors1[j].code}]} as FilterQuery<IPassagewayPersistence & Document>;
                     const passageways1 = await this.passagewaySchema.find(query1);
                     if (passageways1.length != 0) {
