@@ -1,0 +1,49 @@
+<form class="building-form" id="buildingForm" (ngSubmit)="submit()" [formGroup]="buildingForm" #formDir="ngForm">
+    <h1>Edit a building</h1>
+    <div class="input-container">
+        <label for="code">Code</label>
+        <select id="code" formControlName="code" required>
+            <option *ngFor="let code of buildings" [value]="code">{{ code }}</option>
+        </select>
+        <div *ngIf="code?.invalid && formDir.submitted" class="validation-error">
+            <p *ngIf="code?.errors?.['required']">Code is required!</p>
+        </div>
+    </div>
+    <div class="input-container">
+        <label for="length">Length</label>
+        <input type="number" id="length" formControlName="length" placeholder="Length" required>
+        <div *ngIf="length?.invalid && formDir.submitted" class="validation-error">
+            <p *ngIf="length?.errors?.['required']">Length is required!</p>
+        </div>
+    </div>
+    <div class="input-container">
+        <label for="width">Width</label>
+        <input type="number" id="width" formControlName="width" placeholder="Width" required>
+        <div *ngIf="width?.invalid && formDir.submitted" class="validation-error">
+            <p *ngIf="width?.errors?.['required']">Width is required!</p>
+        </div>
+    </div>
+    <div class="input-container">
+        <label for="name">Name</label>
+        <input type="text" id="name" formControlName="name" placeholder="Building name">
+    </div>
+    <div class="input-container">
+        <label for="description">Description</label>
+        <textarea id="description" formControlName="description" placeholder="Building description"></textarea>
+    </div>
+    <div class="input-container">
+        <label for="maxFloors">Maximum floors</label>
+        <input type="number" id="maxFloors" formControlName="maxFloors" placeholder="Maximum floors" required>
+        <div *ngIf="maxFloors?.invalid && formDir.submitted" class="validation-error">
+            <p *ngIf="maxFloors?.errors?.['required']">Maximum floors is required!</p>
+        </div>
+    </div>
+    <div class="input-container">
+        <label for="width">Minimum floors</label>
+        <input type="number" id="minFloors" formControlName="minFloors" placeholder="Minimum floors" required>
+        <div *ngIf="minFloors?.invalid && formDir.submitted" class="validation-error">
+            <p *ngIf="minFloors?.errors?.['required']">Minimum floors is required!</p>
+        </div>
+    </div>
+    <button type="submit">Submit</button>
+</form>

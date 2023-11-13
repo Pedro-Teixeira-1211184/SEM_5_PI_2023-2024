@@ -11,13 +11,14 @@
 <div (click)="openSidebar()" id="menu-button">&#9776;</div>
 <div (click)="closeSidebar()" id="toggle-sidebar-button">&#8592;</div>
 <div *ngIf="isCampusManager" class="sidebar" id="sidebar">
-  <a (click)="buildingCreateForm()" >Create building</a>
+  <a (click)="buildingCreateForm()">Create building</a>
+  <a (click)="buildingEditForm()">Edit building</a>
   <a (click)="floorCreateForm()">Create Floor</a>
   <a href="#">Menu 3</a>
   <a href="#">Menu 4</a>
   <button class="logout bottom-logout">
     <img src="../../assets/_images/logout_icon.png" alt="Logout">
-    <a (click)="logout()" >Logout</a>
+    <a (click)="logout()">Logout</a>
   </button>
 </div>
 <div *ngIf="isAdministrator" class="sidebar" id="sidebar">
@@ -27,7 +28,7 @@
   <a href="#">Menu 8</a>
   <button class="logout bottom-logout">
     <img src="../../assets/_images/logout_icon.png" alt="Logout">
-    <a (click)="logout()" >Logout</a>
+    <a (click)="logout()">Logout</a>
   </button>
 </div>
 <div *ngIf="home_body" id="content">
@@ -39,6 +40,9 @@
 </div>
 <div *ngIf="createFloor" id="content">
   <app-floor></app-floor>
+</div>
+<div *ngIf="editBuilding" id="content">
+  <app-edit-building></app-edit-building>
 </div>
 </body>
 </html>

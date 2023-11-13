@@ -14,8 +14,10 @@ export class HomeComponent implements OnInit {
   auth: AuthService = inject(AuthService);
   isCampusManager: boolean = false;
   isAdministrator: boolean = false;
+
   home_body: boolean = true;
   createBuilding: boolean = false;
+  editBuilding: boolean = false;
   createFloor: boolean = false;
 
   constructor(auth: AuthService) {
@@ -86,6 +88,7 @@ export class HomeComponent implements OnInit {
     this.home_body = true;
     this.createBuilding = false;
     this.createFloor = false;
+    this.editBuilding = false;
   }
 
   buildingCreateForm() {
@@ -97,5 +100,12 @@ export class HomeComponent implements OnInit {
     this.home_body = false;
     this.createBuilding = false;
     this.createFloor = true;
+  }
+
+  buildingEditForm() {
+    this.home_body = false;
+    this.createBuilding = false;
+    this.createFloor = false;
+    this.editBuilding = true;
   }
 }
