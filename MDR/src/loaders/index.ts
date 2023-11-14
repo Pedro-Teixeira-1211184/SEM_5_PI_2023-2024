@@ -61,6 +61,11 @@ export default async ({expressApp}) => {
         schema: '../persistence/schemas/mapSchema',
     }
 
+    const taskTypeSchema = {
+        name: 'taskTypeSchema',
+        schema: '../persistence/schemas/taskTypeSchema',
+    }
+
     const roleController = {
         name: config.controllers.role.name,
         path: config.controllers.role.path
@@ -104,6 +109,11 @@ export default async ({expressApp}) => {
     const mapController = {
         name: config.controllers.map.name,
         path: config.controllers.map.path
+    }
+
+    const taskController = {
+        name: config.controllers.task.name,
+        path: config.controllers.task.path
     }
 
     const roleRepo = {
@@ -156,6 +166,11 @@ export default async ({expressApp}) => {
         path: config.repos.map.path
     }
 
+    const taskTypeRepo = {
+        name: config.repos.taskType.name,
+        path: config.repos.taskType.path
+    }
+
     const roleService = {
         name: config.services.role.name,
         path: config.services.role.path
@@ -202,6 +217,11 @@ export default async ({expressApp}) => {
         path: config.services.map.path
     }
 
+    const taskService = {
+        name: config.services.task.name,
+        path: config.services.task.path
+    }
+
     await dependencyInjectorLoader({
         mongoConnection,
         schemas: [
@@ -214,7 +234,8 @@ export default async ({expressApp}) => {
             robotSchema,
             robotTypeSchema,
             elevatorSchema,
-            mapSchema
+            mapSchema,
+            taskTypeSchema
         ],
         controllers: [
             roomController,
@@ -225,7 +246,8 @@ export default async ({expressApp}) => {
             robotController,
             elevatorController,
             mapController,
-            userController
+            userController,
+            taskController
         ],
         repos: [
             roomRepo,
@@ -237,7 +259,8 @@ export default async ({expressApp}) => {
             robotRepo,
             robotTypeRepo,
             elevatorRepo,
-            mapRepo
+            mapRepo,
+            taskTypeRepo
         ],
         services: [
             roomService,
@@ -248,7 +271,8 @@ export default async ({expressApp}) => {
             robotService,
             elevatorService,
             mapService,
-            userService
+            userService,
+            taskService
         ]
     });
     Logger.info('✌️ Schemas, Controllers, Repositories, Services, etc. loaded');

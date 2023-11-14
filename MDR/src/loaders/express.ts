@@ -9,6 +9,7 @@ import passagewayRoute from '../api/routes/passagewayRoute';
 import roomRoute from '../api/routes/roomRoute';
 import mapRoute from "../api/routes/mapRoute";
 import userRoute from "../api/routes/userRoute";
+import TaskRoute from "../api/routes/TaskRoute";
 
 export default ({app}: { app: express.Application }) => {
   app.enable('trust proxy');
@@ -45,6 +46,7 @@ export default ({app}: { app: express.Application }) => {
   app.use('/passageways', passagewayRoute());
   app.use('/rooms', roomRoute());
   app.use('/maps', mapRoute());
+  app.use('/tasks', TaskRoute());
 
   app.get('/status', (req, res) => {
     res.status(200).end();

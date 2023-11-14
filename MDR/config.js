@@ -81,6 +81,10 @@ export default {
       name: "MapController",
       path: "../controllers/mapController"
     },
+    task: {
+      name: "TaskController",
+      path: "../controllers/taskController"
+    },
   },
 
   repos: {
@@ -124,6 +128,10 @@ export default {
       name: "MapRepo",
       path: "../repos/mapRepo"
     },
+    taskType: {
+      name: "TaskTypeRepo",
+      path: "../repos/taskTypeRepo"
+    },
   },
 
   services: {
@@ -162,6 +170,10 @@ export default {
     map: {
       name: "MapService",
       path: "../services/mapService"
+    },
+    task: {
+      name: "TaskService",
+      path: "../services/taskService"
     },
   },
 };
