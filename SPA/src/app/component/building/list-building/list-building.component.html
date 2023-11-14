@@ -1,0 +1,25 @@
+<table>
+  <thead>
+  <tr>
+    <th>Code</th>
+    <th>Name</th>
+    <th>Length</th>
+    <th>Width</th>
+    <th>Description</th>
+    <th>Max Floors</th>
+    <th>Min Floors</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let item of buildings">
+    <td>{{ item.code }}</td>
+    <td>{{ item.name }}</td>
+    <td>{{ item.dimensions.length }}</td>
+    <td>{{ item.dimensions.width }}</td>
+    <td>{{ item.description }}</td>
+    <td>{{ item.maxFloors }}</td>
+    <td>{{ item.minFloors }}</td>
+  </tr>
+  </tbody>
+</table>
+

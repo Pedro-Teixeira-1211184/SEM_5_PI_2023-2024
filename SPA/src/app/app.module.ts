@@ -11,6 +11,7 @@ import { BuildingComponent } from './component/building/building.component';
 import { FloorComponent } from './component/floor/floor.component';
 import { FloorByBuildingComponent } from './component/floor/floor-by-building/floor-by-building.component';
 import { EditBuildingComponent } from './component/building/edit-building/edit-building.component';
+import { ListBuildingComponent } from './component/building/list-building/list-building.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { EditBuildingComponent } from './component/building/edit-building/edit-b
     BuildingComponent,
     FloorComponent,
     FloorByBuildingComponent,
-    EditBuildingComponent
+    EditBuildingComponent,
+    ListBuildingComponent
   ],
   imports: [
     BrowserModule,

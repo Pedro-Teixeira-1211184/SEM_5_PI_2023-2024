@@ -16,8 +16,6 @@ export default () => {
         body: Joi.object({
             floorCode1: Joi.string().required().error(new Error('Invalid floorCode1 code')),
             floorCode2: Joi.string().required().error(new Error('Invalid floorCode2 code')),
-            localization1: Joi.string().regex(new RegExp('^[(][0-9]+[,][0-9]+[)][;][(][0-9]+[,][0-9]+[)]$')).error(new Error('Invalid localization1')),
-            localization2: Joi.string().regex(new RegExp('^[(][0-9]+[,][0-9]+[)][;][(][0-9]+[,][0-9]+[)]$')).error(new Error('Invalid localization2'))
         })
     }), (req, res, next) => {
         console.log("Creating a passageway!");
@@ -29,8 +27,6 @@ export default () => {
         body: Joi.object({
             floorCode1: Joi.string().required().error(new Error('Invalid floorID code')),
             floorCode2: Joi.string().required().error(new Error('Invalid floorID code')),
-            localization1: Joi.string().regex(new RegExp('^[(][0-9]+[,][0-9]+[)][;][(][0-9]+[,][0-9]+[)]$')).error(new Error('Invalid localization1')),
-            localization2: Joi.string().regex(new RegExp('^[(][0-9]+[,][0-9]+[)][;][(][0-9]+[,][0-9]+[)]$')).error(new Error('Invalid localization2'))
         })
     }), (req, res, next) => {
         console.log("Updating a passageway!");

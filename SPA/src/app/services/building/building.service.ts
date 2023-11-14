@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import Constants from "../../../utils/Constants";
+import IBuildingDTO from "../../component/building/list-building/dto/IBuildingDTO";
 
 @Injectable({
     providedIn: 'root'
@@ -241,6 +242,25 @@ export class BuildingService {
             console.log(e);
         }
     }
+
+  public async getAllBuildings(): Promise<any> {
+    try {
+      let buildings: IBuildingDTO[] = [];
+      const response = await fetch(Constants.API_BUILDING_GET_ALL_URL, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      const x = await response.json();
+      for (let i = 0; i < x.length; i++) {
+        buildings.push(x[i]);
+      }
+      return buildings;
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
 }
 
