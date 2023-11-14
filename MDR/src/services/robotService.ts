@@ -17,101 +17,115 @@ import IRobotTypeRepo from "./IRepos/IRobotTypeRepo";
 
 export default class RobotService implements IRobotService {
 
-    constructor(
-        @Inject(config.repos.robot.name) private robotRepo: IRobotRepo,
-        @Inject(config.repos.robotType.name) private robotTypeRepo: IRobotTypeRepo
-    ) {
+  constructor(
+    @Inject(config.repos.robot.name) private robotRepo: IRobotRepo,
+    @Inject(config.repos.robotType.name) private robotTypeRepo: IRobotTypeRepo
+  ) {
+  }
+
+  public async createRobot(robotDTO: IRobotDTO): Promise<Result<IRobotDTO>> {
+    try {
+      //check if robotType exists
+      const robotType = await this.robotTypeRepo.findByDesignation(robotDTO.robotType);
+      if (robotType === null) {
+        return Result.fail<IRobotDTO>('RobotType does not exist');
+      }
+
+      if (robotDTO.isActive === undefined) {
+        robotDTO.isActive = true;
+      }
+
+      const robotOrError = await Robot.create(robotDTO);
+      if (robotOrError.isFailure) {
+        return Result.fail<IRobotDTO>(robotOrError.errorValue());
+      }
+
+      const robotResult = robotOrError.getValue();
+
+      //save robot
+      const robotCreated = await this.robotRepo.save(robotResult);
+
+      if (robotCreated === null) {
+        return Result.fail<IRobotDTO>('Robot already exists');
+      }
+
+      const robotDTOResult = RobotMapper.toDTO(robotCreated);
+      return Result.ok<IRobotDTO>(robotDTOResult)
+
+    } catch (e) {
+      throw e;
     }
+  }
 
-    public async createRobot(robotDTO: IRobotDTO): Promise<Result<IRobotDTO>> {
-        try {
-            //check if robotType exists
-            const robotType = await this.robotTypeRepo.findByDesignation(robotDTO.robotType);
-            if (robotType === null) {
-                return Result.fail<IRobotDTO>('RobotType does not exist');
-            }
+  public async createRobotType(robotTypeDTO: IRobotTypeDTO): Promise<Result<IRobotTypeDTO>> {
+    try {
+      const robotTypeOrError = await RobotType.create(robotTypeDTO);
+      if (robotTypeOrError.isFailure) {
+        return Result.fail<IRobotTypeDTO>(robotTypeOrError.errorValue());
+      }
 
-            if (robotDTO.isActive === undefined) {
-                robotDTO.isActive = true;
-            }
+      const robotTypeResult = robotTypeOrError.getValue();
 
-            const robotOrError = await Robot.create(robotDTO);
-            if (robotOrError.isFailure) {
-                return Result.fail<IRobotDTO>(robotOrError.errorValue());
-            }
+      //save robotType
+      const robotTypeCreated = await this.robotTypeRepo.save(robotTypeResult);
 
-            const robotResult = robotOrError.getValue();
+      if (robotTypeCreated === null) {
+        return Result.fail<IRobotTypeDTO>('This type of robot already exists!');
+      }
 
-            //save robot
-            const robotCreated = await this.robotRepo.save(robotResult);
+      const robotTypeDTOResult = RobotTypeMapper.toDTO(robotTypeCreated);
 
-            if (robotCreated === null) {
-                return Result.fail<IRobotDTO>('Robot already exists');
-            }
+      return Result.ok<IRobotTypeDTO>(robotTypeDTOResult)
 
-            const robotDTOResult = RobotMapper.toDTO(robotCreated);
-            return Result.ok<IRobotDTO>(robotDTOResult)
-
-        } catch (e) {
-            throw e;
-        }
+    } catch (e) {
+      throw e;
     }
+  }
 
-    public async createRobotType(robotTypeDTO: IRobotTypeDTO): Promise<Result<IRobotTypeDTO>> {
-        try {
-            const robotTypeOrError = await RobotType.create(robotTypeDTO);
-            if (robotTypeOrError.isFailure) {
-                return Result.fail<IRobotTypeDTO>(robotTypeOrError.errorValue());
-            }
+  public async updateRobot(robot_id: string, body: IRobotDTO): Promise<Result<IRobotDTO>> {
+    try {
+      const robot = await this.robotRepo.findByCode(robot_id);
 
-            const robotTypeResult = robotTypeOrError.getValue();
+      if (robot === null) {
+        return Result.fail<IRobotDTO>('Robot does not exist');
+      }
 
-            //save robotType
-            const robotTypeCreated = await this.robotTypeRepo.save(robotTypeResult);
+      if (body.isActive === undefined) {
+        robot.isActive = !robot.isActive;
+      } else {
+        robot.isActive = body.isActive;
+      }
 
-            if (robotTypeCreated === null) {
-                return Result.fail<IRobotTypeDTO>('This type of robot already exists!');
-            }
+      const mapped = RobotMapper.toPersistence(robot)
+      const mapped2 = RobotMapper.toDomain(mapped)
 
-            const robotTypeDTOResult = RobotTypeMapper.toDTO(robotTypeCreated);
+      const robotOrError = await this.robotRepo.update(mapped2, robot_id);
 
-            return Result.ok<IRobotTypeDTO>(robotTypeDTOResult)
+      if (robotOrError === null) {
+        return Result.fail<IRobotDTO>('Robot already exists');
+      }
 
-        } catch (e) {
-            throw e;
-        }
+      const robotDTOResult = RobotMapper.toDTO(robotOrError);
+
+      return Result.ok<IRobotDTO>(robotDTOResult)
+
+    } catch (e) {
+      throw e;
     }
+  }
 
-    public async updateRobot(robot_id: string, body: IRobotDTO): Promise<Result<IRobotDTO>> {
-        try {
-            const robot = await this.robotRepo.findByDomainId(robot_id);
+  public async getAll(): Promise<Result<Array<IRobotDTO>>> {
+    try {
+      const robots = await this.robotRepo.getAll();
 
-            if (robot === null) {
-                return Result.fail<IRobotDTO>('Robot does not exist');
-            }
+      if (robots.length === 0) {
+        return Result.fail<Array<IRobotDTO>>('No robots found');
+      }
 
-            if (body.isActive === undefined) {
-                robot.isActive = !robot.isActive;
-            } else {
-                robot.isActive = body.isActive;
-            }
-
-            const mapped = RobotMapper.toPersistence(robot)
-            const mapped2 = RobotMapper.toDomain(mapped)
-
-            const robotOrError = await this.robotRepo.update(mapped2, robot_id);
-
-            if (robotOrError === null) {
-                return Result.fail<IRobotDTO>('Robot already exists');
-            }
-
-            const robotDTOResult = RobotMapper.toDTO(robotOrError);
-
-            return Result.ok<IRobotDTO>(robotDTOResult)
-
-        } catch (e) {
-            throw e;
-        }
+      return Result.ok<Array<IRobotDTO>>(robots);
+    } catch (e) {
+      throw e;
     }
+  }
 
 }

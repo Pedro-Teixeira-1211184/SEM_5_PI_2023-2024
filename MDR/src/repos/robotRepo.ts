@@ -6,7 +6,7 @@ import IRobotRepo from "../services/IRepos/IRobotRepo";
 import {Robot} from "../domain/robot";
 import {IBuildingPersistence} from "../dataschema/IBuildingPersistence";
 import {RobotMapper} from "../mappers/RobotMapper";
-import e from "express";
+import IRobotDTO from "../dto/IRobotDTO";
 
 
 
@@ -64,7 +64,7 @@ export default class RobotRepo implements IRobotRepo {
         return RobotMapper.toDomain(floorDocument);
       }
       return null;
-    }catch (e) {
+    } catch (e) {
       throw e;
     }
   }
@@ -85,14 +85,48 @@ export default class RobotRepo implements IRobotRepo {
 
   public async update(robot: Robot, id: string): Promise<Robot> {
     try {
-      const query: FilterQuery<IBuildingPersistence> = {_id: id.toString()};
+      const query: FilterQuery<IBuildingPersistence> = {robotCode: id.toString()};
       const find = await this.robotSchema.findOne(query as FilterQuery<IBuildingPersistence & Document>);
       const robot1 = RobotMapper.toDomain(find);
       robot1.isActive = robot.isActive;
       const rawRobot = RobotMapper.toPersistence(robot1);
       await this.robotSchema.replaceOne(query as FilterQuery<IBuildingPersistence & Document>, rawRobot);
       return robot1;
-    }catch (e) {
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  public async getAll(): Promise<IRobotDTO[]> {
+    try {
+      const query = {} as FilterQuery<IRobotPersistence & Document>;
+      const robotRecord = await this.robotSchema.find(query);
+      const robotArray: IRobotDTO[] = [];
+
+      if (robotRecord.length === 0) {
+        return [];
+      } else {
+        for (let i = 0; i < robotRecord.length; i++) {
+          robotArray[i] = RobotMapper.toDTO(RobotMapper.toDomain(robotRecord[i]));
+        }
+        return robotArray;
+      }
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  public async findByCode(robotCode: string): Promise<Robot> {
+    try {
+      const query = {robotCode: robotCode};
+      return this.robotSchema.findOne(query as FilterQuery<IRobotPersistence & Document>)
+          .then((document) => {
+            if (document != null) {
+              return RobotMapper.toDomain(document);
+            }
+            return null;
+          });
+    } catch (e) {
       throw e;
     }
   }

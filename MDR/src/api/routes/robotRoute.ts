@@ -45,5 +45,10 @@ export default () => {
         ctrl.updateRobot(req, res, next);
     });
 
+    route.get('/', (req, res, next) => {
+        console.log("Getting all robots!");
+        ctrl.getAllRobots(req, res, next);
+    });
+
     return route;
 }

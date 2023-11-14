@@ -24,7 +24,7 @@ export class RobotMapper extends Mapper<Robot> {
     public static toDomain(raw: any | Model<IRobotPersistence & Document>): Robot {
         const robot = Robot.create(
             {
-                id: raw.robotID,
+                id: raw._id,
                 robotType: raw.robotRobotType,
                 code: raw.robotCode,
                 serialNumber: raw.robotSerialNumber,
@@ -44,12 +44,12 @@ export class RobotMapper extends Mapper<Robot> {
     public static toPersistence(robot: Robot): any {
         return {
             robotID: robot.id.toString(),
-            robotRobotType: robot.robotType.toString(),
-            robotCode: robot.code.toString(),
-            robotSerialNumber: robot.serialNumber.toString(),
-            robotNickname: robot.nickname.toString(),
-            robotBrand: robot.brand.toString(),
-            robotIsActive: robot.isActive.valueOf()
+            robotRobotType: robot.robotType,
+            robotCode: robot.code,
+            robotSerialNumber: robot.serialNumber,
+            robotNickname: robot.nickname,
+            robotBrand: robot.brand,
+            robotIsActive: robot.isActive
         }
     }
 }

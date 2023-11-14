@@ -1,1 +1,10 @@
-<p>deactivate-robot works!</p>
+<h1>Robots:</h1>
+<p><em>Select a robot to activate/deactivate</em></p>
+<ul>
+  <li *ngFor="let robot of robots">
+    <button type="button" (click)="updateStatus(robot)">
+      {{robot.code}} - {{robot.nickname}} - {{robot.isActive ? 'Active' : 'Inactive'}}
+    </button>
+  </li>
+</ul>
+

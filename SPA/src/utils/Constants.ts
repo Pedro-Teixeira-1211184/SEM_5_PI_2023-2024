@@ -15,6 +15,11 @@ export default class Constants {
     public static readonly API_FLOOR_CREATE_URL = Constants.API_BASE_URL + 'buildings/floors';
     public static readonly API_FLOOR_GET_BY_BUILDING_CODE_URL = Constants.API_BASE_URL + 'buildings/floors/:buildingCode';
 
+
+    //robot
+    public static readonly API_ROBOT_GET_ALL_URL = Constants.API_BASE_URL + 'robots';
+    public static readonly API_ROBOT_UPDATE_STATUS_URL = Constants.API_BASE_URL + 'robots/';
+
     public static readonly CAMPUS_MANAGER_ROLE = 'Campus manager';
     public static readonly ADMIN_ROLE = 'Admin';
     public static readonly FLEET_MANAGER_ROLE = 'Fleet manager';
