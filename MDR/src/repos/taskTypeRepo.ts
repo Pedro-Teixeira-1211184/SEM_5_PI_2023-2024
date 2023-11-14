@@ -21,7 +21,7 @@ export default class TaskTypeRepo implements ITaskTypeRepo {
     }
 
     public async exists(taskType: TaskType): Promise<boolean> {
-        const query = {taskTypeDesignation: taskType.designation};
+        const query = {taskTypeDesignation: taskType.designation, taskTypeRobotType: taskType.robotType};
         const record = await this.taskTypeSchema.findOne(query as FilterQuery<IRobotTypePersistence & Document>);
         return record == null;
     }

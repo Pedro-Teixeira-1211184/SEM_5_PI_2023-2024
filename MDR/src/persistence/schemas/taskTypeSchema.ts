@@ -5,7 +5,7 @@ import {ITaskTypePersistence} from "../../dataschema/ITaskTypePersistence";
 const TaskTypeSchema = new mongoose.Schema(
     {
         taskTypeID: {type: String, unique: true},
-        taskTypeDesignation: {type: String, required: true, unique: true},
+        taskTypeDesignation: {type: String, required: true},
         taskTypeRobotType: {type: String, required: true}
     },
     {
