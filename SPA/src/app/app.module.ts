@@ -12,20 +12,23 @@ import { FloorComponent } from './component/floor/floor.component';
 import { FloorByBuildingComponent } from './component/floor/floor-by-building/floor-by-building.component';
 import { EditBuildingComponent } from './component/building/edit-building/edit-building.component';
 import { ListBuildingComponent } from './component/building/list-building/list-building.component';
+import {DeactivateRobotComponent} from "./component/robot/deactivate-robot/deactivate-robot.component";
 
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    PageNotFoundComponent,
-    LoginComponent,
-    HomeComponent,
-    BuildingComponent,
-    FloorComponent,
-    FloorByBuildingComponent,
-    EditBuildingComponent,
-    ListBuildingComponent
-  ],
+    declarations: [
+        AppComponent,
+        PageNotFoundComponent,
+        LoginComponent,
+        HomeComponent,
+        BuildingComponent,
+        FloorComponent,
+        FloorByBuildingComponent,
+        EditBuildingComponent,
+        ListBuildingComponent,
+        DeactivateRobotComponent,
+        DeactivateRobotComponent
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,
