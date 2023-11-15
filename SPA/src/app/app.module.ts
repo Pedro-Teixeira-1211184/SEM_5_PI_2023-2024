@@ -14,6 +14,7 @@ import { EditBuildingComponent } from './component/building/edit-building/edit-b
 import { ListBuildingComponent } from './component/building/list-building/list-building.component';
 import {DeactivateRobotComponent} from "./component/robot/deactivate-robot/deactivate-robot.component";
 import { CreateRobotTypeComponent } from './component/robot/robot-type/create-robot-type/create-robot-type.component';
+import { CreatePassagewayComponent } from './component/passageway/create-passageway/create-passageway.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { CreateRobotTypeComponent } from './component/robot/robot-type/create-ro
         ListBuildingComponent,
         DeactivateRobotComponent,
         DeactivateRobotComponent,
-        CreateRobotTypeComponent
+        CreateRobotTypeComponent,
+        CreatePassagewayComponent
     ],
   imports: [
     BrowserModule,

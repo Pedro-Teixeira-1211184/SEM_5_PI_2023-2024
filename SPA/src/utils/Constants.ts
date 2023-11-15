@@ -27,6 +27,9 @@ export default class Constants {
     //task
     public static readonly API_TASK_TYPE_CREATE_URL = Constants.API_BASE_URL + 'tasks/types';
 
+    //passageway
+    public static readonly API_PASSAGEWAY_CREATE_URL = Constants.API_BASE_URL + 'passageways';
+
     public static readonly CAMPUS_MANAGER_ROLE = 'Campus manager';
     public static readonly ADMIN_ROLE = 'Admin';
     public static readonly FLEET_MANAGER_ROLE = 'Fleet manager';
