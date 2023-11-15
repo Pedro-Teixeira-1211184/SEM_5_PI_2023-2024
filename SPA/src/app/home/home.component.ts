@@ -25,6 +25,7 @@ export class HomeComponent implements OnInit {
   deactivateRobot: boolean = false;
   createRobotType: boolean = false;
   createPassageway: boolean = false;
+  patchMap: boolean = false;
 
 
   constructor(auth: AuthService) {
@@ -109,6 +110,7 @@ export class HomeComponent implements OnInit {
     this.deactivateRobot = false;
     this.createRobotType = false;
     this.createPassageway = false;
+    this.patchMap = false;
   }
 
   floorsByBuildingCodeList() {
@@ -121,6 +123,7 @@ export class HomeComponent implements OnInit {
     this.deactivateRobot = false;
     this.createRobotType = false;
     this.createPassageway = false;
+    this.patchMap = false;
   }
 
   buildingCreateForm() {
@@ -133,6 +136,7 @@ export class HomeComponent implements OnInit {
     this.deactivateRobot = false;
     this.createRobotType = false;
     this.createPassageway = false;
+    this.patchMap = false;
   }
 
   floorCreateForm() {
@@ -145,6 +149,7 @@ export class HomeComponent implements OnInit {
     this.deactivateRobot = false;
     this.createRobotType = false;
     this.createPassageway = false;
+    this.patchMap = false;
   }
 
   buildingEditForm() {
@@ -157,6 +162,7 @@ export class HomeComponent implements OnInit {
     this.deactivateRobot = false;
     this.createRobotType = false;
     this.createPassageway = false;
+    this.patchMap = false;
   }
 
   buildingList() {
@@ -169,6 +175,7 @@ export class HomeComponent implements OnInit {
     this.deactivateRobot = false;
     this.createRobotType = false;
     this.createPassageway = false;
+    this.patchMap = false;
   }
 
   deactivateRobotForm() {
@@ -181,6 +188,7 @@ export class HomeComponent implements OnInit {
     this.floorsByBuildingCode = false;
     this.createRobotType = false;
     this.createPassageway = false;
+    this.patchMap = false;
   }
 
   createRobotTypeForm() {
@@ -193,6 +201,7 @@ export class HomeComponent implements OnInit {
     this.floorsByBuildingCode = false;
     this.createRobotType = true;
     this.createPassageway = false;
+    this.patchMap = false;
   }
 
   passagewayCreateForm() {
@@ -205,5 +214,19 @@ export class HomeComponent implements OnInit {
     this.floorsByBuildingCode = false;
     this.createRobotType = false;
     this.createPassageway = true;
+    this.patchMap = false;
+  }
+
+  patchMapForm() {
+    this.home_body = false;
+    this.createBuilding = false;
+    this.createFloor = false;
+    this.editBuilding = false;
+    this.listBuilding = false;
+    this.deactivateRobot = false;
+    this.floorsByBuildingCode = false;
+    this.createRobotType = false;
+    this.createPassageway = false;
+    this.patchMap = true;
   }
 }

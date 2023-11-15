@@ -17,7 +17,7 @@
   <a (click)="floorCreateForm()">Create floor</a>
   <a (click)="floorsByBuildingCodeList()">Get floors by building</a>
   <a (click)="passagewayCreateForm()">Create passageway</a>
-  <a href="#">Menu 4</a>
+  <a (click)="patchMapForm()">Patch map</a>
   <button class="logout bottom-logout">
     <img src="../../assets/_images/logout_icon.png" alt="Logout">
     <a (click)="logout()">Logout</a>
@@ -60,6 +60,9 @@
 </div>
 <div *ngIf="createPassageway" id="content">
   <app-create-passageway></app-create-passageway>
+</div>
+<div *ngIf="patchMap" id="content">
+  <app-patch-map></app-patch-map>
 </div>
 </body>
 </html>
