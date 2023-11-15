@@ -24,7 +24,7 @@ export default class PassagewayController implements IPassagewayController /* TO
       const passagewayOrError = await this.passagewayServiceInstance.createPassageway(req.body as IPassagewayDTO) as Result<IPassagewayDTO>;
 
       if (passagewayOrError.isFailure) {
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json("passageway already exists");
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(passagewayOrError.error);
       }
 
       const passagewayDTO = passagewayOrError.getValue();
@@ -39,11 +39,11 @@ export default class PassagewayController implements IPassagewayController /* TO
     try {
       const floorOrError = await this.floorServiceInstance.findFloorsByBuildingCode(req.params.buildingCode1) as Result<Array<IFloorDTO>>;
       const floorOrError1 = await this.floorServiceInstance.findFloorsByBuildingCode(req.params.buildingCode2) as Result<Array<IFloorDTO>>;
-  
+
       if (floorOrError.isFailure) {
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json("First building selected doesn t have any floors registered");
       }
-      
+
       if (floorOrError1.isFailure) {
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json("Second building selected doesn t have any floors registered");
       }
@@ -64,9 +64,9 @@ export default class PassagewayController implements IPassagewayController /* TO
       return next(e);
     }
   };
-  
+
   public async updatePassageway(req: Request, res: Response, next: NextFunction) {
-    try{ 
+    try{
       const floorOrError = await this.floorServiceInstance.findFloorByCode(req.body.floorCode1) as Result<IFloorDTO>;
       const floorOrError1 = await this.floorServiceInstance.findFloorByCode(req.body.floorCode2) as Result<IFloorDTO>;
       if (floorOrError.isFailure) {
@@ -82,7 +82,7 @@ export default class PassagewayController implements IPassagewayController /* TO
       if(passagewayOrError.isFailure){
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(passagewayOrError.error);
       }
-  
+
       const passagewayDTO = passagewayOrError.getValue();
       return res.json(passagewayDTO).status(StatusCodes.ACCEPTED);
     }catch(e){

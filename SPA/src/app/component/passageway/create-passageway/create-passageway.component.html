@@ -1,1 +1,21 @@
-<p>create-passageway works!</p>
+<form class="building-form" id="buildingForm" (ngSubmit)="submit()" [formGroup]="passagewayForm" #formDir="ngForm">
+  <h1>Create a passageway</h1>
+  <div class="input-container">
+    <label for="code1">Floor 1</label>
+    <select id="code1" formControlName="code1" required>
+      <option *ngFor="let code of floorsCode" [value]="code">{{ code }}</option>
+    </select>
+    <div *ngIf="code1?.invalid && formDir.submitted" class="validation-error">
+      <p *ngIf="code1?.errors?.['required']">Code is required!</p>
+    </div>
+    <label for="code2">Floor 2</label>
+    <select id="code2" formControlName="code2" required>
+      <option *ngFor="let code of floorsCode" [value]="code">{{ code }}</option>
+    </select>
+    <div *ngIf="code2?.invalid && formDir.submitted" class="validation-error">
+      <p *ngIf="code2?.errors?.['required']">Code is required!</p>
+    </div>
+  </div>
+  <button type="submit">Submit</button>
+</form>
+

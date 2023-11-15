@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import Constants from "../../../utils/Constants";
-import { Observable, from } from 'rxjs';
+import {from, Observable} from 'rxjs';
+import IFloorDTO from "../../component/floor/dto/IFloorDTO";
 
 @Injectable({
     providedIn: 'root'
@@ -46,6 +47,17 @@ export class FloorService {
 
         return from(response.then(res => res.json()));
     }
+
+  public async getFloorsByBuildingCodeForPassageway(buildingCode: string): Promise<IFloorDTO[]> {
+    const response = fetch(Constants.API_FLOOR_GET_BY_BUILDING_CODE_URL + buildingCode, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    return await response.then(res => res.json());
+  }
 
 
     private async getResponse(hasDescription: boolean, buildingCode: string, number: number, description: string) {
