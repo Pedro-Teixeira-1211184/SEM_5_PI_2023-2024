@@ -13,6 +13,7 @@ import { FloorByBuildingComponent } from './component/floor/floor-by-building/fl
 import { EditBuildingComponent } from './component/building/edit-building/edit-building.component';
 import { ListBuildingComponent } from './component/building/list-building/list-building.component';
 import {DeactivateRobotComponent} from "./component/robot/deactivate-robot/deactivate-robot.component";
+import { CreateRobotTypeComponent } from './component/robot/robot-type/create-robot-type/create-robot-type.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import {DeactivateRobotComponent} from "./component/robot/deactivate-robot/deact
         EditBuildingComponent,
         ListBuildingComponent,
         DeactivateRobotComponent,
-        DeactivateRobotComponent
+        DeactivateRobotComponent,
+        CreateRobotTypeComponent
     ],
   imports: [
     BrowserModule,

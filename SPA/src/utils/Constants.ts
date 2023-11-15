@@ -20,6 +20,13 @@ export default class Constants {
     public static readonly API_ROBOT_GET_ALL_URL = Constants.API_BASE_URL + 'robots';
     public static readonly API_ROBOT_UPDATE_STATUS_URL = Constants.API_BASE_URL + 'robots/';
 
+    //robot type
+    public static readonly API_ROBOT_TYPE_CREATE_URL = Constants.API_BASE_URL + 'robots/types';
+
+
+    //task
+    public static readonly API_TASK_TYPE_CREATE_URL = Constants.API_BASE_URL + 'tasks/types';
+
     public static readonly CAMPUS_MANAGER_ROLE = 'Campus manager';
     public static readonly ADMIN_ROLE = 'Admin';
     public static readonly FLEET_MANAGER_ROLE = 'Fleet manager';

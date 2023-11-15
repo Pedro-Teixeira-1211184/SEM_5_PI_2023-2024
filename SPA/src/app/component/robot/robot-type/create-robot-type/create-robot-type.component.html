@@ -1,0 +1,26 @@
+<!-- app.component.html -->
+
+<form id="form" (ngSubmit)="submit()" [formGroup]="form" #formDir="ngForm">
+    <h1>Robot type</h1>
+    <div class="input-container">
+        <label for="designation">Name</label>
+        <input type="text" formControlName="designation" id="designation" placeholder="Robot type designation" required>
+        <div *ngIf="designation?.invalid && formDir.submitted" class="validation-error">
+            <p *ngIf="designation?.errors?.['required']">Designation is required!</p>
+        </div>
+    </div>
+
+    <div>
+        <div *ngFor="let task of tasks">
+            <label [for]="task.id">{{ task.name }}</label>
+            <div class="checkbox-wrapper-2">
+                <input type="checkbox" class="sc-gJwTLC ikxBAC" [checked]="task.selected" [id]="task.id" formControlName="chosen" (change)="onChange($event)">
+            </div>
+        </div>
+        <div *ngIf="chosen?.invalid && formDir.submitted" class="validation-error">
+            <p *ngIf="chosen?.errors?.['required']">At least one task is required!</p>
+        </div>
+    </div>
+
+    <button type="submit">Submit</button>
+</form>
