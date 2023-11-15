@@ -1,4 +1,4 @@
-.building-form {
+.passageway-form {
   max-width: 400px;
   margin: 0 auto;
   padding: 20px;
@@ -7,7 +7,7 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.building-form h1 {
+.passageway-form h1 {
   font-size: 24px;
   color: #333;
   margin-bottom: 20px;

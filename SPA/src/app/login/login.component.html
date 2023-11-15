@@ -6,22 +6,16 @@
   <title>{{title}}</title>
 </head>
 <body>
-<div class="container">
-  <form class="login-form" id="loginForm" (ngSubmit)="submit()" [formGroup]="loginForm" #formDir="ngForm">
-    <h1>Login</h1>
+<div class="box">
+  <form (ngSubmit)="submit()" [formGroup]="loginForm" #formDir="ngForm">
+    <span class="text-center">login</span>
     <div class="input-container">
-      <label for="email">Email</label>
-      <input type="text" id="email" formControlName="email" placeholder="Type your email" required>
-      <div *ngIf="email?.invalid && formDir.submitted" class="validation-error">
-        <p *ngIf="email?.errors?.['required']">Email is required!</p>
-      </div>
+      <input formControlName="email" type="text" required/>
+      <label>Email</label>
     </div>
     <div class="input-container">
-      <label for="password">Password</label>
-      <input type="password" id="password" formControlName="password" placeholder="Type your password" required>
-      <div *ngIf="password?.invalid && formDir.submitted" class="validation-error">
-        <p *ngIf="password?.errors?.['required']">Password is required!</p>
-      </div>
+      <input formControlName="password" type="password" required/>
+      <label>Password</label>
     </div>
     <div class="wrapper">
       <button class="cta" type="submit">
