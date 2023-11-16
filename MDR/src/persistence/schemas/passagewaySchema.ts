@@ -6,8 +6,6 @@ const PassagewaySchema = new mongoose.Schema(
     passagewayID: {type: String, unique: true},
     passagewayFloorCode1: {type: String, required: true},
     passagewayFloorCode2: {type: String, required: true},
-    passagewayLocalization1: {type: String},
-    passagewayLocalization2: {type: String}
   },
   {
     timestamps: true
