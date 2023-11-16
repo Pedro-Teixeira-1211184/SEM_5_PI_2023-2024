@@ -1,12 +1,14 @@
 <form class="floor-form" id="floorForm" (ngSubmit)="submit()" [formGroup]="floorForm" #formDir="ngForm">
     <h1>Create a Floor</h1>
-    <div class="input-container">
-      <label for="buildingCode">Building Code</label>
-      <input type="text" id="buildingCode" formControlName="buildingCode" placeholder="Building code" required>
-      <div *ngIf="buildingCode?.invalid && formDir.submitted" class="validation-error">
-        <p *ngIf="buildingCode?.errors?.['required']">Building Code is required!</p>
-      </div>
+  <div class="input-container">
+    <label for="code">Code</label>
+    <select id="code" formControlName="buildingCode" required>
+      <option *ngFor="let code of buildings" [value]="code">{{ code }}</option>
+    </select>
+    <div *ngIf="buildingCode?.invalid && formDir.submitted" class="validation-error">
+      <p *ngIf="buildingCode?.errors?.['required']">Code is required!</p>
     </div>
+  </div>
     <div class="input-container">
       <label for="number">Number</label>
       <input type="number" id="number" formControlName="number" placeholder="Floor number" required>
@@ -16,8 +18,10 @@
     </div>
     <div class="input-container">
       <label for="description">Description</label>
-      <textarea id="description" formControlName="description" placeholder="Floor description"></textarea>
+      <textarea id="description" formControlName="description" placeholder="Description" required></textarea>
+      <div *ngIf="description?.invalid && formDir.submitted" class="validation-error">
+        <p *ngIf="description?.errors?.['required']">Description is required!</p>
+      </div>
     </div>
     <button type="submit">Submit</button>
   </form>
-  

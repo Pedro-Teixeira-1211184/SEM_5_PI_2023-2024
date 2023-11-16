@@ -1,6 +1,7 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {FloorService} from "../../services/floor/floor.service";
+import {BuildingService} from "../../services/building/building.service";
 
 
 @Component({
@@ -11,12 +12,15 @@ import {FloorService} from "../../services/floor/floor.service";
 export class FloorComponent implements OnInit {
   floorForm!: FormGroup;
   service: FloorService = inject(FloorService);
+  b_service: BuildingService = inject(BuildingService);
+  buildings: string[] = [];
 
-  constructor() { }
+  constructor() {
+    this.getAllBuildings();
+  }
 
   public async submit() {
     try{
-      console.log(this.floorForm);
       if (this.floorForm.invalid) {
         alert('Please fill all the fields');
         return;
@@ -37,6 +41,10 @@ export class FloorComponent implements OnInit {
       number: new FormControl('', [Validators.required]),
       description: new FormControl()
     });
+  }
+
+  public async getAllBuildings(){
+    this.buildings = await this.b_service.getAllBuildingsCode();
   }
 
   get buildingCode() {
