@@ -54,12 +54,13 @@ export class FloorService {
       headers: {
         'Content-Type': 'application/json'
       }
-    });
+     }
+    );
 
-    if (response.status === 200) {
-      alert(await response.json());
+    if (response.status == 500) {
+      alert(await response.text());
+      return [];
     }
-
     return await response.json();
   }
 

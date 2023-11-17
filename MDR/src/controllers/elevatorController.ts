@@ -10,7 +10,7 @@ import {Result} from '../core/logic/Result';
 import {StatusCodes} from "http-status-codes";
 import { min } from 'lodash';
 import IBuildingDTO from '../dto/IBuildingDTO';
-import IFloorDTO from '../dto/IFloorDTO';
+
 
 @Service()
 
@@ -41,5 +41,17 @@ export default class ElevatorController implements IElevatorController /* TODO: 
       return next(e);
     }
   };
+
+  public async findElevatorsByBuildingCode(req: Request, res: Response, next: NextFunction) {
+    try {
+      const result = await this.elevatorServiceInstance.getElevatorsByBuildingCode(req.params.buildingCode);
+      if (result.isFailure) {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(result.errorValue());
+      }
+      return res.json(result.getValue()).status(StatusCodes.OK);
+    }catch (e) {
+      return next(e);
+    }
+  }
 
 }

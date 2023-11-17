@@ -107,5 +107,11 @@ export default () => {
     }
   );
 
+  route.get('/:buildingCode/elevators', (req, res, next) => {
+      console.log("Getting all Elevators by Building Code!");
+      elevatorCtrl.findElevatorsByBuildingCode(req, res, next);
+    }
+  );
+
   return route;
 }

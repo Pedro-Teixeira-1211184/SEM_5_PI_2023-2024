@@ -34,8 +34,12 @@ export default class Constants {
     //map
     public static readonly API_MAP_PATCH_URL = Constants.API_BASE_URL + 'maps';
 
+    //elevator
+    public static readonly API_ELEVATOR_GET_BY_BUILDING_CODE_URL = 'elevators/';
+
     public static readonly CAMPUS_MANAGER_ROLE = 'Campus manager';
     public static readonly ADMIN_ROLE = 'Admin';
     public static readonly FLEET_MANAGER_ROLE = 'Fleet manager';
+
 
 }

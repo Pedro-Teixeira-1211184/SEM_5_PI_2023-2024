@@ -7,6 +7,8 @@ import {PassagewayService} from "../../../services/passageway/passageway.service
 import IFloorDTO from "../../floor/dto/IFloorDTO";
 import IBuildingDTO from "../../building/list-building/dto/IBuildingDTO";
 import IPassagewayDTO from "../../passageway/dto/IPassagewayDTO";
+import {ElevatorService} from "../../../services/elevator/elevator.service";
+import IElevatorDTO from "../../../services/elevator/dto/IElevatorDTO";
 
 @Component({
   selector: 'app-patch-map',
@@ -19,6 +21,7 @@ export class PatchMapComponent implements OnInit {
   b_service = inject(BuildingService);
   p_service = inject(PassagewayService);
   f_service = inject(FloorService);
+  e_service = inject(ElevatorService);
 
   mapForm!: FormGroup;
   form!: FormGroup;
@@ -26,6 +29,7 @@ export class PatchMapComponent implements OnInit {
   buildings: IBuildingDTO[] = [];
   floors: IFloorDTO[] = [];
   passageways: IPassagewayDTO[] = [];
+  elevators: IElevatorDTO[] = [];
 
   columns: number = 0;
   rows: number = 0;
@@ -122,6 +126,8 @@ export class PatchMapComponent implements OnInit {
   public async getFloorElements() {
     //get passageways
     this.passageways = await this.p_service.getPassageWayByFloorCode(this.floorCode?.value);
+    this.elevators = await this.e_service.getElevatorsByBuildingCode(this.buildingCode?.value);
+    console.log(this.elevators);
     //TODO: get rest of elements - rooms and elevator
   }
 }

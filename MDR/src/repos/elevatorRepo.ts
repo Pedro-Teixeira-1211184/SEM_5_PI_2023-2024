@@ -84,4 +84,21 @@ export default class ElevatorRepo implements IElevatorRepo {
       throw error;
     }
   }
+
+  public async getElevatorsByBuildingCode(buildingCode: string): Promise<Elevator[]> {
+    try {
+      const query = {elevatorBuildingCode: buildingCode};
+      const elevatorRecords = await this.elevatorSchema.find(query as FilterQuery<IElevatorPersistence & Document>);
+      if (elevatorRecords.length == 0) {
+        return null;
+      }
+      const elevators: Elevator[] = [];
+      for (let i = 0; i < elevatorRecords.length; i++) {
+        elevators.push(ElevatorMapper.toDomain(elevatorRecords[i]));
+      }
+      return elevators;
+    }catch (e) {
+      throw e;
+    }
+  }
 }
