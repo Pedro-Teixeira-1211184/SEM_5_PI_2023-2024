@@ -34,7 +34,7 @@ export default class PassagewayRepo implements IPassagewayRepo {
       const invPassageway = passageway;
       invPassageway.floorCode1 = passageway.floorCode2;
       invPassageway.floorCode2 = passageway.floorCode1;
-  
+
       if (await this.exists(passageway) || await this.exists(invPassageway)) {
         const rawPassageway = PassagewayMapper.toPersistence(passageway);
         const passagewayCreated = await this.passagewaySchema.create(rawPassageway);
@@ -185,6 +185,21 @@ export default class PassagewayRepo implements IPassagewayRepo {
       }
       return PassagewayMapper.toDomain(find);
     } catch (error) {
+      throw error;
+    }
+  }
+
+  public async getPassagewaysInFloor(floorCode: string): Promise<Array<IPassagewayDTO>> {
+    try {
+      const query = {$or: [{passagewayFloorCode1: floorCode}, {passagewayFloorCode2: floorCode}]} as FilterQuery<IPassagewayPersistence & Document>;
+      const find = await this.passagewaySchema.find(query);
+      let result1: IPassagewayDTO[] = [];
+      for (let i = 0; i < find.length; i++) {
+        const result = PassagewayMapper.toDTO(PassagewayMapper.toDomain(find[i]));
+        result1.push(result);
+      }
+      return result1;
+    }catch (error) {
       throw error;
     }
   }

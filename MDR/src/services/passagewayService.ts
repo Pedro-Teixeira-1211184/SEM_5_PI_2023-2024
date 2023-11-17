@@ -105,5 +105,19 @@ export default class PassagewayService implements IPassagewayService {
     }
   }
 
+  public async getPassagewaysInFloors(floorCode: string): Promise<Result<Array<IPassagewayDTO>>> {
+    try {
+      const passagewaysInFloors = await this.PassagewayRepo.getPassagewaysInFloor(floorCode);
+
+      if (passagewaysInFloors.length == 0) {
+        return Result.fail<Array<IPassagewayDTO>>('No passageways found');
+      }
+
+      return Result.ok<Array<IPassagewayDTO>>(passagewaysInFloors)
+    }catch (e) {
+      throw e;
+    }
+  }
+
 
 }

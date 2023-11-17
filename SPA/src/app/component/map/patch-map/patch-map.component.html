@@ -9,25 +9,30 @@
       <p *ngIf="buildingCode?.errors?.['required']">Code is required!</p>
     </div>
     <label for="code2">Floor</label>
-    <select id="code2" formControlName="floorCode" required>
-      <option *ngFor="let code of floors" [value]="code">{{ code.code }}</option>
+    <select id="code2" formControlName="floorCode" (change)="getFloorElements()" required>
+      <option *ngFor="let code of floors" [value]="code.code">{{ code.code }}</option>
     </select>
     <div *ngIf="floorCode?.invalid && formDir.submitted" class="validation-error">
       <p *ngIf="floorCode?.errors?.['required']">Code is required!</p>
     </div>
-    <table>
-      <tr *ngFor="let row of matrix; let i = index">
-        <td *ngFor="let cell of row; let j = index">
-          <input
-            type="number"
-            min="0"
-            max="3"
-          />
-        </td>
-      </tr>
-    </table>
+    <button type="submit">Submit</button>
   </div>
-  <button type="submit">Submit</button>
 </form>
+<form [formGroup]="form">
+  <table>
+    <tr *ngFor="let row of matrix.controls; let i = index" formArrayName="matrix">
+      <td *ngFor="let cell of row.value; let j = index">
+        <input
+          type="number"
+          min="0"
+          max="3"
+          [formControl]="getCellControl(i, j)"
+          (change)="onCellValueChange(i, j)"
+        />
+      </td>
+    </tr>
+  </table>
+</form>
+
 
 

@@ -1,5 +1,5 @@
 import {Inject, Service} from 'typedi';
-import e, {Response, Request, NextFunction} from 'express';
+import {Response, Request, NextFunction} from 'express';
 import config from "../../config";
 import IPassagewayService from "../services/IServices/IPassagewayService";
 import IPassagewayController from "./IControllers/IPassagewayController";
@@ -51,7 +51,7 @@ export default class PassagewayController implements IPassagewayController /* TO
       const floorsResult = floorOrError.getValue();
       const floorsResult1 = floorOrError1.getValue();
 
-      const passagewayOrError = await this.passagewayServiceInstance.getPassagewaysInBuildings(floorsResult,floorsResult1) as Result<Array<IPassagewayDTO>>;
+      const passagewayOrError = await this.passagewayServiceInstance.getPassagewaysInBuildings(floorsResult, floorsResult1) as Result<Array<IPassagewayDTO>>;
 
       if (passagewayOrError.isFailure) {
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json("No passageways found");
@@ -66,7 +66,7 @@ export default class PassagewayController implements IPassagewayController /* TO
   };
 
   public async updatePassageway(req: Request, res: Response, next: NextFunction) {
-    try{
+    try {
       const floorOrError = await this.floorServiceInstance.findFloorByCode(req.body.floorCode1) as Result<IFloorDTO>;
       const floorOrError1 = await this.floorServiceInstance.findFloorByCode(req.body.floorCode2) as Result<IFloorDTO>;
       if (floorOrError.isFailure) {
@@ -79,13 +79,26 @@ export default class PassagewayController implements IPassagewayController /* TO
 
       const passagewayOrError = await this.passagewayServiceInstance.updatePassageway(req.body as IPassagewayDTO) as Result<IPassagewayDTO>;
 
-      if(passagewayOrError.isFailure){
+      if (passagewayOrError.isFailure) {
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(passagewayOrError.error);
       }
 
       const passagewayDTO = passagewayOrError.getValue();
       return res.json(passagewayDTO).status(StatusCodes.ACCEPTED);
-    }catch(e){
+    } catch (e) {
+      return next(e);
+    }
+  }
+
+  public async getPassagewaysInFloors(req: Request, res: Response, next: NextFunction) {
+    try {
+      const result = await this.passagewayServiceInstance.getPassagewaysInFloors(req.params.floorCode);
+      if (result.isFailure) {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json("No passageways found");
+      }
+      const passagewayDTO = result.getValue();
+      return res.json(passagewayDTO).status(StatusCodes.OK);
+    } catch (e) {
       return next(e);
     }
   }
