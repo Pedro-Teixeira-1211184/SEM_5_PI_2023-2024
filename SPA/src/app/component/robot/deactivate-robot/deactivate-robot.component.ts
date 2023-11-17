@@ -1,6 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {RobotService} from "../../../services/robot/robot.service";
-import IRobotDTO from "../dto/IRobotDTO";
+import IRobotDTO from "../../../dto/IRobotDTO";
 
 
 @Component({

@@ -4,11 +4,11 @@ import {BuildingService} from "../../../services/building/building.service";
 import {MapService} from "../../../services/map/map.service";
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {PassagewayService} from "../../../services/passageway/passageway.service";
-import IFloorDTO from "../../floor/dto/IFloorDTO";
-import IBuildingDTO from "../../building/list-building/dto/IBuildingDTO";
-import IPassagewayDTO from "../../passageway/dto/IPassagewayDTO";
+import IFloorDTO from "../../../dto/IFloorDTO";
+import IBuildingDTO from "../../../dto/IBuildingDTO";
+import IPassagewayDTO from "../../../dto/IPassagewayDTO";
 import {ElevatorService} from "../../../services/elevator/elevator.service";
-import IElevatorDTO from "../../../services/elevator/dto/IElevatorDTO";
+import IElevatorDTO from "../../../dto/IElevatorDTO";
 
 @Component({
   selector: 'app-patch-map',
@@ -127,7 +127,6 @@ export class PatchMapComponent implements OnInit {
     //get passageways
     this.passageways = await this.p_service.getPassageWayByFloorCode(this.floorCode?.value);
     this.elevators = await this.e_service.getElevatorsByBuildingCode(this.buildingCode?.value);
-    console.log(this.elevators);
     //TODO: get rest of elements - rooms and elevator
   }
 }

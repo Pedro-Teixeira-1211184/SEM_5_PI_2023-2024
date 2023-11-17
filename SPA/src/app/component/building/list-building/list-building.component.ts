@@ -1,6 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {BuildingService} from "../../../services/building/building.service";
-import IBuildingDTO from "./dto/IBuildingDTO";
+import IBuildingDTO from "../../../dto/IBuildingDTO";
 
 @Component({
   selector: 'app-list-building',

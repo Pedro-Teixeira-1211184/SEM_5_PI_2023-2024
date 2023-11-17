@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import Constants from "../../../utils/Constants";
-import IPassagewayDTO from "../../component/passageway/dto/IPassagewayDTO";
+import IPassagewayDTO from "../../dto/IPassagewayDTO";
 import {from} from "rxjs";
 
 @Injectable({

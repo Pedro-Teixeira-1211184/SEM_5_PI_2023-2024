@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import Constants from "../../../utils/Constants";
 import {from, Observable} from 'rxjs';
-import IFloorDTO from "../../component/floor/dto/IFloorDTO";
+import IFloorDTO from "../../dto/IFloorDTO";
 
 @Injectable({
     providedIn: 'root'
