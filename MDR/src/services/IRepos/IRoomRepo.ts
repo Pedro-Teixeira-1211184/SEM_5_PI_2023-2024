@@ -7,4 +7,5 @@ export default interface IRoomRepo extends Repo<Room> {
     findByName(roomName: string): Promise<Room>;
     delete(room: Room): Promise<void>;
     exists(room: Room): Promise<boolean>;
+    findByFloorCode(floorCode: string): Promise<Room[]>;
 }

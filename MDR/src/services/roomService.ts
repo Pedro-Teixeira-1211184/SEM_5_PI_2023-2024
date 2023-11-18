@@ -9,6 +9,7 @@ import {RoomMapper} from "../mappers/RoomMapper";
 import IFloorRepo from "./IRepos/IFloorRepo";
 
 
+
 @Service()
 
 export default class RoomService implements IRoomService {
@@ -46,6 +47,32 @@ export default class RoomService implements IRoomService {
       const roomDTOResult = RoomMapper.toDTO(roomResult) as IRoomDTO;
       return Result.ok<IRoomDTO>(roomDTOResult)
     } catch (e) {
+      throw e;
+    }
+  }
+
+  public async getRoomsByFloorCode(floorCode: string): Promise<Result<IRoomDTO[]>> {
+    try {
+      //verify if floor exists
+      const floorExists = await this.floorRepo.findByDomainId(floorCode);
+      if (floorExists == null) {
+        console.log('Floor does not exist');
+        return Result.fail<IRoomDTO[]>('Floor does not exist');
+      }
+
+      const rooms = await this.roomRepo.findByFloorCode(floorCode);
+      if (rooms == null) {
+        return Result.fail<IRoomDTO[]>('Rooms not found');
+      }
+
+      const roomsDTO: IRoomDTO[] = [];
+      for (let i = 0; i < rooms.length; i++) {
+        roomsDTO.push(RoomMapper.toDTO(rooms[i]));
+      }
+
+      return Result.ok<IRoomDTO[]>(roomsDTO);
+
+    }catch (e) {
       throw e;
     }
   }
