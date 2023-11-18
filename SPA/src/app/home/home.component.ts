@@ -22,10 +22,12 @@ export class HomeComponent implements OnInit {
   listBuilding: boolean = false;
   createFloor: boolean = false;
   floorsByBuildingCode: boolean = false;
+  editFloor: boolean = false;
   deactivateRobot: boolean = false;
   createRobotType: boolean = false;
   createPassageway: boolean = false;
   patchMap: boolean = false;
+
 
 
   constructor(auth: AuthService) {
@@ -228,5 +230,19 @@ export class HomeComponent implements OnInit {
     this.createRobotType = false;
     this.createPassageway = false;
     this.patchMap = true;
+  }
+
+  editFloorForm() {
+    this.home_body = false;
+    this.createBuilding = false;
+    this.createFloor = false;
+    this.editBuilding = false;
+    this.listBuilding = false;
+    this.deactivateRobot = false;
+    this.floorsByBuildingCode = false;
+    this.createRobotType = false;
+    this.createPassageway = false;
+    this.patchMap = false;
+    this.editFloor = true;
   }
 }

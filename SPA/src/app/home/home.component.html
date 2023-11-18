@@ -16,6 +16,7 @@
   <a (click)="buildingList()">List building</a>
   <a (click)="floorCreateForm()">Create floor</a>
   <a (click)="floorsByBuildingCodeList()">Get floors by building</a>
+  <a (click)="editFloorForm()">Edit floor</a>
   <a (click)="passagewayCreateForm()">Create passageway</a>
   <a (click)="patchMapForm()">Patch map</a>
   <button class="logout bottom-logout">
@@ -63,6 +64,9 @@
 </div>
 <div *ngIf="patchMap" id="content">
   <app-patch-map></app-patch-map>
+</div>
+<div *ngIf="editFloor" id="content">
+  <app-edit-floor></app-edit-floor>
 </div>
 </body>
 </html>

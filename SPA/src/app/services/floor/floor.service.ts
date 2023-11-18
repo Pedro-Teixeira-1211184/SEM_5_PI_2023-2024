@@ -100,4 +100,59 @@ export class FloorService {
             });
         }
     }
+
+    public async editFloor(buildingCode: string, number: number, code: string, description: string): Promise<void> {
+        try{
+            let hasDescription = true;
+
+            //check if description is empty
+            if (description === '' || description === null || description === undefined) {
+                hasDescription = false;
+            }
+
+            const response = await this.getEditResponse(hasDescription, buildingCode, number, code, description);
+
+            const json = await response.json();
+
+            if (response.status === 200) {
+                alert('Edited floor successfully');
+                window.location.href = '/home';
+            } else {
+                alert(json);
+            }
+        }catch (e) {
+            console.log(e);
+        }
+
+    }
+
+    private async getEditResponse(hasDescription: boolean, buildingCode: string, number: number, code: string, description: string) {
+
+        if (hasDescription) {
+            return await fetch(Constants.API_FLOOR_EDIT_URL, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    buildingCode: buildingCode,
+                    number: number,
+                    code: code,
+                    description: description
+                })
+            });
+        } else {
+            return await fetch(Constants.API_FLOOR_EDIT_URL, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    buildingCode: buildingCode,
+                    number: number,
+                    code: code
+                })
+            });
+        }
+    }
 }

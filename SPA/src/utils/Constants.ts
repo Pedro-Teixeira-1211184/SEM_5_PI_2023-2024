@@ -14,6 +14,7 @@ export default class Constants {
     //floor
     public static readonly API_FLOOR_CREATE_URL = Constants.API_BASE_URL + 'buildings/floors';
     public static readonly API_FLOOR_GET_BY_BUILDING_CODE_URL = Constants.API_BASE_URL + 'buildings/floors/';
+    public static readonly API_FLOOR_EDIT_URL = Constants.API_BASE_URL + 'buildings/floors';
 
 
     //robot
