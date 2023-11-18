@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import Constants from "../../../utils/Constants";
-import IRobotDTO from "../../component/robot/dto/IRobotDTO";
+import IRobotDTO from "../../dto/IRobotDTO";
 
 @Injectable({
     providedIn: 'root'

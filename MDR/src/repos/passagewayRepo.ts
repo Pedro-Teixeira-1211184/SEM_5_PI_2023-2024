@@ -30,7 +30,12 @@ export default class PassagewayRepo implements IPassagewayRepo {
         console.log('Passageway cannot be created between floors of the same building');
         return null;
       }
-      if (await this.exists(passageway)) {
+
+      const invPassageway = passageway;
+      invPassageway.floorCode1 = passageway.floorCode2;
+      invPassageway.floorCode2 = passageway.floorCode1;
+
+      if (await this.exists(passageway) || await this.exists(invPassageway)) {
         const rawPassageway = PassagewayMapper.toPersistence(passageway);
         const passagewayCreated = await this.passagewaySchema.create(rawPassageway);
         return PassagewayMapper.toDomain(passagewayCreated);
@@ -112,7 +117,7 @@ export default class PassagewayRepo implements IPassagewayRepo {
       let result1: IPassagewayDTO[] = [];
       for (let i = 0; i < floors1.length; i++) {
         for (let j = 0; j < floors2.length; j++) {
-          const query = {$and: [{floorCode1: floors1[i].code}, {floorCode2: floors2[j].code}]} as FilterQuery<IPassagewayPersistence & Document>;
+          const query = {$and: [{passagewayFloorCode1: floors1[i].code}, {passagewayFloorCode2: floors2[j].code}]} as FilterQuery<IPassagewayPersistence & Document>;
           const passageways = await this.passagewaySchema.find(query);
           if (passageways.length != 0) {
             for (let k = 0; k < passageways.length; k++) {
@@ -122,11 +127,16 @@ export default class PassagewayRepo implements IPassagewayRepo {
               }
             }
           }
-          const query1 = {$and: [{floorCode1: floors2[i].code}, {floorCode2: floors1[j].code}]} as FilterQuery<IPassagewayPersistence & Document>;
-          const passageways1 = await this.passagewaySchema.find(query1);
-          if (passageways1.length != 0) {
-            for (let k = 0; k < passageways1.length; k++) {
-              const result = PassagewayMapper.toDomain(passageways1[k]);
+        }
+      }
+
+      for (let i = 0; i < floors2.length; i++) {
+        for (let j = 0; j < floors1.length; j++) {
+          const query = {$and: [{passagewayFloorCode1: floors2[i].code}, {passagewayFloorCode2: floors1[j].code}]} as FilterQuery<IPassagewayPersistence & Document>;
+          const passageways = await this.passagewaySchema.find(query);
+          if (passageways.length != 0) {
+            for (let k = 0; k < passageways.length; k++) {
+              const result = PassagewayMapper.toDomain(passageways[k]);
               if (result.floorCode1 != null && result.floorCode2 != null && result1.find(element => element.floorCode1 == result.floorCode1 && element.floorCode2 == result.floorCode2) == null) {
                 result1.push(PassagewayMapper.toDTO(result));
               }
@@ -150,8 +160,6 @@ export default class PassagewayRepo implements IPassagewayRepo {
       const passageway = PassagewayMapper.toDomain(findpassageway);
       passageway.floorCode1 = updatedFields.floorCode1;
       passageway.floorCode2 = updatedFields.floorCode2;
-      passageway.localization1 = updatedFields.localization1;
-      passageway.localization2 = updatedFields.localization2;
       const rawPassageway = PassagewayMapper.toPersistence(passageway);
       const query = {
         $or: [{
@@ -169,10 +177,7 @@ export default class PassagewayRepo implements IPassagewayRepo {
   public async findByFloorCodes(floorCode1: string, floorCode2: string): Promise<Passageway> {
     try {
       const query = {
-        $or: [{
-          passagewayFloorCode1: floorCode1,
-          passagewayFloorCode2: floorCode2
-        }, {passagewayFloorCode1: floorCode2, passagewayFloorCode2: floorCode1}]
+        $or: [{passagewayFloorCode1: floorCode1,passagewayFloorCode2: floorCode2}, {passagewayFloorCode1: floorCode2, passagewayFloorCode2: floorCode1}]
       } as FilterQuery<IPassagewayPersistence & Document>;
       const find = await this.passagewaySchema.findOne(query as FilterQuery<IPassagewayPersistence & Document>);
       if (find == null) {
@@ -180,6 +185,21 @@ export default class PassagewayRepo implements IPassagewayRepo {
       }
       return PassagewayMapper.toDomain(find);
     } catch (error) {
+      throw error;
+    }
+  }
+
+  public async getPassagewaysInFloor(floorCode: string): Promise<Array<IPassagewayDTO>> {
+    try {
+      const query = {$or: [{passagewayFloorCode1: floorCode}, {passagewayFloorCode2: floorCode}]} as FilterQuery<IPassagewayPersistence & Document>;
+      const find = await this.passagewaySchema.find(query);
+      let result1: IPassagewayDTO[] = [];
+      for (let i = 0; i < find.length; i++) {
+        const result = PassagewayMapper.toDTO(PassagewayMapper.toDomain(find[i]));
+        result1.push(result);
+      }
+      return result1;
+    }catch (error) {
       throw error;
     }
   }

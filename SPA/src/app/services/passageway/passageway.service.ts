@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
 import Constants from "../../../utils/Constants";
+import IPassagewayDTO from "../../dto/IPassagewayDTO";
+import {from} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +31,21 @@ export class PassagewayService {
     } else {
       alert(json);
     }
+  }
+
+  public async getPassageWayByFloorCode(floorCode: string): Promise<IPassagewayDTO[]> {
+    const response = await fetch(Constants.API_PASSAGEWAY_GET_BY_FLOOR_CODE_URL + floorCode, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (response.status == 500) {
+      alert(await response.json())
+    }
+
+    return await response.json();
   }
 
 }

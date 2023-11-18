@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import Constants from "../../../utils/Constants";
-import IBuildingDTO from "../../component/building/list-building/dto/IBuildingDTO";
+import IBuildingDTO from "../../dto/IBuildingDTO";
 
 @Injectable({
     providedIn: 'root'
