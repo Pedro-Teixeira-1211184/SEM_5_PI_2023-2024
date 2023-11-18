@@ -112,7 +112,7 @@ export class PatchMapComponent implements OnInit {
     await this.getFloorsCodes(this.buildingCode?.value);
   }
 
-  // Função para obter o controle de uma célula específica
+  // Função para obter o controlo de uma célula específica
   getCellControl(rowIndex: number, colIndex: number) {
     return (this.form.get('matrix') as FormGroup).get(`${rowIndex}.${colIndex}`) as FormControl;
   }
@@ -130,3 +130,5 @@ export class PatchMapComponent implements OnInit {
     //TODO: get rest of elements - rooms and elevator
   }
 }
+
+// Path: SPA/src/app/component/map/patch-map/patch-map.component.html

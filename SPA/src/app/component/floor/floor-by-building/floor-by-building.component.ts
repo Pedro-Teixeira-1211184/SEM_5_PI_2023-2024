@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {FloorService} from "../../../services/floor/floor.service";
 import { map } from 'rxjs/operators';
-import IFloorDTO from '../dto/IFloorDTO';
+import IFloorDTO from '../../../dto/IFloorDTO';
 
 @Component({
   selector: 'app-floor-by-building',
@@ -15,7 +15,7 @@ export class FloorByBuildingComponent implements OnInit{
   floors: IFloorDTO[] = [];
 
 
-  constructor() { 
+  constructor() {
   }
 
   public async getFloorsByBuildingCode(){
