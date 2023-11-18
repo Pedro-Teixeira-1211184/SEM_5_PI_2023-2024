@@ -15,7 +15,7 @@ export class FloorByBuildingComponent implements OnInit{
   floors: IFloorDTO[] = [];
   Object = Object;
 
-  constructor() { 
+  constructor() {
   }
 
   public async getFloorsByBuildingCode(){
