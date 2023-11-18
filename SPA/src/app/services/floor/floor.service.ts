@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import Constants from "../../../utils/Constants";
-import {from, Observable} from 'rxjs';
-import IFloorDTO from "../../component/floor/dto/IFloorDTO";
+import { Observable, from } from 'rxjs';
+import IFloorDTO from 'src/app/component/floor/dto/IFloorDTO';
 
 @Injectable({
     providedIn: 'root'
@@ -37,27 +37,24 @@ export class FloorService {
 
     }
 
-    public getFloorsByBuildingCode(buildingCode: string): Observable<any[]> {
-        const response = fetch(Constants.API_FLOOR_GET_BY_BUILDING_CODE_URL + buildingCode, {
+    public async getFloorsByBuildingCode(buildingCode: string): Promise<any> {
+       try{
+        let floors: IFloorDTO[] = [];
+        const response = await fetch(Constants.API_FLOOR_GET_BY_BUILDING_CODE_URL + buildingCode, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
         });
-
-        return from(response.then(res => res.json()));
+        const x = await response.json();
+        for (let i = 0; i < x.length; i++) {
+            floors.push(x[i]);
+        }
+        return floors;
+       }catch (e) {
+           console.log(e);
+       }
     }
-
-  public async getFloorsByBuildingCodeForPassageway(buildingCode: string): Promise<IFloorDTO[]> {
-    const response = fetch(Constants.API_FLOOR_GET_BY_BUILDING_CODE_URL + buildingCode, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-
-    return await response.then(res => res.json());
-  }
 
 
     private async getResponse(hasDescription: boolean, buildingCode: string, number: number, description: string) {

@@ -1,9 +1,9 @@
-<form class="floor-form" id="getFloorsForm" (ngSubmit)="getFloorsByBuildingCode()" [formGroup]="floorForm" #formDir="ngForm">
+<form class="floor-form" id="floorForm" (ngSubmit)="getFloorsByBuildingCode()" [formGroup]="floorForm" #formDir="ngForm">
   <h1>Get Floors by Building Code</h1>
   <div class="input-container">
     <label for="buildingCode">Building Code</label>
-    <input type="text" id="buildingCode" formControlName="buildingCode" placeholder="Enter Building code" required>
-    <div *ngIf="!buildingCode && formDir.submitted" class="validation-error">
+    <input type="text" id="buildingCode" formControlName="code" placeholder="Enter Building code" required>
+    <div *ngIf="!code && formDir.submitted" class="validation-error">
       <p>Building Code is required!</p>
     </div>
   </div>

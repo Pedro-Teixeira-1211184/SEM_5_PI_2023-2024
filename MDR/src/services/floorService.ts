@@ -6,14 +6,15 @@ import IFloorDTO from "../dto/IFloorDTO";
 import {Result} from "../core/logic/Result";
 import {FloorMapper} from "../mappers/FloorMapper";
 import {Floor} from "../domain/floor";
-
+import IBuildingRepo from "../services/IRepos/IBuildingRepo";
 
 @Service()
 
 export default class FloorService implements IFloorService {
 
   constructor(
-    @Inject(config.repos.floor.name) private floorRepo: IFloorRepo
+    @Inject(config.repos.floor.name) private floorRepo: IFloorRepo,
+    @Inject(config.repos.building.name) private buildingRepo: IBuildingRepo
   ) {
   }
 
@@ -42,6 +43,10 @@ export default class FloorService implements IFloorService {
 
   public async findFloorsByBuildingCode(buildingCode: string): Promise<Result<IFloorDTO[]>> {
     try {
+      const buildingOrError = await this.buildingRepo.findByCode(buildingCode);
+      if (buildingOrError == null) {
+        return Result.fail<IFloorDTO[]>('Building not found');
+      }
       const floors = await this.floorRepo.findFloorsByBuildingCode(buildingCode);
       if (floors.length == 0) {
         return Result.fail<IFloorDTO[]>('No floors found');
