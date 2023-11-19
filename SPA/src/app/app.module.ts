@@ -16,6 +16,8 @@ import {DeactivateRobotComponent} from "./component/robot/deactivate-robot/deact
 import { CreateRobotTypeComponent } from './component/robot/robot-type/create-robot-type/create-robot-type.component';
 import { CreatePassagewayComponent } from './component/passageway/create-passageway/create-passageway.component';
 import { PatchMapComponent } from './component/map/patch-map/patch-map.component';
+import { ListPassagewaysBetween2BuildingsComponent } from './component/passageway/list-passageways-between-2-buildings/list-passageways-between-2-buildings.component';
+
 
 
 @NgModule({
@@ -33,7 +35,8 @@ import { PatchMapComponent } from './component/map/patch-map/patch-map.component
         DeactivateRobotComponent,
         CreateRobotTypeComponent,
         CreatePassagewayComponent,
-        PatchMapComponent
+        PatchMapComponent,
+        ListPassagewaysBetween2BuildingsComponent
     ],
   imports: [
     BrowserModule,

@@ -18,6 +18,7 @@
   <a (click)="floorsByBuildingCodeList()">Get floors by building</a>
   <a (click)="passagewayCreateForm()">Create passageway</a>
   <a (click)="patchMapForm()">Patch map</a>
+  <a (click)="listPassagewaysBetween2BuildingsForm()">List passageways between 2 buildings</a>
   <button class="logout bottom-logout">
     <img src="../../assets/_images/logout_icon.png" alt="Logout">
     <a (click)="logout()">Logout</a>
@@ -63,6 +64,9 @@
 </div>
 <div *ngIf="patchMap" id="content">
   <app-patch-map></app-patch-map>
+</div>
+<div *ngIf="listPassagewaysBetween2Buildings" id="content">
+  <app-list-passageways-between-2-buildings></app-list-passageways-between-2-buildings>
 </div>
 </body>
 </html>

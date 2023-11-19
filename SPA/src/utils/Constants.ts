@@ -30,6 +30,7 @@ export default class Constants {
     //passageway
     public static readonly API_PASSAGEWAY_CREATE_URL = Constants.API_BASE_URL + 'passageways';
     public static readonly API_PASSAGEWAY_GET_BY_FLOOR_CODE_URL = Constants.API_BASE_URL + 'passageways/';
+    public static readonly API_PASSAGEWAY_GET_BETWEEN_BUILDINGS_URL = Constants.API_BASE_URL + 'passageways/passagewaysBetweenBuildings/';
 
     //map
     public static readonly API_MAP_PATCH_URL = Constants.API_BASE_URL + 'maps';

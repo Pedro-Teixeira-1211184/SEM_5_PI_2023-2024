@@ -1,0 +1,54 @@
+.passageway-between-2-buildings-form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .passageway-between-2-buildings-form h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .input-container {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    padding: 5px;
+  }
+  
+  select {
+    width: 30%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    font-size: 14px;
+    color: #444;
+  }
+  
+  .validation-error {
+    color: #ff0000;
+    margin-top: 5px;
+  }
+  
+  button[type="submit"] {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #2a80b9;
+  }
+  

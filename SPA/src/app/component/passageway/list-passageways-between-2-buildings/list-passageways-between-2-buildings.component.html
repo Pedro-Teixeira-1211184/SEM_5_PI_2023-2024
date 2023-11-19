@@ -1,0 +1,32 @@
+<form class="passageway-between-2-buildings-form" id="passagewaysBetween2BuildingsForm" (ngSubmit)="submit()" [formGroup]="passagewaysBetween2BuildingsForm" #formDir="ngForm">
+    <h1>List Passageways between two buildings</h1>
+    <div class="input-container">
+      <label for="code1">Building 1</label>
+      <select id="code1" formControlName="code1" required>
+        <option *ngFor="let code of buildingsCodes" [value]="code">{{ code }}</option>
+      </select>
+      <div *ngIf="code1?.invalid && formDir.submitted" class="validation-error">
+        <p *ngIf="code1?.errors?.['required']">Code is required!</p>
+      </div>
+      <label for="code2">Building 2</label>
+      <select id="code2" formControlName="code2" required>
+        <option *ngFor="let code of buildingsCodes" [value]="code">{{ code }}</option>
+      </select>
+      <div *ngIf="code2?.invalid && formDir.submitted" class="validation-error">
+        <p *ngIf="code2?.errors?.['required']">Code is required!</p>
+      </div>
+    </div>
+    <button type="submit" (click)="showPassageways = true">Get Passageways</button>
+    <div *ngIf="passageways.length == 0 && showPassageways" class="validation-error">
+      <p> No passageways between these 2 buildings!</p>
+      <div *ngIf="passageways.length > 0 && showPassageways">
+        <h2>Passageways:</h2>
+        <ul>
+          <li *ngFor="let passageway of passageways">{{ passageway | json }}</li>
+        </ul>
+      </div>      
+    </div>
+  </form>
+  
+  
+  
