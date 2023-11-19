@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
   createFloor: boolean = false;
   floorsByBuildingCode: boolean = false;
   editFloor: boolean = false;
+  createElevator: boolean = false;
   deactivateRobot: boolean = false;
   createRobotType: boolean = false;
   createPassageway: boolean = false;
@@ -244,5 +245,19 @@ export class HomeComponent implements OnInit {
     this.createPassageway = false;
     this.patchMap = false;
     this.editFloor = true;
+  }
+
+  createElevatorForm() {
+    this.home_body = false;
+    this.createBuilding = false;
+    this.createFloor = false;
+    this.editBuilding = false;
+    this.listBuilding = false;
+    this.deactivateRobot = false;
+    this.floorsByBuildingCode = false;
+    this.createRobotType = false;
+    this.createPassageway = false;
+    this.patchMap = false;
+    this.createElevator = true;
   }
 }

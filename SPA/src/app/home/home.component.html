@@ -17,6 +17,7 @@
   <a (click)="floorCreateForm()">Create floor</a>
   <a (click)="floorsByBuildingCodeList()">Get floors by building</a>
   <a (click)="editFloorForm()">Edit floor</a>
+  <a (click)="createElevatorForm()">Create elevator</a>
   <a (click)="passagewayCreateForm()">Create passageway</a>
   <a (click)="patchMapForm()">Patch map</a>
   <button class="logout bottom-logout">
@@ -58,6 +59,9 @@
 </div>
 <div *ngIf="createRobotType" id="content">
   <app-create-robot-type></app-create-robot-type>
+</div>
+<div *ngIf="createElevator" id="content">
+  <app-elevator></app-elevator>
 </div>
 <div *ngIf="createPassageway" id="content">
   <app-create-passageway></app-create-passageway>
