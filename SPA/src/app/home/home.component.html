@@ -27,6 +27,7 @@
   </button>
 </div>
 <div *ngIf="isFleetManager" class="sidebar" id="sidebar">
+  <a (click)="createRobotForm()">Create robot</a>
   <a (click)="deactivateRobotForm()">Deactivate robot</a>
   <a (click)="createRobotTypeForm()">Create robot type</a>
   <a href="#">Menu 7</a>
@@ -55,6 +56,8 @@
 <div *ngIf="listBuilding" id="content">
   <app-list-building></app-list-building>
 </div>
+<div *ngIf="createRobotForm" id="content">
+  <app-create-robot></app-create-robot>
 <div *ngIf="deactivateRobot" id="content">
   <app-deactivate-robot></app-deactivate-robot>
 </div>

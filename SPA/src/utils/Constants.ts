@@ -18,6 +18,7 @@ export default class Constants {
 
 
     //robot
+    public static readonly API_ROBOT_CREATE_URL = Constants.API_BASE_URL + 'robots';
     public static readonly API_ROBOT_GET_ALL_URL = Constants.API_BASE_URL + 'robots';
     public static readonly API_ROBOT_UPDATE_STATUS_URL = Constants.API_BASE_URL + 'robots/';
 
