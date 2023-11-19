@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
   isCampusManager: boolean = false;
   isAdministrator: boolean = false;
   isFleetManager: boolean = false;
-
+  
   home_body: boolean = true;
   createBuilding: boolean = false;
   editBuilding: boolean = false;
