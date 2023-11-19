@@ -1,53 +1,53 @@
-.passageway-form {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #f5f5f5;
+/* Formulários */
+form {
+  background-color: #f0f0f0;
+  margin: 10px;
+  padding: 15px;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.passageway-form h1 {
-  font-size: 24px;
+h1, h2 {
   color: #333;
-  margin-bottom: 20px;
 }
 
-.input-container {
-  margin-bottom: 20px;
+/* Tabelas */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
 }
 
-label {
-  display: block;
-  margin-bottom: 5px;
-  color: #555;
-  padding: 5px;
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+/* Inputs e selects */
+input[type="number"], select {
+  width: 70px; /* Ajuste o tamanho conforme necessário */
+  padding: 8px;
+  margin: 2px;
+}
+
+/* Estilo para os botões de submit nos formulários */
+button[type="submit"] {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 select {
-  width: 30%;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 3px;
-  font-size: 14px;
-  color: #444;
-}
-
-.validation-error {
-  color: #ff0000;
-  margin-top: 5px;
-}
-
-button[type="submit"] {
-  background-color: #3498db;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
+  text-align: center;
 }
 
 button[type="submit"]:hover {
-  background-color: #2a80b9;
+  background-color: #45a049;
 }

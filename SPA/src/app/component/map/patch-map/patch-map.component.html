@@ -1,38 +1,151 @@
 <form class="map-form" id="buildingForm" (ngSubmit)="submit()" [formGroup]="mapForm" #formDir="ngForm">
-  <h1>Load a map</h1>
-  <div class="input-container">
-    <label for="code1">Building</label>
-    <select id="code1" formControlName="buildingCode" (change)="getFloorsOfBuilding()" required>
-      <option *ngFor="let code of buildings" [value]="code.code">{{ code.code }}</option>
-    </select>
-    <div *ngIf="buildingCode?.invalid && formDir.submitted" class="validation-error">
-      <p *ngIf="buildingCode?.errors?.['required']">Code is required!</p>
+    <h1>Load a map</h1>
+    <div class="input-container">
+        <label for="code1">Building</label>
+        <select id="code1" formControlName="buildingCode" (change)="getFloorsOfBuilding()" required>
+            <option *ngFor="let code of buildings" [value]="code.code">{{ code.code }}</option>
+        </select>
+        <div *ngIf="buildingCode?.invalid && formDir.submitted" class="validation-error">
+            <p *ngIf="buildingCode?.errors?.['required']">Code is required!</p>
+        </div>
+        <label for="code2">Floor</label>
+        <select id="code2" formControlName="floorCode" (change)="getFloorElements()" required>
+            <option *ngFor="let code of floors" [value]="code.code">{{ code.code }}</option>
+        </select>
+        <div *ngIf="floorCode?.invalid && formDir.submitted" class="validation-error">
+            <p *ngIf="floorCode?.errors?.['required']">Code is required!</p>
+        </div>
+        <button type="submit">Submit</button>
     </div>
-    <label for="code2">Floor</label>
-    <select id="code2" formControlName="floorCode" (change)="getFloorElements()" required>
-      <option *ngFor="let code of floors" [value]="code.code">{{ code.code }}</option>
-    </select>
-    <div *ngIf="floorCode?.invalid && formDir.submitted" class="validation-error">
-      <p *ngIf="floorCode?.errors?.['required']">Code is required!</p>
-    </div>
-    <button type="submit">Submit</button>
-  </div>
 </form>
-<form [formGroup]="form">
-  <table>
-    <tr *ngFor="let row of matrix.controls; let i = index" formArrayName="matrix">
-      <td *ngFor="let cell of row.value; let j = index">
-        <input
-          type="number"
-          min="0"
-          max="3"
-          [formControl]="getCellControl(i, j)"
-          (change)="onCellValueChange(i, j)"
-        />
-      </td>
-    </tr>
-  </table>
+<form *ngIf="hasMap" [formGroup]="form">
+    <h2>Map</h2>
+    <table>
+        <tr *ngFor="let row of matrix.controls; let i = index" formArrayName="matrix">
+            <td *ngFor="let cell of row.value; let j = index">
+                <input
+                        type="number"
+                        min="0"
+                        max="3"
+                        [formControl]="getCellControl(i, j)"
+                        (change)="onCellValueChange(i, j)"
+                />
+            </td>
+        </tr>
+    </table>
 </form>
-
-
+<form *ngIf="hasRooms" [formGroup]="roomForm">
+    <h2>Rooms</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Designation</th>
+            <th>Name</th>
+            <th>Door X</th>
+            <th>Door Y</th>
+            <th>Top corner x</th>
+            <th>Top corner y</th>
+            <th>Bottom corner x</th>
+            <th>Bottom corner y</th>
+            <th>Door Orientation</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let row of roomMatrix.controls; let i = index" formArrayName="roomMatrix">
+            <td *ngFor="let cell of row.value; let j = index">
+                <ng-container *ngIf="j === 0 || j === 1">
+                    {{ cell }}
+                </ng-container>
+                <ng-container *ngIf="j == 2 || j == 3 || j == 4 || j == 5 || j == 6 || j == 7">
+                    <input
+                            type="number"
+                            min="0"
+                            [formControl]="getCellControlRoom(i, j)"
+                            (change)="onCellValueChangeRoom(i, j)"
+                    />
+                </ng-container>
+                <ng-container *ngIf="j == 8">
+                    <select (change)="onCellValueChangeRoom(i,j)" [formControl]="getCellControlRoom(i,j)">
+                        <option value="north">North</option>
+                        <option value="west">West</option>
+                    </select>
+                </ng-container>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+<form *ngIf="hasPassageways" [formGroup]="passagewayForm">
+    <h2>Passageways</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Floor 1</th>
+            <th>Floor 2</th>
+            <th>X</th>
+            <th>Y</th>
+            <th>Orientation</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let row of passagewayMatrix.controls; let i = index" formArrayName="passagewayMatrix">
+            <td *ngFor="let cell of row.value; let j = index">
+                <ng-container *ngIf="j === 0 || j === 1">
+                    {{ cell }}
+                </ng-container>
+                <ng-container *ngIf="j == 2 || j == 3">
+                    <input
+                            type="number"
+                            min="0"
+                            [formControl]="getCellControlPassageway(i, j)"
+                            (change)="onCellValueChangePassageway(i, j)"
+                    />
+                </ng-container>
+                <ng-container *ngIf="j == 4">
+                    <select (change)="onCellValueChangePassageway(i,j)" [formControl]="getCellControlPassageway(i,j)">
+                        <option value="north">North</option>
+                        <option value="west">West</option>
+                    </select>
+                </ng-container>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+<form *ngIf="hasElevators" [formGroup]="elevatorsForm">
+    <h2>Elevators</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Coverage</th>
+            <th>X</th>
+            <th>Y</th>
+            <th>Orientation</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let row of elevatorMatrix.controls; let i = index" formArrayName="elevatorMatrix">
+            <td *ngFor="let cell of row.value; let j = index">
+                <ng-container *ngIf="j === 0">
+                    {{ cell }}
+                </ng-container>
+                <ng-container *ngIf="j == 1 || j == 2">
+                    <input
+                            type="number"
+                            min="0"
+                            [formControl]="getCellControlElevator(i, j)"
+                            (change)="onCellValueChangeElevator(i, j)"
+                    />
+                </ng-container>
+                <ng-container *ngIf="j == 3">
+                    <select (change)="onCellValueChangeElevator(i,j)" [formControl]="getCellControlElevator(i,j)">
+                        <option value="north">North</option>
+                        <option value="west">West</option>
+                    </select>
+                </ng-container>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
 
