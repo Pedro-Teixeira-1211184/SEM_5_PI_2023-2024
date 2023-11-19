@@ -36,6 +36,7 @@ export default class Constants {
     public static readonly API_MAP_PATCH_URL = Constants.API_BASE_URL + 'maps';
 
     //elevator
+    public static readonly API_ELEVATOR_CREATE_URL = Constants.API_BASE_URL + 'buildings/elevators';
     public static readonly API_ELEVATOR_GET_BY_BUILDING_CODE_URL = 'elevators/';
 
     //room

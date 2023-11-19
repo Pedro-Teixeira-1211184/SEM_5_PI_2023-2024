@@ -17,6 +17,7 @@ import { CreateRobotTypeComponent } from './component/robot/robot-type/create-ro
 import { CreatePassagewayComponent } from './component/passageway/create-passageway/create-passageway.component';
 import { PatchMapComponent } from './component/map/patch-map/patch-map.component';
 import { EditFloorComponent } from './component/floor/edit-floor/edit-floor.component';
+import { ElevatorComponent } from './component/elevator/elevator.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { EditFloorComponent } from './component/floor/edit-floor/edit-floor.comp
         CreateRobotTypeComponent,
         CreatePassagewayComponent,
         PatchMapComponent,
-        EditFloorComponent
+        EditFloorComponent,
+        ElevatorComponent
     ],
   imports: [
     BrowserModule,
