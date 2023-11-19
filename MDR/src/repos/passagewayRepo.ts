@@ -25,17 +25,7 @@ export default class PassagewayRepo implements IPassagewayRepo {
 
   public async save(passageway: Passageway): Promise<Passageway> {
     try {
-      const check = passageway.floorCode1.substring(0, 1) == passageway.floorCode2.substring(0, 1);
-      if (check) {
-        console.log('Passageway cannot be created between floors of the same building');
-        return null;
-      }
-
-      const invPassageway = passageway;
-      invPassageway.floorCode1 = passageway.floorCode2;
-      invPassageway.floorCode2 = passageway.floorCode1;
-
-      if (await this.exists(passageway) || await this.exists(invPassageway)) {
+      if (await this.exists(passageway)) {
         const rawPassageway = PassagewayMapper.toPersistence(passageway);
         const passagewayCreated = await this.passagewaySchema.create(rawPassageway);
         return PassagewayMapper.toDomain(passagewayCreated);

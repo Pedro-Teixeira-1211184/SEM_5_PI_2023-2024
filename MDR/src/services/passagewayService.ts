@@ -44,11 +44,15 @@ export default class PassagewayService implements IPassagewayService {
         return Result.fail<IPassagewayDTO>('Floor2 not found');
       }
 
+      if (floor1.buildingCode == floor2.buildingCode) {
+        return Result.fail<IPassagewayDTO>('Passageway cannot be created between floors of the same building');
+      }
+
       //save Passageway
       const PassagewayCreated = await this.PassagewayRepo.save(PassagewayResult);
 
       if (PassagewayCreated === null) {
-        return Result.fail<IPassagewayDTO>('Passageway not created');
+        return Result.fail<IPassagewayDTO>('Passageway already exists');
       }
 
       const PassagewayDTOResult = PassagewayMapper.toDTO(PassagewayResult) as IPassagewayDTO;
