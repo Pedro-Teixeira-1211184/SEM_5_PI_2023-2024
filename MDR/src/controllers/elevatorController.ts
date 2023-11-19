@@ -26,7 +26,7 @@ export default class ElevatorController implements IElevatorController /* TODO: 
     try {
       const buildingOrError = await this.buildingServiceInstance.getBuildingByCode(req.body.buildingCode) as Result<IBuildingDTO>;
       if (buildingOrError.isFailure) {
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(buildingOrError.errorValue());
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json("Building not found");
       }
 
       const elevatorOrError = await this.elevatorServiceInstance.createElevator(req.body as IElevatorDTO) as Result<IElevatorDTO>;
