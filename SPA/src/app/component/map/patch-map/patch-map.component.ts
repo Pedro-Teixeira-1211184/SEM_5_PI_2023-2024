@@ -9,6 +9,8 @@ import IBuildingDTO from "../../../dto/IBuildingDTO";
 import IPassagewayDTO from "../../../dto/IPassagewayDTO";
 import {ElevatorService} from "../../../services/elevator/elevator.service";
 import IElevatorDTO from "../../../dto/IElevatorDTO";
+import {RoomService} from "../../../services/room/room.service";
+import IRoomDTO from "../../../dto/IRoomDTO";
 
 @Component({
   selector: 'app-patch-map',
@@ -22,6 +24,7 @@ export class PatchMapComponent implements OnInit {
   p_service = inject(PassagewayService);
   f_service = inject(FloorService);
   e_service = inject(ElevatorService);
+  r_service = inject(RoomService);
 
   mapForm!: FormGroup;
   form!: FormGroup;
@@ -30,6 +33,7 @@ export class PatchMapComponent implements OnInit {
   floors: IFloorDTO[] = [];
   passageways: IPassagewayDTO[] = [];
   elevators: IElevatorDTO[] = [];
+  rooms: IRoomDTO[] = [];
 
   columns: number = 0;
   rows: number = 0;
@@ -112,7 +116,7 @@ export class PatchMapComponent implements OnInit {
     await this.getFloorsCodes(this.buildingCode?.value);
   }
 
-  // Função para obter o controle de uma célula específica
+  // Função para obter o controlo de uma célula específica
   getCellControl(rowIndex: number, colIndex: number) {
     return (this.form.get('matrix') as FormGroup).get(`${rowIndex}.${colIndex}`) as FormControl;
   }
@@ -127,6 +131,8 @@ export class PatchMapComponent implements OnInit {
     //get passageways
     this.passageways = await this.p_service.getPassageWayByFloorCode(this.floorCode?.value);
     this.elevators = await this.e_service.getElevatorsByBuildingCode(this.buildingCode?.value);
-    //TODO: get rest of elements - rooms and elevator
+    this.rooms = await this.r_service.getRoomsByFloorCode(this.floorCode?.value);
   }
 }
+
+// Path: SPA/src/app/component/map/patch-map/patch-map.component.html

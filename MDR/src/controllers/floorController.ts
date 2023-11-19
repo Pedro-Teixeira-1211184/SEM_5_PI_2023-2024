@@ -51,9 +51,15 @@ export default class FloorController implements IFloorController /* TODO: extend
 
     public async findFloorsByBuildingCode(req: Request, res: Response, next: NextFunction) {
         try {
+            const buildingOrError = await this.buildingServiceInstance.getBuildingByCode(req.params.buildingCode) as Result<IBuildingDTO>;
+            if (buildingOrError.isFailure) {
+                console.log("Building not found!");
+                return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json("Building not found!");
+            }
             const floorOrError = await this.floorServiceInstance.findFloorsByBuildingCode(req.params.buildingCode) as Result<IFloorDTO[]>;
             if (floorOrError.isFailure) {
-                return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(floorOrError.errorValue());
+                console.log("Floor not found!");
+                return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json("No floors found!");
             }
 
             const floorResult = floorOrError.getValue();

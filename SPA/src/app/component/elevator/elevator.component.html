@@ -1,0 +1,26 @@
+<form class="elevator-form" id="elevatorForm" (ngSubmit)="submit()" [formGroup]="elevatorForm" #formDir="ngForm">
+    <h1>Create a new elevator</h1>
+    <div class="input-container">
+      <label for="coordenates">Coordenates</label>
+      <input type="text" id="coordenates" formControlName="coordenates" placeholder="(x, y)" required>
+      <div *ngIf="coordenates?.invalid && formDir.submitted" class="validation-error">
+        <p *ngIf="coordenates?.errors?.['required']">Coordenates are required!</p>
+      </div>
+    </div>
+    <div class="input-container">
+      <label for="buildingCode">Building Code</label>
+      <input type="text" id="buildingCode" formControlName="buildingCode" placeholder="Building code" required>
+      <div *ngIf="buildingCode?.invalid && formDir.submitted" class="validation-error">
+        <p *ngIf="buildingCode?.errors?.['required']">Building code is required!</p>
+      </div>
+    </div>
+    <div class="input-container">
+      <label for="floorNumbers">Floor Numbers</label>
+      <input type="text" id="floorNumbers" formControlName="floorNumbers" placeholder="(x, y, z)" required>
+      <div *ngIf="floorNumbers?.invalid && formDir.submitted" class="validation-error">
+        <p *ngIf="floorNumbers?.errors?.['required']">Floor numbers are required!</p>
+      </div>
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+  

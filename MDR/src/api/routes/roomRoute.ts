@@ -24,5 +24,14 @@ export default () => {
         ctrl.createRoom(req, res, next);
     });
 
+    route.get('/:floorCode', celebrate({
+        params: Joi.object({
+            floorCode: Joi.string().required().error(new Error('Invalid floorCode code')),
+        })
+    }), (req, res, next) => {
+        console.log("Getting rooms of a floor!");
+        ctrl.getRoomsByFloorCode(req, res, next);
+    });
+
     return route;
 }

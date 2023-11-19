@@ -6,6 +6,7 @@ import {RoomMapper} from "../mappers/RoomMapper";
 
 import {Document, FilterQuery, Model} from "mongoose";
 import {IRoomPersistence} from "../dataschema/IRoomPersistence";
+import {IElevatorPersistence} from "../dataschema/IElevatorPersistence";
 
 
 @Service()
@@ -15,6 +16,23 @@ export default class RoomRepo implements IRoomRepo {
     @Inject('roomSchema') private roomSchema: Model<IRoomPersistence & Document>,
   ) {
   }
+
+  public async findByFloorCode(floorCode: string): Promise<Room[]> {
+        try {
+          const query = {roomFloorCode: floorCode};
+          const roomRecords = await this.roomSchema.find(query as FilterQuery<IElevatorPersistence & Document>);
+          if (roomRecords.length == 0) {
+            return null;
+          }
+          const rooms: Room[] = [];
+          for (let i = 0; i < roomRecords.length; i++) {
+            rooms.push(RoomMapper.toDomain(roomRecords[i]));
+          }
+          return rooms;
+        }catch (e) {
+          console.log(e);
+        }
+    }
 
   private createBaseQuery(): any {
     return {
