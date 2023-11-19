@@ -132,6 +132,7 @@ export class HomeComponent implements OnInit {
     this.createPassageway = false;
     this.patchMap = false;
     this.createElevator = false;
+    this.editFloor = false;
     this.listPassagewaysBetween2Buildings = false;
   }
 
@@ -146,6 +147,7 @@ export class HomeComponent implements OnInit {
     this.createRobotType = false;
     this.createPassageway = false;
     this.patchMap = false;
+    this.editFloor = false;
     this.listPassagewaysBetween2Buildings = false;
     this.createElevator = false;
   }
@@ -161,6 +163,7 @@ export class HomeComponent implements OnInit {
     this.createRobotType = false;
     this.createPassageway = false;
     this.patchMap = false;
+    this.editFloor = false;
     this.listPassagewaysBetween2Buildings = false;
     this.createElevator = false;
   }
@@ -176,6 +179,7 @@ export class HomeComponent implements OnInit {
     this.createRobotType = false;
     this.createPassageway = false;
     this.patchMap = false;
+    this.editFloor = false;
     this.listPassagewaysBetween2Buildings = false;
     this.createElevator = false;
   }
@@ -191,6 +195,7 @@ export class HomeComponent implements OnInit {
     this.createRobotType = false;
     this.createPassageway = false;
     this.patchMap = false;
+    this.editFloor = false;
     this.listPassagewaysBetween2Buildings = false;
     this.createElevator = false;
   }
@@ -206,6 +211,7 @@ export class HomeComponent implements OnInit {
     this.createRobotType = false;
     this.createPassageway = false;
     this.patchMap = false;
+    this.editFloor = false;
     this.listPassagewaysBetween2Buildings = false;
     this.createElevator = false;
   }
@@ -221,6 +227,7 @@ export class HomeComponent implements OnInit {
     this.createRobotType = true;
     this.createPassageway = false;
     this.patchMap = false;
+    this.editFloor = false;
     this.listPassagewaysBetween2Buildings = false;
     this.createElevator = false;
   }
@@ -236,6 +243,7 @@ export class HomeComponent implements OnInit {
     this.createRobotType = false;
     this.createPassageway = true;
     this.patchMap = false;
+    this.editFloor = false;
     this.listPassagewaysBetween2Buildings = false;
     this.createElevator = false;
   }
@@ -251,6 +259,7 @@ export class HomeComponent implements OnInit {
     this.createRobotType = false;
     this.createPassageway = false;
     this.patchMap = true;
+    this.editFloor = false;
     this.listPassagewaysBetween2Buildings = false;
     this.createElevator = false;
   }
@@ -284,6 +293,7 @@ export class HomeComponent implements OnInit {
     this.createPassageway = false;
     this.patchMap = false;
     this.createElevator = true;
+    this.editFloor = false;
     this.listPassagewaysBetween2Buildings = false;
     this.createElevator = false;
   }
@@ -299,6 +309,7 @@ export class HomeComponent implements OnInit {
     this.createRobotType = false;
     this.createPassageway = false;
     this.patchMap = false;
+    this.editFloor = false;
     this.listPassagewaysBetween2Buildings = true;
     this.createElevator = false;
   }
