@@ -11,9 +11,17 @@ interface MapProps {
   floorNumber: number;
   size: { length: number, width: number };
   map: number[][];
-  rooms: { name: string, dimensions: string, door: string }[];
-  passageways: { start: string, end: string, localization: string }[];
-  elevator: { localization: string };
+  rooms: {
+    name: string,
+    dimensions: { top: { x: number, y: number }, bottom: { x: number, y: number } },
+    door: { coordinates: { x: number, y: number }, orientation: string }
+  }[];
+  passageways: {
+    start: string,
+    end: string,
+    localization: { coordinates: { x: number, y: number }, orientation: string }
+  }[];
+  elevator: { localization: { coordinates: { x: number, y: number } }, orientation: string }[];
 }
 
 export class Map extends AggregateRoot<MapProps> {
@@ -42,15 +50,23 @@ export class Map extends AggregateRoot<MapProps> {
     return this.props.map;
   }
 
-  get rooms(): { name: string, dimensions: string, door: string }[] {
+  get rooms(): {
+    name: string,
+    dimensions: { top: { x: number, y: number }, bottom: { x: number, y: number } },
+    door: { coordinates: { x: number, y: number }, orientation: string }
+  }[] {
     return this.props.rooms;
   }
 
-  get passageways(): { start: string, end: string, localization: string }[] {
+  get passageways(): {
+    start: string,
+    end: string,
+    localization: { coordinates: { x: number, y: number }, orientation: string }
+  }[] {
     return this.props.passageways;
   }
 
-  get elevator(): { localization: string } {
+  get elevator(): { localization: { coordinates: { x: number, y: number } }, orientation: string }[] {
     return this.props.elevator;
   }
 
