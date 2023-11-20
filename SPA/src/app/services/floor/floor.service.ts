@@ -101,7 +101,7 @@ export class FloorService {
         }
     }
 
-    public async editFloor(buildingCode: string, number: number, code: string, description: string): Promise<void> {
+    public async editFloor(buildingCode: string, number: number, description: string): Promise<void> {
         try{
             let hasDescription = true;
 
@@ -110,7 +110,7 @@ export class FloorService {
                 hasDescription = false;
             }
 
-            const response = await this.getEditResponse(hasDescription, buildingCode, number, code, description);
+            const response = await this.getEditResponse(hasDescription, buildingCode, number, description);
 
             const json = await response.json();
 
@@ -126,7 +126,7 @@ export class FloorService {
 
     }
 
-    private async getEditResponse(hasDescription: boolean, buildingCode: string, number: number, code: string, description: string) {
+    private async getEditResponse(hasDescription: boolean, buildingCode: string, number: number, description: string) {
 
         if (hasDescription) {
             return await fetch(Constants.API_FLOOR_EDIT_URL, {
@@ -137,7 +137,6 @@ export class FloorService {
                 body: JSON.stringify({
                     buildingCode: buildingCode,
                     number: number,
-                    code: code,
                     description: description
                 })
             });
@@ -149,8 +148,7 @@ export class FloorService {
                 },
                 body: JSON.stringify({
                     buildingCode: buildingCode,
-                    number: number,
-                    code: code
+                    number: number
                 })
             });
         }

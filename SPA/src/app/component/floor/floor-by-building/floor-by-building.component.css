@@ -1,7 +1,8 @@
+/* CSS */
 .floor-form {
   max-width: 80%;
   margin: 0 auto;
-  text-align: center; /* Center the content within the form */
+  text-align: center;
 }
 
 h1 {
@@ -13,7 +14,7 @@ h1 {
 
 .input-container {
   margin-bottom: 24px;
-  display: inline-block; /* Center the input container */
+  display: inline-block;
 }
 
 label {
@@ -67,4 +68,10 @@ li {
   border-radius: 6px;
   background-color: #f9f9f9;
   display: inline-block;
+}
+
+.floors-container,
+.no-floors-container {
+  text-align: center;
+  margin-top: 20px;
 }

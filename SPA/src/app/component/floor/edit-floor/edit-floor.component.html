@@ -1,12 +1,5 @@
-<form class = "floor-form" id="floorForm" (ngSubmit)="submit()" [formGroup]="floorForm" #formDir="ngForm">
+<form class = "floor-form" id="floorEditForm" (ngSubmit)="submit()" [formGroup]="floorEditForm" #formDir="ngForm">
     <h1>Edit a floor</h1>
-    <div class="input-container">
-        <label for="code">Code</label>
-        <input type="text" id="code" formControlName="code" placeholder="Code" required>
-        <div *ngIf="code?.invalid && formDir.submitted" class="validation-error">
-            <p *ngIf="code?.errors?.['required']">Code is required!</p>
-        </div>
-    </div>
     <div class="input-container">
         <label for="buildingCode">Building Code</label>
         <input type="text" id="buildingCode" formControlName="buildingCode" placeholder="Building Code" required>
@@ -16,9 +9,9 @@
     </div>
     <div class="input-container">
         <label for="number">Number</label>
-        <input type="number" id="number" formControlName="number" placeholder="Number" required>
-        <div *ngIf="number?.invalid && formDir.submitted" class="validation-error">
-            <p *ngIf="number?.errors?.['required']">Number is required!</p>
+        <input type="number" id="number" formControlName="floorNumber" placeholder="Number" required>
+        <div *ngIf="floorNumber?.invalid && formDir.submitted" class="validation-error">
+            <p *ngIf="floorNumber?.errors?.['required']">Number is required!</p>
         </div>
         </div>
     <div class="description">

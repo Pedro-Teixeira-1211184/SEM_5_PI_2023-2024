@@ -10,12 +10,12 @@
   <button type="submit">Get Floors</button>
 </form>
 
-<div *ngIf="floors && floors.length > 0">
+<div *ngIf="floors && floors.length > 0" class="floors-container">
   <h2>Floors:</h2>
   <ul>
     <li *ngFor="let floor of floors">{{ floor | json }}</li>
   </ul>
 </div>
-<div *ngIf="floors && floors.length === 0">
+<div *ngIf="floors && floors.length === 0" class="no-floors-container">
   <p>No floors found</p>
 </div>
