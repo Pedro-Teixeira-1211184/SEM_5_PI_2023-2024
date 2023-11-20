@@ -1,5 +1,26 @@
 :-dynamic ligacel/2.
 
+% Definicao pisos cada edificio
+
+pisos(b,[b1,b2,b3,b4]).
+pisos(g,[g2,g3,g4]).
+pisos(i,[i1,i2,i3,i4]).
+
+%Definicao elevador em cada edificio
+
+elevador(b,[b1,b2,b3,b4]).
+elevador(g,[g2,g3,g4]).
+elevador(i,[i1,i2,i3,i4]).
+
+%Definicao pontes entre edificios
+
+corredor(b,g,b2,g2).
+corredor(b,g,b3,g3).
+corredor(b,i,b3,i3).
+
+
+% Exemplo Piso X Edificio Y
+
 %linha 1:1,1,1,1,1,1,1,1
 %linha 2:0,0,0,0,0,0,0,1
 %linha 3:0,0,0,0,0,0,0,1
@@ -75,33 +96,78 @@ m(6,7,0).
 m(7,7,0).
 m(8,7,1).
 
+
+
+
+
+% O algoritmo cria_grafo cria um 2D grid/grafo com as dimensoes Col/Lin.
+
+% Caso base da recursao. Define que o algoritmo pára quando lin fôr igual a 0
+
 cria_grafo(_,0):-!.
+
+% Esta regra é chamada recursivamente para cada linha
+% Cria as celulas na linha atual
+% Decrementa Lin de 1 e invoca-se a si mesmo com o novo valor de Lin
+
 cria_grafo(Col,Lin):-cria_grafo_lin(Col,Lin),Lin1 is Lin-1,cria_grafo(Col,Lin1).
 
+% Caso base da recursao (colunas)
+% Quando col == 0, a recursão pára
 
 cria_grafo_lin(0,_):-!.
+
+% Esta regra é chamada recursivamente para cada coluna
+% Verifica se a celula atual == 0, se sim conecta-a às celulas vizinhas
+% ColX e LinY sao as coordenadas da celula vizinha
+
 cria_grafo_lin(Col,Lin):-m(Col,Lin,0),!,ColS is Col+1, ColA is Col-1, LinS is Lin+1,LinA is Lin-1,
     ((m(ColS,Lin,0),assertz(ligacel(cel(Col,Lin),cel(ColS,Lin)));true)),
     ((m(ColA,Lin,0),assertz(ligacel(cel(Col,Lin),cel(ColA,Lin)));true)),
     ((m(Col,LinS,0),assertz(ligacel(cel(Col,Lin),cel(Col,LinS)));true)),
     ((m(Col,LinA,0),assertz(ligacel(cel(Col,Lin),cel(Col,LinA)));true)),
-    Col1 is Col-1,
-    cria_grafo_lin(Col1,Lin).
+    
+	% Decrementa Col
+	
+	Col1 is Col - 1,
+	
+	%Chama-se recursivamente com novo valor de Col
+    
+	cria_grafo_lin(Col1,Lin).
+	
+% Se a celula atual nao estiver vazia,
+% Decrementa Col de 1 e chama-se recursivamente com Col atualizado
+
 cria_grafo_lin(Col,Lin):-Col1 is Col-1,cria_grafo_lin(Col1,Lin).
 
+% ----------------------------------------------------------------
 
+% Algoritmo Pesquisa Primeiro em Profundidade para encontrar caminho
+% Chama dfs2 com o nodo origem (Orig), o nodo destino (Dest), 
+% Lista que contem apenas nodo origem e uma lista vazia (Cam) para guardar o caminho
 
 dfs(Orig,Dest,Cam):-
 	dfs2(Orig,Dest,[Orig],Cam).
 
+% Caso base da recursao.
+% Quando o nó atual (Act) é o nodo destino, inverte a lista LA
+%(Que contém o caminho desde o nodo origem até ao nodo destino) e unifica-a com Cam
+
 dfs2(Dest,Dest,LA,Cam):-
 	reverse(LA,Cam).
+
+% Esta regra é chamada recursivamente para cada nodo.
+% Primeiro verifica se existe uma ligação (ligacel) do nodo atual para outro nodo X
+% Verifica se X já não está no caminho LA. 
+% Se as condicoes se verificarem, chama dfs2 com 
+% X como nodo atual, nodo destino, nova lista que contem X e todos os nodos anteriores e Cam
 
 dfs2(Act,Dest,LA,Cam):-
 	ligacel(Act,X),
         \+ member(X,LA),
 	dfs2(X,Dest,[X|LA],Cam).
 
+% --------------------------------------------------------------------
 
 all_dfs(Orig,Dest,LCam):-findall(Cam,dfs(Orig,Dest,Cam),LCam).
 
@@ -115,6 +181,8 @@ shortlist([L|LL],Lm,Nm):-shortlist(LL,Lm1,Nm1),
 			((NL<Nm1,!,Lm=L,Nm is NL);(Lm=Lm1,Nm is Nm1)).
 
 
+% ------------------------------------------------------------------
+
 bfs(Orig,Dest,Cam):-bfs2(Dest,[[Orig]],Cam).
 
 bfs2(Dest,[[Dest|T]|_],Cam):-
@@ -127,3 +195,11 @@ bfs2(Dest,[LA|Outros],Cam):-
 		Novos),
 	append(Outros,Novos,Todos),
 	bfs2(Dest,Todos,Cam).
+
+
+% Algoritmo para minimizar o número de utilizações do elevador
+
+
+
+
+% Algoritmo para minimizar o número de edificios percorridos
