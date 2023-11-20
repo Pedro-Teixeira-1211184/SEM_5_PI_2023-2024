@@ -1,0 +1,19 @@
+<form class = "passageway-form" id="passagewayForm" (ngSubmit)="submit()" [formGroup]="passagewayForm" #formDir="ngForm">
+    <h1>Edit a passageway</h1> 
+    <div class="input-container">
+        <label for="floorCode">Floor Code 1</label>
+        <input type="text" id="floorCode" formControlName="floorCode" placeholder="FloorCode" required>
+        <div *ngIf="floorCode?.invalid && formDir.submitted" class="validation-error">
+            <p *ngIf="floorCode?.errors?.['required']">Floor Code 1 is required!</p>
+        </div>
+    </div>
+    <div class="input-container">
+        <label for="floorCode1">Floor Code 2</label>
+        <input type="text" id="floorCode1" formControlName="floorCode1" placeholder="FloorCode1" required>
+        <div *ngIf="floorCode1?.invalid && formDir.submitted" class="validation-error">
+            <p *ngIf="floorCode1?.errors?.['required']">Floor Code 2 is required!</p>
+        </div>
+    </div>
+    
+    <button type="submit">Submit</button>
+</form>

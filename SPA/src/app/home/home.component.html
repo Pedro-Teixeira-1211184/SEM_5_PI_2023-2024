@@ -21,6 +21,7 @@
   <a (click)="passagewayCreateForm()">Create passageway</a>
   <a (click)="patchMapForm()">Patch map</a>
   <a (click)="listPassagewaysBetween2BuildingsForm()">List passageways between 2 buildings</a>
+  <a (click)="editPassagewayForm()">Edit passageway</a>
   <button class="logout bottom-logout">
     <img src="../../assets/_images/logout_icon.png" alt="Logout">
     <a (click)="logout()">Logout</a>
@@ -75,6 +76,9 @@
 </div>
 <div *ngIf="editFloor" id="content">
   <app-edit-floor></app-edit-floor>
+</div>
+<div *ngIf="editPassageway" id="content">
+  <app-edit-passageway></app-edit-passageway>
 </div>
 </body>
 </html>

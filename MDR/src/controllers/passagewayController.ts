@@ -47,7 +47,7 @@ export default class PassagewayController implements IPassagewayController /* TO
       if (floorOrError1.isFailure) {
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json("Second building selected doesn t have any floors registered");
       }
-
+      
       const floorsResult = floorOrError.getValue();
       const floorsResult1 = floorOrError1.getValue();
 

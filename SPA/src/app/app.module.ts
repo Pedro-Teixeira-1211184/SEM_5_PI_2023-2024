@@ -19,6 +19,7 @@ import { PatchMapComponent } from './component/map/patch-map/patch-map.component
 import { EditFloorComponent } from './component/floor/edit-floor/edit-floor.component';
 import { ElevatorComponent } from './component/elevator/elevator.component';
 import { ListPassagewaysBetween2BuildingsComponent } from './component/passageway/list-passageways-between-2-buildings/list-passageways-between-2-buildings.component';
+import { EditPassagewayComponent } from './component/passageway/edit-passageway/edit-passageway.component'; 
 
 
 
@@ -40,7 +41,8 @@ import { ListPassagewaysBetween2BuildingsComponent } from './component/passagewa
         PatchMapComponent,
         EditFloorComponent,
         ElevatorComponent,
-        ListPassagewaysBetween2BuildingsComponent
+        ListPassagewaysBetween2BuildingsComponent,
+        EditPassagewayComponent
     ],
   imports: [
     BrowserModule,

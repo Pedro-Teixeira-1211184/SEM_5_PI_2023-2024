@@ -50,14 +50,13 @@ export class PassagewayService {
     return await response.json();
   }
 
-  public async getPassagewaysInBuildings(floorsCode: IFloorDTO[], floorsCode1: IFloorDTO[]): Promise<IPassagewayDTO[]> {
-    const response = await fetch(Constants.API_PASSAGEWAY_GET_BETWEEN_BUILDINGS_URL + floorsCode + floorsCode1, {
+  public async getPassagewaysInBuildings(buildingCode: string, buildingCode1: string): Promise<IPassagewayDTO[]> {
+    const response = await fetch(Constants.API_PASSAGEWAY_GET_BETWEEN_BUILDINGS_URL + buildingCode + "/" + buildingCode1, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
       }
     });
-
     if (response.status == 500) {
       alert(await response.json())
     }
@@ -65,4 +64,26 @@ export class PassagewayService {
     return await response.json();
   }
 
+
+  public async editPassageway(floorCode: string, floorCode1: string) {
+    const response = await fetch(Constants.API_PASSAGEWAY_EDIT_URL, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        floorCode: floorCode,
+        floorCode1: floorCode1
+      })
+    });
+
+    const json = await response.json();
+
+    if (response.status == 200) {
+      alert("Passageway edited successfully!");
+      window.location.reload();
+    } else {
+      alert(json);
+    }
+  }
 }

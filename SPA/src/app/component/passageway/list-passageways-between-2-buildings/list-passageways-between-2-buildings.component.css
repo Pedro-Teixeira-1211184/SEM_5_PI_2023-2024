@@ -51,4 +51,11 @@
   button[type="submit"]:hover {
     background-color: #2a80b9;
   }
+
+  table {
+    width: 80%;
+    border-collapse: collapse;
+    border: 1px solid black;
+    margin-top: 30px;
+  }
   

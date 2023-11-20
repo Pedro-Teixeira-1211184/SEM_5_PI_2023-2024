@@ -3,6 +3,7 @@ import {PassagewayService} from "../../../services/passageway/passageway.service
 import {BuildingService} from "../../../services/building/building.service";
 import {FloorService} from "../../../services/floor/floor.service";
 import IPassagewayDTO from "../../../dto/IPassagewayDTO";
+import IFloorDTO from "../../../dto/IFloorDTO";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
@@ -41,19 +42,7 @@ export class ListPassagewaysBetween2BuildingsComponent implements OnInit {
 
   public async submit() {
     if (this.passagewaysBetween2BuildingsForm.valid) {
-      let floorsCode = await this.f_service.getFloorsByBuildingCodeForPassageway(this.code1?.value);
-      if ( floorsCode.length === 0) {
-        alert('First building selected doesn t have any floors registered');
-        return;
-      }
-
-      let floorsCode1 = await this.f_service.getFloorsByBuildingCodeForPassageway(this.code2?.value);
-      if ( floorsCode1.length === 0) {
-        alert('Second building selected doesn t have any floors registered');
-        return;
-      }
-    
-      this.passageways = await this.service.getPassagewaysInBuildings(floorsCode,floorsCode1);
+      this.passageways = await this.service.getPassagewaysInBuildings(this.code1?.value, this.code2?.value) as IPassagewayDTO[];
     }
   }
 
