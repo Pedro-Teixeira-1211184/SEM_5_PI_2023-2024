@@ -19,7 +19,7 @@ export default class MapController implements IMapController /* TODO: extends ..
 
   public async createMap(req: Request, res: Response, next: NextFunction) {
     try {
-
+console.log(req.body);
       const mapOrError = await this.mapServiceInstance.createMap(req.body as IMapDTO) as Result<IMapDTO>;
 
       if (mapOrError.isFailure) {
