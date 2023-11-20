@@ -20,6 +20,7 @@ import { EditFloorComponent } from './component/floor/edit-floor/edit-floor.comp
 import { ElevatorComponent } from './component/elevator/elevator.component';
 import { ListPassagewaysBetween2BuildingsComponent } from './component/passageway/list-passageways-between-2-buildings/list-passageways-between-2-buildings.component';
 import { EditPassagewayComponent } from './component/passageway/edit-passageway/edit-passageway.component'; 
+import { CreateRobotComponent } from './component/robot/create-robot/create-robot.component';
 
 
 
@@ -42,7 +43,8 @@ import { EditPassagewayComponent } from './component/passageway/edit-passageway/
         EditFloorComponent,
         ElevatorComponent,
         ListPassagewaysBetween2BuildingsComponent,
-        EditPassagewayComponent
+        EditPassagewayComponent,
+        CreateRobotComponent
     ],
   imports: [
     BrowserModule,

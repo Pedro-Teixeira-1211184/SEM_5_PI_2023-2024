@@ -1,0 +1,41 @@
+<form class="robot-form" id="robotForm" (ngSubmit)="submit()" [formGroup]="robotForm" #formDir="ngForm">
+    <h1>Create a Robot</h1>
+    <div class="input-container">
+      <label for="robotType">Robot Type</label>
+      <input type="text" id="robotType" formControlName="robotType" placeholder="Robot Type" required>
+      <div *ngIf="robotType?.invalid && formDir.submitted" class="validation-error">
+        <p *ngIf="robotType?.errors?.['required']">Robot Type is required!</p>
+      </div>
+    </div>
+    <div class="input-container">
+      <label for="code">Code</label>
+      <input type="text" id="code" formControlName="code" placeholder="Robot code" required>
+      <div *ngIf="code?.invalid && formDir.submitted" class="validation-error">
+        <p *ngIf="code?.errors?.['required']">Code is required!</p>
+      </div>
+    </div>
+    <div class="input-container">
+      <label for="serialNumber">Serial Number</label>
+      <input type="text" id="serialNumber" formControlName="serialNumber" placeholder="Serial Number" required>
+      <div *ngIf="serialNumber?.invalid && formDir.submitted" class="validation-error">
+        <p *ngIf="serialNumber?.errors?.['required']">Serial Number is required!</p>
+      </div>
+    </div>
+    <div class="input-container">
+      <label for="nickname">Nickname</label>
+      <input type="text" id="nickname" formControlName="nickname" placeholder="Robot Nickname">
+    </div>
+    <div class="input-container">
+      <label for="brand">Brand</label>
+      <input type="text" id="brand" formControlName="brand" placeholder="Robot Brand" required>
+      <div *ngIf="brand?.invalid && formDir.submitted" class="validation-error">
+        <p *ngIf="brand?.errors?.['required']">Brand is required!</p>
+      </div>
+    </div>
+    <div class="input-container">
+      <label for="isActive">Is Active</label>
+      <input type="checkbox" id="isActive" formControlName="isActive">
+    </div>
+    <button type="submit">Submit</button>
+  </form>
+  
