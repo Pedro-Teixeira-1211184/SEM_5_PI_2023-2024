@@ -9,12 +9,14 @@ export default class Constants {
     public static readonly API_BUILDING_CREATE_URL = Constants.API_BASE_URL + 'buildings';
     public static readonly API_BUILDING_EDIT_URL = Constants.API_BASE_URL + 'buildings';
     public static readonly API_BUILDING_GET_ALL_URL = Constants.API_BASE_URL + 'buildings';
+    public static readonly API_BUILDING_GET_BY_FLOOR_RANGE_URL = Constants.API_BASE_URL + 'buildings/floorRange/';
 
 
     //floor
     public static readonly API_FLOOR_CREATE_URL = Constants.API_BASE_URL + 'buildings/floors';
     public static readonly API_FLOOR_GET_BY_BUILDING_CODE_URL = Constants.API_BASE_URL + 'buildings/floors/';
     public static readonly API_FLOOR_EDIT_URL = Constants.API_BASE_URL + 'buildings/floors';
+    public static readonly API_FLOOR_GET_WITH_PASSAGEWAYS_URL = Constants.API_BASE_URL + 'buildings/floorsWithPassageways/';
 
 
     //robot

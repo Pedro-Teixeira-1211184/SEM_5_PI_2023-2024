@@ -1,0 +1,19 @@
+<form class="floors-with-passageway-form" id="floorsWithPassagewayForm" (ngSubmit)="submit()" [formGroup]="floorsWithPassagewayForm" #formDir="ngForm">
+    <h1>Get Floors with Passageways and connected Buildings`s codes</h1>
+    <div class="input-container">
+      <label for="buildingCode">Building Code</label>
+      <select id="buildingCode" formControlName="buildingCode" required>
+        <option *ngFor="let buildingCode of allBuildingsCodes" [value]="buildingCode">{{ buildingCode }}</option>
+      </select>
+    </div>
+    <button type="submit" (click)="submit()" >Get floors and building codes</button>
+  <div *ngIf="results.length == 0 && showResults" class="no-floors-container">
+      <p>No floors found</p>
+  </div>
+  <div *ngIf="results.length > 0 && showResults" class="floors-container">
+    <h2>Floors and building codes:</h2>
+    <ul>
+      <li *ngFor="let result of results">{{ result | json }}</li>
+    </ul>
+  </div>
+</form> 

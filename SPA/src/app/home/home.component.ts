@@ -31,6 +31,8 @@ export class HomeComponent implements OnInit {
   patchMap: boolean = false;
   listPassagewaysBetween2Buildings: boolean = false;
   editPassageway: boolean = false;
+  floorsWithPassageway: boolean = false;
+  buildingsByFloorRange: boolean = false; 
   
 
 
@@ -122,6 +124,8 @@ export class HomeComponent implements OnInit {
     this.createElevator = false;
     this.createRobot = false;
     this.editPassageway = false;
+    this.floorsWithPassageway = false;
+    this.buildingsByFloorRange = false;
   }
 
   floorsByBuildingCodeList() {
@@ -140,6 +144,8 @@ export class HomeComponent implements OnInit {
     this.listPassagewaysBetween2Buildings = false;
     this.editPassageway = false;
     this.createRobot = false;
+    this.floorsWithPassageway = false;
+    this.buildingsByFloorRange = false;
   }
 
   buildingCreateForm() {
@@ -157,6 +163,9 @@ export class HomeComponent implements OnInit {
     this.listPassagewaysBetween2Buildings = false;
     this.createElevator = false
     this.editPassageway = false;
+    this.createRobot = false;
+    this.floorsWithPassageway = false;
+    this.buildingsByFloorRange = false;
   }
 
   floorCreateForm() {
@@ -175,6 +184,8 @@ export class HomeComponent implements OnInit {
     this.createElevator = false;
     this.editPassageway = false;
     this.createRobot = false;
+    this.floorsWithPassageway = false;
+    this.buildingsByFloorRange = false;
   }
 
   buildingEditForm() {
@@ -192,6 +203,9 @@ export class HomeComponent implements OnInit {
     this.listPassagewaysBetween2Buildings = false;
     this.createElevator = false; 
     this.editPassageway = false;
+    this.createRobot = false;
+    this.floorsWithPassageway = false;
+    this.buildingsByFloorRange = false;
   }
 
   buildingList() {
@@ -210,6 +224,8 @@ export class HomeComponent implements OnInit {
     this.createElevator = false;
     this.editPassageway = false;
     this.createRobot = false;
+    this.floorsWithPassageway = false;
+    this.buildingsByFloorRange = false;
   }
 
   deactivateRobotForm() {
@@ -228,6 +244,8 @@ export class HomeComponent implements OnInit {
     this.createElevator = false;
     this.editPassageway = false;
     this.createRobot = false;
+    this.floorsWithPassageway = false;
+    this.buildingsByFloorRange = false;
   }
 
   createRobotTypeForm() {
@@ -246,6 +264,8 @@ export class HomeComponent implements OnInit {
     this.createElevator = false;
     this.editPassageway = false;
     this.createRobot = false;
+    this.floorsWithPassageway = false;
+    this.buildingsByFloorRange = false;
   }
 
   passagewayCreateForm() {
@@ -264,6 +284,8 @@ export class HomeComponent implements OnInit {
     this.createElevator = false;
     this.editPassageway = false;
     this.createRobot = false;
+    this.floorsWithPassageway = false;
+    this.buildingsByFloorRange = false;
   }
 
   patchMapForm() {
@@ -282,6 +304,8 @@ export class HomeComponent implements OnInit {
     this.createElevator = false;
     this.editPassageway = false;
     this.createRobot = false;
+    this.floorsWithPassageway = false;
+    this.buildingsByFloorRange = false;
   }
   
 
@@ -301,6 +325,8 @@ export class HomeComponent implements OnInit {
     this.createElevator = false;
     this.editPassageway = false;
     this.createRobot = false;
+    this.floorsWithPassageway = false;
+    this.buildingsByFloorRange = false;
   }
 
   createElevatorForm() {
@@ -320,6 +346,8 @@ export class HomeComponent implements OnInit {
     this.createElevator = false;
     this.editPassageway = false;
     this.createRobot = false;
+    this.floorsWithPassageway = false;
+    this.buildingsByFloorRange = false;
   }
 
   listPassagewaysBetween2BuildingsForm() {
@@ -338,6 +366,8 @@ export class HomeComponent implements OnInit {
     this.createElevator = false;
     this.editPassageway = false;
     this.createRobot = false;
+    this.floorsWithPassageway = false;
+    this.buildingsByFloorRange = false;
   }
 
   createRobotForm() {
@@ -355,6 +385,9 @@ export class HomeComponent implements OnInit {
     this.listPassagewaysBetween2Buildings = false;
     this.createElevator = false;
     this.createRobot = true;
+    this.editPassageway = false;
+    this.floorsWithPassageway = false;
+    this.buildingsByFloorRange = false;
   }
 
   editPassagewayForm() {
@@ -371,7 +404,50 @@ export class HomeComponent implements OnInit {
     this.editFloor = false;
     this.listPassagewaysBetween2Buildings = false;
     this.createElevator = false;
+    this.createRobot = false;
     this.editPassageway = true;
+    this.floorsWithPassageway = false;
+    this.buildingsByFloorRange = false;	
   }
+
+  floorsWithPassagewayForm() {
+      this.home_body = false;
+      this.createBuilding = false;
+      this.createFloor = false;
+      this.editBuilding = false;
+      this.listBuilding = false;
+      this.deactivateRobot = false;
+      this.floorsByBuildingCode = false;
+      this.createRobotType = false;
+      this.createPassageway = false;
+      this.patchMap = false;
+      this.editFloor = false;
+      this.listPassagewaysBetween2Buildings = false;
+      this.createElevator = false;
+      this.createRobot = false;
+      this.editPassageway = false;
+      this.floorsWithPassageway = true;
+      this.buildingsByFloorRange = false;
+    }
+
+    buildingsByFloorRangeForm() {
+      this.home_body = false;
+      this.createBuilding = false;
+      this.createFloor = false;
+      this.editBuilding = false;
+      this.listBuilding = false;
+      this.deactivateRobot = false;
+      this.floorsByBuildingCode = false;
+      this.createRobotType = false;
+      this.createPassageway = false;
+      this.patchMap = false;
+      this.editFloor = false;
+      this.listPassagewaysBetween2Buildings = false;
+      this.createElevator = false;
+      this.createRobot = false;
+      this.editPassageway = false;
+      this.floorsWithPassageway = false;
+      this.buildingsByFloorRange = true;
+    }
   
 }

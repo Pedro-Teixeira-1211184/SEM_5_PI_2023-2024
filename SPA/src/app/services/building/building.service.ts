@@ -262,5 +262,24 @@ export class BuildingService {
     }
   }
 
+    public async getBuildingsByFloorRange(floorRange: string): Promise<any> {
+        try {
+        let buildings: IBuildingDTO[] = [];
+        const response = await fetch(Constants.API_BUILDING_GET_BY_FLOOR_RANGE_URL + floorRange, {
+            method: 'GET',
+            headers: {
+            'Content-Type': 'application/json'
+            }
+        });
+        const x = await response.json();
+        for (let i = 0; i < x.length; i++) {
+            buildings.push(x[i]);
+        }
+        return buildings;
+        } catch (e) {
+        console.log(e);
+        }
+    }
+
 }
 

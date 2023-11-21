@@ -153,4 +153,15 @@ export class FloorService {
             });
         }
     }
+
+    public async getFloorsWithPassageways(buildingCode: string) {
+        const response = await fetch(Constants.API_FLOOR_GET_WITH_PASSAGEWAYS_URL + buildingCode, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const x = await response.json();
+        return x;
+    }
 }

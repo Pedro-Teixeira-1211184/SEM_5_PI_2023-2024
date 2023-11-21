@@ -21,6 +21,8 @@ import { ElevatorComponent } from './component/elevator/elevator.component';
 import { ListPassagewaysBetween2BuildingsComponent } from './component/passageway/list-passageways-between-2-buildings/list-passageways-between-2-buildings.component';
 import { EditPassagewayComponent } from './component/passageway/edit-passageway/edit-passageway.component'; 
 import { CreateRobotComponent } from './component/robot/create-robot/create-robot.component';
+import { FloorsWithPassagewayComponent } from './component/floor/floors-with-passageway/floors-with-passageway.component';
+import { BuildingsByFloorRangeComponent } from './component/building/buildings-by-floor-range/buildings-by-floor-range.component';
 
 
 
@@ -44,7 +46,9 @@ import { CreateRobotComponent } from './component/robot/create-robot/create-robo
         ElevatorComponent,
         ListPassagewaysBetween2BuildingsComponent,
         EditPassagewayComponent,
-        CreateRobotComponent
+        CreateRobotComponent,
+        FloorsWithPassagewayComponent,
+        BuildingsByFloorRangeComponent
     ],
   imports: [
     BrowserModule,

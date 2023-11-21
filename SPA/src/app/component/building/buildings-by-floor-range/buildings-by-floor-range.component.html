@@ -1,0 +1,21 @@
+<form class="buildings-by-floor-range-form" id="buildingsByFloorRangeForm" (ngSubmit)="submit()" [formGroup]="buildingsByFloorRangeForm" #formDir="ngForm">
+    <h1>Get buildings by floor range</h1>
+    <div class="input-container">
+      <label for="floorRange">Floor Range, Structure : number-number</label>
+      <input type="text" id="floorRange" formControlName="floorRange" placeholder="Enter floor range" required>
+      <div *ngIf="!floorRange && formDir.submitted" class="validation-error">
+        <p>Floor range is required!</p>
+      </div>
+    </div>
+    <button type="submit" (click)="submit()">Get buildings</button>
+    <div *ngIf="showBuildings && buildings.length > 0" class="buiildings-container">
+        <h2>Buildings:</h2>
+        <ul>
+          <li *ngFor="let building of buildings">{{ building | json }}</li>
+        </ul>
+    </div>
+    <div *ngIf="showBuildings && buildings.length === 0" class="no-buildings-container">
+        <p>No buildings found</p>
+    </div>
+  </form>
+  
