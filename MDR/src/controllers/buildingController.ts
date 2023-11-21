@@ -69,7 +69,7 @@ export default class BuildingController implements IBuildingController /* TODO: 
 
       if(minFloors > maxFloors) {
         console.log("minFloors must be less than maxFloors");
-        return res.status(StatusCodes.BAD_REQUEST).json("minFloors must be less than maxFloors");
+        return null;
       }
 
       const buildings = await this.buildingServiceInstance.findByMinMaxFloors(minFloors, maxFloors);

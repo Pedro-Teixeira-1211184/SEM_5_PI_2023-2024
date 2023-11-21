@@ -130,7 +130,7 @@ export default class BuildingRepo implements IBuildingRepo {
 
   try{
     //building with min floors higher than the minFloors and max floors lower than the maxFloors
-    const query = {buildingMinFloors: {$gte: minFloors}, buildingMaxFloors: {$lte: maxFloors}} as FilterQuery<IBuildingPersistence & Document>;
+    const query = {buildingMinFloors: {$gte: minFloors, $lte: maxFloors }, buildingMaxFloors: {$lte: maxFloors, $gte: minFloors}} as FilterQuery<IBuildingPersistence & Document>;
     const buildingRecord = await this.buildingSchema.find(query);
     const buildingArray: IBuildingDTO[] = [];
 
