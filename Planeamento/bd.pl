@@ -131,7 +131,7 @@ cria_grafo_lin(Col,Lin):-m(Col,Lin,0),!,ColS is Col+1, ColA is Col-1, LinS is Li
 	
 	Col1 is Col - 1,
 	
-	%Chama-se recursivamente com novo valor de Col
+	% Chama-se recursivamente com novo valor de Col
     
 	cria_grafo_lin(Col1,Lin).
 	
@@ -189,7 +189,7 @@ bfs2(Dest,[[Dest|T]|_],Cam):-
 	reverse([Dest|T],Cam).
 
 bfs2(Dest,[LA|Outros],Cam):-
-	LA=[Act|_],
+	LA=[Act|_],  
 	findall([X|LA],
 		(Dest\==Act,ligacel(Act,X),\+ member(X,LA)),
 		Novos),
