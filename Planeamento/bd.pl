@@ -189,7 +189,7 @@ bfs2(Dest,[[Dest|T]|_],Cam):-
 	reverse([Dest|T],Cam).
 
 bfs2(Dest,[LA|Outros],Cam):-
-	LA=[Act|_],
+	LA=[Act|_],  
 	findall([X|LA],
 		(Dest\==Act,ligacel(Act,X),\+ member(X,LA)),
 		Novos),
