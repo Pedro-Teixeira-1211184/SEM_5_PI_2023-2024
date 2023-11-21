@@ -14,6 +14,8 @@
             <p *ngIf="floorCode1?.errors?.['required']">Floor Code 2 is required!</p>
         </div>
     </div>
-    
-    <button type="submit">Submit</button>
+    <div *ngIf="showUpdate" class="validation-error">
+        <p> Passageway has been updated!</p>
+    </div>
+    <button type="submit" (click)="showUpdate = true ">Update Passageway</button>
 </form>

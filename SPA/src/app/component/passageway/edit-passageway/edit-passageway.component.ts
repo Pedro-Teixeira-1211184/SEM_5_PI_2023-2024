@@ -1,21 +1,23 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PassagewayService } from 'src/app/services/passageway/passageway.service';
+import { OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-edit-passageway',
   templateUrl: './edit-passageway.component.html',
   styleUrls: ['./edit-passageway.component.css']
 })
-export class EditPassagewayComponent {
+export class EditPassagewayComponent implements OnInit {
     passagewayForm!: FormGroup;
     service: PassagewayService = new PassagewayService();
+
+    showUpdate: boolean = false;
 
   constructor() { 
   }
 
-
-  ngonInit(): void {
+  ngOnInit(): void {
     this.passagewayForm = new FormGroup({
       floorCode: new FormControl('', [Validators.required]),
       floorCode1: new FormControl('', [Validators.required]),

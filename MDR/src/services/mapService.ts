@@ -71,6 +71,8 @@ export default class MapService implements IMapService {
                 }
             }
 
+            console.log(mapDTO.elevator);
+
             if (mapDTO.elevator != undefined) {
                 //verify if elevator exists
                 const elevatorExists = await this.elevatorRepo.findByBuildingCode(mapDTO.buildingCode);
