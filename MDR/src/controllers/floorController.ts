@@ -73,7 +73,7 @@ export default class FloorController implements IFloorController /* TODO: extend
         try {
             const floorOrError = await this.floorServiceInstance.findFloorsByBuildingCode(req.params.buildingCode) as Result<IFloorDTO[]>;
             if (floorOrError.isFailure) {
-                return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(floorOrError.errorValue());
+                return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send("No floors found!");
             }
             const floorsInBuilding = floorOrError.getValue();
 
@@ -90,34 +90,44 @@ export default class FloorController implements IFloorController /* TODO: extend
                 return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send("No passageways found in building!");
             }
 
-            /*
+    
             const passagewaysInBuilding: IPassagewayDTO[] = [];
-            let k = 0;
 
             for (let i = 0; i < getFloorsWithPassageway.length; i++) {
-                const aux = await this.passagewayServiceInstance.getPassagewaysInFloors(getFloorsWithPassageway[i].id) as Result<IPassagewayDTO[]>;
-                if (aux.isSuccess) {
-                    const aux1 = aux.getValue();
-                    passagewaysInBuilding.push(aux1[k]);
-                    k++;
-                    console.log("aux1: ", aux1[k]);
+                const aux = await this.passagewayServiceInstance.getPassagewaysInFloors(getFloorsWithPassageway[i].code) as Result<IPassagewayDTO[]>;
+                const aux1 = aux.getValue();
+                if (aux1.length != 0) {
+                    for ( let k = 0; k < aux1.length; k++){
+                        passagewaysInBuilding.push(aux1[k]);
+                    }
                 }
             }
 
-            for (let i = 0; i < passagewaysInBuilding.length; i++) {
-                const aux2 = passagewaysInBuilding[i].floorID1;
-                const aux3 = passagewaysInBuilding[i].floorID2;
-                for (let j = 0; j < getFloorsWithPassageway.length; j++) {
-                    if (aux2 == getFloorsWithPassageway[j].id) {
-                        const buildingWithPassage = this.floorServiceInstance.getBuildingcodeByFloor(aux3);
-                    }
-                    else{
-                        const buildingWithPassage = this.floorServiceInstance.getBuildingcodeByFloor(aux2);
-                    }
-                }
-            }*/
+            let buildingsWithPassageWay: string[] = [];
 
-            return res.status(StatusCodes.OK).json(getFloorsWithPassageway);
+            for (let i = 0; i < passagewaysInBuilding.length; i++) {
+                const aux2 = passagewaysInBuilding[i].floorCode1;
+                const aux3 = passagewaysInBuilding[i].floorCode2;
+                if ( aux2.substring(0, 1) == req.params.buildingCode && !buildingsWithPassageWay.includes(aux3.substring(0, 1))) {
+                    buildingsWithPassageWay.push(aux3.substring(0, 1));
+                }
+
+                if ( aux3.substring(0, 1) == req.params.buildingCode && !buildingsWithPassageWay.includes(aux2.substring(0, 1))) {
+                    buildingsWithPassageWay.push(aux2.substring(0, 1));
+                }
+            }
+            let result: string[] = [];
+            for (let i = 0; i < getFloorsWithPassageway.length; i++) {
+                result.push("Building Code:"+ getFloorsWithPassageway[i].buildingCode + " Number:"+ getFloorsWithPassageway[i].number + " Floor Code:"+getFloorsWithPassageway[i].code + " Description:"+ getFloorsWithPassageway[i].description);
+            }
+
+            result = result.concat("Buildings connected to: " + buildingsWithPassageWay);
+            
+            for (let i = 0; i < result.length; i++) {
+                result[i].split("\n");
+            }
+
+            return res.status(StatusCodes.OK).json(result);
         } catch (e) {
             return next(e);
         }

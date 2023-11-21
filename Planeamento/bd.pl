@@ -131,7 +131,7 @@ cria_grafo_lin(Col,Lin):-m(Col,Lin,0),!,ColS is Col+1, ColA is Col-1, LinS is Li
 	
 	Col1 is Col - 1,
 	
-	%Chama-se recursivamente com novo valor de Col
+	% Chama-se recursivamente com novo valor de Col
     
 	cria_grafo_lin(Col1,Lin).
 	
@@ -169,7 +169,7 @@ dfs2(Act,Dest,LA,Cam):-
 
 % --------------------------------------------------------------------
 
-all_dfs(Orig,Dest,LCam):-findall(Cam,dfs(Orig,Dest,Cam),LCam).
+all_dfs(Orig,Dest,LCam):-findav ll(Cam,dfs(Orig,Dest,Cam),LCam).
 
 
 better_dfs(Orig,Dest,Cam):-all_dfs(Orig,Dest,LCam), shortlist(LCam,Cam,_).

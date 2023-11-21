@@ -121,6 +121,7 @@ export class HomeComponent implements OnInit {
     this.listPassagewaysBetween2Buildings = false;
     this.createElevator = false;
     this.createRobot = false;
+    this.editPassageway = false;
   }
 
   floorsByBuildingCodeList() {
@@ -154,7 +155,8 @@ export class HomeComponent implements OnInit {
     this.patchMap = false;
     this.editFloor = false;
     this.listPassagewaysBetween2Buildings = false;
-    this.createElevator = false;
+    this.createElevator = false
+    this.editPassageway = false;
   }
 
   floorCreateForm() {
@@ -188,7 +190,8 @@ export class HomeComponent implements OnInit {
     this.patchMap = false;
     this.editFloor = false;
     this.listPassagewaysBetween2Buildings = false;
-    this.createElevator = false;
+    this.createElevator = false; 
+    this.editPassageway = false;
   }
 
   buildingList() {
