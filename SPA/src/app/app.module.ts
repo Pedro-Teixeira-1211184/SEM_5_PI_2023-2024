@@ -23,6 +23,7 @@ import { EditPassagewayComponent } from './component/passageway/edit-passageway/
 import { CreateRobotComponent } from './component/robot/create-robot/create-robot.component';
 import { FloorsWithPassagewayComponent } from './component/floor/floors-with-passageway/floors-with-passageway.component';
 import { BuildingsByFloorRangeComponent } from './component/building/buildings-by-floor-range/buildings-by-floor-range.component';
+import { PlaneamentoComponent } from './component/planeamento/planeamento.component';
 
 
 
@@ -48,7 +49,8 @@ import { BuildingsByFloorRangeComponent } from './component/building/buildings-b
         EditPassagewayComponent,
         CreateRobotComponent,
         FloorsWithPassagewayComponent,
-        BuildingsByFloorRangeComponent
+        BuildingsByFloorRangeComponent,
+        PlaneamentoComponent
     ],
   imports: [
     BrowserModule,

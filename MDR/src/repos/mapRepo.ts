@@ -44,5 +44,36 @@ export default class MapRepo implements IMapRepo {
       throw e;
     }
   }
+/*
+  public async findByBuildingCodeAndFloorNumber(buildingCode: string, floorNumber: number): Promise<Map> {
+    try {
+      const query = {mapBuildingCode: buildingCode, mapFloorNumber: floorNumber};
+      const mapDocument = await this.mapSchema.findOne(query as FilterQuery<IMapPersistence & Document>);
+      return MapMapper.toDomain(mapDocument);
+    } catch (e) {
+      throw e;
+    }
+  }
 
+  public async delete(map: Map): Promise<Map> {
+    try {
+      const query = {mapBuildingCode: map.buildingCode, mapFloorNumber: map.floorNumber};
+      const mapDocument = await this.mapSchema.findOneAndDelete(query as FilterQuery<IMapPersistence & Document>);
+      return MapMapper.toDomain(mapDocument);
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  public async findAll(): Promise<Map[]> {
+    try {
+      const mapDocuments = await this.mapSchema.find();
+      return mapDocuments.map((mapDocument) => {
+        return MapMapper.toDomain(mapDocument);
+      });
+    } catch (e) {
+      throw e;
+    }
+  }
+*/
 }

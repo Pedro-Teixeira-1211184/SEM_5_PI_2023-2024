@@ -11,6 +11,10 @@ import IRoomRepo from "./IRepos/IRoomRepo";
 import IPassagewayRepo from "./IRepos/IPassagewayRepo";
 import IElevatorRepo from "./IRepos/IElevatorRepo";
 import IBuildingRepo from "./IRepos/IBuildingRepo";
+import IPlantDTO from '../dto/IPlantDTO';
+import { http } from 'winston';
+import IPathDTO from '../dto/IPathDTO';
+import IPathResultDTO from '../dto/IPathResultDTO';
 
 
 @Service()
@@ -102,5 +106,99 @@ export default class MapService implements IMapService {
         }
     }
 
+    /*public async loadMap(mapDTO: IMapDTO): Promise<Result<IMapDTO>> {
+        try {
+            const mapOrError = await this.mapRepo.findByBuildingCodeAndFloorNumber(mapDTO.buildingCode, mapDTO.floorNumber) as Result<Map>;
+            if (mapOrError.isFailure) {
+                return Result.fail<IMapDTO>(mapOrError.errorValue());
+            }
+            const map = mapOrError.getValue();
+            const mapExists = await this.mapRepo.exists(map);
+            if (!mapExists) {
+                return Result.fail<IMapDTO>("Map does not exist.");
+            }
+            const mapDocument = await this.mapRepo.save(map);
+            mapDTO = MapMapper.toDTO(mapDocument);
 
+            return Result.ok<IMapDTO>(mapDTO);
+        } catch (e) {
+            throw e;
+        }
+    }*/
+
+    /*public async deleteMap(mapDTO: IMapDTO): Promise<Result<IMapDTO>> {
+        try {
+            const mapOrError = await this.mapRepo.findByBuildingCodeAndFloorNumber(mapDTO.buildingCode, mapDTO.floorNumber) as Result<Map>;
+            if (mapOrError.isFailure) {
+                return Result.fail<IMapDTO>(mapOrError.errorValue());
+            }
+            const map = mapOrError.getValue();
+            const mapExists = await this.mapRepo.exists(map);
+            if (!mapExists) {
+                return Result.fail<IMapDTO>("Map does not exist.");
+            }
+            const mapDocument = await this.mapRepo.delete(map);
+            mapDTO = MapMapper.toDTO(mapDocument);
+
+            return Result.ok<IMapDTO>(mapDTO);
+        } catch (e) {
+            throw e;
+        }
+    }*/
+
+    /*public async listMaps(): Promise<Result<IPlantDTO[]>> {
+        try{
+            const mapOrError = await this.mapRepo.findAll();
+            if (mapOrError.isFailure) {
+                return Result.fail<IPlantDTO[]>(mapOrError.errorValue());
+            }
+            let plants: IPlantDTO[] = [];
+            for (let i=0; i<mapOrError.length; i++) {
+                
+                let plantDTO = mapOrError[i].mapa as IPlantDTO;
+
+                const plant={
+                    floorCode = mapOrError[i].floorCode,
+                    width = plantDTO.width,
+                    length = plantDTO.length,
+                    map = plantDTO.map,
+                    passageways = plantDTO.passageways,
+                    elevator = plantDTO.elevator,
+                    rooms = plantDTO.rooms
+                }as IPlantDTO;
+                plants.push(plant);
+            }
+            return Result.ok<IPlantDTO[]>(plants);
+        }catch(e){
+            throw e;
+        }
+    }*/
+
+    /*public async pathBetweenFloors(pathDTO: IPathDTO): Promise<Result<IPathResultDTO>> {
+        let pathBetweenFloors: string[];
+        let pathPerFloor: number[];
+
+        const uri = config.connectionPlaneamento + "/pathBetweenFloors/" + pathDTO.origin + "/" + pathDTO.destination;
+
+        return await fetch(uri, {
+            method : 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            return response.json();
+        }).then((data) => {
+            pathBetweenFloors = data.path;
+            pathPerFloor = data.pathPerFloor;
+            return Result.ok<IPathResultDTO>({pathBetweenFloors, pathPerFloor});
+        }).catch((error) => {
+            return Result.fail<IPathResultDTO>(error);
+        }
+        );
+
+        return pathResult.create({
+            pathBetweenFloors: pathBetweenFloors,
+            pathPerFloor: pathPerFloor
+        } as IPathResultDTO);
+    }*/
 }
