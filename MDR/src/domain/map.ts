@@ -21,7 +21,7 @@ interface MapProps {
     end: string,
     localization: { coordinates: { x: number, y: number }, orientation: string }
   }[];
-  elevator: { localization: { coordinates: { x: number, y: number } }, orientation: string }[];
+  elevator: { localization: { coordinates: { x: number, y: number }, orientation: string } }[];
 }
 
 export class Map extends AggregateRoot<MapProps> {
@@ -66,7 +66,7 @@ export class Map extends AggregateRoot<MapProps> {
     return this.props.passageways;
   }
 
-  get elevator(): { localization: { coordinates: { x: number, y: number } }, orientation: string }[] {
+  get elevator(): { localization: { coordinates: { x: number, y: number }, orientation: string } }[] {
     return this.props.elevator;
   }
 

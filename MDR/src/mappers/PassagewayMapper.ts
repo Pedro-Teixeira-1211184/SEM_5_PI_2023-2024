@@ -13,9 +13,7 @@ export class PassagewayMapper extends Mapper<Passageway> {
       id: passageway.id.toString(),
       floorCode1: passageway.floorCode1,
       floorCode2: passageway.floorCode2,
-      localization1: passageway.localization1,
-      localization2: passageway.localization2
-      } as IPassagewayDTO;
+    } as IPassagewayDTO;
   }
 
 
@@ -25,8 +23,6 @@ export class PassagewayMapper extends Mapper<Passageway> {
         id: raw.passagewayID,
         floorCode1: raw.passagewayFloorCode1,
         floorCode2: raw.passagewayFloorCode2,
-        localization1: raw.passagewayLocalization1,
-        localization2: raw.passagewayLocalization2
       },
       new UniqueEntityID(raw.domainId)
     );
@@ -41,9 +37,7 @@ export class PassagewayMapper extends Mapper<Passageway> {
     return {
       passagewayID: passageway.id.toString(),
       passagewayFloorCode1: passageway.floorCode1.toString(),
-      passagewayFloorCode2: passageway.floorCode2.toString(),
-      passagewayLocalization1: passageway.localization1,
-      passagewayLocalization2: passageway.localization2
+      passagewayFloorCode2: passageway.floorCode2.toString()
     }
   }
 }
