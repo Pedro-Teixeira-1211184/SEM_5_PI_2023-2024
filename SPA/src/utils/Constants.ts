@@ -52,6 +52,7 @@ export default class Constants {
     public static readonly CAMPUS_MANAGER_ROLE = 'Campus manager';
     public static readonly ADMIN_ROLE = 'Admin';
     public static readonly FLEET_MANAGER_ROLE = 'Fleet manager';
+    public static readonly TASK_MANAGER_ROLE = 'Task manager';
 
 
 }

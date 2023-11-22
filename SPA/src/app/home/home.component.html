@@ -40,6 +40,18 @@
     <a (click)="logout()">Logout</a>
   </button>
 </div>
+<div *ngIf="isTaskManager" class="sidebar" id="sidebar">
+  <a (click)="planeamentoForm()">Get Path</a>
+  <a href="#">Menu 2</a>
+  <a href="#">Menu 3</a>
+  <a href="#">Menu 4</a>
+  <a href="#">Menu 5</a>
+  <a href="#">Menu 6</a>
+  <button class="logout bottom-logout">
+    <img src="../../assets/_images/logout_icon.png" alt="Logout">
+    <a (click)="logout()">Logout</a>
+  </button>
+</div>
 <div *ngIf="home_body" id="content">
   <h1>Home page</h1>
   <p>Home page content goes here</p>
@@ -91,6 +103,9 @@
 </div>
 <div *ngIf="buildingsByFloorRange" id="content">
   <app-buildings-by-floor-range></app-buildings-by-floor-range>
+</div>
+<div *ngIf="pathBetweenFloors" id="content">
+  <app-planeamento></app-planeamento>
 </div>
 </body>
 </html>

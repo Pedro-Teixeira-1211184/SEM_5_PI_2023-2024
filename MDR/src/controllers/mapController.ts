@@ -47,7 +47,8 @@ console.log(req.body);
       }
 
       const mapDTO = mapOrError.getValue();
-      return res.json(mapDTO).status(StatusCodes.ACCEPTED);
+      const plant = await this.mapServiceInstance.turnToPlant(mapDTO);
+      return res.json(plant).status(StatusCodes.ACCEPTED);
     } catch (e) {
       return next(e);
     }

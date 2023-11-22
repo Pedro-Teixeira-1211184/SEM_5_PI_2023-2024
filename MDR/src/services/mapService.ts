@@ -108,7 +108,7 @@ export default class MapService implements IMapService {
     }
 
 
-    //turn to plant
+    
     public async loadMap(buildingCode: string, floorNumber: number): Promise<Result<IMapDTO>> {
         try {
             const mapOrError = await this.mapRepo.findByBuildingCodeAndFloorNumber(buildingCode, floorNumber);

@@ -48,7 +48,7 @@ export class MapService {
     }
   }
 
-  public async getMap(buildingCode: string, floorNumber: number) {
+  public async loadMap(buildingCode: string, floorNumber: number) {
     try {
       const response = await fetch(Constants.API_MAP_GET_URL + '/' + buildingCode + '/' + floorNumber, {
         method: 'GET',
@@ -67,4 +67,23 @@ export class MapService {
     }
   }
 
+
+  public async pathBetweenFloors(origin: string, destination: string) {
+    try {
+      const response = await fetch(Constants.API_PATH_BETWEEN_FLOORS_URL + '/' + origin + '/' + destination, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.status === 200) {
+        return await response.json();
+      } else {
+        alert(await response.text());
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
 }

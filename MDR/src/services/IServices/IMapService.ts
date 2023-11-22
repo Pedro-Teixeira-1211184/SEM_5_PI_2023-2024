@@ -9,4 +9,5 @@ export default interface IMapService {
   loadMap(buildingCode: string, floorNumber: number): Promise<Result<IMapDTO>>;
   listMaps(): Promise<Result<IPlantDTO[]>>;
   pathBetweenFloors(pathDTO: IPathDTO): Promise<IPathResultDTO | Result<IPathResultDTO>>;
+  turnToPlant(mapDTO: IMapDTO): Promise<IPlantDTO>;
 }
