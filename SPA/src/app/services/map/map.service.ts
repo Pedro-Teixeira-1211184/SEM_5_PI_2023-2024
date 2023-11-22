@@ -48,4 +48,23 @@ export class MapService {
     }
   }
 
+  public async getMap(buildingCode: string, floorNumber: number) {
+    try {
+      const response = await fetch(Constants.API_MAP_GET_URL + '/' + buildingCode + '/' + floorNumber, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.status === 200) {
+        return await response.json();
+      } else {
+        alert(await response.text());
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
 }

@@ -107,21 +107,20 @@ export default class MapService implements IMapService {
         }
     }
 
-    /*public async loadMap(mapDTO: IMapDTO): Promise<Result<IMapDTO>> {
+
+    //turn to plant
+    public async loadMap(buildingCode: string, floorNumber: number): Promise<Result<IMapDTO>> {
         try {
-            const mapOrError = await this.mapRepo.findByBuildingCodeAndFloorNumber(mapDTO.buildingCode, mapDTO.floorNumber);
+            const mapOrError = await this.mapRepo.findByBuildingCodeAndFloorNumber(buildingCode, floorNumber);
             const mapExists = await this.mapRepo.exists(MapMapper.toDomain(mapOrError));
             if (!mapExists) {
                 return Result.fail<IMapDTO>("Map does not exist.");
             }
-            const mapDocument = await this.mapRepo.save(map);
-            mapDTO = MapMapper.toDTO(mapDocument);
-
-            return Result.ok<IMapDTO>(mapDTO);
+            return Result.ok<IMapDTO>(mapOrError);
         } catch (e) {
             throw e;
         }
-    }*/
+    }
     
     public async listMaps(): Promise<Result<IPlantDTO[]>> {
         try{
