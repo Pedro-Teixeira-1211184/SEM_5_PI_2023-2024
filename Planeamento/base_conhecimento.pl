@@ -19,19 +19,6 @@ corredor(b,g,b3,g3).
 corredor(b,i,b3,i3).
 
 
-% Exemplo Piso X Edificio Y
-
-%linha 1:1,1,1,1,1,1,1,1
-%linha 2:0,0,0,0,0,0,0,1
-%linha 3:0,0,0,0,0,0,0,1
-%linha 4:0,0,0,0,0,0,0,1
-%linha 5:1,1,1,1,0,0,0,1
-%linha 6:1,1,1,1,0,0,0,1
-%linha 7:1,1,1,1,0,0,0,1
-%coluna :1,2,3,4,5,6,7,8
-%
-%
-%
 %m(col,lin,valor, tipo) - valor: 1 se for obstáculo, 0 se for livre, 
 % tipo: 2 se for elevador, 3 se for passagem, 4 se for porta, 5 se for parede,0 se for livre
 m(1,1,1,5).

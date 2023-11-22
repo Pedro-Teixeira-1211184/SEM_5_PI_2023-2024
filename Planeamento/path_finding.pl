@@ -70,11 +70,3 @@ bfs2(Dest,[LA|Outros],Cam):-
 		Novos),
 	append(Outros,Novos,Todos),
 	bfs2(Dest,Todos,Cam).
-
-
-% Algoritmo para minimizar o número de utilizações do elevador
-
-
-
-
-% Algoritmo para minimizar o número de edificios percorridos
