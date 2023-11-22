@@ -48,6 +48,7 @@ export default class Constants {
 
     //room
     public static readonly API_ROOM_GET_BY_FLOOR_CODE_URL = Constants.API_BASE_URL + 'rooms/';
+    public static readonly API_ROOM_CREATE_URL = Constants.API_BASE_URL + 'rooms';
 
     public static readonly CAMPUS_MANAGER_ROLE = 'Campus manager';
     public static readonly ADMIN_ROLE = 'Admin';

@@ -194,7 +194,7 @@ export class PatchMapComponent implements OnInit {
 
   private async getFloorsCodes(buildingCode: string) {
     this.floors = [];
-    this.floors = await this.f_service.getFloorsByBuildingCodeForPassageway(buildingCode);
+    this.floors = await this.f_service.getFloorsByBuildingCode(buildingCode);
   }
 
   get buildingCode() {

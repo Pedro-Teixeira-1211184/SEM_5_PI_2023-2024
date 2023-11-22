@@ -23,6 +23,7 @@ import { EditPassagewayComponent } from './component/passageway/edit-passageway/
 import { CreateRobotComponent } from './component/robot/create-robot/create-robot.component';
 import { FloorsWithPassagewayComponent } from './component/floor/floors-with-passageway/floors-with-passageway.component';
 import { BuildingsByFloorRangeComponent } from './component/building/buildings-by-floor-range/buildings-by-floor-range.component';
+import { CreateRoomComponent } from './component/room/create-room/create-room.component';
 import { PlaneamentoComponent } from './component/planeamento/planeamento.component';
 
 
@@ -50,7 +51,11 @@ import { PlaneamentoComponent } from './component/planeamento/planeamento.compon
         CreateRobotComponent,
         FloorsWithPassagewayComponent,
         BuildingsByFloorRangeComponent,
+<<<<<<< HEAD
+        CreateRoomComponent
+=======
         PlaneamentoComponent
+>>>>>>> 7a1c440497e926fefc3c5d565682f3d59f0850aa
     ],
   imports: [
     BrowserModule,

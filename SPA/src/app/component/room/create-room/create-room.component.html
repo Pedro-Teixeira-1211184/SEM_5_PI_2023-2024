@@ -1,0 +1,24 @@
+<form class="room-form" id="roomForm" (ngSubmit)="submit()" [formGroup]="roomForm" #formDir="ngForm">
+    <h1>Create a room</h1>
+    <div class="input-container">
+      <label for="floorCode">Floor Code</label>
+      <select id="floorCode" formControlName="floorCode" required>
+        <option *ngFor="let floorCode of floorsCode" [value]="floorCode">{{ floorCode }}</option>
+      </select>
+      <div *ngIf="floorCode?.invalid && formDir.submitted" class="validation-error">
+        <p *ngIf="floorCode?.errors?.['required']">Floor Code is required!</p>
+      </div>
+      <label for="designation">Designation</label>
+        <input type="designation" id="designation" formControlName="designation" placeholder="designation" required>
+      <div *ngIf="designation?.invalid && formDir.submitted" class="validation-error">
+        <p *ngIf="designation?.errors?.['required']">Designation is required!</p>
+      </div>
+      <label for="name">Name</label>
+        <input type="name" id="name" formControlName="name" placeholder="name" required>
+      <div *ngIf="name?.invalid && formDir.submitted" class="validation-error">
+        <p *ngIf="name?.errors?.['required']">Name is required!</p>
+      </div>
+    </div>
+    <button type="submit" >Submit</button>
+  </form>
+  
