@@ -15,3 +15,6 @@
 | UC350     | **[*](..\diagramas\nivel1\UC350.md)** | **[*](..\diagramas\nivel2\UC350.md)** | **[*](..\diagramas\nivel3\UC350.md)** |
 | UC370     | **[*](..\diagramas\nivel1\UC370.md)** | **[*](..\diagramas\nivel2\UC370.md)** | **[*](..\diagramas\nivel3\UC370.md)** |
 
+| UC Number | Support                         |
+|-----------|---------------------------------|
+| UC601     | **[*](..\docs\UC601\UC601.md)** |

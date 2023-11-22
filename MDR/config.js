@@ -22,6 +22,11 @@ export default {
   databaseURL: process.env.MONGODB_URI || "mongodb://vsgate-s1.dei.isep.ipp.pt:10564",
 
   /**
+   * Connection string for Planeamento
+   */
+  connectionPlaneamento: process.env.CONNECTION_PLANEAMENTO || "http://localhost:8080/Planeamento",
+
+  /**
    * Your secret sauce
    */
   jwtSecret: process.env.JWT_SECRET || "my sakdfho2390asjod$%jl)!sdjas0i secret",
