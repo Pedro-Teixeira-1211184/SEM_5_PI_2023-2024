@@ -36,24 +36,11 @@ console.log(req.body);
     }
   }
 
-  /*public async loadMap(req: Request, res: Response, next: NextFunction) {
+  public async loadMap(req: Request, res: Response, next: NextFunction) {
+    const buildingCode = String(req.params.buildingCode);
+    const floorNumber = Number(req.params.floorNumber);
     try {
-      const mapOrError = await this.mapServiceInstance.loadMap(req.body as IMapDTO) as Result<IMapDTO>;
-
-      if (mapOrError.isFailure) {
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(mapOrError.errorValue());
-      }
-
-      const mapDTO = mapOrError.getValue();
-      return res.json(mapDTO).status(StatusCodes.ACCEPTED);
-    } catch (e) {
-      return next(e);
-    }
-  }
-
-  public async deleteMap (req: Request, res: Response, next: NextFunction) {
-    try {
-      const mapOrError = await this.mapServiceInstance.deleteMap(req.body as IMapDTO) as Result<IMapDTO>;
+      const mapOrError = await this.mapServiceInstance.loadMap(buildingCode, floorNumber) as Result<IMapDTO>;
 
       if (mapOrError.isFailure) {
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(mapOrError.errorValue());
@@ -82,8 +69,8 @@ console.log(req.body);
   }
 
   public async pathBetweenFloors (req: Request, res: Response, next: NextFunction) {
-  const origin = String(req.body.origin);
-  const destination = String(req.body.destination);
+  const origin = String(req.params.origin);
+  const destination = String(req.params.destination);
   const path: IPathDTO = {origin, destination};
 
   try {
@@ -99,5 +86,5 @@ console.log(req.body);
     return next(e); 
   }
 }
-*/
+
 }

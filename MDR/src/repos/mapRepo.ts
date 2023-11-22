@@ -6,6 +6,8 @@ import {Map} from "../domain/map";
 import {IMapPersistence} from "../dataschema/IMapPersistence";
 import {MapMapper} from "../mappers/MapMapper";
 import {IBuildingPersistence} from "../dataschema/IBuildingPersistence";
+import IMapDTO from "../dto/IMapDTO";
+
 
 
 @Service()
@@ -44,22 +46,12 @@ export default class MapRepo implements IMapRepo {
       throw e;
     }
   }
-/*
-  public async findByBuildingCodeAndFloorNumber(buildingCode: string, floorNumber: number): Promise<Map> {
-    try {
-      const query = {mapBuildingCode: buildingCode, mapFloorNumber: floorNumber};
-      const mapDocument = await this.mapSchema.findOne(query as FilterQuery<IMapPersistence & Document>);
-      return MapMapper.toDomain(mapDocument);
-    } catch (e) {
-      throw e;
-    }
-  }
 
-  public async delete(map: Map): Promise<Map> {
+  public async findByBuildingCodeAndFloorNumber(buildingCode: string, floorNumber: number): Promise<IMapDTO> {
     try {
-      const query = {mapBuildingCode: map.buildingCode, mapFloorNumber: map.floorNumber};
-      const mapDocument = await this.mapSchema.findOneAndDelete(query as FilterQuery<IMapPersistence & Document>);
-      return MapMapper.toDomain(mapDocument);
+      const query = { mapBuildingCode: buildingCode, mapFloorNumber: floorNumber };
+      const mapDocument = await this.mapSchema.findOne(query as FilterQuery<IMapPersistence & Document>) ;
+      return MapMapper.toDTO(MapMapper.toDomain(mapDocument));
     } catch (e) {
       throw e;
     }
@@ -75,5 +67,5 @@ export default class MapRepo implements IMapRepo {
       throw e;
     }
   }
-*/
+
 }

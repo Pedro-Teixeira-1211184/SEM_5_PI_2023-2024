@@ -70,14 +70,9 @@ export default () => {
   )
   ;
 
-  /*route.get('/', (req, res, next) => {
+  route.get('/:buildingCode/:floorNumber', (req, res, next) => {
     console.log("Loading a Map!");
     ctrl.loadMap(req, res, next);
-  });
-
-  route.delete('/', (req, res, next) => {
-    console.log("Deleting a Map!");
-    ctrl.deleteMap(req, res, next);
   });
 
   route.get('/list', (req, res, next) => {
@@ -85,10 +80,10 @@ export default () => {
     ctrl.listMaps(req, res, next);
   });
 
-  route.get('/path', (req, res, next) => {
+  route.get('/path/:origin/:destination', (req, res, next) => {
     console.log("Finding path between floors!");
     ctrl.pathBetweenFloors(req, res, next);
-  });*/
+  });
 
   return route;
 }

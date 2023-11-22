@@ -6,9 +6,7 @@ import IPathDTO from "../../dto/IPathDTO";
 
 export default interface IMapService {
   createMap(mapDTO: IMapDTO): Promise<Result<IMapDTO>>;
-  /*loadMap(mapDTO: IMapDTO): Promise<Result<IMapDTO>>;
-  deleteMap(mapDTO: IMapDTO): Promise<Result<IMapDTO>>;
+  loadMap(buildingCode: string, floorNumber: number): Promise<Result<IMapDTO>>;
   listMaps(): Promise<Result<IPlantDTO[]>>;
-  pathBetweenFloors(pathDTO: IPathDTO): Promise<Result<IPathResultDTO>>;
-*/
+  pathBetweenFloors(pathDTO: IPathDTO): Promise<IPathResultDTO | Result<IPathResultDTO>>;
 }
