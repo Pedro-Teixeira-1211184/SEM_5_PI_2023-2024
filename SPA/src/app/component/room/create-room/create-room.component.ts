@@ -1,29 +1,30 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {PassagewayService} from "../../../services/passageway/passageway.service";
+import {RoomService} from "../../../services/room/room.service";
 import {BuildingService} from "../../../services/building/building.service";
 import {FloorService} from "../../../services/floor/floor.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
-  selector: 'app-create-passageway',
-  templateUrl: './create-passageway.component.html',
-  styleUrls: ['./create-passageway.component.css']
+  selector: 'app-create-room',
+  templateUrl: './create-room.component.html',
+  styleUrls: ['./create-room.component.css']
 })
-export class CreatePassagewayComponent implements OnInit {
+export class CreateRoomComponent implements OnInit {
 
-  service: PassagewayService = inject(PassagewayService);
+  service: RoomService = inject(RoomService);
   b_service: BuildingService = inject(BuildingService);
   f_service: FloorService = inject(FloorService);
 
   buildingsCodes: string[] = [];
   floorsCode: string[] = [];
 
-  passagewayForm!: FormGroup;
+  roomForm!: FormGroup;
 
   ngOnInit(): void {
-    this.passagewayForm = new FormGroup({
-      code1: new FormControl('', [Validators.required]),
-      code2: new FormControl('', [Validators.required]),
+    this.roomForm = new FormGroup({
+      floorCode: new FormControl('', [Validators.required]),
+      designation: new FormControl('', [Validators.required]),
+      name: new FormControl('', [Validators.required]),
     });
   }
 
@@ -42,17 +43,21 @@ export class CreatePassagewayComponent implements OnInit {
   }
 
   public async submit() {
-    if (this.passagewayForm.valid) {
-      await this.service.createPassageway(this.code1?.value, this.code2?.value);
+    if (this.roomForm.valid) {
+      await this.service.createRoom(this.floorCode?.value, this.designation?.value, this.name?.value);
     }
   }
 
-  get code1() {
-    return this.passagewayForm.get('code1');
+  get floorCode() {
+    return this.roomForm.get('floorCode');
   }
 
-  get code2() {
-    return this.passagewayForm.get('code2');
+  get designation() {
+    return this.roomForm.get('designation');
+  }
+
+  get name() {
+    return this.roomForm.get('name');
   }
 
 }

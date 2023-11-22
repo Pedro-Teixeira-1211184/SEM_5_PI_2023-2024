@@ -30,4 +30,18 @@ export class RoomService {
       console.log(e);
     }
   }
+
+  public async createRoom(floorCode: string, designation: string, name: string) {
+    const response = await fetch(Constants.API_ROOM_CREATE_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        floorCode: floorCode,
+        designation: designation,
+        name: name
+      })
+      })
+    };
 }

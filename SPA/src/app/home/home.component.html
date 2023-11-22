@@ -24,6 +24,7 @@
   <a (click)="editPassagewayForm()">Edit passageway</a>
   <a (click)="floorsWithPassagewayForm()">List floors of a building with passageways</a>
   <a (click)="buildingsByFloorRangeForm()">List buildings with a floor range</a>
+  <a (click)="createRoomForm()">Create a room</a>
   <button class="logout bottom-logout">
     <img src="../../assets/_images/logout_icon.png" alt="Logout">
     <a (click)="logout()">Logout</a>
@@ -91,6 +92,9 @@
 </div>
 <div *ngIf="buildingsByFloorRange" id="content">
   <app-buildings-by-floor-range></app-buildings-by-floor-range>
+</div>
+<div *ngIf="createRoom" id="content">
+  <app-create-room></app-create-room>
 </div>
 </body>
 </html>

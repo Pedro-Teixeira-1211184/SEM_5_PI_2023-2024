@@ -56,7 +56,7 @@ export class FloorService {
        }
     }
 
-  public async getFloorsByBuildingCodeForPassageway(buildingCode: string): Promise<IFloorDTO[]> {
+  /*public async getFloorsByBuildingCodeForPassageway(buildingCode: string): Promise<IFloorDTO[]> {
      const response =  await fetch(Constants.API_FLOOR_GET_BY_BUILDING_CODE_URL + buildingCode, {
       method: 'GET',
       headers: {
@@ -70,7 +70,7 @@ export class FloorService {
       return [];
     }
     return await response.json();
-  }
+  }*/
 
 
     private async getResponse(hasDescription: boolean, buildingCode: string, number: number, description: string) {
