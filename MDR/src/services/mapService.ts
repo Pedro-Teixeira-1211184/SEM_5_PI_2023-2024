@@ -15,6 +15,7 @@ import IPlantDTO from '../dto/IPlantDTO';
 //import { http } from 'winston';
 import IPathDTO from '../dto/IPathDTO';
 import IPathResultDTO from '../dto/IPathResultDTO';
+import { forEach } from 'lodash';
 const http = require('http');
 
 
@@ -142,52 +143,54 @@ export default class MapService implements IMapService {
     
 
 
-    public async turnToPlant(mapDTO: IMapDTO): Promise<IPlantDTO> {
-        try{
-            const plantDTO: IPlantDTO = {
-                floorCode: `${mapDTO.buildingCode}-${mapDTO.floorNumber}`,
-                width: mapDTO.size.width,
-                length: mapDTO.size.length,
-                map: mapDTO.map.map((row) => [...row]), // Create a deep copy of the original map
-                passageways: mapDTO.map.map(() => Array(mapDTO.size.width).fill(0)),
-                elevator: mapDTO.map.map(() => Array(mapDTO.size.width).fill(0)),
-                rooms: mapDTO.map.map(() => Array(mapDTO.size.width).fill(0)),
-              };
-            
-              // Update the map with room information
-              mapDTO.rooms.forEach((room) => {
-                for (let x = room.dimensions.top.x; x <= room.dimensions.bottom.x; x++) {
-                  for (let y = room.dimensions.top.y; y <= room.dimensions.bottom.y; y++) {
-                    plantDTO.map[y][x] = 5; // Walls
-                  }
-                }
-                const doorX = room.door.coordinates.x;
-                const doorY = room.door.coordinates.y;
-                plantDTO.map[doorY][doorX] = 3; // Door
-                plantDTO.rooms[doorY][doorX] = 3; // Room identifier
-              });
-            
-              // Update the map with passageway information
-              mapDTO.passageways.forEach((passageway) => {
-                const x = passageway.localization.coordinates.x;
-                const y = passageway.localization.coordinates.y;
-                plantDTO.map[y][x] = 4; // Passageway
-                plantDTO.passageways[y][x] = 4; // Passageway identifier
-              });
-            
-              // Update the map with elevator information
-              mapDTO.elevator.forEach((elevator) => {
-                const x = elevator.localization.coordinates.x;
-                const y = elevator.localization.coordinates.y;
-                plantDTO.map[y][x] = 2; // Elevator
-                plantDTO.elevator[y][x] = 2; // Elevator identifier
-              });
-            
-              return plantDTO;
-            } catch (e) {
-              throw e;
+    public async  turnToPlant(mapDTO: IMapDTO): Promise<IPlantDTO> {
+        try {
+        const plantDTO: IPlantDTO = {
+            floorCode: `${mapDTO.buildingCode}-${mapDTO.floorNumber}`,
+            width: mapDTO.size.width,
+            length: mapDTO.size.length,
+            map: mapDTO.map.map((row) => [...row]),
+        };
+
+        //elevators = 2
+        forEach(mapDTO.elevator, (elevator) => {
+            plantDTO.map[elevator.localization.coordinates.x][elevator.localization.coordinates.y] = 2;
         }
+        );
+
+        //doors = 3
+        forEach(mapDTO.rooms, (room) => {
+            plantDTO.map[room.door.coordinates.x][room.door.coordinates.y] = 3;
+        }
+        );
+
+        //passageways = 4
+        forEach(mapDTO.passageways, (passageway) => {
+            plantDTO.map[passageway.localization.coordinates.x][passageway.localization.coordinates.y] = 4;
+        }
+        );
+
+        //walls = 1
+        forEach(mapDTO.rooms, (room) => {
+            plantDTO.map[room.dimensions.top.x][room.dimensions.top.y] = 1;
+            plantDTO.map[room.dimensions.bottom.x][room.dimensions.bottom.y] = 1;
+            for (let y=0, x=room.dimensions.top.x; y<room.dimensions.bottom.y; y++) {
+                plantDTO.map[x][y] = 1;
+            }
+            for(let x=room.dimensions.top.x, y=room.dimensions.top.y; x<room.dimensions.bottom.x; x++) {
+                plantDTO.map[x][y] = 1;
+            }
+            for(let y=room.dimensions.bottom.y, x=room.dimensions.bottom.x; y>room.dimensions.top.y; y--) {
+                plantDTO.map[x][y] = 1;
+            }
+        }
+        );
+
+        return plantDTO;
+    } catch (e) {
+        throw e;
     }
+}
 
 
     public async pathBetweenFloors(pathDTO: IPathDTO): Promise<IPathResultDTO | Result<IPathResultDTO>> {

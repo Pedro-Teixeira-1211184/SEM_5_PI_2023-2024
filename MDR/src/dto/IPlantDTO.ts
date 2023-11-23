@@ -3,7 +3,4 @@ export default interface IPlantDTO {
     width: number;
     length: number;
     map: number[][];
-    passageways: number[][];
-    elevator: number[][];
-    rooms: number[][];
 }
