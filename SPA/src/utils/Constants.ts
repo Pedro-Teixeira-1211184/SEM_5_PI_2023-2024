@@ -2,6 +2,7 @@ export default class Constants {
     // user authentication
     public static readonly API_BASE_URL = 'http://localhost:5050/';
     public static readonly API_AUTH_LOGIN_URL = Constants.API_BASE_URL + 'api/auth/signin';
+    public static readonly API_AUTH_SIGNUP_URL = Constants.API_BASE_URL + 'api/auth/signup';
     public static readonly API_AUTH_LOGOUT_URL = Constants.API_BASE_URL + 'api/auth/logout';
     public static readonly API_AUTH_AUTHENTICATED_URL = Constants.API_BASE_URL + 'api/auth/authenticated';
 
@@ -50,10 +51,13 @@ export default class Constants {
     public static readonly API_ROOM_GET_BY_FLOOR_CODE_URL = Constants.API_BASE_URL + 'rooms/';
     public static readonly API_ROOM_CREATE_URL = Constants.API_BASE_URL + 'rooms';
 
+    //roles
     public static readonly CAMPUS_MANAGER_ROLE = 'Campus manager';
     public static readonly ADMIN_ROLE = 'Admin';
     public static readonly FLEET_MANAGER_ROLE = 'Fleet manager';
     public static readonly TASK_MANAGER_ROLE = 'Task manager';
+    public static readonly USER_ROLE = 'User';
+    public static readonly API_ROLES_GET_ALL_URL = Constants.API_BASE_URL + 'api/roles';
 
 
 }

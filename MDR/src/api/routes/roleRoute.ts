@@ -1,8 +1,8 @@
-import { Router } from 'express';
-import { celebrate, Joi } from 'celebrate';
+import {Router} from 'express';
+import {celebrate, Joi} from 'celebrate';
 
-import { Container } from 'typedi';
-import IRoleController from '../../controllers/IControllers/IRoleController'; 
+import {Container} from 'typedi';
+import IRoleController from '../../controllers/IControllers/IRoleController';
 
 import config from "../../../config";
 
@@ -19,7 +19,7 @@ export default (app: Router) => {
         name: Joi.string().required()
       })
     }),
-    (req, res, next) => ctrl.createRole(req, res, next) );
+    (req, res, next) => ctrl.createRole(req, res, next));
 
   route.put('',
     celebrate({
@@ -28,5 +28,8 @@ export default (app: Router) => {
         name: Joi.string().required()
       }),
     }),
-    (req, res, next) => ctrl.updateRole(req, res, next) );
+    (req, res, next) => ctrl.updateRole(req, res, next));
+
+  route.get('',
+    (req, res, next) => ctrl.getAllRoles(req, res, next));
 };

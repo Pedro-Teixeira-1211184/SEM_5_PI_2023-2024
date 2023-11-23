@@ -80,4 +80,16 @@ export default class RoleRepo implements IRoleRepo {
       throw err;
     }
   }
+
+  public async findAll(): Promise<Role[]> {
+    try {
+      return this.roleSchema.find().then((roleRecords) => {
+        return roleRecords.map((roleRecord) => {
+          return RoleMap.toDomain(roleRecord);
+        });
+      });
+    } catch (err) {
+      throw err;
+    }
+  }
 }

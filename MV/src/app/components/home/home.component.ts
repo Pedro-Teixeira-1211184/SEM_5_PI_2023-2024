@@ -56,6 +56,7 @@ export class HomeComponent implements OnInit {
       }
     }
     console.log(this.option);
+    window.location.href = "/view"
   }
 
   getFloorsOfBuilding() {

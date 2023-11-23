@@ -29,6 +29,9 @@ import {
 } from './component/building/buildings-by-floor-range/buildings-by-floor-range.component';
 import {CreateRoomComponent} from './component/room/create-room/create-room.component';
 import {PlaneamentoComponent} from './component/planeamento/planeamento.component';
+import { SignUpComponent } from './component/user/sign-up/sign-up.component';
+import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
+import {MatButtonModule} from "@angular/material/button";
 
 
 @NgModule({
@@ -55,13 +58,16 @@ import {PlaneamentoComponent} from './component/planeamento/planeamento.componen
     FloorsWithPassagewayComponent,
     BuildingsByFloorRangeComponent,
     CreateRoomComponent,
-    PlaneamentoComponent
+    PlaneamentoComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

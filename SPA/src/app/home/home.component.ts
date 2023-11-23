@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
   isAdministrator: boolean = false;
   isFleetManager: boolean = false;
   isTaskManager: boolean = false;
-  
+
   home_body: boolean = true;
   createBuilding: boolean = false;
   editBuilding: boolean = false;
@@ -33,12 +33,11 @@ export class HomeComponent implements OnInit {
   listPassagewaysBetween2Buildings: boolean = false;
   editPassageway: boolean = false;
   floorsWithPassageway: boolean = false;
-  buildingsByFloorRange: boolean = false; 
+  buildingsByFloorRange: boolean = false;
   getMap: boolean = false;
   pathBetweenFloors: boolean = false;
   createRoom: boolean = false;
-  
-
+  signUp: boolean = false;
 
 
   constructor(auth: AuthService) {
@@ -141,6 +140,7 @@ export class HomeComponent implements OnInit {
     this.getMap = false;
     this.pathBetweenFloors = false;
     this.createRoom = false;
+    this.signUp = false;
   }
 
   floorsByBuildingCodeList() {
@@ -164,6 +164,7 @@ export class HomeComponent implements OnInit {
     this.getMap = false;
     this.pathBetweenFloors = false;
     this.createRoom = false;
+    this.signUp = false;
   }
 
   buildingCreateForm() {
@@ -187,6 +188,7 @@ export class HomeComponent implements OnInit {
     this.getMap = false;
     this.pathBetweenFloors = false;
     this.createRoom = false;
+    this.signUp = false;
   }
 
   floorCreateForm() {
@@ -210,6 +212,7 @@ export class HomeComponent implements OnInit {
     this.getMap = false;
     this.pathBetweenFloors = false;
     this.createRoom = false;
+    this.signUp = false;
   }
 
   buildingEditForm() {
@@ -225,7 +228,7 @@ export class HomeComponent implements OnInit {
     this.patchMap = false;
     this.editFloor = false;
     this.listPassagewaysBetween2Buildings = false;
-    this.createElevator = false; 
+    this.createElevator = false;
     this.editPassageway = false;
     this.createRobot = false;
     this.floorsWithPassageway = false;
@@ -233,6 +236,7 @@ export class HomeComponent implements OnInit {
     this.getMap = false;
     this.pathBetweenFloors = false;
     this.createRoom = false;
+    this.signUp = false;
   }
 
   buildingList() {
@@ -256,6 +260,7 @@ export class HomeComponent implements OnInit {
     this.getMap = false;
     this.pathBetweenFloors = false;
     this.createRoom = false;
+    this.signUp = false;
   }
 
   deactivateRobotForm() {
@@ -279,6 +284,7 @@ export class HomeComponent implements OnInit {
     this.getMap = false;
     this.pathBetweenFloors = false;
     this.createRoom = false;
+    this.signUp = false;
   }
 
   createRobotTypeForm() {
@@ -302,6 +308,7 @@ export class HomeComponent implements OnInit {
     this.getMap = false;
     this.pathBetweenFloors = false;
     this.createRoom = false;
+    this.signUp = false;
   }
 
   passagewayCreateForm() {
@@ -325,6 +332,7 @@ export class HomeComponent implements OnInit {
     this.getMap = false;
     this.pathBetweenFloors = false;
     this.createRoom = false;
+    this.signUp = false;
   }
 
   patchMapForm() {
@@ -348,8 +356,9 @@ export class HomeComponent implements OnInit {
     this.getMap = false;
     this.pathBetweenFloors = false;
     this.createRoom = false;
+    this.signUp = false;
   }
-  
+
 
   editFloorForm() {
     this.home_body = false;
@@ -372,6 +381,7 @@ export class HomeComponent implements OnInit {
     this.getMap = false;
     this.pathBetweenFloors = false;
     this.createRoom = false;
+    this.signUp = false;
   }
 
   createElevatorForm() {
@@ -395,6 +405,7 @@ export class HomeComponent implements OnInit {
     this.getMap = false;
     this.pathBetweenFloors = false;
     this.createRoom = false;
+    this.signUp = false;
   }
 
   listPassagewaysBetween2BuildingsForm() {
@@ -418,6 +429,7 @@ export class HomeComponent implements OnInit {
     this.getMap = false;
     this.pathBetweenFloors = false;
     this.createRoom = false;
+    this.signUp = false;
   }
 
   createRobotForm() {
@@ -441,6 +453,7 @@ export class HomeComponent implements OnInit {
     this.getMap = false;
     this.pathBetweenFloors = false;
     this.createRoom = false;
+    this.signUp = false;
   }
 
   editPassagewayForm() {
@@ -460,99 +473,130 @@ export class HomeComponent implements OnInit {
     this.createRobot = false;
     this.editPassageway = true;
     this.floorsWithPassageway = false;
-    this.buildingsByFloorRange = false;	
+    this.buildingsByFloorRange = false;
     this.getMap = false;
     this.pathBetweenFloors = false;
     this.createRoom = false;
+    this.signUp = false;
   }
 
   floorsWithPassagewayForm() {
-      this.home_body = false;
-      this.createBuilding = false;
-      this.createFloor = false;
-      this.editBuilding = false;
-      this.listBuilding = false;
-      this.deactivateRobot = false;
-      this.floorsByBuildingCode = false;
-      this.createRobotType = false;
-      this.createPassageway = false;
-      this.patchMap = false;
-      this.editFloor = false;
-      this.listPassagewaysBetween2Buildings = false;
-      this.createElevator = false;
-      this.createRobot = false;
-      this.editPassageway = false;
-      this.floorsWithPassageway = true;
-      this.buildingsByFloorRange = false;
-      this.getMap = false;
-      this.pathBetweenFloors = false;
-      this.createRoom = false;
-    }
+    this.home_body = false;
+    this.createBuilding = false;
+    this.createFloor = false;
+    this.editBuilding = false;
+    this.listBuilding = false;
+    this.deactivateRobot = false;
+    this.floorsByBuildingCode = false;
+    this.createRobotType = false;
+    this.createPassageway = false;
+    this.patchMap = false;
+    this.editFloor = false;
+    this.listPassagewaysBetween2Buildings = false;
+    this.createElevator = false;
+    this.createRobot = false;
+    this.editPassageway = false;
+    this.floorsWithPassageway = true;
+    this.buildingsByFloorRange = false;
+    this.getMap = false;
+    this.pathBetweenFloors = false;
+    this.createRoom = false;
+    this.signUp = false;
+  }
 
-    buildingsByFloorRangeForm() {
-      this.home_body = false;
-      this.createBuilding = false;
-      this.createFloor = false;
-      this.editBuilding = false;
-      this.listBuilding = false;
-      this.deactivateRobot = false;
-      this.floorsByBuildingCode = false;
-      this.createRobotType = false;
-      this.createPassageway = false;
-      this.patchMap = false;
-      this.editFloor = false;
-      this.listPassagewaysBetween2Buildings = false;
-      this.createElevator = false;
-      this.createRobot = false;
-      this.editPassageway = false;
-      this.floorsWithPassageway = false;
-      this.buildingsByFloorRange = true;
-      this.getMap = false;
-      this.pathBetweenFloors = false;
-      this.createRoom = false;
-    }
+  buildingsByFloorRangeForm() {
+    this.home_body = false;
+    this.createBuilding = false;
+    this.createFloor = false;
+    this.editBuilding = false;
+    this.listBuilding = false;
+    this.deactivateRobot = false;
+    this.floorsByBuildingCode = false;
+    this.createRobotType = false;
+    this.createPassageway = false;
+    this.patchMap = false;
+    this.editFloor = false;
+    this.listPassagewaysBetween2Buildings = false;
+    this.createElevator = false;
+    this.createRobot = false;
+    this.editPassageway = false;
+    this.floorsWithPassageway = false;
+    this.buildingsByFloorRange = true;
+    this.getMap = false;
+    this.pathBetweenFloors = false;
+    this.createRoom = false;
+    this.signUp = false;
+  }
 
-    createRoomForm() {
-      this.home_body = false;
-      this.createBuilding = false;
-      this.createFloor = false;
-      this.editBuilding = false;
-      this.listBuilding = false;
-      this.deactivateRobot = false;
-      this.floorsByBuildingCode = false;
-      this.createRobotType = false;
-      this.createPassageway = false;
-      this.patchMap = false;
-      this.editFloor = false;
-      this.listPassagewaysBetween2Buildings = false;
-      this.createElevator = false;
-      this.createRobot = false;
-      this.editPassageway = false;
-      this.floorsWithPassageway = false;
-      this.buildingsByFloorRange = false;
-      this.createRoom = true;
-    }
-  
+  createRoomForm() {
+    this.home_body = false;
+    this.createBuilding = false;
+    this.createFloor = false;
+    this.editBuilding = false;
+    this.listBuilding = false;
+    this.deactivateRobot = false;
+    this.floorsByBuildingCode = false;
+    this.createRobotType = false;
+    this.createPassageway = false;
+    this.patchMap = false;
+    this.editFloor = false;
+    this.listPassagewaysBetween2Buildings = false;
+    this.createElevator = false;
+    this.createRobot = false;
+    this.editPassageway = false;
+    this.floorsWithPassageway = false;
+    this.buildingsByFloorRange = false;
+    this.createRoom = true;
+    this.getMap = false;
+    this.signUp = false;
+  }
 
-    planeamentoForm() {
-      this.home_body = false;
-      this.createBuilding = false;
-      this.createFloor = false;
-      this.editBuilding = false;
-      this.listBuilding = false;
-      this.deactivateRobot = false;
-      this.floorsByBuildingCode = false;
-      this.createRobotType = false;
-      this.createPassageway = false;
-      this.patchMap = false;
-      this.editFloor = false;
-      this.listPassagewaysBetween2Buildings = false;
-      this.createElevator = false;
-      this.createRobot = false;
-      this.editPassageway = false;
-      this.floorsWithPassageway = false;
-      this.buildingsByFloorRange = false;
-      this.getMap = false;
-      this.pathBetweenFloors = true;
-    }
+
+  planeamentoForm() {
+    this.home_body = false;
+    this.createBuilding = false;
+    this.createFloor = false;
+    this.editBuilding = false;
+    this.listBuilding = false;
+    this.deactivateRobot = false;
+    this.floorsByBuildingCode = false;
+    this.createRobotType = false;
+    this.createPassageway = false;
+    this.patchMap = false;
+    this.editFloor = false;
+    this.listPassagewaysBetween2Buildings = false;
+    this.createElevator = false;
+    this.createRobot = false;
+    this.editPassageway = false;
+    this.floorsWithPassageway = false;
+    this.buildingsByFloorRange = false;
+    this.getMap = false;
+    this.pathBetweenFloors = true;
+    this.createRoom = false;
+    this.signUp = false;
+  }
+
+  signUpForm() {
+    this.home_body = false;
+    this.createBuilding = false;
+    this.createFloor = false;
+    this.editBuilding = false;
+    this.listBuilding = false;
+    this.deactivateRobot = false;
+    this.floorsByBuildingCode = false;
+    this.createRobotType = false;
+    this.createPassageway = false;
+    this.patchMap = false;
+    this.editFloor = false;
+    this.listPassagewaysBetween2Buildings = false;
+    this.createElevator = false;
+    this.createRobot = false;
+    this.editPassageway = false;
+    this.floorsWithPassageway = false;
+    this.buildingsByFloorRange = false;
+    this.getMap = false;
+    this.pathBetweenFloors = false;
+    this.createRoom = false;
+    this.signUp = true;
+  }
 }
