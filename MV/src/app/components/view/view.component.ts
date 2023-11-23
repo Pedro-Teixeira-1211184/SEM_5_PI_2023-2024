@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
-import { AfterViewInit, ElementRef, Input, ViewChild } from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
 import * as THREE from "three";
 
-
 @Component({
-  selector: 'app-cube',
-  templateUrl: './cube.component.html',
-  styleUrls: ['./cube.component.scss']
+  selector: 'app-view',
+  templateUrl: './view.component.html',
+  styleUrls: ['./view.component.scss']
 })
-export class CubeComponent implements AfterViewInit {
+export class ViewComponent implements AfterViewInit{
+
+  title = 'View';
 
   ngAfterViewInit(): void {
     this.createScene();
@@ -37,7 +37,7 @@ export class CubeComponent implements AfterViewInit {
   private loader = new THREE.TextureLoader();
   private geometry = new THREE.BoxGeometry(1, 1, 1);
   private material = new THREE.MeshBasicMaterial({map:
-      this.loader.load(this.texture)});
+        this.loader.load(this.texture)});
   private cube: THREE.Mesh = new THREE.Mesh(this.geometry, this.material);
   private renderer!: THREE.WebGLRenderer;
   private scene: THREE.Scene = new THREE.Scene();
@@ -61,7 +61,7 @@ export class CubeComponent implements AfterViewInit {
 //*Camera
     let aspectRatio = this.getAspectRatio();
     this.camera = new THREE.PerspectiveCamera(this.fieldOfView, aspectRatio,
-      this.nearClippingPane, this.farClippingPane);
+        this.nearClippingPane, this.farClippingPane);
     this.camera.position.z = this.cameraZ;
 //* Renderer
 // Use canvas element in template

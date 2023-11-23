@@ -1,0 +1,21 @@
+<form class="form" id="form1" (ngSubmit)="submit()" [formGroup]="form" #formDir="ngForm">
+  <h1>Load a floor view</h1>
+  <h2>Choose one floor</h2>
+  <div class="input-container">
+    <label for="code1">Building</label>
+    <select id="code1" formControlName="buildingCode" (change)="getFloorsOfBuilding()" required>
+      <option *ngFor="let code of buildings" [value]="code">{{ code }}</option>
+    </select>
+    <div *ngIf="buildingCode?.invalid && formDir.submitted" class="validation-error">
+      <p *ngIf="buildingCode?.errors?.['required']">Code is required!</p>
+    </div>
+    <label for="code2">Floor</label>
+    <select id="code2" formControlName="floorCode" required>
+      <option *ngFor="let code of floors" [value]="code">{{ code }}</option>
+    </select>
+    <div *ngIf="floorCode?.invalid && formDir.submitted" class="validation-error">
+      <p *ngIf="floorCode?.errors?.['required']">Floor is required!</p>
+    </div>
+    <button type="submit">Load</button>
+  </div>
+</form>

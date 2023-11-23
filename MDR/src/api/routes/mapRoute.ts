@@ -70,6 +70,11 @@ export default () => {
   )
   ;
 
+  route.get('/', (req, res, next) => {
+    console.log("Getting all Maps!");
+    ctrl.getAll(req, res, next);
+  });
+
   route.get('/:buildingCode/:floorNumber', (req, res, next) => {
     console.log("Loading a Map!");
     ctrl.loadMap(req, res, next);

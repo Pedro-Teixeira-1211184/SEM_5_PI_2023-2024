@@ -22,7 +22,6 @@ export default class MapController implements IMapController /* TODO: extends ..
 
   public async createMap(req: Request, res: Response, next: NextFunction) {
     try {
-console.log(req.body);
       const mapOrError = await this.mapServiceInstance.createMap(req.body as IMapDTO) as Result<IMapDTO>;
 
       if (mapOrError.isFailure) {
@@ -54,7 +53,7 @@ console.log(req.body);
     }
   }
 
-  public async listMaps (req: Request, res: Response, next: NextFunction) {
+  public async listMaps(req: Request, res: Response, next: NextFunction) {
     try {
       const mapOrError = await this.mapServiceInstance.listMaps() as Result<IPlantDTO[]>;
 
@@ -69,23 +68,36 @@ console.log(req.body);
     }
   }
 
-  public async pathBetweenFloors (req: Request, res: Response, next: NextFunction) {
-  const origin = String(req.params.origin);
-  const destination = String(req.params.destination);
-  const path: IPathDTO = {origin, destination};
+  public async pathBetweenFloors(req: Request, res: Response, next: NextFunction) {
+    const origin = String(req.params.origin);
+    const destination = String(req.params.destination);
+    const path: IPathDTO = {origin, destination};
 
-  try {
-    const pathOrError = await this.mapServiceInstance.pathBetweenFloors(path) as Result<IPathResultDTO>;
+    try {
+      const pathOrError = await this.mapServiceInstance.pathBetweenFloors(path) as Result<IPathResultDTO>;
 
-    if (pathOrError.isFailure) {
-      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(pathOrError.errorValue());
+      if (pathOrError.isFailure) {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(pathOrError.errorValue());
+      }
+
+      const pathDTO = pathOrError.getValue();
+      return res.json(pathDTO).status(StatusCodes.ACCEPTED);
+    } catch (e) {
+      return next(e);
     }
-
-    const pathDTO = pathOrError.getValue();
-    return res.json(pathDTO).status(StatusCodes.ACCEPTED);
-  } catch (e) { 
-    return next(e); 
   }
-}
+
+  public async getAll(req: Request, res: Response, next: NextFunction) {
+    try {
+      const maps = await this.mapServiceInstance.getAll() as Result<IMapDTO[]>;
+      if (maps.isFailure) {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(maps.errorValue());
+      }
+      const mapDTO = maps.getValue();
+      return res.json(mapDTO).status(StatusCodes.ACCEPTED);
+    } catch (e) {
+      return next(e);
+    }
+  }
 
 }

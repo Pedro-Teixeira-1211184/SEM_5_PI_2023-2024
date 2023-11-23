@@ -10,4 +10,5 @@ export default interface IMapService {
   listMaps(): Promise<Result<IPlantDTO[]>>;
   pathBetweenFloors(pathDTO: IPathDTO): Promise<IPathResultDTO | Result<IPathResultDTO>>;
   turnToPlant(mapDTO: IMapDTO): Promise<IPlantDTO>;
+  getAll(): Promise<Result<IMapDTO[]>>
 }
