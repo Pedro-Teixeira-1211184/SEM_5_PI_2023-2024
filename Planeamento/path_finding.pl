@@ -27,7 +27,7 @@ dfs2(Act,Dest,LA,Cam):-
 
 % --------------------------------------------------------------------
 
-all_dfs(Orig,Dest,LCam):-findav ll(Cam,dfs(Orig,Dest,Cam),LCam).
+all_dfs(Orig,Dest,LCam):-findall(Cam,dfs(Orig,Dest,Cam),LCam).
 
 
 better_dfs(Orig,Dest,Cam):-all_dfs(Orig,Dest,LCam), shortlist(LCam,Cam,_).
