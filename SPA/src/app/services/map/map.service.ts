@@ -49,17 +49,16 @@ export class MapService {
     }
   }
 
-  public async loadMap(buildingCode: string, floorNumber: number) {
+  public async loadMap(buildingCode: string, floorNumber: number): Promise <IPlantDTO> {
       const response = await fetch(Constants.API_MAP_GET_URL + buildingCode + '/' + floorNumber, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
         }
       });
-      if (response.status == 200) {
+      if (response.status == 500) {
         alert(await response.json());
       }
-      console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
       return await response.json();
     }
 

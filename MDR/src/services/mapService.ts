@@ -112,7 +112,7 @@ export default class MapService implements IMapService {
     public async  turnToPlant(mapDTO: IMapDTO): Promise<IPlantDTO> {
         try {
         const plantDTO: IPlantDTO = {
-            floorCode: `${mapDTO.buildingCode}-${mapDTO.floorNumber}`,
+            floorCode: `${mapDTO.buildingCode}${mapDTO.floorNumber}`,
             width: mapDTO.size.width,
             length: mapDTO.size.length,
             map: mapDTO.map.map((row) => [...row]),
@@ -151,7 +151,6 @@ export default class MapService implements IMapService {
             }
         }
         );
-
         return plantDTO;
     } catch (e) {
         throw e;

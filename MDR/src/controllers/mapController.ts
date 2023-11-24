@@ -40,13 +40,12 @@ export default class MapController implements IMapController /* TODO: extends ..
     const floorNumber = Number(req.params.floorNumber);
     try {
       const plantOrError = await this.mapServiceInstance.loadMap(buildingCode, floorNumber) as Result<IPlantDTO>;
-
       if (plantOrError.isFailure) {
         return Result.fail<IPlantDTO>(plantOrError.errorValue());
       }
 
       const plantDTO = plantOrError.getValue();
-      return Result.ok<IPlantDTO>(plantDTO);
+      return res.json(plantDTO).status(StatusCodes.ACCEPTED);
     } catch (e) {
       return next(e);
     }

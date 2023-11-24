@@ -60,7 +60,6 @@ export class PassagewayService {
     if (response.status == 500) {
       alert(await response.json())
     }
-
     return await response.json();
   }
 

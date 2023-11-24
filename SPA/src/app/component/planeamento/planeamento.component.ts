@@ -46,10 +46,7 @@ export class PlaneamentoComponent {
       alert ('Please choose a floor');
       return;
     }
-    console.log(this.buildingCode1?.value);
-    console.log(this.floorNumber1?.value);
     this.originPlant = await this.mapservice.loadMap(this.buildingCode1?.value, this.floorNumber1?.value) as IPlantDTO;
-    console.log(this.originPlant.floorCode);
   }
 
   public async loadMapDestination(){
