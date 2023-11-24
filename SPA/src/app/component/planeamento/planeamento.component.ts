@@ -1,9 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import { MapService } from 'src/app/services/map/map.service';
+import { MapService } from '../../services/map/map.service';
 import IFloorDTO from '../../dto/IFloorDTO';
 import { FloorService } from 'src/app/services/floor/floor.service';
-
+import IPlantDTO from '../../dto/IPlantDTO';
 
 @Component({
   selector: 'app-planeamento',
@@ -17,8 +17,12 @@ export class PlaneamentoComponent {
   floors: IFloorDTO[] = [];
   origin: string = '';
   destination: string = '';
+  originPlant: IPlantDTO = {} as IPlantDTO;
+  destinationPlant: IPlantDTO = {} as IPlantDTO;
+
 
   constructor() {
+
   }
 
   public async getFloorsByBuildingCode(){
@@ -42,7 +46,10 @@ export class PlaneamentoComponent {
       alert ('Please choose a floor');
       return;
     }
-    this.mapservice.loadMap(this.buildingCode1?.value, this.floorNumber1?.value);
+    console.log(this.buildingCode1?.value);
+    console.log(this.floorNumber1?.value);
+    this.originPlant = await this.mapservice.loadMap(this.buildingCode1?.value, this.floorNumber1?.value) as IPlantDTO;
+    console.log(this.originPlant.floorCode);
   }
 
   public async loadMapDestination(){
@@ -50,7 +57,9 @@ export class PlaneamentoComponent {
       alert ('Please choose a floor');
       return;
     }
-    this.mapservice.loadMap(this.buildingCode2?.value, this.floorNumber2?.value);
+    console.log(this.buildingCode2?.value);
+    console.log(this.floorNumber2?.value);
+    this.destinationPlant = await this.mapservice.loadMap(this.buildingCode2?.value, this.floorNumber2?.value);
   }
 
   public async chooseOrigin(){
@@ -75,6 +84,9 @@ export class PlaneamentoComponent {
     this.mapservice.pathBetweenFloors(this.origin, this.destination);
   }
 
+  public async listMaps(){
+    this.mapservice.listMaps();
+  }
 
   ngOnInit(): void {
     this.planeamentoForm = new FormGroup({

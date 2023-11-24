@@ -6,6 +6,7 @@ import Constants from "../../../utils/Constants";
 import IMapRoomDTO from "../../dto/IMapRoomDTO";
 import IMapPassagewayDTO from "../../dto/IMapPassagewayDTO";
 import IMapElevatorDTO from "../../dto/IMapElevatorDTO";
+import IPlantDTO from "../../dto/IPlantDTO";
 
 @Injectable({
   providedIn: 'root'
@@ -49,28 +50,23 @@ export class MapService {
   }
 
   public async loadMap(buildingCode: string, floorNumber: number) {
-    try {
-      const response = await fetch(Constants.API_MAP_GET_URL + '/' + buildingCode + '/' + floorNumber, {
+      const response = await fetch(Constants.API_MAP_GET_URL + buildingCode + '/' + floorNumber, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
         }
       });
-
-      if (response.status === 200) {
-        return await response.json();
-      } else {
-        alert(await response.text());
+      if (response.status == 200) {
+        alert(await response.json());
       }
-    } catch (e) {
-      console.log(e);
+      console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+      return await response.json();
     }
-  }
 
 
   public async pathBetweenFloors(origin: string, destination: string) {
     try {
-      const response = await fetch(Constants.API_PATH_BETWEEN_FLOORS_URL + '/' + origin + '/' + destination, {
+      const response = await fetch(Constants.API_PATH_BETWEEN_FLOORS_URL + origin + destination, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
@@ -86,4 +82,25 @@ export class MapService {
       console.log(e);
     }
   }
+
+  public async listMaps() {
+    try{
+      const response = await fetch(Constants.API_MAP_GET_ALL_URL, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.status === 200) {
+        return await response.json();
+      } else {
+        alert(await response.text());
+      }
+    }catch
+      (e) {
+      console.log(e);
+    }
+  }
+
 }

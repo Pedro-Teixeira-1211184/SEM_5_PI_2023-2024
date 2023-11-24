@@ -1,73 +1,83 @@
 <form class="planeamento-form" [formGroup]="planeamentoForm">
-    <h1>Get Path</h1>
+      <h1>Get Path</h1>
+      
+      <!-- Origin -->
+      <div class="input-container">
+        <label for="buildingCode1">Origin Building Code</label>
+        <input type="text" id="buildingCode1" formControlName="buildingCode1" placeholder="Enter Building code" required>
+        <div *ngIf="!buildingCode1?.value && planeamentoForm.get('buildingCode1')?.touched" class="validation-error">
+          <p>Building Code is required!</p>
+        </div>
+      </div>
     
-    <!-- Origin -->
-    <div class="input-container">
-      <label for="buildingCode1">Origin Building Code</label>
-      <input type="text" id="buildingCode1" formControlName="buildingCode1" placeholder="Enter Building code" required>
-      <div *ngIf="!buildingCode1?.value && planeamentoForm.get('buildingCode1')?.touched" class="validation-error">
-        <p>Building Code is required!</p>
+      <button type="button" (click)="getFloorsByBuildingCode()">Get Floors (Origin)</button>
+    
+      <div *ngIf="floors && floors.length > 0" class="floors-container">
+        <h2>Floors:</h2>
+        <ul>
+          <li *ngFor="let floor of floors">{{ floor | json }}</li>
+        </ul>
       </div>
-    </div>
-  
-    <button type="button" (click)="getFloorsByBuildingCode()">Get Floors (Origin)</button>
-  
-    <div *ngIf="floors && floors.length > 0" class="floors-container">
-      <h2>Floors:</h2>
-      <ul>
-        <li *ngFor="let floor of floors">{{ floor | json }}</li>
-      </ul>
-    </div>
-    <div *ngIf="floors && floors.length === 0" class="no-floors-container">
-      <p>No floors found</p>
-    </div>
-  
-    <div class="input-container">
-      <label for="floorNumber1">Choose Origin Floor Number</label>
-      <input type="number" id="floorNumber1" formControlName="floorNumber1" placeholder="Enter Floor number" required>
-    </div>
-  
-    <button type="button" (click)="loadMapOrigin()">Load Map (Origin)</button>
-  
-    <div class="input-container">
-      <label for="origin">Origin Coordinates (x,y)</label>
-      <input type="text" id="origin" formControlName="origin" placeholder="Enter Origin coordinates (x,y)" required>
-    </div>
-  
-    <!-- Destination -->
-    <div class="input-container">
-      <label for="buildingCode2">Destination Building Code</label>
-      <input type="text" id="buildingCode2" formControlName="buildingCode2" placeholder="Enter Building code" required>
-      <div *ngIf="!buildingCode2?.value && planeamentoForm.get('buildingCode2')?.touched" class="validation-error">
-        <p>Building Code is required!</p>
+      <div *ngIf="floors && floors.length === 0" class="no-floors-container">
+        <p>No floors found</p>
       </div>
-    </div>
-  
-    <button type="button" (click)="getFloorsByBuildingCode2()">Get Floors (Destination)</button>
-  
-    <div *ngIf="floors && floors.length > 0" class="floors-container">
-      <h2>Floors:</h2>
-      <ul>
-        <li *ngFor="let floor of floors">{{ floor | json }}</li>
-      </ul>
-    </div>
-    <div *ngIf="floors && floors.length === 0" class="no-floors-container">
-      <p>No floors found</p>
-    </div>
-  
-    <div class="input-container">
-      <label for="floorNumber2">Choose Destination Floor Number</label>
-      <input type="number" id="floorNumber2" formControlName="floorNumber2" placeholder="Enter Floor number" required>
-    </div>
-  
-    <button type="button" (click)="loadMapDestination()">Load Map (Destination)</button>
-  
-    <div class="input-container">
-      <label for="destination">Destination Coordinates (x,y)</label>
-      <input type="text" id="destination" formControlName="destination" placeholder="Enter Destination coordinates (x,y)" required>
-    </div>
-  
-    <!-- Calculate Path -->
-    <button type="button" (click)="definePath()">Calculate path</button>
-  </form>
-  
+    
+      <div class="input-container">
+        <label for="floorNumber1">Choose Origin Floor Number</label>
+        <input type="number" id="floorNumber1" formControlName="floorNumber1" placeholder="Enter Floor number" required>
+      </div>
+    
+      <button type="button" (click)="loadMapOrigin()">Load Map (Origin)</button>
+
+      <div *ngIf="originPlant" class="plant-info-container">
+        <h2>Origin Plant Information:</h2>
+        <p>{{ originPlant | json }}</p>
+      </div>
+    
+      <div class="input-container">
+        <label for="origin">Origin Coordinates (x,y)</label>
+        <input type="text" id="origin" formControlName="origin" placeholder="Enter Origin coordinates (x,y)" required>
+      </div>
+    
+      <!-- Destination -->
+      <div class="input-container">
+        <label for="buildingCode2">Destination Building Code</label>
+        <input type="text" id="buildingCode2" formControlName="buildingCode2" placeholder="Enter Building code" required>
+        <div *ngIf="!buildingCode2?.value && planeamentoForm.get('buildingCode2')?.touched" class="validation-error">
+          <p>Building Code is required!</p>
+        </div>
+      </div>
+    
+      <button type="button" (click)="getFloorsByBuildingCode2()">Get Floors (Destination)</button>
+    
+      <div *ngIf="floors && floors.length > 0" class="floors-container">
+        <h2>Floors:</h2>
+        <ul>
+          <li *ngFor="let floor of floors">{{ floor | json }}</li>
+        </ul>
+      </div>
+      <div *ngIf="floors && floors.length === 0" class="no-floors-container">
+        <p>No floors found</p>
+      </div>
+    
+      <div class="input-container">
+        <label for="floorNumber2">Choose Destination Floor Number</label>
+        <input type="number" id="floorNumber2" formControlName="floorNumber2" placeholder="Enter Floor number" required>
+      </div>
+    
+      <button type="button" (click)="loadMapDestination()">Load Map (Destination)</button>
+
+      <div *ngIf="destinationPlant" class="plant-info-container">
+        <h2>Destination Plant Information:</h2>
+        <p>{{ destinationPlant | json }}</p>
+      </div>
+    
+      <div class="input-container">
+        <label for="destination">Destination Coordinates (x,y)</label>
+        <input type="text" id="destination" formControlName="destination" placeholder="Enter Destination coordinates (x,y)" required>
+      </div>
+    
+      <!-- Calculate Path -->
+      <button type="button" (click)="definePath()">Calculate path</button>
+    </form>
+    

@@ -35,19 +35,18 @@ export default class MapController implements IMapController /* TODO: extends ..
     }
   }
 
-  public async loadMap(req: Request, res: Response, next: NextFunction) {
+  public async loadMap(req: Request, res: Response, next: NextFunction){
     const buildingCode = String(req.params.buildingCode);
     const floorNumber = Number(req.params.floorNumber);
     try {
-      const mapOrError = await this.mapServiceInstance.loadMap(buildingCode, floorNumber) as Result<IMapDTO>;
+      const plantOrError = await this.mapServiceInstance.loadMap(buildingCode, floorNumber) as Result<IPlantDTO>;
 
-      if (mapOrError.isFailure) {
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(mapOrError.errorValue());
+      if (plantOrError.isFailure) {
+        return Result.fail<IPlantDTO>(plantOrError.errorValue());
       }
 
-      const mapDTO = mapOrError.getValue();
-      const plant = await this.mapServiceInstance.turnToPlant(mapDTO);
-      return res.json(plant).status(StatusCodes.ACCEPTED);
+      const plantDTO = plantOrError.getValue();
+      return Result.ok<IPlantDTO>(plantDTO);
     } catch (e) {
       return next(e);
     }
@@ -61,8 +60,7 @@ export default class MapController implements IMapController /* TODO: extends ..
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(mapOrError.errorValue());
       }
 
-      const mapDTO = mapOrError.getValue();
-      return res.json(mapDTO).status(StatusCodes.ACCEPTED);
+      return res.json(mapOrError).status(StatusCodes.ACCEPTED);
     } catch (e) {
       return next(e);
     }
