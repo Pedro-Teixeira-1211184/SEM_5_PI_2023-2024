@@ -32,7 +32,7 @@ export default class ElevatorController implements IElevatorController /* TODO: 
       const elevatorOrError = await this.elevatorServiceInstance.createElevator(req.body as IElevatorDTO) as Result<IElevatorDTO>;
 
       if (elevatorOrError.isFailure) {
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json("Elevator already exists");
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json("Door already exists");
       }
 
       const elevatorDTO = elevatorOrError.getValue();

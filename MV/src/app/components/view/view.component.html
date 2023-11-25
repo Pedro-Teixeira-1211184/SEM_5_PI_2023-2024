@@ -1,1 +1,66 @@
+<title>{{title}}</title>
+<form *ngIf="isFormVisible" class="form" id="form1" (ngSubmit)="submit()" [formGroup]="form" #formDir="ngForm">
+  <h1>Load a floor view</h1>
+  <h2>Choose one floor</h2>
+  <div class="input-container">
+    <label for="code1">Building</label>
+    <select id="code1" formControlName="buildingCode" (change)="getFloorsOfBuilding()" required>
+      <option *ngFor="let code of buildings" [value]="code">{{ code }}</option>
+    </select>
+    <div *ngIf="buildingCode?.invalid && formDir.submitted" class="validation-error">
+      <p *ngIf="buildingCode?.errors?.['required']">Code is required!</p>
+    </div>
+    <label for="code2">Floor</label>
+    <select id="code2" formControlName="floorCode" required>
+      <option *ngFor="let code of floors" [value]="code">{{ code }}</option>
+    </select>
+    <div *ngIf="floorCode?.invalid && formDir.submitted" class="validation-error">
+      <p *ngIf="floorCode?.errors?.['required']">Floor is required!</p>
+    </div>
+    <button type="submit">Load</button>
+  </div>
+</form>
+<div *ngIf="showingTable" id="views-panel">
+  <table class="views">
+    <tr>
+      <td>
+        <label>View:</label>
+        <select id="view">
+          <option value="fixed">Fixed</option>
+          <option value="first">First-person</option>
+          <option value="third">Third-person</option>
+          <option value="top">Top</option>
+        </select>
+      </td>
+      <td>
+        <label>Orientation (h):</label>
+        <input type="number" id="horizontal" required>
+      </td>
+      <td>
+        <label>Orientation (v):</label>
+        <input type="number" id="vertical" required>
+      </td>
+      <td>
+        <button id="changeButton" (click)="changeFloor()" >change floor</button>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label>Projection:</label>
+        <select id="projection" [(ngModel)]="selectedProjection" (change)="changeCamera()">
+          <option value="perspective">Perspective</option>
+          <option value="orthographic">Orthographic</option>
+        </select>
+      </td>
+      <td>
+        <label>Distance:</label>
+        <input type="number" id="distance" required>
+      </td>
+      <td>
+        <label>Zoom:</label>
+        <input type="number" id="zoom" required>
+      </td>
+    </tr>
+  </table>
+</div>
 <canvas #myCanvas id="myCanvas"></canvas>

@@ -32,6 +32,7 @@ import {PlaneamentoComponent} from './component/planeamento/planeamento.componen
 import { SignUpComponent } from './component/user/sign-up/sign-up.component';
 import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
+import { RegisterComponent } from './component/register/register/register.component';
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import {MatButtonModule} from "@angular/material/button";
     BuildingsByFloorRangeComponent,
     CreateRoomComponent,
     PlaneamentoComponent,
-    SignUpComponent
+    SignUpComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

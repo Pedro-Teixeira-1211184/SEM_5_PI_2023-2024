@@ -102,7 +102,7 @@ export default () => {
         coordenates: Joi.string().error(new Error('Invalid coordenates')),
       })
     }), (req, res, next) => {
-      console.log("Creating a Elevator!");
+      console.log("Creating a Door!");
       elevatorCtrl.createElevator(req, res, next);
     }
   );

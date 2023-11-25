@@ -82,7 +82,6 @@ export class PatchMapComponent implements OnInit {
     this.form = this.fb.group({
       matrix: this.fb.array([])
     });
-    // Neste exemplo, criaremos uma matriz 3x3
     for (let i = 0; i < this.columns; i++) {
       const row = this.fb.array([]);
       for (let j = 0; j < this.rows; j++) {

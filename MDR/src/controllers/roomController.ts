@@ -20,7 +20,7 @@ export default class RoomController implements IRoomController /* TODO: extends 
       const RoomOrError = await this.RoomServiceInstance.createRoom(req.body as IRoomDTO) as Result<IRoomDTO>;
 
       if (RoomOrError.isFailure) {
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json("Elevator already exists");
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json("Door already exists");
       }
 
       const RoomDTO = RoomOrError.getValue();
