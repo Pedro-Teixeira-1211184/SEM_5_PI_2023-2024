@@ -1,72 +1,76 @@
-:-consult('base_conhecimento.pl').
+:- use_module(library(http/json)).
+:- use_module(library(http/json_convert)).
+:- use_module(library(http/http_json)).
+:- use_module(library(http/http_parameters)).
 
-% Algoritmo Pesquisa Primeiro em Profundidade para encontrar caminho
-% Chama dfs2 com o nodo origem (Orig), o nodo destino (Dest), 
-% Lista que contem apenas nodo origem e uma lista vazia (Cam) para guardar o caminho
+% Define the HTTP handler
+:- http_handler('https://localhost:5050/maps/pathBetweenFloors/:origin/:destination', find_path_handler, []).
 
-dfs(Orig,Dest,Cam):-
-	dfs2(Orig,Dest,[Orig],Cam).
+% Adapted DFS predicates using the campus graph representation
+find_path_handler(Request) :-
+    http_parameters(Request, [origin(Org), destination(Dest)]),
+    
+    parse_location(Org, Origin),
+    parse_location(Dest, Destination),
+    
+    dfs2_user_input(Origin, Destination, Cam),
+    
+    reply_json(json{path: Cam}).
 
-% Caso base da recursao.
-% Quando o nó atual (Act) é o nodo destino, inverte a lista LA
-%(Que contém o caminho desde o nodo origem até ao nodo destino) e unifica-a com Cam
+% Predicate to parse the location string
+parse_location(Location, (BuildingCode, Floor, Col, Lin)) :-
+    atomic_list_concat([FloorCode, ColStr, LinStr], '-', Location),
+    atom_number(ColStr, Col),
+    atom_number(LinStr, Lin),
+    BuildingCode = planta(BuildingCode, FloorCode, _, _, _, _).
 
-dfs2(Dest,Dest,LA,Cam):-
-	reverse(LA,Cam).
+dfs2_user_input(Dest, Dest, Cam) :-
+    reverse(Cam, [_ | ReverseCam]),
+    reverse(ReverseCam, Cam).
 
-% Esta regra é chamada recursivamente para cada nodo.
-% Primeiro verifica se existe uma ligação (ligacel) do nodo atual para outro nodo X
-% Verifica se X já não está no caminho LA. 
-% Se as condicoes se verificarem, chama dfs2 com 
-% X como nodo atual, nodo destino, nova lista que contem X e todos os nodos anteriores e Cam
+dfs2_user_input(Act, Dest, Cam) :-
+    connected_user_input(Act, X),
+    \+ member(X, Cam),
+    dfs2_user_input(X, Dest, [X | Cam]).
 
-dfs2(Act,Dest,LA,Cam):-
-	ligacel(Act,X),
-        \+ member(X,LA),
-	dfs2(X,Dest,[X|LA],Cam).
-
-% --------------------------------------------------------------------
-
-all_dfs(Orig,Dest,LCam):-findall(Cam,dfs(Orig,Dest,Cam),LCam).
-
-
-better_dfs(Orig,Dest,Cam):-all_dfs(Orig,Dest,LCam), shortlist(LCam,Cam,_).
-
-
-shortlist([L],L,N):-!,length(L,N).
-shortlist([L|LL],Lm,Nm):-shortlist(LL,Lm1,Nm1),
-				length(L,NL),
-			((NL<Nm1,!,Lm=L,Nm is NL);(Lm=Lm1,Nm is Nm1)).
+% Predicate to check if there is a connection between two cells based on user input
+connected_user_input(Cell1, Cell2) :-connected(Cell1, Cell2).
 
 
-% ------------------------------------------------------------------
+:- consult('campus_graph.pl').
 
+dfs(Orig, Dest, Cam) :-
+    dfs2(Orig, Dest, [Orig], Cam).
 
-% O algoritmo Pesquisa Primeiro em Largura para encontrar caminho
-% Chama bfs2 com o nodo origem (Orig), o nodo destino (Dest),
-% Lista que contem apenas nodo origem e uma lista vazia (Cam) para guardar o caminho
+dfs2(Dest, Dest, LA, Cam) :-
+    reverse(LA, Cam).
 
-bfs(Orig,Dest,Cam):-bfs2(Dest,[[Orig]],Cam).
+dfs2(Act, Dest, LA, Cam) :-
+    ligacel(Act, X),
+    \+ member(X, LA),
+    dfs2(X, Dest, [X | LA], Cam).
 
-% Caso base da recursao.
-% Quando o caminho atual termina com Dest, inverte o caminho
-% Obtém o caminho final (Cam)
+all_dfs(Orig, Dest, LCam) :-
+    findall(Cam, dfs(Orig, Dest, Cam), LCam).
 
-bfs2(Dest,[[Dest|T]|_],Cam):-
-	reverse([Dest|T],Cam).
+better_dfs(Orig, Dest, Cam) :-
+    all_dfs(Orig, Dest, LCam),
+    shortlist(LCam, Cam, _).
 
-% Esta regra é chamada recursivamente para cada caminho.
-% Primeiro passa a cabeça da lista de caminhos para LA
-% Usa finall para encontrar extensões do caminho atual, com a verificação 
-% de que o nodo destino não está no caminho e que o nodo atual tem ligação com o próximo (ligacel)
-% verificando se este não está já presente no caminho
-% Adiciona as novas extensões à lista de caminhos (Todos) - append
-% Chama-se recursivamente com a lista de caminhos atualizada
+shortlist([L], L, N) :- !, length(L, N).
+shortlist([L | LL], Lm, Nm) :- shortlist(LL, Lm1, Nm1),
+    length(L, NL),
+    ((NL < Nm1, !, Lm = L, Nm is NL); (Lm = Lm1, Nm is Nm1)).
 
-bfs2(Dest,[LA|Outros],Cam):-
-	LA=[Act|_],  
-	findall([X|LA],
-		(Dest\==Act,ligacel(Act,X),\+ member(X,LA)),
-		Novos),
-	append(Outros,Novos,Todos),
-	bfs2(Dest,Todos,Cam).
+bfs(Orig, Dest, Cam) :- bfs2(Dest, [[Orig]], Cam).
+
+bfs2(Dest, [[Dest | T] | _], Cam) :-
+    reverse([Dest | T], Cam).
+
+bfs2(Dest, [LA | Outros], Cam) :-
+    LA = [Act | _],
+    findall([X | LA],
+        (Dest \== Act, ligacel(Act, X), \+ member(X, LA)),
+        Novos),
+    append(Outros, Novos, Todos),
+    bfs2(Dest, Todos, Cam).

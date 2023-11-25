@@ -1,9 +1,12 @@
 % server.pl
 
 % Include other files
-:- [base_conhecimento].
+:- [getElevators].
+:- [getPassageways].
+:- [getPlants].
 :- [graph_handling].
 :- [path_finding].
+:- [campus_graph].
 
 % Server management
 start_server(Port) :-
@@ -22,15 +25,6 @@ get_all_maps(Request) :-
     prolog_to_json(Maps, JSONObject),
     reply_json(JSONObject, [json_object(dict)]).
 
-:- http_handler('/maps/:buildingCode/:floorNumber', load_map, []).
-load_map(Request) :-
-    cors_enable(Request, [methods([get])]),
-    memberchk(buildingCode=BuildingCode, Request),
-    memberchk(floorNumber=FloorNumber, Request),
-    map(BuildingCode, FloorNumber, Map),
-    prolog_to_json(Map, JSONObject),
-    reply_json(JSONObject, [json_object(dict)]).
-
 :- http_handler('/maps/path/:origin/:destination', path_between_floors_handler, []).
 path_between_floors_handler(Request) :-
     cors_enable(Request, [methods([get])]),
@@ -39,6 +33,21 @@ path_between_floors_handler(Request) :-
     path_between_floors(BuildingCode, Origin, Destination, Path),
     prolog_to_json(Path, JSONObject),
     reply_json(JSONObject, [json_object(dict)]).
+
+:-http_handler('/buildings/elevators', get_all_elevators, []).
+get_all_elevators(Request) :-
+    cors_enable(Request, [methods([get])]),
+    findall(Elevator, elevator(Elevator), Elevators),
+    prolog_to_json(Elevators, JSONObject),
+    reply_json(JSONObject, [json_object(dict)]).
+
+:- http_handler('/passageways', get_all_passageways, []).
+get_all_passageways(Request) :-
+    cors_enable(Request, [methods([get])]),
+    findall(Passageway, passageway(Passageway), Passageways),
+    prolog_to_json(Passageways, JSONObject),
+    reply_json(JSONObject, [json_object(dict)]).
+
 
 % Initialization
 initialize_server(Port) :-
@@ -51,3 +60,4 @@ initialize_system :-
 
 % Example usage:
 % To start the server on port 5000, call initialize_server(5000).
+    
