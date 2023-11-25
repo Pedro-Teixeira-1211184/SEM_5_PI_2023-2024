@@ -43,5 +43,11 @@ export default () => {
     ctrl.getPassagewaysInFloors(req, res, next);
   });
 
+
+  route.get('/', (req, res, next) => {
+    console.log("Getting all passageways!");
+    ctrl.getAll(req, res, next);
+  });
+  
   return route;
 }

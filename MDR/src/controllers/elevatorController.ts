@@ -54,4 +54,16 @@ export default class ElevatorController implements IElevatorController /* TODO: 
     }
   }
 
+
+  public async getAll(req: Request, res: Response, next: NextFunction) {
+    try {
+      const result = await this.elevatorServiceInstance.getAll();
+      if (result.isFailure) {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(result.errorValue());
+      }
+      return res.json(result.getValue()).status(StatusCodes.OK);
+    }catch (e) {
+      return next(e);
+    }
+  }
 }

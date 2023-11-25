@@ -7,6 +7,7 @@ import IMapRoomDTO from "../../dto/IMapRoomDTO";
 import IMapPassagewayDTO from "../../dto/IMapPassagewayDTO";
 import IMapElevatorDTO from "../../dto/IMapElevatorDTO";
 import IPlantDTO from "../../dto/IPlantDTO";
+import IPathResultDTO  from "../../dto/IPathResultDTO";
 
 @Injectable({
   providedIn: 'root'
@@ -63,7 +64,8 @@ export class MapService {
     }
 
 
-  public async pathBetweenFloors(origin: string, destination: string) {
+
+  public async pathBetweenFloors(origin: string, destination: string): Promise<IPathResultDTO> {
     try {
       const response = await fetch(Constants.API_PATH_BETWEEN_FLOORS_URL + origin + destination, {
         method: 'GET',
@@ -71,14 +73,10 @@ export class MapService {
           'Content-Type': 'application/json'
         }
       });
-
-      if (response.status === 200) {
-        return await response.json();
-      } else {
-        alert(await response.text());
-      }
+      return await response.json();
     } catch (e) {
       console.log(e);
+      throw e;
     }
   }
 

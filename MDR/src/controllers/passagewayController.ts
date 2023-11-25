@@ -103,4 +103,20 @@ export default class PassagewayController implements IPassagewayController /* TO
     }
   }
 
+
+  public async getAll(req: Request, res: Response, next: NextFunction) {
+    try {
+
+      const passageways = await this.passagewayServiceInstance.getAll();
+
+      if (passageways.isFailure) {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(passageways.error);
+      }
+
+      return res.json(passageways.getValue()).status(StatusCodes.ACCEPTED);
+    } catch (e) {
+      return next(e);
+    }
+  }
+  
 }

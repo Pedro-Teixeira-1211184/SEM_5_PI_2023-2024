@@ -8,4 +8,5 @@ export default interface IPassagewayService {
   getPassagewaysInBuildings(floors1: Array<IFloorDTO>, floors2: Array<IFloorDTO>): Promise<Result<Array<IPassagewayDTO>>>;
   updatePassageway(passagewayDTO: IPassagewayDTO): Promise<Result<IPassagewayDTO>>;
   getPassagewaysInFloors(floorCode: string): Promise<Result<Array<IPassagewayDTO>>>;
+  getAll(): Promise<Result<Array<IPassagewayDTO>>>;
 }

@@ -113,5 +113,11 @@ export default () => {
     }
   );
 
+  route.get('/elevators', (req, res, next) => {
+    console.log("Getting all Elevators!");
+    elevatorCtrl.getAll(req, res, next);
+  }
+);
+
   return route;
 }

@@ -1,4 +1,4 @@
 export default interface IPathDTO {
-    origin: string;
+    origin: string;                 //floorCode-col-lin 
     destination: string;
 }

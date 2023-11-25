@@ -123,5 +123,18 @@ export default class PassagewayService implements IPassagewayService {
     }
   }
 
+  public async getAll(): Promise<Result<Array<IPassagewayDTO>>> {
+    try {
+      const passageways = await this.PassagewayRepo.getAll();
+
+      if (passageways.length == 0) {
+        return Result.fail<Array<IPassagewayDTO>>('No passageways found');
+      }
+
+      return Result.ok<Array<IPassagewayDTO>>(passageways)
+    }catch (e) {
+      throw e;
+    }
+  }
 
 }

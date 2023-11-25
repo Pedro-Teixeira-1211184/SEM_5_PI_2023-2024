@@ -9,4 +9,6 @@ export default interface IPassagewayController {
   updatePassageway(req: Request, res: Response, next: NextFunction);
 
   getPassagewaysInFloors(req: Request, res: Response, next: NextFunction);
+
+  getAll(req: Request, res: Response, next: NextFunction);
 }

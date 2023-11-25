@@ -15,4 +15,6 @@ export default interface IElevatorRepo extends Repo<Elevator> {
   findByBuildingCode(buildingCode: string): Promise<Elevator>;
 
   getElevatorsByBuildingCode(buildingCode: string): Promise<Elevator[]>;
+
+  getAll(): Promise<Elevator[]>;
 }

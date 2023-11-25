@@ -193,4 +193,19 @@ export default class PassagewayRepo implements IPassagewayRepo {
       throw error;
     }
   }
+
+  public async getAll(): Promise<Array<IPassagewayDTO>> {
+    try {
+      const passageways = await this.passagewaySchema.find();
+      let result1: IPassagewayDTO[] = [];
+      for (let i = 0; i < passageways.length; i++) {
+        const result = PassagewayMapper.toDTO(PassagewayMapper.toDomain(passageways[i]));
+        result1.push(result);
+      }
+      return result1;
+    }catch (error) {
+      throw error;
+    }
+  }
+
 }

@@ -21,4 +21,6 @@ export default interface IPassagewayRepo extends Repo<Passageway> {
   update(floorID1: string, floorID2: string, updatedFields: Partial<IPassagewayDTO>): Promise<Passageway | null>;
 
   getPassagewaysInFloor(floorCode: string): Promise<Array<IPassagewayDTO>>;
+
+  getAll(): Promise<Array<IPassagewayDTO>>;
 }

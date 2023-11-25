@@ -191,8 +191,8 @@ export default class MapService implements IMapService {
   }
 
   public async pathBetweenFloors(pathDTO: IPathDTO): Promise<IPathResultDTO | Result<IPathResultDTO>> {
-    let pathBetweenFloors: string[];
-    let pathPerFloor: number[];
+    /*let pathBetweenFloors: string[];
+    let pathPerFloor: number[];*/
 
     if (pathDTO.origin == pathDTO.destination) {
       return Result.fail<IPathResultDTO>("Origin and destination can't be the same.");

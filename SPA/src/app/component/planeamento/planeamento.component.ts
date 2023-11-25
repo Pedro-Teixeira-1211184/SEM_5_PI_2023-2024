@@ -15,7 +15,7 @@ export class PlaneamentoComponent {
   mapservice: MapService = inject(MapService);
   floorservice: FloorService = inject(FloorService);
   floors: IFloorDTO[] = [];
-  origin: string = '';
+  origin: string = '';  ////floorCode-col-lin 
   destination: string = '';
   originPlant: IPlantDTO = {} as IPlantDTO;
   destinationPlant: IPlantDTO = {} as IPlantDTO;
@@ -61,25 +61,37 @@ export class PlaneamentoComponent {
 
   public async chooseOrigin(){
     if(this.origin === '' || this.origin === null || this.origin === undefined){
-      alert ('Please choose the coordinates for the origin (x,y)');
+      alert ('Please insert floorCode-col-lin (ex: 1-1-1)');
       return;
     }
   }
 
   public async chooseDestination(){
     if(this.destination === '' || this.destination === null || this.destination === undefined){
-      alert ('Please choose the coordinates for the destination (x,y)');
+      alert ('Please insert floorCode-col-lin (ex: 1-1-1)');
       return;
     }
   }
 
-  public async definePath(){
-    if(this.origin === this.destination){
-      alert ('The origin and destination are the same');
+  public async definePath() {
+    // Get the values of the origin and destination form controls
+    const originValue = this.planeamentoForm.get('origin')?.value;
+    const destinationValue = this.planeamentoForm.get('destination')?.value;
+  
+    // Log the values to the console
+    console.log('Origin:', originValue);
+    console.log('Destination:', destinationValue);
+  
+    if (originValue === destinationValue) {
+      alert('The origin and destination are the same');
       return;
     }
-    this.mapservice.pathBetweenFloors(this.origin, this.destination);
+  
+    // Call the pathBetweenFloors method with the origin and destination values
+    const result = await this.mapservice.pathBetweenFloors(originValue, destinationValue);
+    console.log(result);
   }
+  
 
   public async listMaps(){
     this.mapservice.listMaps();
@@ -92,9 +104,10 @@ export class PlaneamentoComponent {
       origin: new FormControl('', [Validators.required]),
       buildingCode2: new FormControl('', [Validators.required]),
       floorNumber2: new FormControl('', [Validators.required]),
-      destination: new FormControl('', [Validators.required])
+      destination: new FormControl('', [Validators.required]),
     });
   }
+  
     get buildingCode1() {
       return this.planeamentoForm.get('buildingCode1');
     }
