@@ -150,3 +150,18 @@ path.two {
     fill: white;
   }
 }
+
+.registration-link {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.registration-link p {
+  color: white;
+}
+
+.registration-anchor {
+  color: blue; /* Set your desired hyperlink color */
+  text-decoration: underline;
+  cursor: pointer;
+}

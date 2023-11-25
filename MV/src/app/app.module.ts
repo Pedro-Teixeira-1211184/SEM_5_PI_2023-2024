@@ -9,6 +9,7 @@ import {ViewComponent} from './components/view/view.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { HomeComponent } from './components/home/home.component';
 import {NgForOf, NgIf} from "@angular/common";
+import { RegisterComponent } from './component/user/register/register.component';
 
 @NgModule({
     declarations: [
@@ -16,7 +17,8 @@ import {NgForOf, NgIf} from "@angular/common";
         LoginComponent,
         ViewComponent,
         PageNotFoundComponent,
-        HomeComponent
+        HomeComponent,
+        RegisterComponent
     ],
     imports: [
         BrowserModule,
