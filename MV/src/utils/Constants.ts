@@ -8,5 +8,9 @@ export default class Constants {
     //map
     public static readonly API_GET_MAPS_URL = Constants.API_BASE_URL + 'maps/';
 
+    //user
+    public static readonly USER_ROLE = 'User';
+    public static readonly API_AUTH_SIGNUP_URL = Constants.API_BASE_URL + 'api/auth/signup';
+
 
 }

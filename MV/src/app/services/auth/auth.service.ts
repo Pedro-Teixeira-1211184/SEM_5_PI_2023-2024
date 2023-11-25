@@ -81,4 +81,31 @@ export class AuthService {
         }
     }
 
+    public async signUp(firstName: string, lastName: string, email: string, password: string, role: string): Promise<void> {
+        try {
+            const response = await fetch(Constants.API_AUTH_SIGNUP_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    password: password,
+                    role: role
+                })
+            });
+
+            if (response.status === 403) {
+                alert('Sign up failed');
+            } else {
+                alert('Sign up successful');
+                window.location.href = '/home';
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
 }

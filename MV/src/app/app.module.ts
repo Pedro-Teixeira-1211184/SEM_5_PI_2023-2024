@@ -9,7 +9,8 @@ import {ViewComponent} from './components/view/view.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { HomeComponent } from './components/home/home.component';
 import {NgForOf, NgIf} from "@angular/common";
-import { RegisterComponent } from './component/user/register/register.component';
+import { RegisterComponent } from './components/user/register/register.component';
+import {RouterLink} from "@angular/router";
 
 @NgModule({
     declarations: [
@@ -28,7 +29,8 @@ import { RegisterComponent } from './component/user/register/register.component'
         FormsModule,
         NgForOf,
         NgIf,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        RouterLink
     ],
     providers: [],
     bootstrap: [AppComponent]
