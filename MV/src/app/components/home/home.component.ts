@@ -55,7 +55,6 @@ export class HomeComponent implements OnInit {
         break;
       }
     }
-    console.log(this.option);
     window.location.href = "/view"
   }
 

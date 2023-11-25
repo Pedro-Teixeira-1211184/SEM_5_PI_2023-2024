@@ -29,7 +29,7 @@ export class AuthService {
                 const data = await response.json();
                 this.userEmail = data.email;
                 //redirect to home page of a certain user role
-                window.location.href = '/home';
+                window.location.href = '/view';
             } else {
                 alert('Invalid credentials');
                 window.location.href = '/';

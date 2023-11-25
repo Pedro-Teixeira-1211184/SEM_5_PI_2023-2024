@@ -46,7 +46,7 @@ export default class MapService implements IMapService {
       //check size
       const length = parseInt(building.dimensions.length.toString());
       const width = parseInt(building.dimensions.width.toString());
-      if (mapDTO.size.width - 1 != width || mapDTO.size.length - 1 != length) {
+      if (mapDTO.size.width != width || mapDTO.size.length != length) {
         return Result.fail<IMapDTO>("Map size does not match building size.");
       }
       //verify if floor exists
@@ -86,7 +86,7 @@ export default class MapService implements IMapService {
         const floorsWithElevator = elevatorExists.floorNumbers.split(",");
         //check if elevator exists in this floor
         if (!floorsWithElevator.includes(mapDTO.floorNumber.toString())) {
-          return Result.fail<IMapDTO>("Elevator does not exist in this floor.");
+          return Result.fail<IMapDTO>("Door does not exist in this floor.");
         }
       }
 
@@ -109,54 +109,54 @@ export default class MapService implements IMapService {
   }
 
 
-    public async  turnToPlant(mapDTO: IMapDTO): Promise<IPlantDTO> {
-        try {
-        const plantDTO: IPlantDTO = {
-            floorCode: `${mapDTO.buildingCode}${mapDTO.floorNumber}`,
-            width: mapDTO.size.width,
-            length: mapDTO.size.length,
-            map: mapDTO.map.map((row) => [...row]),
-        };
+  public async  turnToPlant(mapDTO: IMapDTO): Promise<IPlantDTO> {
+    try {
+      const plantDTO: IPlantDTO = {
+        floorCode: `${mapDTO.buildingCode}${mapDTO.floorNumber}`,
+        width: mapDTO.size.width,
+        length: mapDTO.size.length,
+        map: mapDTO.map.map((row) => [...row]),
+      };
 
-        //elevators = 2
-        forEach(mapDTO.elevator, (elevator) => {
-            plantDTO.map[elevator.localization.coordinates.x][elevator.localization.coordinates.y] = 2;
+      //elevators = 2
+      forEach(mapDTO.elevator, (elevator) => {
+          plantDTO.map[elevator.localization.coordinates.x][elevator.localization.coordinates.y] = 2;
         }
-        );
+      );
 
-        //doors = 3
-        forEach(mapDTO.rooms, (room) => {
-            plantDTO.map[room.door.coordinates.x][room.door.coordinates.y] = 3;
+      //doors = 3
+      forEach(mapDTO.rooms, (room) => {
+          plantDTO.map[room.door.coordinates.x][room.door.coordinates.y] = 3;
         }
-        );
+      );
 
-        //passageways = 4
-        forEach(mapDTO.passageways, (passageway) => {
-            plantDTO.map[passageway.localization.coordinates.x][passageway.localization.coordinates.y] = 4;
+      //passageways = 4
+      forEach(mapDTO.passageways, (passageway) => {
+          plantDTO.map[passageway.localization.coordinates.x][passageway.localization.coordinates.y] = 4;
         }
-        );
+      );
 
-        //walls = 1
-        forEach(mapDTO.rooms, (room) => {
-            plantDTO.map[room.dimensions.top.x][room.dimensions.top.y] = 1;
-            plantDTO.map[room.dimensions.bottom.x][room.dimensions.bottom.y] = 1;
-            for (let y=0, x=room.dimensions.top.x; y<room.dimensions.bottom.y; y++) {
-                plantDTO.map[x][y] = 1;
-            }
-            for(let x=room.dimensions.top.x, y=room.dimensions.top.y; x<room.dimensions.bottom.x; x++) {
-                plantDTO.map[x][y] = 1;
-            }
-            for(let y=room.dimensions.bottom.y, x=room.dimensions.bottom.x; y>room.dimensions.top.y; y--) {
-                plantDTO.map[x][y] = 1;
-            }
+      //walls = 1
+      forEach(mapDTO.rooms, (room) => {
+          plantDTO.map[room.dimensions.top.x][room.dimensions.top.y] = 1;
+          plantDTO.map[room.dimensions.bottom.x][room.dimensions.bottom.y] = 1;
+          for (let y=0, x=room.dimensions.top.x; y<room.dimensions.bottom.y; y++) {
+            plantDTO.map[x][y] = 1;
+          }
+          for(let x=room.dimensions.top.x, y=room.dimensions.top.y; x<room.dimensions.bottom.x; x++) {
+            plantDTO.map[x][y] = 1;
+          }
+          for(let y=room.dimensions.bottom.y, x=room.dimensions.bottom.x; y>room.dimensions.top.y; y--) {
+            plantDTO.map[x][y] = 1;
+          }
         }
-        );
-        return plantDTO;
+      );
+      return plantDTO;
     } catch (e) {
-        throw e;
+      throw e;
 
     }
-}
+  }
 
   public async loadMap(buildingCode: string, floorNumber: number): Promise<Result<IPlantDTO>> {
     try {

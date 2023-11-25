@@ -32,7 +32,7 @@ export default class ElevatorService implements IElevatorService {
             const elevatorCreated = await this.elevatorRepo.save(elevatorResult);
 
             if (elevatorCreated === null) {
-                return Result.fail<IElevatorDTO>('Elevator not created');
+                return Result.fail<IElevatorDTO>('Door not created');
             }
 
             const elevatorDTOResult = ElevatorMapper.toDTO(elevatorResult) as IElevatorDTO;

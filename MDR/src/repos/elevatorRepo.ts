@@ -44,7 +44,7 @@ export default class ElevatorRepo implements IElevatorRepo {
 
         return ElevatorMapper.toDomain(elevatorCreated);
       } else {
-        console.log('Elevator already exists');
+        console.log('Door already exists');
         return null;
       }
     } catch (error) {
