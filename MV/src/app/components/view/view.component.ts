@@ -97,7 +97,7 @@ export class ViewComponent implements OnInit {
     private light!: Lights;
     private renderer!: THREE.WebGLRenderer;
     private scene: THREE.Scene = new THREE.Scene();
-    private camera!: Camera;
+    camera!: Camera;
     private cameraUsed: any = null;
     selectedProjection: string = 'perspective';
 
@@ -139,7 +139,7 @@ export class ViewComponent implements OnInit {
         this.renderer = new THREE.WebGLRenderer({canvas: this.canvas});
         this.renderer.setPixelRatio(devicePixelRatio);
         this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
-        //this.renderer.domElement.addEventListener("wheel", event => this.mouseWheel(event));
+        this.renderer.domElement.addEventListener("wheel", event => this.mouseWheel(event));
         // Register the event handler to be called on mouse down
         this.renderer.domElement.addEventListener("mousedown", event => this.mouseDown(event));
         // Register the event handler to be called on mouse move
@@ -380,35 +380,57 @@ export class ViewComponent implements OnInit {
     }
 
     mousePosition!: THREE.Vector2;
-/*
+
     private mouseWheel(event: WheelEvent) {
         // Prevent the mouse wheel from scrolling the document's content
         event.preventDefault();
         // Store current mouse position in window coordinates (mouse coordinate system: origin in the top-left corner; window coordinate system: origin in the bottom-left corner)
         this.mousePosition = new THREE.Vector2(event.clientX, window.innerHeight - event.clientY - 1);
-        // Select the camera whose view is being pointed
-        const cameraView = this.getPointedViewport(this.mousePosition);
-        if (cameraView != "none" && cameraView != "mini-map") { // One of the remaining cameras selected
-            const cameraIndex = ["fixed", "first-person", "third-person", "top"].indexOf(cameraView);
-            this.view.options.selectedIndex = cameraIndex;
-            const activeViewCamera = [this.fixedViewCamera, this.firstPersonViewCamera, this.thirdPersonViewCamera, this.topViewCamera][cameraIndex];
-            activeViewCamera.updateZoom(-0.001 * event.deltaY);
-            this.setActiveViewCamera(activeViewCamera);
+        this.camera.updateZoom(-0.002 * event.deltaY);
+    }
+
+
+    private mouseDown(event: MouseEvent) {
+        if (event.buttons == 1 || event.buttons == 2) { // Primary or secondary button down
+            // Store current mouse position in window coordinates (mouse coordinate system: origin in the top-left corner; window coordinate system: origin in the bottom-left corner)
+            this.mousePosition = new THREE.Vector2(event.clientX, window.innerHeight - event.clientY - 1);
+            if (event.buttons == 1) { // Primary button down
+                this.changeCameraDistance = true;
+            } else { // Secondary button down
+                this.changeCameraOrientation = true;
+            }
         }
     }
 
- */
-
-    private mouseDown(event: MouseEvent) {
-
-    }
+    //}
 
     private mouseMove(event: MouseEvent) {
-
+        if (event.buttons == 1 || event.buttons == 2) { // Primary or secondary button down
+            if (this.changeCameraDistance || this.changeCameraOrientation) { // Mouse action in progress
+                // Compute mouse movement and update mouse position
+                const newMousePosition = new THREE.Vector2(event.clientX, window.innerHeight - event.clientY - 1);
+                const mouseIncrement = newMousePosition.clone().sub(this.mousePosition);
+                this.mousePosition = newMousePosition;
+                if (event.buttons == 1) { // Primary button down
+                    if (this.changeCameraDistance) {
+                        this.camera.updateDistance(-0.05 * (mouseIncrement.x + mouseIncrement.y));
+                    }
+                } else { // Secondary button down
+                    if (this.changeCameraOrientation) {
+                        this.camera.updateOrientation(new Orientation(-0.2 * mouseIncrement.x, -0.2 * mouseIncrement.y));
+                    }
+                }
+            }
+        }
     }
+
+    changeCameraDistance: boolean = false;
+    changeCameraOrientation: boolean = false;
 
     private mouseUp(event: MouseEvent) {
-
-
+        // Reset mouse move action
+        this.changeCameraDistance = false;
+        this.changeCameraOrientation = false;
     }
+
 }

@@ -34,11 +34,11 @@
       </td>
       <td>
         <label>Orientation (h):</label>
-        <input type="number" id="horizontal" required>
+        <input type="number" id="horizontal" [(ngModel)]="camera.orientation.h" required>
       </td>
       <td>
         <label>Orientation (v):</label>
-        <input type="number" id="vertical" required>
+        <input type="number" id="vertical" [(ngModel)]="camera.orientation.v" required>
       </td>
       <td>
         <button id="changeButton" (click)="changeFloor()" >change floor</button>
@@ -54,11 +54,11 @@
       </td>
       <td>
         <label>Distance:</label>
-        <input type="number" id="distance" required>
+        <input type="number" id="distance" [(ngModel)]="camera.distance" required>
       </td>
       <td>
         <label>Zoom:</label>
-        <input type="number" id="zoom" required>
+        <input type="number" id="zoom" [(ngModel)]="camera.zoom" required>
       </td>
     </tr>
   </table>
