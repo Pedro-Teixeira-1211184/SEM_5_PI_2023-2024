@@ -324,7 +324,6 @@ export default class Floor {
 
     distanceToSouthWall(position: THREE.Vector3) {
         const indices = this.cartesianToCell(position);
-        console.log(indices);
         indices[0]++;
         if (this.map[indices[0]][indices[1]] == 2 || this.map[indices[0]][indices[1]] == 3) {
             return this.cellToCartesian(indices).z - this.scale.z / 2.0 - position.z;

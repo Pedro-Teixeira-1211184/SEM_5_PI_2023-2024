@@ -127,9 +127,9 @@ export default class Robot {
                 box.getSize(size);
 
                 // Adjust the object's oversized dimensions (hard-coded; see previous comments)
-                size.x = 3.0;
+                size.x = 1.0;
                 size.y = 4.4;
-                size.z = 2.6;
+                size.z = 1.0;
 
                 // Set the object's radius and eye height
                 this.radius = size.x / 2.0 * this.scale.x;

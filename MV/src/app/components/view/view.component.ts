@@ -327,20 +327,20 @@ export class ViewComponent implements OnInit {
         const direction = this.robot.object.rotation.y;
         if (this.robot.keyStates.backward) {
           const newPosition = new THREE.Vector3(-coveredDistance * Math.sin(direction), 0.0, -coveredDistance * Math.cos(direction)).add(this.robot.object.position);
-          //if (this.collision(newPosition)) {
-          //    this.animations.fadeToAction("Death", 0.2);
-          //} else {
-          this.animations.fadeToAction(this.robot.keyStates.run ? "Running" : "Walking", 0.2);
-          this.robot.object.position.set(newPosition.x, newPosition.y, newPosition.z)
-          //}
+          if (this.collision(newPosition)) {
+            this.animations.fadeToAction("Death", 0.2);
+          } else {
+            this.animations.fadeToAction(this.robot.keyStates.run ? "Running" : "Walking", 0.2);
+            this.robot.object.position.set(newPosition.x, newPosition.y, newPosition.z)
+          }
         } else if (this.robot.keyStates.forward) {
           const newPosition = new THREE.Vector3(coveredDistance * Math.sin(direction), 0.0, coveredDistance * Math.cos(direction)).add(this.robot.object.position);
-          //if (this.collision(newPosition)) {
-          //  this.animations.fadeToAction("Death", 0.2);
-          //} else {
-          this.animations.fadeToAction(this.robot.keyStates.run ? "Running" : "Walking", 0.2);
-          this.robot.object.position.set(newPosition.x, newPosition.y, newPosition.z)
-          // }
+          if (this.collision(newPosition)) {
+            this.animations.fadeToAction("Death", 0.2);
+          } else {
+            this.animations.fadeToAction(this.robot.keyStates.run ? "Running" : "Walking", 0.2);
+            this.robot.object.position.set(newPosition.x, newPosition.y, newPosition.z)
+          }
         } else if (this.robot.keyStates.jump) {
           this.animations.fadeToAction("Jump", 0.2);
         } else if (this.robot.keyStates.yes) {
@@ -359,57 +359,6 @@ export class ViewComponent implements OnInit {
       }
     }
 
-    /*
-    // Update first-person, third-person and top view cameras parameters (player direction and target)
-    this.firstPersonViewCamera.playerDirection = this.player.direction;
-    this.thirdPersonViewCamera.playerDirection = this.player.direction;
-    this.topViewCamera.playerDirection = this.player.direction;
-    const target = new THREE.Vector3(this.player.position.x, this.player.position.y + this.player.eyeHeight, this.player.position.z);
-    this.firstPersonViewCamera.setTarget(target);
-    this.thirdPersonViewCamera.setTarget(target);
-    this.topViewCamera.setTarget(target);
-
-    // Update statistics
-    this.statistics.update();
-
-
-
-    // Render primary viewport(s)
-    this.renderer.clear();
-
-    if (this.fog.enabled) {
-        this.scene3D.fog = this.fog.object;
-    } else {
-        this.scene3D.fog = null;
-    }
-    let cameras;
-    if (this.multipleViewsCheckBox.checked) {
-        cameras = [this.fixedViewCamera, this.firstPersonViewCamera, this.thirdPersonViewCamera, this.topViewCamera];
-    } else {
-        cameras = [this.activeViewCamera];
-    }
-    for (const camera of cameras) {
-        this.player.object.visible = (camera != this.firstPersonViewCamera);
-        const viewport = camera.getViewport();
-        this.renderer.setViewport(viewport.x, viewport.y, viewport.width, viewport.height);
-        this.renderer.render(this.scene3D, camera.object);
-        this.renderer.render(this.scene2D, this.camera2D);
-        this.renderer.clearDepth();
-    }
-
-    // Render secondary viewport (mini-map)
-    if (this.miniMapCheckBox.checked) {
-        this.scene3D.fog = null;
-        this.player.object.visible = true;
-        const viewport = this.miniMapCamera.getViewport();
-        this.renderer.setViewport(viewport.x, viewport.y, viewport.width, viewport.height);
-        this.renderer.render(this.scene3D, this.miniMapCamera.object);
-        this.renderer.render(this.scene2D, this.camera2D);
-    }
-
-}
-
-     */
     this.renderer.render(this.scene, this.cameraUsed);
   }
 
