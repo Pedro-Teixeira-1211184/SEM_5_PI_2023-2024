@@ -77,7 +77,7 @@ export default class Robot {
     eyeHeight: number = Default_data.eyeHeight;
     scene!: THREE.Scene;
 
-    constructor(scene: THREE.Scene, url: string, credits: string, scale: THREE.Vector3, walkingSpeed: number, initialDirection: number, turningSpeed: number, runningFactor: number, keyCodes: {
+    constructor(scene: THREE.Scene, url: string, credits: string, initial_position: number[],scale: THREE.Vector3, walkingSpeed: number, initialDirection: number, turningSpeed: number, runningFactor: number, keyCodes: {
         fixedView: string,
         firstPersonView: string,
         thirdPersonView: string,
@@ -118,7 +118,7 @@ export default class Robot {
                 // Loaded callback
                 this.object = gltf.scene;
                 this.object.scale.copy(this.scale);
-                this.object.position.set(Default_data.initialPosition[0], 0.0, Default_data.initialPosition[1]);
+                this.object.position.set(initial_position[0], 0.0, initial_position[1]);
                 const box = new THREE.Box3();
                 box.setFromObject(this.object); // This function may result in a larger box than strictly necessary: https://threejs.org/docs/#api/en/math/Box3.setFromObject
 

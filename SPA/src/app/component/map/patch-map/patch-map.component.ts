@@ -395,7 +395,7 @@ export class PatchMapComponent implements OnInit {
       elevators.push(elevator);
     }
     console.log(elevators)
-    await this.service.patchMap(this.buildingCode?.value, this.floorNumber, this.columns, this.rows, this.matrix.value, rooms, passageways, elevators);
+    await this.service.patchMap(this.buildingCode?.value, this.floorNumber, this.columns - 1, this.rows - 1, this.matrix.value, rooms, passageways, elevators);
   }
 }
 

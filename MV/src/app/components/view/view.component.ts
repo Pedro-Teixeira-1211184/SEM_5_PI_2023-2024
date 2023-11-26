@@ -37,6 +37,8 @@ export class ViewComponent implements OnInit {
         this.form = new FormGroup({
             buildingCode: new FormControl('', [Validators.required]),
             floorCode: new FormControl('', [Validators.required]),
+            robotX: new FormControl('', [Validators.required]),
+            robotZ: new FormControl('', [Validators.required]),
         });
     }
 
@@ -55,6 +57,7 @@ export class ViewComponent implements OnInit {
     }
 
     getFloorsOfBuilding() {
+        this.floors = [];
         for (let map of this.maps) {
             if (map.buildingCode == this.buildingCode?.value) {
                 this.floors.push(map.floorNumber);
@@ -72,15 +75,28 @@ export class ViewComponent implements OnInit {
         return this.form.get('floorCode');
     }
 
+    get robotX() {
+        return this.form.get('robotX');
+    }
+
+    get robotZ() {
+        return this.form.get('robotZ');
+    }
+
     submit() {
-        for (let map of this.maps) {
-            if (map.buildingCode == this.buildingCode?.value && map.floorNumber == this.floorCode?.value) {
-                this.option = map;
-                this.isFormVisible = false;
-                this.showingTable = true;
-                this.createScene();
-                this.render();
-                break;
+        if (this.form.valid) {
+            // se as todos os campos do formulário estiverem preenchidos
+            if (this.buildingCode?.value != null && this.floorCode?.value != null && this.robotX?.value != null && this.robotZ?.value != null) {
+                for (let map of this.maps) {
+                    if (map.buildingCode == this.buildingCode?.value && map.floorNumber == this.floorCode?.value) {
+                        this.option = map;
+                        this.isFormVisible = false;
+                        this.showingTable = true;
+                        this.createScene();
+                        this.render();
+                        break;
+                    }
+                }
             }
         }
     }
@@ -110,18 +126,15 @@ export class ViewComponent implements OnInit {
      */
     private createScene(): void {
         //* Scene
-
+        // Create the scene
+        this.scene = new THREE.Scene();
 
         this.floor = new Floor(Default_data.groundTextureUrl, new THREE.Vector3(-3.5, 10, 2.5), this.option);
         this.scene.add(this.floor.object);
-        this.robot = new Robot(this.scene, Default_data.robot_url, Default_data.credits, Default_data.scale, Default_data.walkingSpeed, Default_data.initialDirection, Default_data.turningSpeed, Default_data.runningFactor, Default_data.keyCodes);
+        const pos: number[] = [this.robotX?.value, this.robotZ?.value]
+        this.robot = new Robot(this.scene, Default_data.robot_url, Default_data.credits, pos, Default_data.scale, Default_data.walkingSpeed, Default_data.initialDirection, Default_data.turningSpeed, Default_data.runningFactor, Default_data.keyCodes);
         this.light = new Lights(Default_data.ambientLight, Default_data.pointLight1, Default_data.pointLight2, Default_data.spotLight);
         this.scene.add(this.light.object);
-
-        //add light pointing to the robot
-        let light = new THREE.PointLight(0xffffff, 1, 100);
-        light.position.set(0, 0, 0);
-        this.scene.add(light);
 
         // key change
         // Register the event handler to be called on key down
@@ -251,10 +264,6 @@ export class ViewComponent implements OnInit {
     update() {
         if (!this.isRunning) {
             if (this.floor.loaded && this.robot.loaded) { // If all resources have been loaded
-                // Add the maze, the player and the lights to the scene
-                this.scene.add(this.floor.object);
-                this.scene.add(this.robot.object);
-                this.scene.add(this.light.object);
 
                 // Create the clock
                 this.clock = new THREE.Clock();

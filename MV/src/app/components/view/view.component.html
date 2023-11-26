@@ -17,6 +17,16 @@
     <div *ngIf="floorCode?.invalid && formDir.submitted" class="validation-error">
       <p *ngIf="floorCode?.errors?.['required']">Floor is required!</p>
     </div>
+    <label for="rx">Robot initial position x:</label>
+    <input formControlName="robotX" type="number" id="rx" required>
+    <div *ngIf="robotX?.invalid && formDir.submitted" class="validation-error">
+      <p *ngIf="robotX?.errors?.['required']">robot x initial position is required!</p>
+    </div>
+    <label for="ry">Robot initial position z:</label>
+    <input formControlName="robotZ" type="number" id="ry" required>
+    <div *ngIf="robotZ?.invalid && formDir.submitted" class="validation-error">
+      <p *ngIf="robotZ?.errors?.['required']">robot x initial position is required!</p>
+    </div>
     <button type="submit">Load</button>
   </div>
 </form>
