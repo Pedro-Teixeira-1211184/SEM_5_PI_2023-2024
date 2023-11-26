@@ -198,25 +198,19 @@ export default class MapService implements IMapService {
       return Result.fail<IPathResultDTO>("Origin and destination can't be the same.");
     }
 
-
     const uri = config.connectionPlaneamento + "/pathBetweenFloors/" + pathDTO.origin + "/" + pathDTO.destination;
-    let solution = new Promise<IPathResultDTO>((resolve) => {
-      http.get(uri, (res) => {
+    let solution = new Promise<IPathResultDTO>((resolve, reject) => {
+      http.get(uri, (resp) => {
         let data = '';
-        res.on('data', (chunk) => {
+        resp.on('data', (chunk) => {
           data += chunk;
         });
-
-        res.on('end', () => {
-          const pathResult: IPathResultDTO = {
-            pathBetweenFloors: JSON.parse(data).pathBetweenFloors,
-            pathPerFloor: JSON.parse(data).pathPerFloor
-          };
-          resolve(pathResult);
+        resp.on('end', () => {
+          resolve(JSON.parse(data));
         });
       }).on("error", (err) => {
-        console.log("Error: " + err.message);
-      }).end();
+        reject(err);
+      });
     });
 
     await solution;

@@ -1,5 +1,5 @@
-:- dynamic elevador/2.  % Assuming elevador/2 has been defined in the elevators file
-:- dynamic corredor/4.  % Assuming corredor/4 has been defined in the passageways file
+:- dynamic elevador/2.  
+:- dynamic corredor/4.  
 
 % Predicate to consult elevator data
 consult_elevators :-
@@ -31,7 +31,7 @@ connect_floors(BuildingCodeFrom, FloorsFrom, BuildingCodeTo, FloorsTo, Type) :-
 
 % Predicate to connect plants based on elevators or passageways
 connect_plants(BuildingCode, Floor, Type) :-
-    plants_map(Width, Length, _),  % Assuming plants_map/3 has been defined in the plants_map file
+    plants_map(Width, Length, _),  
     connect_cells(BuildingCode, Floor, 1, 1, Width, Length, Type).
 
 connect_cells(_, _, Col, Lin, _, 0, _Type) :- !.

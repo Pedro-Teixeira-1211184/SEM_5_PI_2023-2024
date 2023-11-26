@@ -2,9 +2,10 @@
 :- use_module(library(http/json_convert)).
 :- use_module(library(http/http_json)).
 :- use_module(library(http/http_parameters)).
+:- use_module(library(http/http_dispatch)).
 
 % Define the HTTP handler
-:- http_handler('https://localhost:5050/maps/pathBetweenFloors/:origin/:destination', find_path_handler, []).
+:- http_handler('/maps/pathBetweenFloors/:origin/:destination', find_path_handler, []).
 
 % Adapted DFS predicates using the campus graph representation
 find_path_handler(Request) :-
@@ -32,9 +33,6 @@ dfs2_user_input(Act, Dest, Cam) :-
     connected_user_input(Act, X),
     \+ member(X, Cam),
     dfs2_user_input(X, Dest, [X | Cam]).
-
-% Predicate to check if there is a connection between two cells based on user input
-connected_user_input(Cell1, Cell2) :-connected(Cell1, Cell2).
 
 
 :- consult('campus_graph.pl').

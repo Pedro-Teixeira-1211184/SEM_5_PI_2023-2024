@@ -42,7 +42,7 @@ export default class Constants {
     //map
     public static readonly API_MAP_PATCH_URL = Constants.API_BASE_URL + 'maps';
     public static readonly API_MAP_GET_URL = Constants.API_BASE_URL + 'maps/';
-    public static readonly API_PATH_BETWEEN_FLOORS_URL = Constants.API_BASE_URL + 'maps/path/:origin/:destination';
+    public static readonly API_PATH_BETWEEN_FLOORS_URL = Constants.API_BASE_URL + 'maps/path/';
     public static readonly API_MAP_GET_ALL_URL = Constants.API_BASE_URL + 'maps/list';
 
     //elevator

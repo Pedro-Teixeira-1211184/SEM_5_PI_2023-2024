@@ -82,7 +82,7 @@ export class PlaneamentoComponent {
     console.log('Origin:', originValue);
     console.log('Destination:', destinationValue);
   
-    if (originValue === destinationValue) {
+    if (originValue == destinationValue) {
       alert('The origin and destination are the same');
       return;
     }

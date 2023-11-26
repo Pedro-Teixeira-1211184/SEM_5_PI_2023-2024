@@ -1,57 +1,45 @@
+:- use_module(library(http/json)).
+:- use_module(library(http/http_open)).
+
+% Define the output file for passageway data
+output_file_passageways('passageways.pl').
+
 % Predicate to convert passageway data to the desired format
-convert_and_export_passageway_data(BuildingCodeFrom, BuildingCodeTo, Floors) :-
-    % Define the file name for exporting data
-    output_file('passageways.pl'),
-    
+convert_and_export_passageway_data(FloorCode1, FloorCode2) :-
     % Open the file for writing
-    open('passageways.pl', append, File),  % Use append mode to add to an existing file
+    output_file_passageways(OutputFile),
+    open(OutputFile, append, File),  % Use append mode to add to an existing file
     
     % Export passageway data to the file
-    export_passageway_data(BuildingCodeFrom, BuildingCodeTo, Floors, File),
+    format(File, 'corredor(~w, ~w).~n', [FloorCode1, FloorCode2]),
     
     % Close the file
     close(File),
     
     write('Passageway data exported to file: passageways.pl'), nl.
 
-% Predicate to export passageway data to a file in the desired format
-export_passageway_data(BuildingCodeFrom, BuildingCodeTo, [], File) :- !.
-export_passageway_data(BuildingCodeFrom, BuildingCodeTo, [Floor|Rest], File) :-
-    % Write the passageway data to the file in the desired format
-    format(File, 'corredor(~w, ~w, ~w, ~w).~n', [BuildingCodeFrom, BuildingCodeTo, BuildingCodeFrom, BuildingCodeTo]),
-    
-    % Recursively process the rest of the floors
-    export_passageway_data(BuildingCodeFrom, BuildingCodeTo, Rest, File).
-
 % Predicate to fetch passageway data from the API and export passageway information
 fetch_and_export_passageway_data :-
-    url(http://localhost:5050/passageways),
-    output_file(OutputFile),
-    
-    % Perform HTTP GET request to the API
-    http_get(http://localhost:5050/passageways, PassagewayData, [json_object(dict)]),
-    
-    % Open the file for writing
-    open(OutputFile, write, File),
+    % Open the URL and get the content
+    http_open('http://localhost:5050/passageways', In, []),
+    json_read_dict(In, PassagewayData),
+    close(In),
     
     % Export passageway data to the file
-    export_passageway_data_from_api(PassagewayData, File),
-    
-    % Close the file
-    close(File),
-    
-    write('Passageway data exported to file: '), write(OutputFile), nl.
+    export_passageway_data_from_api(PassagewayData).
 
 % Predicate to export passageway data from the API to a file in Prolog format
 export_passageway_data_from_api([], _File) :- !.
-export_passageway_data_from_api([Passageway|Rest], File) :-
+export_passageway_data_from_api([Passageway|Rest]) :-
     % Extract relevant information from the API data
-    BuildingCodeFrom = Passageway.buildingCodeFrom,
-    BuildingCodeTo = Passageway.buildingCodeTo,
-    Floors = Passageway.floors,
+    FloorCode1 = Passageway.get(floorCode1),
+    FloorCode2 = Passageway.get(floorCode2),
     
     % Convert and export the passageway data to the file
-    convert_and_export_passageway_data(BuildingCodeFrom, BuildingCodeTo, Floors),
+    convert_and_export_passageway_data(FloorCode1, FloorCode2),
     
     % Recursively process the rest of the data
-    export_passageway_data_from_api(Rest, File).
+    export_passageway_data_from_api(Rest).
+
+% Example usage:
+% Call fetch_and_export_passageway_data/0 to fetch data from the API and export it to the file

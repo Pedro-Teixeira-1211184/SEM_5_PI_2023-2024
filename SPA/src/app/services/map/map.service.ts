@@ -67,7 +67,7 @@ export class MapService {
 
   public async pathBetweenFloors(origin: string, destination: string): Promise<IPathResultDTO> {
     try {
-      const response = await fetch(Constants.API_PATH_BETWEEN_FLOORS_URL + origin + destination, {
+      const response = await fetch(Constants.API_PATH_BETWEEN_FLOORS_URL + origin + '/' + destination, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
