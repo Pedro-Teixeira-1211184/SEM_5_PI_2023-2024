@@ -1,0 +1,11 @@
+@startuml
+participant "RobDroneGo UI" as UI
+participant "RobDroneGo" as API
+
+activate UI
+activate API
+UI -> API : 1 : .post(/robots)
+API -> API : 1.1 : posts new robot in database
+API --> UI : 2 : response status
+
+@enduml

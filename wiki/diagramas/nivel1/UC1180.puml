@@ -1,0 +1,16 @@
+@startuml
+actor "User" as OE
+
+activate OE
+OE -> ":UI" : 1 : starts the node edition process
+activate ":UI"
+":UI" --> OE : 1.1 : requests data (floorCode1, floorCode2)
+deactivate ":UI"
+OE -> ":UI" : 2 : inserts the data (floorCode1, floorCode2)
+activate ":UI"
+":UI" --> OE : 2.1 : Shows nothing because it is impossible to update a node that only has 2 attributes that are both primary keys
+
+
+deactivate ":UI"
+
+@enduml
