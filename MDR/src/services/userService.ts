@@ -112,4 +112,18 @@ export default class UserService implements IUserService {
     this.user = null;
   }
 
+  public async deleteUser(email: string): Promise<Result<boolean>> {
+    try {
+        const user = await this.userRepo.findByEmail(email);
+
+        if (user == null) {
+            return Result.fail<boolean>("User does not exist");
+        }
+        const x = await this.userRepo.delete(user);
+        return Result.ok<boolean>(x);
+    }catch (e) {
+      throw e;
+    }
+  }
+
 }

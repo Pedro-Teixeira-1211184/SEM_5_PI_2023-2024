@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import Constants from "../../utils/Constants";
+import {IUserDTO} from "../dto/IUserDTO";
 
 @Injectable({
   providedIn: 'root'
@@ -65,6 +66,22 @@ export class AuthService {
     return response.status === 200;
   }
 
+  public async isAuthenticatedUser(): Promise<IUserDTO> {
+    const response = await fetch(Constants.API_AUTH_AUTHENTICATED_URL, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (response.status === 200) {
+      return await response.json();
+    }
+    else {
+      return Promise.reject();
+    }
+  }
+
   public async authenticatedUserRole(): Promise<string> {
     const response = await fetch(Constants.API_AUTH_AUTHENTICATED_URL, {
       method: 'GET',
@@ -78,6 +95,21 @@ export class AuthService {
       return data.role;
     } else {
       return '';
+    }
+  }
+
+  public async deleteUser(email: string): Promise<void> {
+    const response = await fetch(Constants.API_AUTH_DELETE_ACCOUNT_URL + email, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (response.status === 200) {
+      window.location.href = '/login';
+    } else {
+      alert('Delete failed');
     }
   }
 

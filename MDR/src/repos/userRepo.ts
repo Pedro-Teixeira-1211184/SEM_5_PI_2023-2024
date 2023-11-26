@@ -81,4 +81,15 @@ export default class UserRepo implements IUserRepo {
         } else
             return null;
     }
+
+    delete(user: User): Promise<boolean> {
+        try {
+            this.userSchema.deleteOne({domainId: user.id.toString()}, function (err) {
+                if (err) return false;
+            });
+            return Promise.resolve(true);
+        } catch (e) {
+            throw e;
+        }
+    }
 }

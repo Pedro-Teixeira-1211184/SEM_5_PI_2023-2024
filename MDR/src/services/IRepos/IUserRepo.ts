@@ -8,4 +8,6 @@ export default interface IUserRepo extends Repo<User> {
     findByEmail(email: string): Promise<User>;
 
     findById(id: string): Promise<User>;
+
+    delete(user: User): Promise<boolean>;
 }
