@@ -1,0 +1,71 @@
+@startuml
+
+autonumber
+participant "passageway.component" as C
+participant "passageway.service" as S
+participant "RobDroneGo UI" as UI
+participant "RobDroneGo" as API
+participant ":passagewayController" as PC
+participant ":passagewayService" as PS
+participant ":passagewayRepository" as PR
+participant ":passagewayMapper" as PM
+participant ":passagewayDTO" as DTO
+participant "p:passageway" as P
+participant ":passagewaychema" as PSchema
+
+
+activate C
+C -> S : .createpassageway(floorCode1, floorCode2)
+activate S
+S -> UI : .post(/passageways)
+activate UI
+activate API
+UI -> API : .put(/passageways)
+API -> PC : createPassageway(req, res, next)
+activate PC
+PC -> PS : passagewayOrError = updatePassageway(req.body as passagewayDTO)
+activate PS
+PS -> PR : updatedPassageway = update(passagewayDTO.floorCode1, passagewayDTO.floorCode2, passageWayDTO)
+activate PR
+PR -> PSchema : find = findOne(query)
+activate PSchema
+PSchema --> PR : passageway found
+deactivate PSchema
+PR -> PM : passageway = toDomain(passagewayCreated)
+activate PM
+PM -> P : create(passagewayCreated)
+activate P
+P --> PM : passageway
+deactivate P
+PM --> PR : passageway
+deactivate PM
+PR -> PR : update passageway object
+activate PR
+deactivate PR
+PR -> PM : toPersistence(passageway)
+activate PM
+PM --> PR : persistence passageway
+deactivate PM
+PR -> PSchema : replaceOne(query, rawPassageway)
+activate PSchema
+PSchema --> PR : updated passageway
+deactivate PSchema
+PR --> PS : updated passageway
+deactivate PR
+PS -> PM : updatedPassagewayDTO = toDTO(updatedPassagewayDTO)
+activate PM
+PM --> PS : updatedPassagewayDTO
+deactivate PM
+PS --> PC : updatedPassagewayDTO
+deactivate PS
+PC --> API : updatedPassagewayDTO and status 201
+deactivate PC
+API --> UI : updatedPassagewayDTO and status 201
+deactivate API
+UI --> S : passagewayDTO and status 201
+deactivate UI
+S --> C : passagewayDTO and status 201
+deactivate S
+
+
+@enduml

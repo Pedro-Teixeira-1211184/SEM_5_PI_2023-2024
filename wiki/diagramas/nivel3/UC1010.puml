@@ -1,0 +1,72 @@
+@startuml
+
+autonumber
+participant "robot.component" as C
+participant "robot.service" as S
+participant "RobDroneGo UI" as UI
+participant "RobDroneGo" as API
+participant ":robotController" as RC
+participant ":robotService" as RS
+participant ":robotRepository" as RR
+participant ":robotMapper" as RM
+participant ":robotDTO" as DTO
+participant "r:robot" as R
+participant ":robotSchema" as RSchema
+
+activate C
+C -> S : .createRobot(robotType,code,serialNumber,nickname,brand,isActive)
+activate S
+S -> UI : .post(/robots)
+activate UI
+activate API
+UI -> API : .post(/robots)
+API -> RC : createrobot(req, res, next)
+activate RC
+RC -> RS : robotOrError = createrobot(req.Rody as robotDTO)
+activate RS
+RS -> R : robotOrError = create(robotDTO)
+activate R
+R --> RS : robot
+deactivate R
+RS -> RR : robot = save(robot)
+activate RR
+RR -> RM : rawrobot = toPersistence(robot)
+activate RM
+RM --> RR : robot form to save
+deactivate RM
+RR -> RSchema : robotCreated = create(rawrobot)
+activate RSchema
+RSchema --> RR : robot saved
+deactivate RSchema
+deactivate RM
+RR -> RM : robot = toDomain(robotCreated)
+activate RM
+RM -> R : create(robotCreated)
+activate R
+R --> RM : robot
+deactivate R
+RM --> RR : robot form to return
+deactivate RM
+RR --> RS : robot
+deactivate RR
+RS -> RM : robotDTOResult = toDTO(robot)
+activate RM
+RM -> DTO : robotDTO = toDTO(robot)
+activate DTO
+DTO --> RM : robotDTO
+deactivate DTO
+RM --> RS : robotDTO
+deactivate RM
+RS --> RC : robotDTO
+deactivate RS
+RC --> API : robotDTO and status 201
+deactivate RC
+API --> UI : robotDTO and status 201
+deactivate API
+UI --> S : robotDTO and status 201
+deactivate UI
+S --> C : robotDTO and status 201
+deactivate S
+
+
+@enduml

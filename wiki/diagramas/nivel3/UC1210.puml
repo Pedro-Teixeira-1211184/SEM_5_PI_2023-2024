@@ -1,0 +1,71 @@
+@startuml
+
+autonumber
+participant "room.component" as C
+participant "room.service" as S
+participant "RobDroneGo UI" as UI
+participant "RobDroneGo" as API
+participant ":roomController" as RC
+participant ":roomService" as RS
+participant ":roomRepository" as RR
+participant ":roomMapper" as RM
+participant ":roomDTO" as DTO
+participant "r:room" as R
+participant ":roomSchema" as RSchema
+
+activate C
+C -> S : .createroom(roomType,code,serialNumber,nickname,brand,isActive)
+activate S
+S -> UI : .post(/rooms)
+activate UI
+activate API
+UI -> API : .post(/rooms)
+API -> RC : createroom(req, res, next)
+activate RC
+RC -> RS : roomOrError = createroom(req.Rody as roomDTO)
+activate RS
+RS -> R : roomOrError = create(roomDTO)
+activate R
+R --> RS : room
+deactivate R
+RS -> RR : room = save(room)
+activate RR
+RR -> RM : rawroom = toPersistence(room)
+activate RM
+RM --> RR : room form to save
+deactivate RM
+RR -> RSchema : roomCreated = create(rawroom)
+activate RSchema
+RSchema --> RR : room saved
+deactivate RSchema
+deactivate RM
+RR -> RM : room = toDomain(roomCreated)
+activate RM
+RM -> R : create(roomCreated)
+activate R
+R --> RM : room
+deactivate R
+RM --> RR : room form to return
+deactivate RM
+RR --> RS : room
+deactivate RR
+RS -> RM : roomDTOResult = toDTO(room)
+activate RM
+RM -> DTO : roomDTO = toDTO(room)
+activate DTO
+DTO --> RM : roomDTO
+deactivate DTO
+RM --> RS : roomDTO
+deactivate RM
+RS --> RC : roomDTO
+deactivate RS
+RC --> API : roomDTO and status 201
+deactivate RC
+API --> UI : roomDTO and status 201
+deactivate API
+UI --> S : roomDTO and status 201
+deactivate UI
+S --> C : roomDTO and status 201
+deactivate S
+
+@enduml

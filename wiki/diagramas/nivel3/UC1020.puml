@@ -1,7 +1,8 @@
 @startuml
 
 autonumber
-
+participant "robot.component" as C
+participant "robot.service" as S
 participant "RobDroneGo UI" as UI
 participant "RobDroneGo" as API
 participant ":robotController" as EC
@@ -12,14 +13,18 @@ participant ":robotDTO" as DTO
 participant "r:robot" as E
 participant ":robotSchema" as BSchema
 
+activate C
+C -> S : .updateRobotStatus(code)
+activate S
+S -> UI : .patch(/robots/:code)
 activate UI
-UI -> API: .post('/robots/:robot_id')
+UI -> API: .patch('/robots/:code')
 activate API
 API -> EC: updateRobot(req, res, next)
 activate EC
-EC -> BS: robotOrError = updateRobot(req.params.robot_id, req.body)
+EC -> BS: robotOrError = updateRobot(req.params.code, req.body)
 activate BS
-BS -> BR: robot = findByDomainId(robot_id)
+BS -> BR: robot = findByDomainId(code)
 activate BR
 BR -> BSchema: robot = findOne(query)
 activate BSchema
@@ -48,7 +53,7 @@ E --> BM: robot
 deactivate E
 BM --> BS: robot
 deactivate BM
-BS -> BR: robotOrError = update(mapped2, robot_id)
+BS -> BR: robotOrError = update(mapped2, code)
 activate BR
 BR -> BSchema: find = findOne(query)
 activate BSchema
@@ -84,5 +89,10 @@ deactivate BS
 EC --> API: robotDTO and status 201
 deactivate EC
 API --> UI: robotDTO and status 201
+deactivate API
+UI --> S : robotDTO and status 201
+deactivate UI
+S --> C : robotDTO and status 201
+deactivate S
 
 @enduml
