@@ -6,6 +6,7 @@
 :- use_module(library(http/thread_httpd)).
 
 
+
 % Include other files
 :- [getPlants].
 :- [getElevators].
@@ -57,12 +58,12 @@ initialize_server(Port) :-
     initialize_system.
 
 initialize_system :-
-    consult("getPlants.pl"),
-    consult("getPassageways.pl"),
-    consult("getElevators.pl"),
-    consult("graph_handling.pl"),
-    consult("campus_graph.pl"),
-    consult("path_finding.pl"),
+    consult("../getPlants.pl"),
+    consult("./getPassageways.pl"),
+    consult("./getElevators.pl"),
+    consult(".7graph_handling.pl"),
+    consult("./campus_graph.pl"),
+    consult("./path_finding.pl"),
     fetch_and_export_plant_map_data,
     fetch_and_export_passageway_data,
     fetch_and_export_elevator_data,

@@ -24,7 +24,7 @@ export default {
   /**
    * Connection string for Planeamento
    */
-  connectionPlaneamento: process.env.CONNECTION_PLANEAMENTO || "http://localhost:5000/Planeamento",
+  connectionPlaneamento: "http://localhost:5000/Planeamento",
 
   /**
    * Your secret sauce
