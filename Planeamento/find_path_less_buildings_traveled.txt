@@ -1,0 +1,29 @@
+
+building(Step, Building) :-
+ sub_atom(Step, 0, 1, _, Building).
+
+% Predicado que verifica se o primeiro carater do step (que representa o building)
+% é diferente do building atual.
+% Se for, isso significa que o step muda de building e o predicado sucede.
+change_building(Step, Building) :-
+ building(Step, Building),
+ sub_atom(Step, 0, 1, _, Building).
+
+building_changes(Path, Num) :-
+ aggregate_all(count, (member(Step, Path), change_building(Step, Building)), Num).
+
+best_path(Origin, Destination, Path) :-
+ % Gera todos os paths desde origin até destination
+ all_dfs(Origin, Destination, Paths),
+ % Itera sebre estes paths
+ best_path(Paths, [], Path).
+
+% Predicado auxiliar
+best_path([], BestPath, BestPath).
+best_path([Path|Paths], BestPath, BestPath) :-
+ % Calcula o numero de mudancas de building no current path
+ building_changes(Path, Num),
+ % Se o numero de mudancas de buildings for menor do que o numero de mudancas no best path até agora,
+ % atualiza o best path
+ ( Num < BestNum -> best_path(Paths, Path, BestPath) ; 
+ best_path(Paths, BestPath, BestPath) ).
