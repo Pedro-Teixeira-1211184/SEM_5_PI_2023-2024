@@ -11,6 +11,7 @@ import Robot from "./elements/robot";
 import Lights from "./elements/lights";
 import Animations from "./elements/animations";
 import {Door} from "./elements/door";
+import User_interface from "./elements/user_interface";
 
 @Component({
   selector: 'app-view',
@@ -32,6 +33,16 @@ export class ViewComponent implements OnInit {
   isFormVisible: boolean = true;
   showingTable: boolean = false;
   isRunning: boolean = false;
+
+  private floor!: Floor;
+  private robot!: Robot;
+  private light!: Lights;
+  private renderer!: THREE.WebGLRenderer;
+  private scene: THREE.Scene = new THREE.Scene();
+  camera!: Camera;
+  private cameraUsed: any = null;
+  selectedProjection: string = 'perspective';
+  private userInterface!: User_interface;
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -132,16 +143,6 @@ export class ViewComponent implements OnInit {
     return this.canvasRef.nativeElement;
   }
 
-
-  private floor!: Floor;
-  private robot!: Robot;
-  private light!: Lights;
-  private renderer!: THREE.WebGLRenderer;
-  private scene: THREE.Scene = new THREE.Scene();
-  camera!: Camera;
-  private cameraUsed: any = null;
-  selectedProjection: string = 'perspective';
-
   /**
    * Create the scene
    *
@@ -160,6 +161,9 @@ export class ViewComponent implements OnInit {
     this.light = new Lights(Default_data.ambientLight, Default_data.pointLight1, Default_data.pointLight2, Default_data.spotLight);
     this.scene.add(this.light.object);
 
+    this.userInterface = new User_interface(this.scene, this.renderer, this.light, this.robot, this.animations);
+    this.userInterface.setVisibility(true);
+
     // key change
     // Register the event handler to be called on key down
     document.addEventListener("keydown", event => this.keyChange(event, true));
@@ -169,7 +173,7 @@ export class ViewComponent implements OnInit {
 
     //*Camera
     this.camera = new Camera(window.innerWidth, window.innerHeight, "fixed", new THREE.Vector4(0.0, 0.0, 1.0, 1.0), new THREE.Vector3(0.0, 0.0, 0.0),
-      new Orientation(135.0, -45.0), new Orientation(-180.0, -90.0), new Orientation(180.0, 0.0), 8.0, 4.0, 16.0, 0.5, 0.5, 2.0,
+      new Orientation(135.0, -45.0), new Orientation(-180.0, -90.0), new Orientation(180.0, 0.0), 8.0, 4.0, 16.0, 0.5, 0.1, 2.0,
       45.0, 0.01, 100.0);
     this.cameraUsed = this.camera.object;
     //* Renderer
