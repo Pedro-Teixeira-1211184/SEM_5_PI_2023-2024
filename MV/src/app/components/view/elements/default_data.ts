@@ -4,6 +4,8 @@ import * as THREE from "three";
 export default class Default_data {
   public static groundTextureUrl: string = 'assets/textures/ground.jpg';
   public static wallTextureUrl: string = 'assets/textures/wall.jpg';
+  public static doorTextureUrl: string = 'assets/textures/door.jpg';
+  public static bridgeTextureUrl: string = 'assets/textures/bridge.jpg';
   public static initialPosition = [3, 1]; // to change
   public static initialDirection = 0.0;
   public static robot_url: string = "assets/models/gltf/RobotExpressive/RobotExpressive.glb";

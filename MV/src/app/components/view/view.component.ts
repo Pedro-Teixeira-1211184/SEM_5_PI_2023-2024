@@ -10,6 +10,7 @@ import {MapService} from "../../services/map/map.service";
 import Robot from "./elements/robot";
 import Lights from "./elements/lights";
 import Animations from "./elements/animations";
+import {Door} from "./elements/door";
 
 @Component({
     selector: 'app-view',
@@ -109,7 +110,7 @@ export class ViewComponent implements OnInit {
      */
     private createScene(): void {
         //* Scene
-        this.scene.background = new THREE.Color(0x272727);
+
 
         this.floor = new Floor(Default_data.groundTextureUrl, new THREE.Vector3(-3.5, 10, 2.5), this.option);
         this.scene.add(this.floor.object);
