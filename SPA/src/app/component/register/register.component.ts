@@ -43,7 +43,11 @@ export class RegisterComponent {
   }
 
   public async submit() {
-    await this.service.signUp(this.firstName?.value, this.lastName?.value, this.email?.value, this.password?.value, Constants.USER_ROLE);
+    // just if first name and last name are not empty just as email and password
+    if (!this.form.invalid) {
+      //TODO: dont create a user but instead create a request to create a user
+      await this.service.signUp(this.firstName?.value, this.lastName?.value, this.email?.value, this.password?.value, Constants.USER_ROLE);
+    }
   }
 
   accept() {
