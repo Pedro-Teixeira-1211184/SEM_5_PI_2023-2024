@@ -11,4 +11,6 @@ export default interface IUserService {
     Logout(): Promise<void>;
 
     deleteUser(email: string): Promise<Result<boolean>>;
+
+    getUserByEmail(email: string): Promise<Result<IUserDTO>>;
 }

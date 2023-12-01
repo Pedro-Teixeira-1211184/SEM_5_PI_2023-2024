@@ -3,141 +3,172 @@ import Constants from "../../utils/Constants";
 import {IUserDTO} from "../dto/IUserDTO";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class AuthService {
 
-  //user logged in
-  public userEmail: string | null = null;
+    //user logged in
+    public userEmail: string | null = null;
 
-  constructor() {
-  }
-
-  public async login(email: string, password: string): Promise<void> {
-    try {
-      const response = await fetch(Constants.API_AUTH_LOGIN_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password
-        })
-      });
-
-      if (response.status === 200) {
-        const data = await response.json();
-        this.userEmail = data.email;
-        //redirect to home page of a certain user role
-        window.location.href = '/home';
-      } else {
-        alert('Invalid credentials');
-        window.location.href = '/';
-      }
-    } catch (e) {
-      console.log(e);
+    constructor() {
     }
-  }
 
-  public async logout(): Promise<void> {
-    const response = await fetch(Constants.API_AUTH_LOGOUT_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+    public async login(email: string, password: string): Promise<void> {
+        try {
+            const response = await fetch(Constants.API_AUTH_LOGIN_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
+            });
 
-    if (response.status === 200) {
-      window.location.href = '/login';
-    } else {
-      alert('Logout failed');
+            if (response.status === 200) {
+                const data = await response.json();
+                this.userEmail = data.email;
+                //redirect to home page of a certain user role
+                window.location.href = '/home';
+            } else {
+                alert('Invalid credentials');
+                window.location.href = '/';
+            }
+        } catch (e) {
+            console.log(e);
+        }
     }
-  }
 
-  public async isAuthenticated(): Promise<boolean> {
-    const response = await fetch(Constants.API_AUTH_AUTHENTICATED_URL, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+    public async logout(): Promise<void> {
+        const response = await fetch(Constants.API_AUTH_LOGOUT_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
 
-    return response.status === 200;
-  }
-
-  public async isAuthenticatedUser(): Promise<IUserDTO> {
-    const response = await fetch(Constants.API_AUTH_AUTHENTICATED_URL, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-
-    if (response.status === 200) {
-      return await response.json();
+        if (response.status === 200) {
+            window.location.href = '/login';
+        } else {
+            alert('Logout failed');
+        }
     }
-    else {
-      return Promise.reject();
+
+    public async isAuthenticated(): Promise<boolean> {
+        const response = await fetch(Constants.API_AUTH_AUTHENTICATED_URL, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        return response.status === 200;
     }
-  }
 
-  public async authenticatedUserRole(): Promise<string> {
-    const response = await fetch(Constants.API_AUTH_AUTHENTICATED_URL, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+    public async isAuthenticatedUser(): Promise<IUserDTO> {
+        const response = await fetch(Constants.API_AUTH_AUTHENTICATED_URL, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
 
-    if (response.status === 200) {
-      const data = await response.json();
-      return data.role;
-    } else {
-      return '';
+        if (response.status === 200) {
+            return await response.json();
+        } else {
+            return Promise.reject();
+        }
     }
-  }
 
-  public async deleteUser(email: string): Promise<void> {
-    const response = await fetch(Constants.API_AUTH_DELETE_ACCOUNT_URL + email, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+    public async authenticatedUserRole(): Promise<string> {
+        const response = await fetch(Constants.API_AUTH_AUTHENTICATED_URL, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
 
-    if (response.status === 200) {
-      window.location.href = '/login';
-    } else {
-      alert('Delete failed');
+        if (response.status === 200) {
+            const data = await response.json();
+            return data.role;
+        } else {
+            return '';
+        }
     }
-  }
 
-  public async signUp(firstName: string, lastName: string, email: string, password: string, role: string): Promise<void> {
-    try {
-      const response = await fetch(Constants.API_AUTH_SIGNUP_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          firstName: firstName,
-          lastName: lastName,
-          email: email,
-          password: password,
-          role: role
-        })
-      });
+    public async deleteUser(email: string): Promise<void> {
+        const response = await fetch(Constants.API_AUTH_DELETE_ACCOUNT_URL + email, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
 
-      if (response.status === 403) {
-        alert('Sign up failed');
-      } else {
-        alert('Sign up successful');
-        window.location.href = '/home';
-      }
-    } catch (e) {
-      console.log(e);
+        if (response.status === 200) {
+            window.location.href = '/login';
+        } else {
+            alert('Delete failed');
+        }
     }
-  }
+
+    public async signUp(firstName: string, lastName: string, email: string, password: string, role: string): Promise<void> {
+        try {
+            const response = await fetch(Constants.API_AUTH_SIGNUP_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    password: password,
+                    role: role
+                })
+            });
+
+            if (response.status === 403) {
+                alert('Sign up failed');
+            } else {
+                alert('Sign up successful');
+                window.location.href = '/home';
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    public async download(email: string): Promise<void> {
+        try {
+            const response = await fetch(Constants.API_AUTH_GET_USER_BY_EMAIL + email, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.status === 200) {
+                const data = await response.json();
+                //desencriptar password
+                data.password = atob(data.password);
+                const content = 'Email: ' + data.email + '\n' + 'Name: ' + data.firstName + ' ' + data.lastName + '\n' + 'Role: ' + data.role;
+                const blob = new Blob([content], {type: 'text/plain'});
+
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = 'profile.txt'; // Nome do arquivo a ser baixado
+
+                document.body.appendChild(a);
+                a.click();
+
+                document.body.removeChild(a);
+            } else {
+                alert('Download failed');
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
 
 }

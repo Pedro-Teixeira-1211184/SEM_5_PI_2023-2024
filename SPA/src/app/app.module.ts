@@ -34,6 +34,7 @@ import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
 import { RegisterComponent } from './component/register/register.component';
 import { DeleteComponent } from './component/user/delete/delete.component';
+import { DownloadComponent } from './component/user/download/download.component';
 
 
 @NgModule({
@@ -63,7 +64,8 @@ import { DeleteComponent } from './component/user/delete/delete.component';
     PlaneamentoComponent,
     SignUpComponent,
     RegisterComponent,
-    DeleteComponent
+    DeleteComponent,
+    DownloadComponent
   ],
   imports: [
     BrowserModule,

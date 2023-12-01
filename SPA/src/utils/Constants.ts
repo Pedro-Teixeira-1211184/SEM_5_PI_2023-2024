@@ -6,6 +6,7 @@ export default class Constants {
     public static readonly API_AUTH_LOGOUT_URL = Constants.API_BASE_URL + 'api/auth/logout';
     public static readonly API_AUTH_AUTHENTICATED_URL = Constants.API_BASE_URL + 'api/auth/authenticated';
     public static readonly API_AUTH_DELETE_ACCOUNT_URL = Constants.API_BASE_URL + 'api/auth/delete/';
+    public static readonly API_AUTH_GET_USER_BY_EMAIL = Constants.API_BASE_URL + 'api/auth/';
 
     //building
     public static readonly API_BUILDING_CREATE_URL = Constants.API_BASE_URL + 'buildings';

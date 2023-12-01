@@ -10,4 +10,6 @@ export default interface IUserController {
     signOut(req: Request, res: Response, next: NextFunction);
 
     deleteUser(req: Request, res: Response, next: NextFunction);
+
+    getUser(req: Request, res: Response, next: NextFunction);
 }

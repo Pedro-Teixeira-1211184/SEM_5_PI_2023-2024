@@ -66,4 +66,9 @@ export default (app: Router) => {
         ctrl.deleteUser(req, res, next);
     });
 
+    route.get('/:email', async (req: Request, res: Response, next: NextFunction) => {
+        console.log("Getting a User!");
+        ctrl.getUser(req, res, next);
+    });
+
 };

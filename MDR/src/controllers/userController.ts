@@ -2,7 +2,7 @@ import {Inject, Service} from "typedi";
 import config from "../../config";
 import IUserController from "./IControllers/IUserController";
 import IUserService from "../services/IServices/IUserService";
-import e, {NextFunction, Request, Response} from "express";
+import {NextFunction, Request, Response} from "express";
 import {IUserDTO} from "../dto/IUserDTO";
 import {Result} from "../core/logic/Result";
 
@@ -75,6 +75,19 @@ export default class UserController implements IUserController /* TODO: extends 
                 return res.status(403).json(sucOrError.errorValue());
             }
             return res.status(200).json({message: "User deleted!"});
+        } catch (e) {
+            return next(e);
+        }
+    }
+
+    public async getUser(req: Request, res: Response, next: NextFunction) {
+        try {
+            const email = req.params.email;
+            const userOrError = await this.userServiceInstance.getUserByEmail(email) as Result<IUserDTO>;
+            if (userOrError.isFailure) {
+                return res.status(403).json(userOrError.errorValue());
+            }
+            return res.status(200).json(userOrError.getValue());
         } catch (e) {
             return next(e);
         }
