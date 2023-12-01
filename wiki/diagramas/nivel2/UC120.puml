@@ -1,0 +1,11 @@
+@startuml
+participant "UI" as UI
+participant "MDR" as API
+
+activate UI
+activate API
+UI -> API : 1 : .delete(/api/auth/delete/:email)
+API -> API : 1.1 : handles request body, \n checks if user exists, \n deletes user
+API --> UI : 2 : response status
+
+@enduml
