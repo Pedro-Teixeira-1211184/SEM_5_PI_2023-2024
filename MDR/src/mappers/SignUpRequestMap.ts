@@ -18,11 +18,11 @@ export class SignUpRequestMap extends Mapper<SignUpRequest> {
   public static async toDomain(raw: any): Promise<SignUpRequest> {
     const userOrError = SignUpRequest.create(
       {
-        domainId: raw.domainId,
-        firstName: raw.firstName,
-        lastName: raw.lastName,
-        email: raw.email,
-        password: raw.password
+        domainId: raw.signUpRequestDomainId,
+        firstName: raw.signUpRequestFirstName,
+        lastName: raw.signUpRequestLastName,
+        email: raw.signUpRequestEmail,
+        password: raw.signUpRequestPassword
       },
       new UniqueEntityID(raw.domainId)
     );
@@ -34,11 +34,11 @@ export class SignUpRequestMap extends Mapper<SignUpRequest> {
 
   public static toPersistence(user: SignUpRequest): any {
     return {
-      domainId: user.id.toString(),
-      email: user.email,
-      password: user.password,
-      firstName: user.firstName,
-      lastName: user.lastName
+      signUpRequestDomainId: user.id.toString(),
+      signUpRequestEmail: user.email,
+      signUpRequestPassword: user.password,
+      signUpRequestFirstName: user.firstName,
+      signUpRequestLastName: user.lastName
     };
   }
 }

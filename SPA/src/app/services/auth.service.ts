@@ -122,6 +122,7 @@ export class AuthService {
 
     public async signupRequest(firstName: string, lastName: string, email: string, password: string): Promise<void> {
         try {
+          console.log(firstName, lastName, email, password);
             const response = await fetch(Constants.API_AUTH_SIGNUP_REQUEST_URL, {
                 method: 'POST',
                 headers: {
@@ -135,8 +136,10 @@ export class AuthService {
                 })
             });
 
+            const json = await response.json();
+
             if (response.status === 403) {
-                alert('Sign up failed');
+                alert(json);
             } else {
                 window.location.href = '/login';
             }
