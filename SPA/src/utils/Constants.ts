@@ -3,6 +3,7 @@ export default class Constants {
     public static readonly API_BASE_URL = 'http://localhost:5050/';
     public static readonly API_AUTH_LOGIN_URL = Constants.API_BASE_URL + 'api/auth/signin';
     public static readonly API_AUTH_SIGNUP_URL = Constants.API_BASE_URL + 'api/auth/signup';
+    public static readonly API_AUTH_SIGNUP_REQUEST_URL = Constants.API_BASE_URL + 'api/auth/request';
     public static readonly API_AUTH_LOGOUT_URL = Constants.API_BASE_URL + 'api/auth/logout';
     public static readonly API_AUTH_AUTHENTICATED_URL = Constants.API_BASE_URL + 'api/auth/authenticated';
     public static readonly API_AUTH_DELETE_ACCOUNT_URL = Constants.API_BASE_URL + 'api/auth/delete/';

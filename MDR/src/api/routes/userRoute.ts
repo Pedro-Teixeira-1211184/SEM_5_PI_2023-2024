@@ -10,65 +10,78 @@ import IUserController from '../../controllers/IControllers/IUserController';
 const route = Router();
 
 export default (app: Router) => {
-    const ctrl = Container.get(config.controllers.user.name) as IUserController;
+  const ctrl = Container.get(config.controllers.user.name) as IUserController;
 
-    app.use('/auth', route);
+  app.use('/auth', route);
 
-    route.post(
-        '/signup',
-        celebrate({
-            body: Joi.object({
-                firstName: Joi.string().required(),
-                lastName: Joi.string().required(),
-                email: Joi.string().required(),
-                password: Joi.string().required(),
-                role: Joi.string().required()
-            }),
-        }),
-        async (req: Request, res: Response, next: NextFunction) => {
-            console.log("Creating a User!");
-            ctrl.signUp(req, res, next);
-        }
-    );
+  route.post('/request', celebrate({
+      body: Joi.object({
+        firstName: Joi.string().required(),
+        lastName: Joi.string().required(),
+        email: Joi.string().required(),
+        password: Joi.string().required()
+      }),
+    }), async (req: Request, res: Response, next: NextFunction) => {
+      console.log("Creating a User Request!");
+      ctrl.signUpRequest(req, res, next);
+    }
+  );
 
-    route.post(
-        '/signin',
-        celebrate({
-            body: Joi.object({
-                email: Joi.string().required(),
-                password: Joi.string().required(),
-            }),
-        }),
-        async (req: Request, res: Response, next: NextFunction) => {
-            console.log("Signing in a User!");
-            ctrl.signIn(req, res, next);
-        },
-    );
+  route.post(
+    '/signup',
+    celebrate({
+      body: Joi.object({
+        firstName: Joi.string().required(),
+        lastName: Joi.string().required(),
+        email: Joi.string().required(),
+        password: Joi.string().required(),
+        role: Joi.string().required()
+      }),
+    }),
+    async (req: Request, res: Response, next: NextFunction) => {
+      console.log("Creating a User!");
+      ctrl.signUp(req, res, next);
+    }
+  );
 
-    route.get(
-        '/authenticated',
-        async (req: Request, res: Response, next: NextFunction) => {
-            console.log("Checking if user is signed in!");
-            ctrl.isSignedIn(req, res, next);
-        }
-    );
+  route.post(
+    '/signin',
+    celebrate({
+      body: Joi.object({
+        email: Joi.string().required(),
+        password: Joi.string().required(),
+      }),
+    }),
+    async (req: Request, res: Response, next: NextFunction) => {
+      console.log("Signing in a User!");
+      ctrl.signIn(req, res, next);
+    },
+  );
 
-    route.post(
-        '/logout',
-        async (req: Request, res: Response, next: NextFunction) => {
-            console.log("Signing out a User!");
-            ctrl.signOut(req, res, next);
-        }
-    );
+  route.get(
+    '/authenticated',
+    async (req: Request, res: Response, next: NextFunction) => {
+      console.log("Checking if user is signed in!");
+      ctrl.isSignedIn(req, res, next);
+    }
+  );
 
-    route.delete('/delete/:email', async (req: Request, res: Response, next: NextFunction) => {
-        console.log("Deleting a User!");
-        ctrl.deleteUser(req, res, next);
-    });
+  route.post(
+    '/logout',
+    async (req: Request, res: Response, next: NextFunction) => {
+      console.log("Signing out a User!");
+      ctrl.signOut(req, res, next);
+    }
+  );
 
-    route.get('/:email', async (req: Request, res: Response, next: NextFunction) => {
-        console.log("Getting a User!");
-        ctrl.getUser(req, res, next);
-    });
+  route.delete('/delete/:email', async (req: Request, res: Response, next: NextFunction) => {
+    console.log("Deleting a User!");
+    ctrl.deleteUser(req, res, next);
+  });
+
+  route.get('/:email', async (req: Request, res: Response, next: NextFunction) => {
+    console.log("Getting a User!");
+    ctrl.getUser(req, res, next);
+  });
 
 };

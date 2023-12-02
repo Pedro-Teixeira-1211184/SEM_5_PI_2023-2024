@@ -66,6 +66,11 @@ export default async ({expressApp}) => {
         schema: '../persistence/schemas/taskTypeSchema',
     }
 
+    const signUpRequestSchema = {
+        name: 'signUpRequestSchema',
+        schema: '../persistence/schemas/signUpRequestSchema',
+    }
+
     const roleController = {
         name: config.controllers.role.name,
         path: config.controllers.role.path
@@ -171,6 +176,11 @@ export default async ({expressApp}) => {
         path: config.repos.taskType.path
     }
 
+    const signUpRequestRepo = {
+        name: config.repos.signUpRequest.name,
+        path: config.repos.signUpRequest.path
+    }
+
     const roleService = {
         name: config.services.role.name,
         path: config.services.role.path
@@ -235,7 +245,8 @@ export default async ({expressApp}) => {
             robotTypeSchema,
             elevatorSchema,
             mapSchema,
-            taskTypeSchema
+            taskTypeSchema,
+            signUpRequestSchema
         ],
         controllers: [
             roomController,
@@ -260,7 +271,8 @@ export default async ({expressApp}) => {
             robotTypeRepo,
             elevatorRepo,
             mapRepo,
-            taskTypeRepo
+            taskTypeRepo,
+            signUpRequestRepo
         ],
         services: [
             roomService,

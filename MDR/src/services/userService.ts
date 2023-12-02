@@ -12,12 +12,17 @@ import IRoleRepo from './IRepos/IRoleRepo';
 import {User} from '../domain/user';
 import {Result} from "../core/logic/Result";
 import * as crypto from "crypto";
+import {ISignUpRequestDTO} from '../dto/ISignUpRequestDTO';
+import {SignUpRequest} from "../domain/signUpRequest";
+import {SignUpRequestMap} from "../mappers/SignUpRequestMap";
+import ISignUpRequestRepo from "./IRepos/ISignUpRequestRepo";
 
 @Service()
 export default class UserService implements IUserService {
     constructor(
         @Inject(config.repos.user.name) private userRepo: IUserRepo,
-        @Inject(config.repos.role.name) private roleRepo: IRoleRepo
+        @Inject(config.repos.role.name) private roleRepo: IRoleRepo,
+        @Inject(config.repos.signUpRequest.name) private signUpRequestRepo: ISignUpRequestRepo
     ) {
     }
 
@@ -48,9 +53,6 @@ export default class UserService implements IUserService {
             if (emailAlreadyExists != null) {
                 return Result.fail<IUserDTO>("Email already exists");
             }
-
-            //hash password
-            user.password = await this.hashPassword(user.password);
 
             await this.userRepo.save(user);
 
@@ -137,6 +139,30 @@ export default class UserService implements IUserService {
             const userDTO = UserMap.toDTO(user) as IUserDTO;
 
             return Result.ok<IUserDTO>(userDTO);
+        } catch (e) {
+            throw e;
+        }
+    }
+
+    public async SignUpRequest(request: ISignUpRequestDTO): Promise<Result<ISignUpRequestDTO>> {
+        try {
+            const requestOrError = await SignUpRequest.create(request);
+
+            if (requestOrError.isFailure) {
+                return Result.fail<ISignUpRequestDTO>(requestOrError.errorValue());
+            }
+
+            const user = requestOrError.getValue();
+
+            //hash password
+            user.password = await this.hashPassword(user.password);
+
+            const save = await this.signUpRequestRepo.save(user);
+            if (save == null) {
+                return Result.fail<ISignUpRequestDTO>("Request already exists");
+            }
+            const requestDTO = SignUpRequestMap.toDTO(save) as ISignUpRequestDTO;
+            return Result.ok<ISignUpRequestDTO>(requestDTO);
         } catch (e) {
             throw e;
         }

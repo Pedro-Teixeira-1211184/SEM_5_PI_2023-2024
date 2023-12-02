@@ -3,161 +3,186 @@ import Constants from "../../utils/Constants";
 import {IUserDTO} from "../dto/IUserDTO";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class AuthService {
 
-  //user logged in
-  public userEmail: string | null = null;
+    //user logged in
+    public userEmail: string | null = null;
 
-  constructor() {
-  }
-
-  public async login(email: string, password: string): Promise<void> {
-    try {
-      const response = await fetch(Constants.API_AUTH_LOGIN_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password
-        })
-      });
-
-      if (response.status === 200) {
-        const data = await response.json();
-        //redirect to home page of a certain user role
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('role', data.userDTO.role);
-        localStorage.setItem('email', data.userDTO.email);
-        localStorage.setItem('firstName', data.userDTO.firstName);
-        localStorage.setItem('lastName', data.userDTO.lastName);
-        window.location.href = '/home';
-      } else {
-        alert('Invalid credentials');
-        window.location.href = '/';
-      }
-    } catch (e) {
-      console.log(e);
+    constructor() {
     }
-  }
 
-  public async logout(): Promise<void> {
-    const response = await fetch(Constants.API_AUTH_LOGOUT_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+    public async login(email: string, password: string): Promise<void> {
+        try {
+            const response = await fetch(Constants.API_AUTH_LOGIN_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
+            });
 
-    if (response.status === 200) {
-      this.clearLocalStorage();
-      window.location.href = '/login';
-    } else {
-      alert('Logout failed');
-    }
-  }
-
-  public async isAuthenticated(): Promise<boolean> {
-    return localStorage.getItem('token') !== null;
-  }
-
-  public async isAuthenticatedUser(): Promise<IUserDTO> {
-    return {
-      firstName: localStorage.getItem('firstName') as string,
-      lastName: localStorage.getItem('lastName') as string,
-      email: localStorage.getItem('email') as string,
-      role: localStorage.getItem('role') as string,
-      password: ''
-    };
-  }
-
-  public async authenticatedUserRole(): Promise<string> {
-    return localStorage.getItem('role') as string;
-  }
-
-  public async deleteUser(email: string): Promise<void> {
-    const response = await fetch(Constants.API_AUTH_DELETE_ACCOUNT_URL + email, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-
-    if (response.status === 200) {
-      this.clearLocalStorage();
-      window.location.href = '/login';
-    } else {
-      alert('Delete failed');
-    }
-  }
-
-  public async signUp(firstName: string, lastName: string, email: string, password: string, role: string): Promise<void> {
-    try {
-      const response = await fetch(Constants.API_AUTH_SIGNUP_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          firstName: firstName,
-          lastName: lastName,
-          email: email,
-          password: password,
-          role: role
-        })
-      });
-
-      if (response.status === 403) {
-        alert('Sign up failed');
-      } else {
-        window.location.href = '/login';
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
-  public async download(email: string): Promise<void> {
-    try {
-      const response = await fetch(Constants.API_AUTH_GET_USER_BY_EMAIL + email, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
+            if (response.status === 200) {
+                const data = await response.json();
+                //redirect to home page of a certain user role
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('role', data.userDTO.role);
+                localStorage.setItem('email', data.userDTO.email);
+                localStorage.setItem('firstName', data.userDTO.firstName);
+                localStorage.setItem('lastName', data.userDTO.lastName);
+                window.location.href = '/home';
+            } else {
+                alert('Invalid credentials');
+                window.location.href = '/';
+            }
+        } catch (e) {
+            console.log(e);
         }
-      });
-
-      if (response.status === 200) {
-        const data = await response.json();
-        //desencriptar password
-        data.password = atob(data.password);
-        const content = 'Email: ' + data.email + '\n' + 'Name: ' + data.firstName + ' ' + data.lastName + '\n' + 'Role: ' + data.role;
-        const blob = new Blob([content], {type: 'text/plain'});
-
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = 'profile.txt'; // Nome do arquivo a ser baixado
-
-        document.body.appendChild(a);
-        a.click();
-
-        document.body.removeChild(a);
-      } else {
-        alert('Download failed');
-      }
-    } catch (e) {
-      console.log(e);
     }
-  }
 
-  clearLocalStorage(): void {
-    localStorage.removeItem('token')
-    localStorage.removeItem('role')
-    localStorage.removeItem('email')
-    localStorage.removeItem('firstName')
-    localStorage.removeItem('lastName')
-  }
+    public async logout(): Promise<void> {
+        const response = await fetch(Constants.API_AUTH_LOGOUT_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response.status === 200) {
+            this.clearLocalStorage();
+            window.location.href = '/login';
+        } else {
+            alert('Logout failed');
+        }
+    }
+
+    public async isAuthenticated(): Promise<boolean> {
+        return localStorage.getItem('token') !== null;
+    }
+
+    public async isAuthenticatedUser(): Promise<IUserDTO> {
+        return {
+            firstName: localStorage.getItem('firstName') as string,
+            lastName: localStorage.getItem('lastName') as string,
+            email: localStorage.getItem('email') as string,
+            role: localStorage.getItem('role') as string,
+            password: ''
+        };
+    }
+
+    public async authenticatedUserRole(): Promise<string> {
+        return localStorage.getItem('role') as string;
+    }
+
+    public async deleteUser(email: string): Promise<void> {
+        const response = await fetch(Constants.API_AUTH_DELETE_ACCOUNT_URL + email, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response.status === 200) {
+            this.clearLocalStorage();
+            window.location.href = '/login';
+        } else {
+            alert('Delete failed');
+        }
+    }
+
+    public async signUp(firstName: string, lastName: string, email: string, password: string, role: string): Promise<void> {
+        try {
+            const response = await fetch(Constants.API_AUTH_SIGNUP_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    password: password,
+                    role: role
+                })
+            });
+
+            if (response.status === 403) {
+                alert('Sign up failed');
+            } else {
+                window.location.href = '/login';
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    public async signupRequest(firstName: string, lastName: string, email: string, password: string): Promise<void> {
+        try {
+            const response = await fetch(Constants.API_AUTH_SIGNUP_REQUEST_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    password: password,
+                })
+            });
+
+            if (response.status === 403) {
+                alert('Sign up failed');
+            } else {
+                window.location.href = '/login';
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    public async download(email: string): Promise<void> {
+        try {
+            const response = await fetch(Constants.API_AUTH_GET_USER_BY_EMAIL + email, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.status === 200) {
+                const data = await response.json();
+                //desencriptar password
+                data.password = atob(data.password);
+                const content = 'Email: ' + data.email + '\n' + 'Name: ' + data.firstName + ' ' + data.lastName + '\n' + 'Role: ' + data.role;
+                const blob = new Blob([content], {type: 'text/plain'});
+
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = 'profile.txt'; // Nome do arquivo a ser baixado
+
+                document.body.appendChild(a);
+                a.click();
+
+                document.body.removeChild(a);
+            } else {
+                alert('Download failed');
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    clearLocalStorage(): void {
+        localStorage.removeItem('token')
+        localStorage.removeItem('role')
+        localStorage.removeItem('email')
+        localStorage.removeItem('firstName')
+        localStorage.removeItem('lastName')
+    }
 
 }
