@@ -11,4 +11,6 @@ export default interface IMapController {
   pathBetweenFloors(req: Request, res: Response, next: NextFunction);
 
   getAll(req: Request, res: Response, next: NextFunction);
+
+  getAllPlants(req: Request, res: Response, next: NextFunction);
 }

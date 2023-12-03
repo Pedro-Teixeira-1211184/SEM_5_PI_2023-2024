@@ -75,6 +75,11 @@ export default () => {
     ctrl.getAll(req, res, next);
   });
 
+  route.get('/allPlants', (req, res, next) => {
+    console.log("Getting all Plants!");
+    ctrl.getAllPlants(req, res, next);
+  });
+
   route.get('/:buildingCode/:floorNumber', (req, res, next) => {
     console.log("Loading a Map!");
     ctrl.loadMap(req, res, next);

@@ -97,4 +97,24 @@ export default class MapController implements IMapController /* TODO: extends ..
     }
   }
 
+
+  public async getAllPlants(req: Request, res: Response, next: NextFunction) {
+    try{
+      const maps = await this.mapServiceInstance.getAll() as Result<IMapDTO[]>;
+      if (maps.isFailure) {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(maps.errorValue());
+      }
+      let plants: IPlantDTO[] = [];
+      for (let i = 0; i < maps.getValue().length; i++) {
+        const plantDTO = await this.mapServiceInstance.turnToPlant(maps.getValue()[i]);
+        plants.push(plantDTO);
+      }
+      if (plants.length == 0) {
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json("No plants found.");
+      }
+      return res.json(plants).status(StatusCodes.ACCEPTED);
+    }catch (e) {
+      return next(e);
+    }
+  }
 }

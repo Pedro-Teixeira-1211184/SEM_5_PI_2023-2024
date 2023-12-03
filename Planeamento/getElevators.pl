@@ -44,7 +44,7 @@ fetch_and_export_elevator_data :-
     output_file_elevators(OutputFile),
 
     % Perform HTTP GET request to the API
-    http_get('http://localhost:5050/elevators', ElevatorData, [json_object(dict)]),
+    http_get('http://localhost:5050/buildings/elevators', ElevatorData, [json_object(dict)]),
 
     % Open the file for writing
     open(OutputFile, write, File),

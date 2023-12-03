@@ -64,10 +64,10 @@ export_plant_map_line_cols(Col, [Value|Rest], File) :-
 % Predicate to fetch plant map data from the API and export plant map information
 fetch_and_export_plant_map_data :-
     % Specify the API endpoint
-    url('http://localhost:5050/maps'),
+    url('http://localhost:5050/maps/allPlants'),
 
     % Perform HTTP GET request to the API
-    http_get('http://localhost:5050/maps', PlantMapData, [json_object(dict)]),
+    http_get('http://localhost:5050/maps/allPlants', PlantMapData, [json_object(dict)]),
 
     % Export plant map data to the file
     export_plant_map_data_from_api(PlantMapData).

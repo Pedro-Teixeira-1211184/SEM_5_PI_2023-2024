@@ -4,33 +4,22 @@
 :- use_module(library(http/http_parameters)).
 :- use_module(library(http/http_dispatch)).
 :- use_module(library(http/thread_httpd)).
-:- use_module(getPlants,[export_plant_map_data_from_api/2]).
-
-
-
-% Include other files
-:- [getPlants].
-:- [getElevators].
-:- [getPassageways].
-:- [graph_handling].
-:- [campus_graph].
-:- [path_finding].
+:- use_module(getPlants,[fetch_and_export_plant_map_data/0]).
+:- use_module(getElevators,[fetch_and_export_elevator_data/0]).
+:- use_module(getPassageways,[fetch_and_export_passageway_data/0]).
+:- use_module(graph_handling,[create_graph_for_each_plant/0]).
+:- use_module(campus_graph,[connect_floors_with_elevators/0, connect_floors_with_passageways/0]).
+:- use_module(path_finding,[find_path_handler/1]).
 
 % Server management
 start_server(Port) :-
     http_server(http_dispatch, [port(Port)]),
-    asserta(port(Port)).
 
 stop_server :-
     retract(port(Port)),
     http_stop_server(Port, _).
 
 % HTTP request handling
-:- http_handler('/maps', get_all_maps, []).
-get_all_maps(Request) :-
-    cors_enable(Request, [methods([get])]),
-    findall(Map, map(Map), Maps),
-    reply_json(Maps).
 
 :- http_handler('/maps/path/:origin/:destination', path_between_floors_handler, []).
 path_between_floors_handler(Request) :-
@@ -41,30 +30,20 @@ path_between_floors_handler(Request) :-
     prolog_to_json(Path, JSONObject),
     reply_json(JSONObject, [json_object(dict)]).
 
-:- http_handler('/buildings/elevators', get_all_elevators, []).
-get_all_elevators(Request) :-
-    cors_enable(Request, [methods([get])]),
-    findall(Elevator, elevator(Elevator), Elevators),
-    reply_json(Elevators).
-
-:- http_handler('/passageways', get_all_passageways, []).
-get_all_passageways(Request) :-
-    cors_enable(Request, [methods([get])]),
-    findall(Passageway, passageway(Passageway), Passageways),
-    reply_json(Passageways).
-
 % Initialization
 initialize_server(Port) :-
     start_server(Port),
     initialize_system.
 
 initialize_system :-
-    fetch_and_export_plant_map_data,
-    fetch_and_export_passageway_data,
-    fetch_and_export_elevator_data,
-    create_graph_for_each_plant,
-    connect_floors_with_elevators,
-    connect_floors_with_passageways.
+    fetch_and_export_plant_map_data([]),
+    consult('plants_map.pl').
+    fetch_and_export_elevator_data([]),
+    consult('elevators.pl').
+    fetch_and_export_passageway_data([]),
+    consult('passageways.pl').
+    create_graph_for_each_plant/0.
+    connect_floors_with_elevators/0.
+    connect_floors_with_passageways/0.
 
-% Example usage:
-% To start the server on port 5000, call initialize_server(5000).
+
