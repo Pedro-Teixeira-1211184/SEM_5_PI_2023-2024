@@ -1,3 +1,5 @@
+:- module(campus_graph, [connect_floors_with_elevators/0, connect_floors_with_passageways/0]).
+
 :- dynamic elevador/2.  
 :- dynamic corredor/4.  
 

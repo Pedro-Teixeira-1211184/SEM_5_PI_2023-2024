@@ -1,3 +1,5 @@
+:- module(graph_handling, [create_graph_for_each_plant/0]).
+
 % Load plant map data from the file
 :- consult('plants_map.pl').
 

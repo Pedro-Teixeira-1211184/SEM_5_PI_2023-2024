@@ -1,3 +1,5 @@
+:- module(path_finding, [find_path_handler/1]).
+
 :- use_module(library(http/json)).
 :- use_module(library(http/json_convert)).
 :- use_module(library(http/http_json)).

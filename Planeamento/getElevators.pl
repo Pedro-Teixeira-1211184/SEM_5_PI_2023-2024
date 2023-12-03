@@ -1,3 +1,5 @@
+:- module(getElevators, [fetch_and_export_elevator_data/0]).
+
 :- use_module(library(http/json)).
 :- use_module(library(http/http_open)).
 
