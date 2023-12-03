@@ -35,6 +35,7 @@ import {MatButtonModule} from "@angular/material/button";
 import { RegisterComponent } from './component/register/register.component';
 import { DeleteComponent } from './component/user/delete/delete.component';
 import { DownloadComponent } from './component/user/download/download.component';
+import { RequestComponent } from './component/user/request/request.component';
 
 
 @NgModule({
@@ -65,7 +66,8 @@ import { DownloadComponent } from './component/user/download/download.component'
     SignUpComponent,
     RegisterComponent,
     DeleteComponent,
-    DownloadComponent
+    DownloadComponent,
+    RequestComponent
   ],
   imports: [
     BrowserModule,

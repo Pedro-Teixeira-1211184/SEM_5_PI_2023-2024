@@ -113,7 +113,32 @@ export class AuthService {
             if (response.status === 403) {
                 alert('Sign up failed');
             } else {
-                window.location.href = '/login';
+                alert('Sign up successful');
+                await fetch(Constants.API_REQUEST_DELETE_URL + email, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    public async deleteRequest(email: string): Promise<void> {
+        try {
+            const response = await fetch(Constants.API_REQUEST_DELETE_URL + email, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.status === 200) {
+                alert('Delete successful')
+            } else {
+                alert('Delete failed');
             }
         } catch (e) {
             console.log(e);
@@ -122,7 +147,7 @@ export class AuthService {
 
     public async signupRequest(firstName: string, lastName: string, email: string, password: string): Promise<void> {
         try {
-          console.log(firstName, lastName, email, password);
+            console.log(firstName, lastName, email, password);
             const response = await fetch(Constants.API_AUTH_SIGNUP_REQUEST_URL, {
                 method: 'POST',
                 headers: {

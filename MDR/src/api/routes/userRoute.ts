@@ -27,6 +27,18 @@ export default (app: Router) => {
     }
   );
 
+  route.get('/request', async (req: Request, res: Response, next: NextFunction) => {
+    console.log("Getting all User Requests!");
+    ctrl.getAllUserRequests(req, res, next);
+  }
+  );
+
+  route.delete('/request/:email', async (req: Request, res: Response, next: NextFunction) => {
+    console.log("Deleting a User Request!");
+    ctrl.deleteUserRequest(req, res, next);
+  }
+  );
+
   route.post(
     '/signup',
     celebrate({

@@ -50,7 +50,7 @@
   </button>
 </div>
 <div *ngIf="isAdministrator" class="sidebar" id="sidebar">
-  <a>Menu 1</a>
+  <a (click)="requestForm()">Handle requests</a>
   <button class="logout bottom-logout">
     <img src="../../assets/_images/logout_icon.png" alt="Logout">
     <a (click)="logout()">Logout</a>
@@ -116,6 +116,9 @@
 </div>
 <div *ngIf="signUp" id="content">
   <app-sign-up></app-sign-up>
+</div>
+<div *ngIf="request" id="content">
+  <app-request></app-request>
 </div>
 </body>
 </html>

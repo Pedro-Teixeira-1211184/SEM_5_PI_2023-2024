@@ -11,7 +11,7 @@ export class SignUpRequestMap extends Mapper<SignUpRequest> {
       firstName: request.firstName,
       lastName: request.lastName,
       email: request.email,
-      password: ""
+      password: request.password,
     } as ISignUpRequestDTO;
   }
 

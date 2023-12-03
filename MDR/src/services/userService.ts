@@ -26,8 +26,37 @@ export default class UserService implements IUserService {
     ) {
     }
 
+    public async deleteUserRequest(email: string): Promise<Result<boolean>> {
+        try {
+            const user = await this.signUpRequestRepo.findByEmail(email);
+
+            if (user == null) {
+                return Result.fail<boolean>("User does not exist");
+            }
+
+            await this.signUpRequestRepo.delete(user);
+
+            return Result.ok<boolean>(true);
+        } catch (e) {
+            throw e;
+        }
+    }
+
     //user signed up
     user: IUserDTO = null;
+
+    public async getAllUserRequests(): Promise<Result<ISignUpRequestDTO[]>> {
+        try {
+            const requests = await this.signUpRequestRepo.getAll();
+            if (requests == null || requests.length == 0) {
+                return Result.fail<ISignUpRequestDTO[]>("No requests found");
+            }
+            const requestDTOs = requests.map(request => SignUpRequestMap.toDTO(request) as ISignUpRequestDTO);
+            return Result.ok<ISignUpRequestDTO[]>(requestDTOs);
+        } catch (e) {
+            throw e;
+        }
+    }
 
     public async SignUp(dto: IUserDTO): Promise<Result<IUserDTO>> {
         try {

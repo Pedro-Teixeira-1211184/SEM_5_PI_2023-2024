@@ -1,4 +1,4 @@
-import {Service, Inject} from 'typedi';
+import {Inject, Service} from 'typedi';
 
 import ISignUpRequestRepo from "../services/IRepos/ISignUpRequestRepo";
 import {SignUpRequest} from "../domain/signUpRequest";
@@ -13,27 +13,41 @@ import {IFloorPersistence} from "../dataschema/IFloorPersistence";
 export default class SignUpRequestRepo implements ISignUpRequestRepo {
 
     constructor(
-        @Inject('signUpRequestSchema') private signUpResquestSchema: Model<ISignUpRequestPersistence & Document>,
+        @Inject('signUpRequestSchema') private signUpRequestSchema: Model<ISignUpRequestPersistence & Document>,
     ) {
     }
 
-    delete(signUpRequest: SignUpRequest): Promise<void> {
-        return Promise.resolve(undefined);
+    public async delete(signUpRequest: SignUpRequest): Promise<boolean> {
+        try {
+            this.signUpRequestSchema.deleteOne({signUpRequestEmail: signUpRequest.email}, (err) => {
+                if (err) return false;
+            });
+            return true;
+        } catch (e) {
+            throw e;
+        }
     }
 
     public async exists(signUpRequest: SignUpRequest): Promise<boolean> {
         try {
             //determines if the floor exists in the database by his number and buildingCode
             const query = {signUpRequestEmail: signUpRequest.email};
-            const floorDocument = await this.signUpResquestSchema.findOne(query as FilterQuery<IFloorPersistence & Document>);
+            const floorDocument = await this.signUpRequestSchema.findOne(query as FilterQuery<ISignUpRequestPersistence & Document>);
             return floorDocument != null;
         } catch (error) {
             throw error;
         }
     }
 
-    findByEmail(email: UserEmail): Promise<SignUpRequest> {
-        return Promise.resolve(undefined);
+    public async findByEmail(email: string): Promise<SignUpRequest> {
+        try {
+            //determines if the floor exists in the database by his number and buildingCode
+            const query = {signUpRequestEmail: email};
+            const floorDocument = await this.signUpRequestSchema.findOne(query as FilterQuery<ISignUpRequestPersistence & Document>);
+            return SignUpRequestMap.toDomain(floorDocument);
+        } catch (error) {
+            throw error;
+        }
     }
 
     public async save(signUpRequest: SignUpRequest): Promise<SignUpRequest> {
@@ -41,11 +55,24 @@ export default class SignUpRequestRepo implements ISignUpRequestRepo {
             //determines if the floor exists in the database by his number and buildingCode
             if (!await this.exists(signUpRequest)) {
                 const pers = SignUpRequestMap.toPersistence(signUpRequest);
-                const signUpRequestDocument = await this.signUpResquestSchema.create(pers);
+                const signUpRequestDocument = await this.signUpRequestSchema.create(pers);
                 return SignUpRequestMap.toDomain(signUpRequestDocument);
             } else {
                 return null;
             }
+        } catch (e) {
+            return Promise.reject(e);
+        }
+    }
+
+    public async getAll(): Promise<SignUpRequest[]> {
+        try {
+            const signUpRequestDocuments = await this.signUpRequestSchema.find();
+            let signUpRequests: SignUpRequest[] = [];
+            for (let signUpRequestDocument of signUpRequestDocuments) {
+                signUpRequests.push(await SignUpRequestMap.toDomain(signUpRequestDocument));
+            }
+            return signUpRequests;
         } catch (e) {
             return Promise.reject(e);
         }

@@ -14,4 +14,8 @@ export default interface IUserController {
   getUser(req: Request, res: Response, next: NextFunction);
 
   signUpRequest(req: Request, res: Response, next: NextFunction);
+
+  getAllUserRequests(req: Request, res: Response, next: NextFunction);
+
+  deleteUserRequest(req: Request, res: Response, next: NextFunction);
 }

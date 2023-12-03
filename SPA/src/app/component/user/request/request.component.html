@@ -1,0 +1,16 @@
+<div class="container">
+  <div *ngFor="let request of requests" class="cube">
+    <p>Name: {{ request.firstName }} {{ request.lastName }}</p>
+    <p>Email: {{ request.email }}</p>
+    <div class="select-container">
+      <label for="roleSelect">Role:</label>
+      <select id="roleSelect" [(ngModel)]="request.role">
+        <option *ngFor="let role of roles" [value]="role.name">{{ role.name }}</option>
+      </select>
+    </div>
+    <div class="button-container">
+      <button id="approve-but" (click)="accept(request)">Accept</button>
+      <button id="deny-but" (click)="deny(request)">Deny</button>
+    </div>
+  </div>
+</div>
