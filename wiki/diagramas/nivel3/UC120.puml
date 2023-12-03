@@ -1,0 +1,50 @@
+@startuml
+
+autonumber
+participant "UI" as UI
+participant "MDR" as API
+participant ":userController" as BC
+participant ":userService" as BS
+participant ":userRepository" as BR
+participant ":buildingMapper" as BM
+participant ":buildingDTO" as DTO
+participant "b:building" as B
+participant ":buildingSchema" as BSchema
+
+
+activate UI
+activate API
+UI -> API : .delete(/api/auth/delete/:email)
+API -> BC : deleteUser(req, res, next)
+activate BC
+BC -> BS : sucOrError = deleteUser(email)
+activate BS
+BS -> BR : user = findByEmail(email)
+activate BR
+BR -> BSchema : userRecord = findOne(query)
+activate BSchema
+BSchema -> BR : user persistence object
+deactivate BSchema
+BR -> BM: toDomain(userRecord)
+activate BM
+BM -> B : create(userRecord)
+activate B
+deactivate B
+BM --> BR : user
+deactivate BM
+BR --> BS : user
+deactivate BR
+BS -> BR : x = delete(user)
+activate BR
+BR -> BSchema : deleteOne({domainId: user.id.toString()}, function (err) {})
+activate BSchema
+BSchema -> BR : error or success
+deactivate BSchema
+BR --> BS : true/false
+deactivate BR
+BS --> BC : true/false
+deactivate BS
+BC --> API : json with message and status 200 or 403
+API --> UI : json with message and status 200 or 403
+
+@enduml

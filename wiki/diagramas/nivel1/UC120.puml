@@ -1,0 +1,10 @@
+@startuml
+actor "User" as OE
+
+activate OE
+activate ":UI"
+OE -> ":UI" : 1: requests an account deletion
+":UI" --> ":UI" : 1.2: deletes the account
+":UI" --> OE : 2: redirects to the login page
+
+@enduml-+

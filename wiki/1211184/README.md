@@ -15,6 +15,12 @@
 | UC350     | **[*](..\diagramas\nivel1\UC350.md)** | **[*](..\diagramas\nivel2\UC350.md)** | **[*](..\diagramas\nivel3\UC350.md)** |
 | UC370     | **[*](..\diagramas\nivel1\UC370.md)** | **[*](..\diagramas\nivel2\UC370.md)** | **[*](..\diagramas\nivel3\UC370.md)** |
 
+### Sprint 2
 | UC Number | Support                         |
 |-----------|---------------------------------|
 | UC601     | **[*](..\docs\UC601\UC601.md)** |
+
+### Sprint 3
+| UC Number | Nivel 1 | Nivel 2 | Nivel 3 |
+|-----------|---------------|---------|-------|
+| UC120     | **[*](..\diagramas\nivel1\UC120.md)** | **[*](..\diagramas\nivel2\UC120.md)** | **[*](..\diagramas\nivel3\UC120.md)** |
