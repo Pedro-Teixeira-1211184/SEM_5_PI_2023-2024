@@ -1,3 +1,5 @@
+:- module(getPlants, [export_plant_map_data_from_api/2]).
+
 :- use_module(library(http/json)).
 :- use_module(library(http/http_open)).
 

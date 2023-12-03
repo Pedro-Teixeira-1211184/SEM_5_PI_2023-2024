@@ -4,6 +4,7 @@
 :- use_module(library(http/http_parameters)).
 :- use_module(library(http/http_dispatch)).
 :- use_module(library(http/thread_httpd)).
+:- use_module(getPlants,[export_plant_map_data_from_api/2]).
 
 
 
@@ -58,12 +59,6 @@ initialize_server(Port) :-
     initialize_system.
 
 initialize_system :-
-    consult("../getPlants.pl"),
-    consult("./getPassageways.pl"),
-    consult("./getElevators.pl"),
-    consult(".7graph_handling.pl"),
-    consult("./campus_graph.pl"),
-    consult("./path_finding.pl"),
     fetch_and_export_plant_map_data,
     fetch_and_export_passageway_data,
     fetch_and_export_elevator_data,

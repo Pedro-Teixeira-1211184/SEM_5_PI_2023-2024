@@ -24,7 +24,7 @@ export default {
   /**
    * Connection string for Planeamento
    */
-  connectionPlaneamento: "http://localhost:5000/Planeamento",
+  connectionPlaneamento: "http://0.0.0.0:5000/Planeamento",
 
   /**
    * Your secret sauce
