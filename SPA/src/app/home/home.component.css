@@ -36,6 +36,7 @@ body {
   background-color: #333;
   padding-top: 20px;
   transition: left 0.3s;
+  overflow-y: scroll;
 }
 
 .sidebar a {
@@ -97,6 +98,7 @@ body {
   align-items: center;
   justify-content: center;
   background-color: #d9534f; /* Red color */
+  cursor: pointer;
 }
 
 .logout:hover {
@@ -111,10 +113,10 @@ body {
 .logout img {
   width: 30px;
   height: 30px;
-  margin-right: 10px;
+  margin-top: 5px;
 }
 
 .bottom-logout {
-  position: absolute;
-  bottom: 15px;
+  position: relative;
+  display: block;
 }
