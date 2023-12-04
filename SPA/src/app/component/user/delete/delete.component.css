@@ -1,5 +1,5 @@
 /* Estilo para o container principal */
-div {
+.div-template {
     max-width: 400px;
     margin: 20px auto;
     padding: 20px;
@@ -40,4 +40,26 @@ button {
 
 button:hover {
     background-color: #c0392b;
+}
+
+.logout {
+  display: flex;
+  align-items: center;
+}
+
+.logout a:hover {
+  color: black;
+  text-decoration: none;
+}
+
+.logout img {
+  width: 30px;
+  height: 30px;
+  margin-right: 5px; /* Adiciona margem à direita da imagem */
+}
+
+#button-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

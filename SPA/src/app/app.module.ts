@@ -36,6 +36,7 @@ import { RegisterComponent } from './component/register/register.component';
 import { DeleteComponent } from './component/user/delete/delete.component';
 import { DownloadComponent } from './component/user/download/download.component';
 import { RequestComponent } from './component/user/request/request.component';
+import { TaskRequestComponent } from './component/task/task-request/task-request.component';
 
 
 @NgModule({
@@ -67,7 +68,8 @@ import { RequestComponent } from './component/user/request/request.component';
     RegisterComponent,
     DeleteComponent,
     DownloadComponent,
-    RequestComponent
+    RequestComponent,
+    TaskRequestComponent
   ],
   imports: [
     BrowserModule,

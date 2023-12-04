@@ -3,27 +3,31 @@ import {AuthService} from "../../../services/auth.service";
 import {IUserDTO} from "../../../dto/IUserDTO";
 
 @Component({
-    selector: 'app-delete',
-    templateUrl: './delete.component.html',
-    styleUrls: ['./delete.component.css']
+  selector: 'app-delete',
+  templateUrl: './delete.component.html',
+  styleUrls: ['./delete.component.css']
 })
 export class DeleteComponent implements OnInit {
 
-    service: AuthService = inject(AuthService);
-    user!: IUserDTO;
+  service: AuthService = inject(AuthService);
+  user!: IUserDTO;
 
-    ngOnInit(): void {
-    }
+  ngOnInit(): void {
+  }
 
-    constructor() {
-        this.getUser();
-    }
+  constructor() {
+    this.getUser();
+  }
 
-    async getUser() {
-        this.user = await this.service.isAuthenticatedUser();
-    }
+  async getUser() {
+    this.user = await this.service.isAuthenticatedUser();
+  }
 
-    async deleteAccount() {
-        await this.service.deleteUser(this.user.email);
-    }
+  async deleteAccount() {
+    await this.service.deleteUser(this.user.email);
+  }
+
+  public async logout(): Promise<void> {
+    await this.service.logout();
+  }
 }

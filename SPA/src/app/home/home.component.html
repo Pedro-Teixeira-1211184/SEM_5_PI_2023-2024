@@ -26,38 +26,23 @@
   <a (click)="floorsWithPassagewayForm()">List floors of a building with passageways</a>
   <a (click)="buildingsByFloorRangeForm()">List buildings with a floor range</a>
   <a (click)="createRoomForm()">Create a room</a>
-  <a>Menu 1</a>
-  <a>Menu 2</a>
-  <a>Menu 3</a>
-  <button class="logout bottom-logout">
-    <img src="../../assets/_images/logout_icon.png" alt="Logout">
-    <a (click)="logout()"></a>
-  </button>
+  <a (click)="taskRequestForm()">Request task</a>
 </div>
 <div *ngIf="isFleetManager" class="sidebar" id="sidebar">
   <a (click)="createRobotForm()">Create robot</a>
   <a (click)="deactivateRobotForm()">Deactivate robot</a>
   <a (click)="createRobotTypeForm()">Create robot type</a>
-  <a href="#">Menu 7</a>
-  <a href="#">Menu 8</a>
-  <button class="logout bottom-logout">
-    <img src="../../assets/_images/logout_icon.png" alt="Logout">
-    <a (click)="logout()"></a>
-  </button>
+  <a (click)="taskRequestForm()">Request task</a>
 </div>
 <div *ngIf="isTaskManager" class="sidebar" id="sidebar">
   <a (click)="planeamentoForm()">Get Path</a>
-  <button class="logout bottom-logout">
-    <img src="../../assets/_images/logout_icon.png" alt="Logout">
-    <a (click)="logout()"></a>
-  </button>
 </div>
 <div *ngIf="isAdministrator" class="sidebar" id="sidebar">
-  <a (click)="requestForm()">Handle requests</a>
-  <button class="logout bottom-logout">
-    <img src="../../assets/_images/logout_icon.png" alt="Logout">
-    <a (click)="logout()"></a>
-  </button>
+  <a (click)="signUpRequestForm()">Handle requests</a>
+  <a (click)="taskRequestForm()">Request task</a>
+</div>
+<div *ngIf="isUser" class="sidebar" id="sidebar">
+  <a (click)="taskRequestForm()">Request task</a>
 </div>
 <div *ngIf="home_body" id="content">
   <h1>Home page</h1>
@@ -120,8 +105,11 @@
 <div *ngIf="signUp" id="content">
   <app-sign-up></app-sign-up>
 </div>
-<div *ngIf="request" id="content">
+<div *ngIf="signUpRequest" id="content">
   <app-request></app-request>
+</div>
+<div *ngIf="taskRequest" id="content">
+  <app-task-request></app-task-request>
 </div>
 </body>
 </html>

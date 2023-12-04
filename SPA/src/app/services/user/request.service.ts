@@ -21,8 +21,7 @@ export class RequestService {
       if (response.status === 200) {
         return await response.json() as ISignUpRequestDTO[];
       } else {
-        alert('No requests found');
-        window.location.href = '/home';
+        return [];
       }
     } catch (e) {
       console.log(e);

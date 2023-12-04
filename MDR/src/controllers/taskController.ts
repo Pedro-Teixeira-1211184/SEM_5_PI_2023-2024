@@ -1,10 +1,9 @@
 import {Inject, Service} from 'typedi';
 import config from "../../config";
-import {NextFunction, Request, Response} from "express";
+import e, {NextFunction, Request, Response} from "express";
 import ITaskController from "./IControllers/ITaskController";
 import ITaskService from "../services/IServices/ITaskService";
 import ITaskTypeDTO from "../dto/ITaskTypeDTO";
-
 
 @Service()
 export default class TaskController implements ITaskController /* TODO: extends ../core/infra/BaseController */ {
@@ -26,6 +25,9 @@ export default class TaskController implements ITaskController /* TODO: extends 
             return next(e);
         }
     }
+
+  public async createTaskRequest(req: Request, res: Response, next: NextFunction) {
+  }
 
 
 }

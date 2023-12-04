@@ -89,34 +89,3 @@ body {
   transition: margin-left 0.3s;
 }
 
-.logout {
-  width: 100%;
-  text-decoration: none;
-  font-size: 20px;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #d9534f; /* Red color */
-  cursor: pointer;
-}
-
-.logout:hover {
-  background-color: #c9302c; /* Red color */
-}
-
-.logout a:hover {
-  color: black;
-  text-decoration: none;
-}
-
-.logout img {
-  width: 30px;
-  height: 30px;
-  margin-top: 5px;
-}
-
-.bottom-logout {
-  position: relative;
-  display: block;
-}

@@ -16,6 +16,7 @@ export class HomeComponent implements OnInit {
   isAdministrator: boolean = false;
   isFleetManager: boolean = false;
   isTaskManager: boolean = false;
+  isUser: boolean = false;
 
   home_body: boolean = true;
   createBuilding: boolean = false;
@@ -38,7 +39,8 @@ export class HomeComponent implements OnInit {
   pathBetweenFloors: boolean = false;
   createRoom: boolean = false;
   signUp: boolean = false;
-  request: boolean = false;
+  signUpRequest: boolean = false;
+  taskRequest: boolean = false;
 
 
   constructor(auth: AuthService) {
@@ -53,6 +55,9 @@ export class HomeComponent implements OnInit {
     });
     this.isTaskManagerQuery().then((isTaskManager) => {
       this.isTaskManager = isTaskManager;
+    });
+    this.isUserQuery().then((isUser) => {
+      this.isUser = isUser;
     });
   }
 
@@ -121,6 +126,11 @@ export class HomeComponent implements OnInit {
     return x === Constants.default.TASK_MANAGER_ROLE;
   }
 
+  private async isUserQuery(): Promise<boolean> {
+    const x = await this.auth.authenticatedUserRole();
+    return x === Constants.default.USER_ROLE;
+  }
+
   clear() {
     this.home_body = true;
     this.createBuilding = false;
@@ -142,7 +152,8 @@ export class HomeComponent implements OnInit {
     this.pathBetweenFloors = false;
     this.createRoom = false;
     this.signUp = false;
-    this.request = false;
+    this.signUpRequest = false;
+    this.taskRequest = false;
   }
 
   floorsByBuildingCodeList() {
@@ -167,7 +178,8 @@ export class HomeComponent implements OnInit {
     this.pathBetweenFloors = false;
     this.createRoom = false;
     this.signUp = false;
-    this.request = false;
+    this.signUpRequest = false;
+    this.taskRequest = false;
   }
 
   buildingCreateForm() {
@@ -192,7 +204,8 @@ export class HomeComponent implements OnInit {
     this.pathBetweenFloors = false;
     this.createRoom = false;
     this.signUp = false;
-    this.request = false;
+    this.signUpRequest = false;
+    this.taskRequest = false;
   }
 
   floorCreateForm() {
@@ -217,7 +230,8 @@ export class HomeComponent implements OnInit {
     this.pathBetweenFloors = false;
     this.createRoom = false;
     this.signUp = false;
-    this.request = false;
+    this.signUpRequest = false;
+    this.taskRequest = false;
   }
 
   buildingEditForm() {
@@ -242,7 +256,8 @@ export class HomeComponent implements OnInit {
     this.pathBetweenFloors = false;
     this.createRoom = false;
     this.signUp = false;
-    this.request = false;
+    this.signUpRequest = false;
+    this.taskRequest = false;
   }
 
   buildingList() {
@@ -267,7 +282,8 @@ export class HomeComponent implements OnInit {
     this.pathBetweenFloors = false;
     this.createRoom = false;
     this.signUp = false;
-    this.request = false;
+    this.signUpRequest = false;
+    this.taskRequest = false;
   }
 
   deactivateRobotForm() {
@@ -292,7 +308,8 @@ export class HomeComponent implements OnInit {
     this.pathBetweenFloors = false;
     this.createRoom = false;
     this.signUp = false;
-    this.request = false;
+    this.signUpRequest = false;
+    this.taskRequest = false;
   }
 
   createRobotTypeForm() {
@@ -317,7 +334,8 @@ export class HomeComponent implements OnInit {
     this.pathBetweenFloors = false;
     this.createRoom = false;
     this.signUp = false;
-    this.request = false;
+    this.signUpRequest = false;
+    this.taskRequest = false;
   }
 
   passagewayCreateForm() {
@@ -342,7 +360,8 @@ export class HomeComponent implements OnInit {
     this.pathBetweenFloors = false;
     this.createRoom = false;
     this.signUp = false;
-    this.request = false;
+    this.signUpRequest = false;
+    this.taskRequest = false;
   }
 
   patchMapForm() {
@@ -367,7 +386,8 @@ export class HomeComponent implements OnInit {
     this.pathBetweenFloors = false;
     this.createRoom = false;
     this.signUp = false;
-    this.request = false;
+    this.signUpRequest = false;
+    this.taskRequest = false;
   }
 
 
@@ -393,7 +413,8 @@ export class HomeComponent implements OnInit {
     this.pathBetweenFloors = false;
     this.createRoom = false;
     this.signUp = false;
-    this.request = false;
+    this.signUpRequest = false;
+    this.taskRequest = false;
   }
 
   createElevatorForm() {
@@ -418,7 +439,8 @@ export class HomeComponent implements OnInit {
     this.pathBetweenFloors = false;
     this.createRoom = false;
     this.signUp = false;
-    this.request = false;
+    this.signUpRequest = false;
+    this.taskRequest = false;
   }
 
   listPassagewaysBetween2BuildingsForm() {
@@ -443,7 +465,8 @@ export class HomeComponent implements OnInit {
     this.pathBetweenFloors = false;
     this.createRoom = false;
     this.signUp = false;
-    this.request = false;
+    this.signUpRequest = false;
+    this.taskRequest = false;
   }
 
   createRobotForm() {
@@ -468,7 +491,8 @@ export class HomeComponent implements OnInit {
     this.pathBetweenFloors = false;
     this.createRoom = false;
     this.signUp = false;
-    this.request = false;
+    this.signUpRequest = false;
+    this.taskRequest = false;
   }
 
   editPassagewayForm() {
@@ -493,7 +517,8 @@ export class HomeComponent implements OnInit {
     this.pathBetweenFloors = false;
     this.createRoom = false;
     this.signUp = false;
-    this.request = false;
+    this.signUpRequest = false;
+    this.taskRequest = false;
   }
 
   floorsWithPassagewayForm() {
@@ -518,7 +543,8 @@ export class HomeComponent implements OnInit {
     this.pathBetweenFloors = false;
     this.createRoom = false;
     this.signUp = false;
-    this.request = false;
+    this.signUpRequest = false;
+    this.taskRequest = false;
   }
 
   buildingsByFloorRangeForm() {
@@ -543,7 +569,8 @@ export class HomeComponent implements OnInit {
     this.pathBetweenFloors = false;
     this.createRoom = false;
     this.signUp = false;
-    this.request = false;
+    this.signUpRequest = false;
+    this.taskRequest = false;
   }
 
   createRoomForm() {
@@ -567,7 +594,8 @@ export class HomeComponent implements OnInit {
     this.createRoom = true;
     this.getMap = false;
     this.signUp = false;
-    this.request = false;
+    this.signUpRequest = false;
+    this.taskRequest = false;
   }
 
 
@@ -593,7 +621,8 @@ export class HomeComponent implements OnInit {
     this.pathBetweenFloors = true;
     this.createRoom = false;
     this.signUp = false;
-    this.request = false;
+    this.signUpRequest = false;
+    this.taskRequest = false;
   }
 
   signUpForm() {
@@ -618,10 +647,11 @@ export class HomeComponent implements OnInit {
     this.pathBetweenFloors = false;
     this.createRoom = false;
     this.signUp = true;
-    this.request = false;
+    this.signUpRequest = false;
+    this.taskRequest = false;
   }
 
-  requestForm() {
+  signUpRequestForm() {
     this.home_body = false;
     this.createBuilding = false;
     this.createFloor = false;
@@ -643,6 +673,34 @@ export class HomeComponent implements OnInit {
     this.pathBetweenFloors = false;
     this.createRoom = false;
     this.signUp = false;
-    this.request = true;
+    this.signUpRequest = true;
+    this.taskRequest = false;
   }
+
+  taskRequestForm() {
+    this.home_body = false;
+    this.createBuilding = false;
+    this.createFloor = false;
+    this.editBuilding = false;
+    this.listBuilding = false;
+    this.deactivateRobot = false;
+    this.floorsByBuildingCode = false;
+    this.createRobotType = false;
+    this.createPassageway = false;
+    this.patchMap = false;
+    this.editFloor = false;
+    this.listPassagewaysBetween2Buildings = false;
+    this.createElevator = false;
+    this.createRobot = false;
+    this.editPassageway = false;
+    this.floorsWithPassageway = false;
+    this.buildingsByFloorRange = false;
+    this.getMap = false;
+    this.pathBetweenFloors = false;
+    this.createRoom = false;
+    this.signUp = false;
+    this.signUpRequest = false;
+    this.taskRequest = true;
+  }
+
 }
