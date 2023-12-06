@@ -29,11 +29,11 @@ export class RobotService {
 
             const json = await response.json();
 
-            if (response.status === 200) {
+            if (response.status === 201) {
                 alert('Created robot successfully');
                 window.location.href = '/home';
             } else {
-                alert(json);
+                alert('Was not possible to create this robot');
             }
         } catch (e) {
             console.log(e);

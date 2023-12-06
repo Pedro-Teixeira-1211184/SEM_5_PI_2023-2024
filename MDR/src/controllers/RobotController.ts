@@ -3,7 +3,7 @@ import config from "../../config";
 import {StatusCodes} from "http-status-codes";
 import IRobotController from "./IControllers/IRobotController";
 import IRobotService from "../services/IServices/IRobotService";
-import {NextFunction, Request, Response} from "express";
+import e, {NextFunction, Request, Response} from "express";
 import IRobotDTO from "../dto/IRobotDTO";
 import {Result} from "../core/logic/Result";
 import IRobotTypeDTO from "../dto/IRobotTypeDTO";
@@ -72,6 +72,23 @@ export default class RobotController implements IRobotController /* TODO: extend
       const robotsDTO = robots.getValue();
 
       return res.status(StatusCodes.OK).json(robotsDTO);
+
+    } catch (e) {
+      return next(e);
+    }
+  }
+
+  public async getRobotType(req: Request, res: Response, next: NextFunction) {
+    try {
+      const types = await this.robotServiceInstance.getAllTypes() as Result<IRobotTypeDTO[]>
+
+      if (types.isFailure) {
+        return res.status(StatusCodes.BAD_REQUEST).json(types.errorValue());
+      }
+
+      const typesDTO = types.getValue();
+
+      return res.status(StatusCodes.OK).json(typesDTO);
 
     } catch (e) {
       return next(e);

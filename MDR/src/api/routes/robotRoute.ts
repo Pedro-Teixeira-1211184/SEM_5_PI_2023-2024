@@ -36,6 +36,12 @@ export default () => {
         }
     );
 
+    route.get('/types', (req, res, next) => {
+        console.log("Creating a robot type!");
+        ctrl.getRobotType(req, res, next);
+      }
+    );
+
     route.patch('/:robot_id', celebrate({
         body: Joi.object({
             isActive: Joi.boolean().error(new Error('Invalid robot status'))

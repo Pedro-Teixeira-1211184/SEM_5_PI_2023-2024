@@ -1,6 +1,6 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { RobotService } from 'src/app/services/robot/robot.service';
+import {Component, inject, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {RobotService} from 'src/app/services/robot/robot.service';
 
 @Component({
   selector: 'app-create-robot',
@@ -11,14 +11,11 @@ export class CreateRobotComponent {
   robotForm!: FormGroup;
   service: RobotService = inject(RobotService);
 
-  constructor() { }
+  constructor() {
+  }
 
   public async submit() {
-    try{
-      if (this.robotForm.invalid) {
-        alert('Please fill all the fields');
-        return;
-      }
+    try {
       const response = await this.service.createRobot(
         this.robotType?.value,
         this.code?.value,
@@ -27,7 +24,7 @@ export class CreateRobotComponent {
         this.brand?.value,
         this.isActive?.value
       );
-    }catch(e){
+    } catch (e) {
       console.log(e);
     }
   }
@@ -42,6 +39,7 @@ export class CreateRobotComponent {
       brand: new FormControl('', [Validators.required]),
       isActive: new FormControl('', [Validators.required])
     });
+    this.robotForm.get('isActive')?.setValue(false);
   }
 
   get robotType() {
@@ -67,6 +65,4 @@ export class CreateRobotComponent {
   get isActive() {
     return this.robotForm.get('isActive');
   }
-
-  
 }

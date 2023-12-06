@@ -10,4 +10,6 @@ export default interface IRobotService {
   updateRobot(robot_id: string, body: IRobotDTO): Promise<Result<IRobotDTO>>;
 
   getAll(): Promise<Result<Array<IRobotDTO>>>;
+
+  getAllTypes(): Promise<Result<Array<IRobotTypeDTO>>>;
 }
