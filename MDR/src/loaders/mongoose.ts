@@ -5,7 +5,7 @@ async function connectToDatabase(): Promise<Connection> {
   try {
     await mongoose.connect(config.databaseURL, {
       user: 'mongoadmin',
-      pass: 'efc6511ad2b66cbb9750c5c1',
+      pass: '1593943c6daffc4c4b671b2a',
     });
     return mongoose.connection;
   } catch (error) {
