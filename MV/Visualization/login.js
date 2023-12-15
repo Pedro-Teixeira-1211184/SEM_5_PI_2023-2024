@@ -25,7 +25,7 @@ function login() {
             localStorage.setItem('token', data.token);
 
             // Redireciona para a página "View.html"
-            window.location.href = 'View.html';
+            window.location.href = 'Thumb_Raiser.html';
         })
         .catch(error => {
             alert("Erro no login: " + error.message);
