@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "G:\\Faculdade\\Faculdade\\3_ano\\SEM_5_PI_2023-2024\\Client\\Client.csproj": {}
+    "G:\\Faculdade\\Faculdade\\3_ano\\SEM_5_PI_2023-2024\\CLIENT\\CLIENT.csproj": {}
   },
   "projects": {
-    "G:\\Faculdade\\Faculdade\\3_ano\\SEM_5_PI_2023-2024\\Client\\Client.csproj": {
+    "G:\\Faculdade\\Faculdade\\3_ano\\SEM_5_PI_2023-2024\\CLIENT\\CLIENT.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\Faculdade\\Faculdade\\3_ano\\SEM_5_PI_2023-2024\\Client\\Client.csproj",
-        "projectName": "Client",
-        "projectPath": "G:\\Faculdade\\Faculdade\\3_ano\\SEM_5_PI_2023-2024\\Client\\Client.csproj",
+        "projectUniqueName": "G:\\Faculdade\\Faculdade\\3_ano\\SEM_5_PI_2023-2024\\CLIENT\\CLIENT.csproj",
+        "projectName": "CLIENT",
+        "projectPath": "G:\\Faculdade\\Faculdade\\3_ano\\SEM_5_PI_2023-2024\\CLIENT\\CLIENT.csproj",
         "packagesPath": "C:\\Users\\pepet\\.nuget\\packages\\",
-        "outputPath": "G:\\Faculdade\\Faculdade\\3_ano\\SEM_5_PI_2023-2024\\Client\\obj\\",
+        "outputPath": "G:\\Faculdade\\Faculdade\\3_ano\\SEM_5_PI_2023-2024\\CLIENT\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\pepet\\AppData\\Roaming\\NuGet\\NuGet.Config"

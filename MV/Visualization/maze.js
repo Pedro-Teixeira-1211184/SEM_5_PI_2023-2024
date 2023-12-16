@@ -21,18 +21,15 @@ export default class Maze {
             this.initialPosition = this.cellToCartesian(description.initialPosition);
             this.initialDirection = description.initialDirection;
 
-            // Store the maze's exit location
-            this.exitLocation = this.cellToCartesian(description.exitLocation);
-
             // Create a group of objects
             this.object = new THREE.Group();
 
             // Create the ground
-            this.ground = new Ground({ textureUrl: description.groundTextureUrl, size: description.size });
+            this.ground = new Ground({textureUrl: description.groundTextureUrl, size: description.size});
             this.object.add(this.ground.object);
 
             // Create a wall
-            this.wall = new Wall({ textureUrl: description.wallTextureUrl });
+            this.wall = new Wall({textureUrl: description.wallTextureUrl});
 
             // Build the maze
             let wallObject;
@@ -145,8 +142,4 @@ export default class Maze {
         }
         return Infinity;
     }
-
-    foundExit(position) {
-        return Math.abs(position.x - this.exitLocation.x) < 0.5 * this.scale.x && Math.abs(position.z - this.exitLocation.z) < 0.5 * this.scale.z
-    };
 }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "MJSL0jVcwL24YOoGa4Wzu3Hw6G3/2CLF7vQqtg3lXtzz3+F5PdSFPvb8R2xrzZRlgZ3+14Webi1+4VdEjpIOFg==",
+  "dgSpecHash": "asfpJ8U2NfrsLtBFaJMqOaPPQu2LLvzeGiSkrVaf14yrVPcgTdBW1803rtLORwcjXPvgk6qOpmqn3e3yXQAxEA==",
   "success": true,
-  "projectFilePath": "G:\\Faculdade\\Faculdade\\3_ano\\SEM_5_PI_2023-2024\\Client\\Client.csproj",
+  "projectFilePath": "G:\\Faculdade\\Faculdade\\3_ano\\SEM_5_PI_2023-2024\\CLIENT\\CLIENT.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\pepet\\.nuget\\packages\\microsoft.aspnetcore.openapi\\8.0.0\\microsoft.aspnetcore.openapi.8.0.0.nupkg.sha512",
     "C:\\Users\\pepet\\.nuget\\packages\\microsoft.entityframeworkcore\\8.0.0\\microsoft.entityframeworkcore.8.0.0.nupkg.sha512",

@@ -250,6 +250,8 @@ export default class ThumbRaiser {
         this.helpCheckBox.checked = false;
         this.statisticsCheckBox = document.getElementById("statistics");
         this.statisticsCheckBox.checked = false;
+        this.dynamicForm = document.getElementById("dynamicForm");
+        this.dynamicForm.style.visibility = "visible";
 
         // Build the help panel
         this.buildHelpPanel(); // MISS
@@ -618,21 +620,6 @@ export default class ThumbRaiser {
         this.displayPanel();
     }
 
-    finalSequence() {
-        // Disable the fog
-        this.fog.enabled = false;
-        // Reconfigure the third-person view camera
-        this.thirdPersonViewCamera.setOrientation(new Orientation(180.0, this.thirdPersonViewCamera.initialOrientation.v));
-        this.thirdPersonViewCamera.setDistance(this.thirdPersonViewCamera.initialDistance);
-        this.thirdPersonViewCamera.setZoom(2.0);
-        // Set it as the active view camera
-        this.setActiveViewCamera(this.thirdPersonViewCamera);
-        // Set single-view mode
-        this.setViewMode(false);
-        // Set the final action
-        this.animations.fadeToAction("Dance", 0.2);
-    }
-
     collision(position) {
         return this.maze.distanceToWestWall(position) < this.player.radius || this.maze.distanceToEastWall(position) < this.player.radius || this.maze.distanceToNorthWall(position) < this.player.radius || this.maze.distanceToSouthWall(position) < this.player.radius;
     }
@@ -669,56 +656,53 @@ export default class ThumbRaiser {
             // Update the player
             if (!this.animations.actionInProgress) {
                 // Check if the player found the exit
-                if (this.maze.foundExit(this.player.position)) {
-                    this.finalSequence();
-                } else {
-                    let coveredDistance = this.player.walkingSpeed * deltaT;
-                    let directionIncrement = this.player.turningSpeed * deltaT;
-                    if (this.player.keyStates.run) {
-                        coveredDistance *= this.player.runningFactor;
-                        directionIncrement *= this.player.runningFactor;
-                    }
-                    if (this.player.keyStates.left) {
-                        this.player.direction += directionIncrement;
-                    } else if (this.player.keyStates.right) {
-                        this.player.direction -= directionIncrement;
-                    }
-                    const direction = THREE.MathUtils.degToRad(this.player.direction);
-                    if (this.player.keyStates.backward) {
-                        const newPosition = new THREE.Vector3(-coveredDistance * Math.sin(direction), 0.0, -coveredDistance * Math.cos(direction)).add(this.player.position);
-                        if (this.collision(newPosition)) {
-                            this.animations.fadeToAction("Death", 0.2);
-                        } else {
-                            this.animations.fadeToAction(this.player.keyStates.run ? "Running" : "Walking", 0.2);
-                            this.player.position = newPosition;
-                        }
-                    } else if (this.player.keyStates.forward) {
-                        const newPosition = new THREE.Vector3(coveredDistance * Math.sin(direction), 0.0, coveredDistance * Math.cos(direction)).add(this.player.position);
-                        if (this.collision(newPosition)) {
-                            this.animations.fadeToAction("Death", 0.2);
-                        } else {
-                            this.animations.fadeToAction(this.player.keyStates.run ? "Running" : "Walking", 0.2);
-                            this.player.position = newPosition;
-                        }
-                    } else if (this.player.keyStates.jump) {
-                        this.animations.fadeToAction("Jump", 0.2);
-                    } else if (this.player.keyStates.yes) {
-                        this.animations.fadeToAction("Yes", 0.2);
-                    } else if (this.player.keyStates.no) {
-                        this.animations.fadeToAction("No", 0.2);
-                    } else if (this.player.keyStates.wave) {
-                        this.animations.fadeToAction("Wave", 0.2);
-                    } else if (this.player.keyStates.punch) {
-                        this.animations.fadeToAction("Punch", 0.2);
-                    } else if (this.player.keyStates.thumbsUp) {
-                        this.animations.fadeToAction("ThumbsUp", 0.2);
-                    } else {
-                        this.animations.fadeToAction("Idle", this.animations.activeName != "Death" ? 0.2 : 0.6);
-                    }
-                    this.player.object.position.set(this.player.position.x, this.player.position.y, this.player.position.z);
-                    this.player.object.rotation.y = direction - this.player.initialDirection;
+                let coveredDistance = this.player.walkingSpeed * deltaT;
+                let directionIncrement = this.player.turningSpeed * deltaT;
+                if (this.player.keyStates.run) {
+                    coveredDistance *= this.player.runningFactor;
+                    directionIncrement *= this.player.runningFactor;
                 }
+                if (this.player.keyStates.left) {
+                    this.player.direction += directionIncrement;
+                } else if (this.player.keyStates.right) {
+                    this.player.direction -= directionIncrement;
+                }
+                const direction = THREE.MathUtils.degToRad(this.player.direction);
+                if (this.player.keyStates.backward) {
+                    const newPosition = new THREE.Vector3(-coveredDistance * Math.sin(direction), 0.0, -coveredDistance * Math.cos(direction)).add(this.player.position);
+                    if (this.collision(newPosition)) {
+                        this.animations.fadeToAction("Death", 0.2);
+                    } else {
+                        this.animations.fadeToAction(this.player.keyStates.run ? "Running" : "Walking", 0.2);
+                        this.player.position = newPosition;
+                    }
+                } else if (this.player.keyStates.forward) {
+                    const newPosition = new THREE.Vector3(coveredDistance * Math.sin(direction), 0.0, coveredDistance * Math.cos(direction)).add(this.player.position);
+                    if (this.collision(newPosition)) {
+                        this.animations.fadeToAction("Death", 0.2);
+                    } else {
+                        this.animations.fadeToAction(this.player.keyStates.run ? "Running" : "Walking", 0.2);
+                        this.player.position = newPosition;
+                    }
+                } else if (this.player.keyStates.jump) {
+                    this.animations.fadeToAction("Jump", 0.2);
+                } else if (this.player.keyStates.yes) {
+                    this.animations.fadeToAction("Yes", 0.2);
+                } else if (this.player.keyStates.no) {
+                    this.animations.fadeToAction("No", 0.2);
+                } else if (this.player.keyStates.wave) {
+                    this.animations.fadeToAction("Wave", 0.2);
+                } else if (this.player.keyStates.punch) {
+                    this.animations.fadeToAction("Punch", 0.2);
+                } else if (this.player.keyStates.thumbsUp) {
+                    this.animations.fadeToAction("ThumbsUp", 0.2);
+                } else {
+                    this.animations.fadeToAction("Idle", this.animations.activeName != "Death" ? 0.2 : 0.6);
+                }
+                this.player.object.position.set(this.player.position.x, this.player.position.y, this.player.position.z);
+                this.player.object.rotation.y = direction - this.player.initialDirection;
             }
+
 
             // Update first-person, third-person and top view cameras parameters (player direction and target)
             this.firstPersonViewCamera.playerDirection = this.player.direction;

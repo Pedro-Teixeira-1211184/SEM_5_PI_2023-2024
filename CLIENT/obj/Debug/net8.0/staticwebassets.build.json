@@ -1,8 +1,8 @@
 {
   "Version": 1,
-  "Hash": "dbENI2QU4LspmYTD7Qc76BLXQqiAHQj10TK2T3LX1H0=",
-  "Source": "Client",
-  "BasePath": "_content/Client",
+  "Hash": "uazA2JxCinAolbALv8Ll+14PB6fO2FEtrjhejiXrkec=",
+  "Source": "CLIENT",
+  "BasePath": "_content/CLIENT",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
