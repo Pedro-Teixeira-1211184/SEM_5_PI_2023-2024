@@ -46,7 +46,7 @@ export default class MapService implements IMapService {
       //check size
       const length = parseInt(building.dimensions.length.toString());
       const width = parseInt(building.dimensions.width.toString());
-      if (mapDTO.size.width != width || mapDTO.size.length != length) {
+      if (mapDTO.size.width != width || mapDTO.size.height != length) {
         return Result.fail<IMapDTO>("Map size does not match building size.");
       }
       //verify if floor exists
@@ -114,7 +114,7 @@ export default class MapService implements IMapService {
       const plantDTO: IPlantDTO = {
         floorCode: `${mapDTO.buildingCode}${mapDTO.floorNumber}`,
         width: mapDTO.size.width,
-        length: mapDTO.size.length,
+        length: mapDTO.size.height,
         map: mapDTO.map.map((row) => [...row]),
       };
 

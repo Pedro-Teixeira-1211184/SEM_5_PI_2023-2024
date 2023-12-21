@@ -7,7 +7,7 @@ const MapSchema = new mongoose.Schema(
     mapBuildingCode: {type: String, required: true},
     mapFloorNumber: {type: Number, required: true},
     mapSize: {
-      length: {type: Number, required: true},
+      height: {type: Number, required: true},
       width: {type: Number, required: true}
     },
     mapMap: {type: Array, required: true},

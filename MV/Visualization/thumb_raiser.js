@@ -13,7 +13,7 @@
 import * as THREE from "three";
 import Stats from "three/addons/libs/stats.module.js";
 import Orientation from "./orientation.js";
-import {generalData, mazeData, playerData, lightsData, fogData, cameraData} from "./default_data.js";
+import {cameraData, fogData, generalData, lightsData, mazeData, playerData} from "./default_data.js";
 import {merge} from "./merge.js";
 import Maze from "./maze.js";
 import Player from "./player.js";
@@ -22,132 +22,7 @@ import Fog from "./fog.js";
 import Camera from "./camera.js";
 import Animations from "./animations.js";
 import UserInterface from "./user_interface.js";
-
-/*
- * generalParameters = {
- *  setDevicePixelRatio: Boolean
- * }
- *
- * mazeParameters = {
- *  url: String,
- *  credits: String,
- *  scale: Vector3
- * }
- *
- * playerParameters = {
- *  url: String,
- *  credits: String,
- *  scale: Vector3,
- *  walkingSpeed: Float,
- *  initialDirection: Float,
- *  turningSpeed: Float,
- *  runningFactor: Float,
- *  keyCodes: { fixedView: String, firstPersonView: String, thirdPersonView: String, topView: String, viewMode: String, userInterface: String, miniMap: String, help: String, statistics: String, run: String, left: String, right: String, backward: String, forward: String, jump: String, yes: String, no: String, wave: String, punch: String, thumbsUp: String }
- * }
- *
- * lightsParameters = {
- *  ambientLight: { color: Integer, intensity: Float },
- *  pointLight1: { color: Integer, intensity: Float, range: Float, position: Vector3 },
- *  pointLight2: { color: Integer, intensity: Float, range: Float, position: Vector3 },
- *  spotLight: { color: Integer, intensity: Float, range: Float, angle: Float, penumbra: Float, position: Vector3, direction: Float }
- * }
- *
- * fogParameters = {
- *  enabled: Boolean,
- *  color: Integer,
- *  near: Float,
- *  far: Float
- * }
- *
- * fixedViewCameraParameters = {
- *  view: String,
- *  multipleViewsViewport: Vector4,
- *  target: Vector3,
- *  initialOrientation: Orientation,
- *  orientationMin: Orientation,
- *  orientationMax: Orientation,
- *  initialDistance: Float,
- *  distanceMin: Float,
- *  distanceMax: Float,
- *  initialZoom: Float,
- *  zoomMin: Float,
- *  zoomMax: Float,
- *  initialFov: Float,
- *  near: Float,
- *  far: Float
- * }
- *
- * firstPersonViewCameraParameters = {
- *  view: String,
- *  multipleViewsViewport: Vector4,
- *  target: Vector3,
- *  initialOrientation: Orientation,
- *  orientationMin: Orientation,
- *  orientationMax: Orientation,
- *  initialDistance: Float,
- *  distanceMin: Float,
- *  distanceMax: Float,
- *  initialZoom: Float,
- *  zoomMin: Float,
- *  zoomMax: Float,
- *  initialFov: Float,
- *  near: Float,
- *  far: Float
- * }
- *
- * thirdPersonViewCameraParameters = {
- *  view: String,
- *  multipleViewsViewport: Vector4,
- *  target: Vector3,
- *  initialOrientation: Orientation,
- *  orientationMin: Orientation,
- *  orientationMax: Orientation,
- *  initialDistance: Float,
- *  distanceMin: Float,
- *  distanceMax: Float,
- *  initialZoom: Float,
- *  zoomMin: Float,
- *  zoomMax: Float,
- *  initialFov: Float,
- *  near: Float,
- *  far: Float
- * }
- *
- * topViewCameraParameters = {
- *  view: String,
- *  multipleViewsViewport: Vector4,
- *  target: Vector3,
- *  initialOrientation: Orientation,
- *  orientationMin: Orientation,
- *  orientationMax: Orientation,
- *  initialDistance: Float,
- *  distanceMin: Float,
- *  distanceMax: Float,
- *  initialZoom: Float,
- *  zoomMin: Float,
- *  zoomMax: Float,
- *  initialFov: Float,
- *  near: Float,
- *  far: Float
- * }
- *
- * miniMapCameraParameters = {
- *  view: String,
- *  multipleViewsViewport: Vector4,
- *  initialOrientation: Orientation,
- *  orientationMin: Orientation,
- *  orientationMax: Orientation,
- *  initialDistance: Float,
- *  distanceMin: Float,
- *  distanceMax: Float,
- *  initialZoom: Float,
- *  zoomMin: Float,
- *  zoomMax: Float,
- *  initialFov: Float,
- *  near: Float,
- *  far: Float
- * }
- */
+import MazeLoad from "./mazeLoad.js";
 
 export default class ThumbRaiser {
     constructor(generalParameters, mazeParameters, playerParameters, lightsParameters, fogParameters, fixedViewCameraParameters, firstPersonViewCameraParameters, thirdPersonViewCameraParameters, topViewCameraParameters, miniMapCameraParameters) {
@@ -177,6 +52,9 @@ export default class ThumbRaiser {
 
         // Create a 3D scene (the game itself)
         this.scene3D = new THREE.Scene();
+
+        // Criar skybox com uma textura de céu com nuvens
+        this.scene3D.background = new THREE.TextureLoader().load("./textures/clouds.jpg");
 
         // Create the maze
         this.maze = new Maze(this.mazeParameters);
@@ -246,15 +124,22 @@ export default class ThumbRaiser {
         this.userInterfaceCheckBox.checked = true;
         this.miniMapCheckBox = document.getElementById("mini-map");
         this.miniMapCheckBox.checked = true;
+        this.loadCheckBox = document.getElementById("load");
+        this.loadCheckBox.checked = true;
         this.helpCheckBox = document.getElementById("help");
         this.helpCheckBox.checked = false;
         this.statisticsCheckBox = document.getElementById("statistics");
         this.statisticsCheckBox.checked = false;
         this.dynamicForm = document.getElementById("dynamicForm");
         this.dynamicForm.style.visibility = "visible";
+        //button of dynamic form
+        this.dynamicFormSubmit = document.getElementById("dynamicFormSubmit");
 
         // Build the help panel
-        this.buildHelpPanel(); // MISS
+        this.buildHelpPanel();
+
+        // Build the dynamic form
+        this.buildDynamicForm();
 
         // Set the active view camera (fixed view)
         this.setActiveViewCamera(this.fixedViewCamera);
@@ -296,16 +181,18 @@ export default class ThumbRaiser {
         this.multipleViewsCheckBox.addEventListener("change", event => this.elementChange(event));
         this.userInterfaceCheckBox.addEventListener("change", event => this.elementChange(event));
         this.helpCheckBox.addEventListener("change", event => this.elementChange(event));
+        this.loadCheckBox.addEventListener("change", event => this.elementChange(event));
         this.statisticsCheckBox.addEventListener("change", event => this.elementChange(event));
+        this.dynamicFormSubmit.addEventListener("click", event => this.elementChange(event));
 
         // Register the event handler to be called on input button click
         this.reset.addEventListener("click", event => this.buttonClick(event));
         this.resetAll.addEventListener("click", event => this.buttonClick(event));
 
         this.activeElement = document.activeElement;
+        this.maps = [];
     }
 
-    // MISS
     buildHelpPanel() {
         const table = document.getElementById("help-table");
         let i = 0;
@@ -317,6 +204,24 @@ export default class ThumbRaiser {
             table.rows[i++].cells[0].innerHTML = this.player.keyCodes[key];
         }
         table.rows[i].cells[0].innerHTML = this.maze.credits + "<br>" + this.player.credits;
+    }
+
+    buildDynamicForm() {
+        const selectElement = document.getElementById('building');
+
+        fetch('http://localhost:5050/maps/')
+            .then(response => response.json())
+            .then(data => {
+                // Preenche as opções do select com base no JSON
+                data.forEach(opcao => {
+                    const optionElement = document.createElement('option');
+                    optionElement.value = opcao.id;
+                    optionElement.text = opcao.buildingCode + opcao.floorNumber;
+                    selectElement.appendChild(optionElement);
+                });
+                this.maps = data;
+            })
+            .catch(error => console.error('Erro ao obter JSON da API:', error));
     }
 
     displayPanel() {
@@ -399,6 +304,11 @@ export default class ThumbRaiser {
         this.miniMapCheckBox.checked = visible;
     }
 
+    setLoadVisibility(visible) { // Hidden: false; visible: true
+        this.loadCheckBox.checked = visible;
+        this.dynamicForm.style.visibility = visible ? "visible" : "hidden";
+    }
+
     setHelpVisibility(visible) { // Hidden: false; visible: true
         this.helpCheckBox.checked = visible;
         this.helpPanel.style.visibility = visible ? "visible" : "hidden";
@@ -445,6 +355,9 @@ export default class ThumbRaiser {
             }
             if (event.code == this.player.keyCodes.miniMap && state) { // Display / hide mini-map
                 this.setMiniMapVisibility(!this.miniMapCheckBox.checked);
+            }
+            if (event.code == this.player.keyCodes.load && state) { // Display / hide load
+                this.setLoadVisibility(!this.loadCheckBox.checked);
             }
             if (event.code == this.player.keyCodes.help && state) { // Display / hide help
                 this.setHelpVisibility(!this.helpCheckBox.checked);
@@ -599,10 +512,33 @@ export default class ThumbRaiser {
             case "help":
                 this.setHelpVisibility(event.target.checked);
                 break;
+            case "load":
+                this.setLoadVisibility(event.target.checked);
+                break;
             case "statistics":
                 this.setStatisticsVisibility(event.target.checked);
                 break;
+            case "dynamicFormSubmit":
+                //change scenario
+                this.changeFloor();
+                break;
         }
+    }
+
+    changeFloor() {
+        const x = document.getElementById("x").value;
+        const y = document.getElementById("y").value;
+        const pos = [x, y];
+        const floorInfo = this.getMapById(document.getElementById("building").value);
+        const mazeLoad = new MazeLoad(floorInfo, pos, 0);
+        this.scene3D.remove(this.maze.object);
+        this.maze = mazeLoad;
+        this.scene3D.add(this.maze.object);
+        this.player.position = this.maze.cellToCartesian(pos);
+    }
+
+    getMapById(id) {
+        return this.maps.find(map => map.id === id);
     }
 
     buttonClick(event) {
@@ -747,6 +683,9 @@ export default class ThumbRaiser {
                 this.renderer.setViewport(viewport.x, viewport.y, viewport.width, viewport.height);
                 this.renderer.render(this.scene3D, this.miniMapCamera.object);
                 this.renderer.render(this.scene2D, this.camera2D);
+            }
+            if (this.loadCheckBox.checked) {
+                this.dynamicForm.style.visibility = "visible";
             }
         }
     }

@@ -6,7 +6,7 @@ export const generalData = {
 }
 
 export const mazeData = {
-    url: "./mazes/Loquitas.json",
+    url: "./map/initial.json",
     credits: "Maze designed by Cecília Fernandes and Nikita.",
     scale: new THREE.Vector3(1.0, 1.0, 1.0)
 }
@@ -20,7 +20,7 @@ export const playerData = {
     initialDirection: 0.0, // Expressed in degrees
     turningSpeed: 75.0, // Expressed in degrees / second
     runningFactor: 2.0, // Affects walking speed and turning speed
-    keyCodes: { fixedView: "Digit1", firstPersonView: "Digit2", thirdPersonView: "Digit3", topView: "Digit4", viewMode: "KeyV", userInterface: "KeyU", miniMap: "KeyM", help: "KeyH", statistics: "KeyS", run: "KeyR", left: "ArrowLeft", right: "ArrowRight", backward: "ArrowDown", forward: "ArrowUp", jump: "KeyJ", yes: "KeyY", no: "KeyN", wave: "KeyW", punch: "KeyP", thumbsUp: "KeyT" }
+    keyCodes: { fixedView: "Digit1", firstPersonView: "Digit2", thirdPersonView: "Digit3", topView: "Digit4", viewMode: "KeyV", userInterface: "KeyU", miniMap: "KeyM", help: "KeyH", load: "KeyL" , statistics: "KeyS", run: "KeyR", left: "ArrowLeft", right: "ArrowRight", backward: "ArrowDown", forward: "ArrowUp", jump: "KeyJ", yes: "KeyY", no: "KeyN", wave: "KeyW", punch: "KeyP", thumbsUp: "KeyT" }
 }
 
 export const lightsData = {

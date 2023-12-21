@@ -18,7 +18,7 @@ export default () => {
         buildingCode: Joi.string().required().error(new Error('Invalid building code')),
         floorNumber: Joi.number().required().error(new Error('Invalid floor number')),
         size: Joi.object({
-          length: Joi.number().required().error(new Error('Invalid length')),
+          height: Joi.number().required().error(new Error('Invalid length')),
           width: Joi.number().required().error(new Error('Invalid width')),
         }).required().error(new Error('Invalid size')),
         map: Joi.array().items(Joi.array().items(Joi.number())).required().error(new Error('Invalid map')),
