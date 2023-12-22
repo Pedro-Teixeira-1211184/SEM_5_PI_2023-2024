@@ -1,6 +1,8 @@
 import * as THREE from "three";
 import Ground from "./ground.js";
 import Wall from "./wall.js";
+import Door from "./door.js";
+import Elevator from "./elevator.js";
 
 export default class MazeLoad {
     constructor(floorInfo, initialPosition, initialDirection) {
@@ -23,6 +25,21 @@ export default class MazeLoad {
         // Create a wall
         this.wall = new Wall({textureUrl: "./textures/wall.jpg"});
 
+        //create a door
+        this.door = new Door("./textures/door.jpg", 0xffffff);
+
+        //create a elevator
+        this.elevator3D = new Elevator();
+
+        // Create a passageway
+        this.bridge = new Door("./textures/bridge.jpg", 0xe26751);
+
+        this.rooms = floorInfo.rooms;
+        this.passageways = floorInfo.passageways;
+        this.elevator = floorInfo.elevator;
+
+        this.updateMap();
+
         // Build the maze
         let wallObject;
         for (let i = 0; i <= floorInfo.size.width; i++) { // In order to represent the eastmost walls, the map width is one column greater than the actual maze width
@@ -35,15 +52,48 @@ export default class MazeLoad {
                  *          2          |    Yes     |     No
                  *          3          |    Yes     |    Yes
                  */
-                if (floorInfo.map[j][i] == 2 || floorInfo.map[j][i] == 3) {
+                if (this.map[j][i] == 2 || this.map[j][i] == 3) {
                     wallObject = this.wall.object.clone();
-                    wallObject.position.set(i - floorInfo.size.width / 2.0 + 0.5, 0.5, j - floorInfo.size.height / 2.0);
+                    wallObject.position.set(i - this.size.width / 2.0 + 0.5, 0.5, j - this.size.height / 2.0);
                     this.object.add(wallObject);
                 }
-                if (floorInfo.map[j][i] == 1 || floorInfo.map[j][i] == 3) {
+                if (this.map[j][i] == 1 || this.map[j][i] == 3) {
                     wallObject = this.wall.object.clone();
                     wallObject.rotateY(Math.PI / 2.0);
-                    wallObject.position.set(i - floorInfo.size.width / 2.0, 0.5, j - floorInfo.size.height / 2.0 + 0.5);
+                    wallObject.position.set(i - this.size.width / 2.0, 0.5, j - this.size.height / 2.0 + 0.5);
+                    this.object.add(wallObject);
+                }
+                if (this.map[j][i] == 4) {
+                    wallObject = this.door.object.clone();
+                    wallObject.position.set(i - this.size.width / 2.0 + 0.5, 0.5, j - this.size.height / 2.0);
+                    this.object.add(wallObject);
+                }
+                if (this.map[j][i] == 5) {
+                    wallObject = this.door.object.clone();
+                    wallObject.rotateY(Math.PI / 2.0);
+                    wallObject.position.set(i - this.size.width / 2.0, 0.5, j - this.size.height / 2.0 + 0.5);
+                    this.object.add(wallObject);
+                }
+                if (this.map[j][i] == 6) {
+                    wallObject = this.elevator3D.object.clone();
+                    wallObject.position.set(i - this.size.width / 2.0 + 0.5, 0.5, j - this.size.height / 2.0);
+                    this.object.add(wallObject);
+                }
+                if (this.map[j][i] == 7) {
+                    wallObject = this.elevator3D.object.clone();
+                    wallObject.rotateY(Math.PI / 2.0);
+                    wallObject.position.set(i - this.size.width / 2.0, 0.5, j - this.size.height / 2.0 + 0.5);
+                    this.object.add(wallObject);
+                }
+                if (this.map[j][i] == 9) {
+                    wallObject = this.bridge.object.clone();
+                    wallObject.position.set(i - this.size.width / 2.0 + 0.5, 0.5, j - this.size.height / 2.0);
+                    this.object.add(wallObject);
+                }
+                if (this.map[j][i] == 8) {
+                    wallObject = this.bridge.object.clone();
+                    wallObject.rotateY(Math.PI / 2.0);
+                    wallObject.position.set(i - this.size.width / 2.0, 0.5, j - this.size.height / 2.0 + 0.5);
                     this.object.add(wallObject);
                 }
             }
@@ -99,5 +149,36 @@ export default class MazeLoad {
             return this.cellToCartesian(indices).z - this.scale.z / 2.0 - position.z;
         }
         return Infinity;
+    }
+
+    updateMap() {
+        if (this.rooms !== undefined) {
+        for (let room of this.rooms) {
+            // door
+            if (room.door.orientation == "north") {
+                this.map[room.door.coordinates.x][room.door.coordinates.y] = 5;
+            } else {
+                this.map[room.door.coordinates.x][room.door.coordinates.y] = 4;
+            }
+        }
+        }
+        if (this.elevator !== undefined) {
+        for (let elevator of this.elevator) {
+            if (elevator.localization.orientation == "north") {
+                this.map[elevator.localization.coordinates.x][elevator.localization.coordinates.y] = 6;
+            } else {
+                this.map[elevator.localization.coordinates.x][elevator.localization.coordinates.y] = 7;
+            }
+        }
+        }
+        // passageways
+        if (this.passageways === undefined) return;
+        for (let passageway of this.passageways) {
+            if (passageway.localization.orientation == "north") {
+                this.map[passageway.localization.coordinates.x][passageway.localization.coordinates.y] = 8;
+            } else {
+                this.map[passageway.localization.coordinates.x][passageway.localization.coordinates.y] = 9;
+            }
+        }
     }
 }
