@@ -1,44 +1,103 @@
-:- use_module(library(http/json)).
-:- use_module(library(http/http_open)).
-:- use_module(library(http/http_json)).
 :- use_module(library(http/http_parameters)).
-:- use_module(library(http/http_dispatch)).
+:- use_module(library(http/http_json)).
+:- use_module(library(http/http_client)).
+:- use_module(library(http/json)).
 :- use_module(library(http/thread_httpd)).
-:- use_module(getPlants, [fetch_and_export_plant_map_data/0]).
-:- use_module(getElevators, [fetch_and_export_elevator_data/0]).
-:- use_module(getPassageways, [fetch_and_export_passageway_data/0]).
-:- use_module(graph_handling, [create_graph_for_each_plant/0]).
-:- use_module(campus_graph, [connect_floors_with_elevators/0, connect_floors_with_passageways/0]).
-:- use_module(path_finding, [find_path_handler/1]).
+:- use_module(library(http/http_dispatch)).
+
+:- use_module(utils, [format_floorPath/2, format_path2/2]).
+:- use_module(graph_handling, [data/0, clear/0, parse_and_assert_matrix/1, cria_grafo/1]).
+:- use_module(search_algorithms, [path_between_floors/4, best_path_per_floors/3, searchByDfsAlgorithm/3, searchByBestDfsAlgorithm/3, searchByBfsAlgorithm/3]).
+
+:- http_handler('/path', searchPath, [methods(get)]).
+:- http_handler('/pathLessElevators', searchPathLessElevators, [methods(get)]).
+
+:- http_handler('/pathPerFloorsDFS', searchPathPerFloor, [methods(post)]).
+:- http_handler('/pathPerFloorsBestDFS', searchPathPerFloorBest, [methods(post)]).
+:- http_handler('/pathPerFloorsBFS', searchPathPerFloorBFS, [methods(post)]).
+:- http_handler('/pathPerFloorsAStar', searchPathPerFloorAStar, [methods(post)]).
 
 % Server management
 start_server(Port) :-
     http_server(http_dispatch, [port(Port)]).
 
-stop_server :-
-    port(Port),
-    http_stop_server(Port, _),
-    retractall(port(Port)).
+%Request handling
+searchPath(Request) :- 
+    data(),
+    http_parameters(Request, [floorA(FloorA, []), floorB(FloorB, [])]),
+    (path_between_floors(FloorA,FloorB,Buildings,Path2) ->
+    (format_path2(Path,JsonObjects),
+    Msg1=json([buildings=Buildings,paths=JsonObjects]),
+    reply_json(Msg1)),
+    clear();
+    format('Content-type: application/json~n~n'),
+    format('\nPath not found'),clear()).
 
-% HTTP request handling
-:- http_handler('/maps/path/:origin/:destination', path_between_floors_handler, []).
-path_between_floors_handler(Request) :-
-    cors_enable(Request, [methods([get])]),
-    memberchk(origin=Origin, Request),
-    memberchk(destination=Destination, Request),
-    path_between_floors(BuildingCode, Origin, Destination, Path),
-    prolog_to_json(path_between_floors(BuildingCode, Origin, Destination, Path), JSONObject),
-    reply_json(JSONObject, [json_object(dict)]).
 
-% Initialization
-initialize_server(Port) :-
-    start_server(Port),
-    initialize_system.
+searchPathLessElevators(Request) :-
+    data(),
+    http_parameters(Request, [floorA(FloorA, []), floorB(FloorB, [])]),
+    (path_between_floors_less_elevators(FloorA,FloorB,Buildings,Path2) ->
+    (format_path2(Path,JsonObjects),
+    Msg1=json([buildings=Buildings,paths=JsonObjects]),
+    reply_json(Msg1)),
+    clear();
+    format('Content-type: application/json~n~n'),
+    format('\nPath not found'),clear()).
 
-initialize_system :-
-    fetch_and_export_plant_map_data,
-    fetch_and_export_elevator_data,
-    fetch_and_export_passageway_data,
-    create_graph_for_each_plant,
-    connect_floors_with_elevators,
-    connect_floors_with_passageways.
+
+
+searchPathPerFloor(Request) :-
+    http_read_data(Request, Data, []),
+    Data = json(RequestProperties), 
+    member(matriz=Matriz, RequestProperties),
+    member(limits=Limits, RequestProperties),
+    member(origin=Origin, RequestProperties),
+    member(destination=Destination, RequestProperties),
+    parse_and_assert_matrix(Matriz),
+    cria_grafo(Limits),
+    (searchByDfsAlgorithm(Origin,Destination,Path) ->
+    (format_floorPath(Path,JsonObjects),
+    Msg1=json([cells=JsonObjects]),
+    reply_json(Msg1)),
+    clear();
+    format('Content-type: application/json~n~n'),
+    format('Path not found'),clear()).
+
+
+searchPathPerFloorBest(Request) :-
+    http_read_data(Request, Data, []),
+    Data = json(RequestProperties), 
+    member(matriz=Matriz, RequestProperties),
+    member(limits=Limits, RequestProperties),
+    member(origin=Origin, RequestProperties),
+    member(destination=Destination, RequestProperties),
+    parse_and_assert_matrix(Matriz),
+    cria_grafo(Limits),
+    (searchByBestDfsAlgorithm(Origin,Destination,Path) ->
+    (format_floorPath(Path,JsonObjects),
+    Msg1=json([cells=JsonObjects]),
+    reply_json(Msg1)),
+    clear();
+    format('Content-type: application/json~n~n'),
+    format('Path not found'),clear()).
+
+
+searchPathPerFloorBFS(Request) :-
+    http_read_data(Request, Data, []),
+    Data = json(RequestProperties), 
+    member(matriz=Matriz, RequestProperties),
+    member(limits=Limits, RequestProperties),
+    member(origin=Origin, RequestProperties),
+    member(destination=Destination, RequestProperties),
+    parse_and_assert_matrix(Matriz),
+    cria_grafo(Limits),
+    (searchByBfsAlgorithm(Origin,Destination,Path) ->
+    (format_floorPath(Path,JsonObjects),
+    Msg1=json([cells=JsonObjects]),
+    reply_json(Msg1)),
+    clear();
+    format('Content-type: application/json~n~n'),
+    format('Path not found'),clear()).    
+
+
