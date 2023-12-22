@@ -560,6 +560,18 @@ export default class ThumbRaiser {
         return this.maze.distanceToWestWall(position) < this.player.radius || this.maze.distanceToEastWall(position) < this.player.radius || this.maze.distanceToNorthWall(position) < this.player.radius || this.maze.distanceToSouthWall(position) < this.player.radius;
     }
 
+    collisionDoor(position) {
+        return this.maze.distanceToDoor(position) < this.player.radius;
+    }
+
+    collisionElevator(position) {
+        return this.maze.distanceToElevator(position) < this.player.radius;
+    }
+
+    collisionBridge(position) {
+        return this.maze.distanceToBridge(position) < this.player.radius;
+    }
+
     update() {
         if (!this.gameRunning) {
             if (this.maze.loaded && this.player.loaded) { // If all resources have been loaded
@@ -609,6 +621,25 @@ export default class ThumbRaiser {
                     if (this.collision(newPosition)) {
                         this.animations.fadeToAction("Death", 0.2);
                     } else {
+                        if (this.collisionDoor(newPosition)) {
+                            //TODO: check if the door is open or not and if it is open then go through it and if it is closed then play the animation
+                            console.log("Door is closed");
+                        } else {
+                            if (this.collisionElevator(newPosition)) {
+                                //TODO: stop the player movement, do elevator animation and display a dynamic form to choose the floor
+                                console.log("Elevator");
+                            } else {
+                                if (this.collisionBridge(newPosition)) {
+                                    //TODO: change the floor and make robot in the new floor in the right position
+                                    console.log("Bridge");
+                                } else {
+                                    /*
+                                    this.animations.fadeToAction(this.player.keyStates.run ? "Running" : "Walking", 0.2);
+                                    this.player.position = newPosition;
+                                     */
+                                }
+                            }
+                        }
                         this.animations.fadeToAction(this.player.keyStates.run ? "Running" : "Walking", 0.2);
                         this.player.position = newPosition;
                     }
@@ -617,6 +648,25 @@ export default class ThumbRaiser {
                     if (this.collision(newPosition)) {
                         this.animations.fadeToAction("Death", 0.2);
                     } else {
+                        if (this.collisionDoor(newPosition)) {
+                            //TODO: check if the door is open or not and if it is open then go through it and if it is closed then play the animation
+                            console.log("Door is closed");
+                        } else {
+                            if (this.collisionElevator(newPosition)) {
+                                //TODO: do elevator animation and display a dynamic form to choose the floor
+                                console.log("Elevator");
+                            } else {
+                                if (this.collisionBridge(newPosition)) {
+                                    //TODO: change the floor and make robot in the new floor in the right position
+                                    console.log("Bridge");
+                                } else {
+                                    /*
+                                    this.animations.fadeToAction(this.player.keyStates.run ? "Running" : "Walking", 0.2);
+                                    this.player.position = newPosition;
+                                     */
+                                }
+                            }
+                        }
                         this.animations.fadeToAction(this.player.keyStates.run ? "Running" : "Walking", 0.2);
                         this.player.position = newPosition;
                     }

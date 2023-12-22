@@ -151,25 +151,49 @@ export default class MazeLoad {
         return Infinity;
     }
 
+    distanceToDoor(position) {
+        const indices = this.cartesianToCell(position);
+        if (this.map[indices[0]][indices[1]] == 4 || this.map[indices[0]][indices[1]] == 5) {
+            return position.z - this.cellToCartesian(indices).z + this.scale.z / 2.0;
+        }
+        return Infinity;
+    }
+
+    distanceToElevator(position) {
+        const indices = this.cartesianToCell(position);
+        if (this.map[indices[0]][indices[1]] == 6 || this.map[indices[0]][indices[1]] == 7) {
+            return position.z - this.cellToCartesian(indices).z + this.scale.z / 2.0;
+        }
+        return Infinity;
+    }
+
+    distanceToBridge(position) {
+        const indices = this.cartesianToCell(position);
+        if (this.map[indices[0]][indices[1]] == 8 || this.map[indices[0]][indices[1]] == 9) {
+            return position.z - this.cellToCartesian(indices).z + this.scale.z / 2.0;
+        }
+        return Infinity;
+    }
+
     updateMap() {
         if (this.rooms !== undefined) {
-        for (let room of this.rooms) {
-            // door
-            if (room.door.orientation == "north") {
-                this.map[room.door.coordinates.x][room.door.coordinates.y] = 5;
-            } else {
-                this.map[room.door.coordinates.x][room.door.coordinates.y] = 4;
+            for (let room of this.rooms) {
+                // door
+                if (room.door.orientation == "north") {
+                    this.map[room.door.coordinates.x][room.door.coordinates.y] = 5;
+                } else {
+                    this.map[room.door.coordinates.x][room.door.coordinates.y] = 4;
+                }
             }
-        }
         }
         if (this.elevator !== undefined) {
-        for (let elevator of this.elevator) {
-            if (elevator.localization.orientation == "north") {
-                this.map[elevator.localization.coordinates.x][elevator.localization.coordinates.y] = 6;
-            } else {
-                this.map[elevator.localization.coordinates.x][elevator.localization.coordinates.y] = 7;
+            for (let elevator of this.elevator) {
+                if (elevator.localization.orientation == "north") {
+                    this.map[elevator.localization.coordinates.x][elevator.localization.coordinates.y] = 6;
+                } else {
+                    this.map[elevator.localization.coordinates.x][elevator.localization.coordinates.y] = 7;
+                }
             }
-        }
         }
         // passageways
         if (this.passageways === undefined) return;
@@ -178,6 +202,7 @@ export default class MazeLoad {
                 this.map[passageway.localization.coordinates.x][passageway.localization.coordinates.y] = 8;
             } else {
                 this.map[passageway.localization.coordinates.x][passageway.localization.coordinates.y] = 9;
+
             }
         }
     }
