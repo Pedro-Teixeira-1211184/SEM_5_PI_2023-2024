@@ -6,4 +6,5 @@ export default interface IBuildingController {
   updateFloor(req: Request, res: Response, next: NextFunction);
   findFloorsByBuildingCode(req: Request, res: Response, next: NextFunction);
   findFloorsByPassageways(req: Request, res: Response, next: NextFunction);
+  getAll(req: Request, res: Response, next: NextFunction);
 }

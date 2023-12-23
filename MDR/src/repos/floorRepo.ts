@@ -173,4 +173,25 @@ export default class FloorRepo implements IFloorRepo {
         }
     }
 
+
+    public async getAll(): Promise<IFloorDTO[]> {
+        try {
+            const query = {} as FilterQuery<IFloorPersistence & Document>;
+            const floorRecord = await this.floorSchema.find(query);
+            const floorArray: IFloorDTO[] = [];
+
+            if (floorRecord.length == 0) {
+                return [];
+            } else {
+                for (let i = 0; i < floorRecord.length; i++) {
+                    floorArray[i] = FloorMapper.toDTO(FloorMapper.toDomain(floorRecord[i]));
+                }
+                return floorArray;
+            }
+
+        } catch (error) {
+            console.log('Error in FloorRepo.getAll(): ', error);
+            throw error;
+        }
+    }
 }

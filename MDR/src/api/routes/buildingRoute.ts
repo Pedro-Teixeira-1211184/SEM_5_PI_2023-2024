@@ -73,6 +73,10 @@ export default () => {
     ctrl.findByMinMaxFloors(req, res, next);
   });
 
+  route.get('/floors', (req, res, next) => {
+    console.log("Getting all Floors!");
+    floorCtrl.getAll(req, res, next);
+    });
 
   route.get('/floors/:buildingCode', (req, res, next) => {
     console.log("Getting all Floors by Building Code!");

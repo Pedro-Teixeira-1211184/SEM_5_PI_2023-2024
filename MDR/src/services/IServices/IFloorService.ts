@@ -6,4 +6,5 @@ export default interface IFloorService {
   findFloorsByBuildingCode(buildingCode: string): Promise<Result<IFloorDTO[]>>;
   updateFloor(floorDTO: IFloorDTO): Promise<Result<IFloorDTO>>;
   findFloorByCode(floorCode: string): Promise<Result<IFloorDTO>>;
+  getAll(): Promise<Result<IFloorDTO[]>>;
 }
