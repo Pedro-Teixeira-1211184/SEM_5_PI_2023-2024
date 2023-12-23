@@ -215,7 +215,7 @@ export default class ThumbRaiser {
                 // Preenche as opções do select com base no JSON
                 data.forEach(opcao => {
                     const optionElement = document.createElement('option');
-                    optionElement.value = opcao.id;
+                    optionElement.value = opcao.buildingCode + opcao.floorNumber;
                     optionElement.text = opcao.buildingCode + opcao.floorNumber;
                     selectElement.appendChild(optionElement);
                 });
@@ -520,25 +520,29 @@ export default class ThumbRaiser {
                 break;
             case "dynamicFormSubmit":
                 //change scenario
-                this.changeFloor();
+                const x = document.getElementById("x").value;
+                const y = document.getElementById("y").value;
+                const floor = document.getElementById("building").value;
+                this.changeFloor(x, y, floor);
                 break;
         }
     }
 
-    changeFloor() {
-        const x = document.getElementById("x").value;
-        const y = document.getElementById("y").value;
+    changeFloor(x, y, floor) {
         const pos = [x, y];
-        const floorInfo = this.getMapById(document.getElementById("building").value);
+        const floorInfo = this.getMapById(floor);
         const mazeLoad = new MazeLoad(floorInfo, pos, 0);
         this.scene3D.remove(this.maze.object);
         this.maze = mazeLoad;
         this.scene3D.add(this.maze.object);
         this.player.position = this.maze.cellToCartesian(pos);
+        //player to turn 180 degrees in radians
+        this.player.direction = this.maze.initialDirection + Math.PI;
+        this.floorLoaded = floor;
     }
 
     getMapById(id) {
-        return this.maps.find(map => map.id === id);
+        return this.maps.find(map => map.buildingCode + map.floorNumber === id);
     }
 
     buttonClick(event) {
@@ -561,15 +565,24 @@ export default class ThumbRaiser {
     }
 
     collisionDoor(position) {
-        return this.maze.distanceToDoor(position) < this.player.radius;
+        return this.maze.distanceToNorthDoor(position) < this.player.radius || this.maze.distanceToWestDoor(position) < this.player.radius;
     }
 
     collisionElevator(position) {
-        return this.maze.distanceToElevator(position) < this.player.radius;
+        return this.maze.distanceToNorthElevator(position) < this.player.radius || this.maze.distanceToWestElevator(position) < this.player.radius;
     }
 
     collisionBridge(position) {
-        return this.maze.distanceToBridge(position) < this.player.radius;
+        return this.maze.distanceToNorthBridge(position) < this.player.radius || this.maze.distanceToWestBridge(position) < this.player.radius;
+    }
+
+    findPassInMap(mapById, start, end) {
+        for (let i = 0; i < mapById.passageways.length; i++) {
+            if ((mapById.passageways[i].start === start && mapById.passageways[i].end === end)
+                || (mapById.passageways[i].start === end && mapById.passageways[i].end === start)) {
+                return mapById.passageways[i];
+            }
+        }
     }
 
     update() {
@@ -623,25 +636,41 @@ export default class ThumbRaiser {
                     } else {
                         if (this.collisionDoor(newPosition)) {
                             //TODO: check if the door is open or not and if it is open then go through it and if it is closed then play the animation
-                            console.log("Door is closed");
+                            this.animations.fadeToAction("Sitting", 0.2);
                         } else {
                             if (this.collisionElevator(newPosition)) {
                                 //TODO: stop the player movement, do elevator animation and display a dynamic form to choose the floor
                                 console.log("Elevator");
                             } else {
                                 if (this.collisionBridge(newPosition)) {
-                                    //TODO: change the floor and make robot in the new floor in the right position
-                                    console.log("Bridge");
+                                    const bridge = this.maze.findPassagewayByCoordinates(newPosition);
+                                    const start = bridge.start;
+                                    const end = bridge.end;
+                                    if (bridge.start === this.floorLoaded) {
+                                        const mapById = this.getMapById(bridge.end);
+                                        const rightPass = this.findPassInMap(mapById, start, end);
+                                        const x = rightPass.localization.coordinates.x;
+                                        let y = rightPass.localization.coordinates.y;
+                                        if (y === this.maze.map.length - 1) {
+                                            y = y - 1;
+                                        }
+                                        this.changeFloor(x, y, rightPass.end);
+                                    } else {
+                                        const pass = this.getMapById(bridge.start);
+                                        const rightPass = this.findPassInMap(pass, start, end);
+                                        const x = rightPass.localization.coordinates.x;
+                                        let y = rightPass.localization.coordinates.y;
+                                        if (y === this.maze.map.length - 1) {
+                                            y = y - 1;
+                                        }
+                                        this.changeFloor(x, y, rightPass.start);
+                                    }
                                 } else {
-                                    /*
                                     this.animations.fadeToAction(this.player.keyStates.run ? "Running" : "Walking", 0.2);
                                     this.player.position = newPosition;
-                                     */
                                 }
                             }
                         }
-                        this.animations.fadeToAction(this.player.keyStates.run ? "Running" : "Walking", 0.2);
-                        this.player.position = newPosition;
                     }
                 } else if (this.player.keyStates.forward) {
                     const newPosition = new THREE.Vector3(coveredDistance * Math.sin(direction), 0.0, coveredDistance * Math.cos(direction)).add(this.player.position);
@@ -650,7 +679,7 @@ export default class ThumbRaiser {
                     } else {
                         if (this.collisionDoor(newPosition)) {
                             //TODO: check if the door is open or not and if it is open then go through it and if it is closed then play the animation
-                            console.log("Door is closed");
+
                         } else {
                             if (this.collisionElevator(newPosition)) {
                                 //TODO: do elevator animation and display a dynamic form to choose the floor
@@ -658,17 +687,34 @@ export default class ThumbRaiser {
                             } else {
                                 if (this.collisionBridge(newPosition)) {
                                     //TODO: change the floor and make robot in the new floor in the right position
-                                    console.log("Bridge");
+                                    const bridge = this.maze.findPassagewayByCoordinates(newPosition);
+                                    const start = bridge.start;
+                                    const end = bridge.end;
+                                    if (bridge.start === this.floorLoaded) {
+                                        const mapById = this.getMapById(bridge.end);
+                                        const rightPass = this.findPassInMap(mapById, start, end);
+                                        const x = rightPass.localization.coordinates.x;
+                                        let y = rightPass.localization.coordinates.y;
+                                        if (y === this.maze.map.length - 1) {
+                                            y = y - 1;
+                                        }
+                                        this.changeFloor(x, y, rightPass.end);
+                                    } else {
+                                        const pass = this.getMapById(bridge.start);
+                                        const rightPass = this.findPassInMap(pass, start, end);
+                                        const x = rightPass.localization.coordinates.x;
+                                        let y = rightPass.localization.coordinates.y;
+                                        if (y === this.maze.map.length - 1) {
+                                            y = y - 1;
+                                        }
+                                        this.changeFloor(x, y, rightPass.start);
+                                    }
                                 } else {
-                                    /*
                                     this.animations.fadeToAction(this.player.keyStates.run ? "Running" : "Walking", 0.2);
                                     this.player.position = newPosition;
-                                     */
                                 }
                             }
                         }
-                        this.animations.fadeToAction(this.player.keyStates.run ? "Running" : "Walking", 0.2);
-                        this.player.position = newPosition;
                     }
                 } else if (this.player.keyStates.jump) {
                     this.animations.fadeToAction("Jump", 0.2);

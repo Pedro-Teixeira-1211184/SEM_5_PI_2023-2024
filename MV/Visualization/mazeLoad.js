@@ -9,7 +9,7 @@ export default class MazeLoad {
         // Store the maze's map and size
         this.map = floorInfo.map;
         this.size = floorInfo.size;
-        this.scale = new THREE.Vector3(1.0, 1.0, 1.0)
+        this.scale = new THREE.Vector3(1.0, 0.7, 1.0)
 
         // Store the player's initial position and direction
         this.initialPosition = this.cellToCartesian(initialPosition);
@@ -151,26 +151,50 @@ export default class MazeLoad {
         return Infinity;
     }
 
-    distanceToDoor(position) {
+    distanceToNorthDoor(position) {
         const indices = this.cartesianToCell(position);
-        if (this.map[indices[0]][indices[1]] == 4 || this.map[indices[0]][indices[1]] == 5) {
+        if (this.map[indices[0]][indices[1]] == 4) {
             return position.z - this.cellToCartesian(indices).z + this.scale.z / 2.0;
         }
         return Infinity;
     }
 
-    distanceToElevator(position) {
+    distanceToWestDoor(position) {
         const indices = this.cartesianToCell(position);
-        if (this.map[indices[0]][indices[1]] == 6 || this.map[indices[0]][indices[1]] == 7) {
+        if (this.map[indices[0]][indices[1]] == 5) {
+            return position.x - this.cellToCartesian(indices).x + this.scale.x / 2.0;
+        }
+        return Infinity;
+    }
+
+    distanceToNorthElevator(position) {
+        const indices = this.cartesianToCell(position);
+        if (this.map[indices[0]][indices[1]] == 6) {
             return position.z - this.cellToCartesian(indices).z + this.scale.z / 2.0;
         }
         return Infinity;
     }
 
-    distanceToBridge(position) {
+    distanceToWestElevator(position) {
         const indices = this.cartesianToCell(position);
-        if (this.map[indices[0]][indices[1]] == 8 || this.map[indices[0]][indices[1]] == 9) {
+        if (this.map[indices[0]][indices[1]] == 7) {
+            return position.x - this.cellToCartesian(indices).x + this.scale.x / 2.0;
+        }
+        return Infinity;
+    }
+
+    distanceToNorthBridge(position) {
+        const indices = this.cartesianToCell(position);
+        if (this.map[indices[0]][indices[1]] == 9) {
             return position.z - this.cellToCartesian(indices).z + this.scale.z / 2.0;
+        }
+        return Infinity;
+    }
+
+    distanceToWestBridge(position) {
+        const indices = this.cartesianToCell(position);
+        if (this.map[indices[0]][indices[1]] == 8) {
+            return position.x - this.cellToCartesian(indices).x + this.scale.x / 2.0;
         }
         return Infinity;
     }
@@ -205,5 +229,44 @@ export default class MazeLoad {
 
             }
         }
+    }
+
+    // find room by his coordinates using carthesian coordinates
+    findRoomByCoordinates(position) {
+        const indices = this.cartesianToCell(position);
+        if (this.rooms !== undefined) {
+            for (let room of this.rooms) {
+                if (room.coordinates.x == indices[0] && room.coordinates.y == indices[1]) {
+                    return room;
+                }
+            }
+        }
+        return undefined;
+    }
+
+    // find Elevator by his coordinates using carthesian coordinates
+    findElevatorByCoordinates(position) {
+        const indices = this.cartesianToCell(position);
+        if (this.elevator !== undefined) {
+            for (let elevator of this.elevator) {
+                if (elevator.localization.coordinates.x == indices[0] && elevator.localization.coordinates.y == indices[1]) {
+                    return elevator;
+                }
+            }
+        }
+        return undefined;
+    }
+
+    // find Passageway by his coordinates using carthesian coordinates
+    findPassagewayByCoordinates(position) {
+        const indices = this.cartesianToCell(position);
+        if (this.passageways !== undefined) {
+            for (let passageway of this.passageways) {
+                if (passageway.localization.coordinates.x == indices[0] && passageway.localization.coordinates.y == indices[1]) {
+                    return passageway;
+                }
+            }
+        }
+        return undefined;
     }
 }
