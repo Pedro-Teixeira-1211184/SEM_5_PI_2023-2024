@@ -10,13 +10,13 @@ export default class Door {
         const doorGeometry = new THREE.BoxGeometry(1, 1, 0.1);
         const loader = new THREE.TextureLoader();
         const texture = loader.load(textureUrl);
-        const doorTexture = new THREE.MeshBasicMaterial({color: color, map: texture });
-        const doorTextureMesh = new THREE.Mesh(doorGeometry, doorTexture);
-        this.object.add(doorTextureMesh);
+        const doorTexture = new THREE.MeshBasicMaterial({color: color, map: texture});
+        this.doorMesh = new THREE.Mesh(doorGeometry, doorTexture);
+        this.object.add(this.doorMesh);
 
         // Adicionar maçaneta do lado direito (face da frente)
         const handleGeometry = new THREE.CylinderGeometry(0.05, 0.05, 0.2, 16);
-        const handleMaterial = new THREE.MeshBasicMaterial({ color: 0x8b4513 }); // Marrom escuro
+        const handleMaterial = new THREE.MeshBasicMaterial({color: 0x8b4513}); // Marrom escuro
 
         // Maçaneta do lado direito (face da frente)
         const handleMeshFrontRight = new THREE.Mesh(handleGeometry, handleMaterial);
@@ -30,40 +30,31 @@ export default class Door {
         this.object.add(handleMeshBackRight);
     }
 
-    // Função para alternar entre abrir e fechar a porta
+    openDoor() {
+        if (!this.doorOpen) {
+            // Adicione aqui a lógica de animação para abrir a porta
+            this.doorMesh.position.x -= 0.5; // Compensa a rotação movendo a porta para a esquerda
+            this.doorMesh.position.z += 0.5; // Compensa a rotação movendo a porta para frente
+            this.doorMesh.rotation.y = Math.PI / 2; // Rotaciona a porta para abrir
+            this.doorOpen = true;
+        }
+    }
+
+    closeDoor() {
+        if (this.doorOpen) {
+            // Adicione aqui a lógica de animação para fechar a porta
+            this.doorMesh.position.x += 0.5; // Compensa a rotação movendo a porta de volta para a direita
+            this.doorMesh.position.z -= 0.5; // Compensa a rotação movendo a porta de volta para trás
+            this.doorMesh.rotation.y = 0; // Rotaciona a porta de volta para fechar
+            this.doorOpen = false;
+        }
+    }
+
     toggleDoor() {
         if (this.doorOpen) {
             this.closeDoor();
         } else {
             this.openDoor();
-        }
-    }
-
-    // Função para abrir a porta
-    openDoor() {
-        if (!this.doorOpen) {
-            const tween = new Tween({ rotationY: 0 })
-                .to({ rotationY: -Math.PI / 2 }, 1000)
-                .onUpdate(object => {
-                    this.object.rotation.y = object.rotationY;
-                })
-                .start();
-
-            this.doorOpen = true;
-        }
-    }
-
-    // Função para fechar a porta
-    closeDoor() {
-        if (this.doorOpen) {
-            const tween = new Tween({ rotationY: -Math.PI / 2 })
-                .to({ rotationY: 0 }, 1000)
-                .onUpdate(object => {
-                    this.object.rotation.y = object.rotationY;
-                })
-                .start();
-
-            this.doorOpen = false;
         }
     }
 }

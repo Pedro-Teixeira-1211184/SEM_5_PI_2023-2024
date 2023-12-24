@@ -27,9 +27,11 @@ export default class MazeLoad {
 
         //create a door
         this.door = new Door("./textures/door.jpg", 0xffffff);
+        this.doors = [];
 
         //create a elevator
         this.elevator3D = new Elevator();
+        this.elevators3D = [];
 
         // Create a passageway
         this.bridge = new Door("./textures/bridge.jpg", 0xe26751);
@@ -64,26 +66,30 @@ export default class MazeLoad {
                     this.object.add(wallObject);
                 }
                 if (this.map[j][i] == 4) {
-                    wallObject = this.door.object.clone();
-                    wallObject.position.set(i - this.size.width / 2.0 + 0.5, 0.5, j - this.size.height / 2.0);
-                    this.object.add(wallObject);
+                    wallObject = new Door("./textures/door.jpg", 0xffffff);
+                    this.doors.push({object: wallObject, coordinates: [j, i]});
+                    wallObject.object.position.set(i - this.size.width / 2.0 + 0.5, 0.5, j - this.size.height / 2.0);
+                    this.object.add(wallObject.object);
                 }
                 if (this.map[j][i] == 5) {
-                    wallObject = this.door.object.clone();
-                    wallObject.rotateY(Math.PI / 2.0);
-                    wallObject.position.set(i - this.size.width / 2.0, 0.5, j - this.size.height / 2.0 + 0.5);
-                    this.object.add(wallObject);
+                    wallObject = new Door("./textures/door.jpg", 0xffffff);
+                    this.doors.push({object: wallObject, coordinates: [j, i]});
+                    wallObject.object.rotateY(Math.PI / 2.0);
+                    wallObject.object.position.set(i - this.size.width / 2.0, 0.5, j - this.size.height / 2.0 + 0.5);
+                    this.object.add(wallObject.object);
                 }
                 if (this.map[j][i] == 6) {
-                    wallObject = this.elevator3D.object.clone();
-                    wallObject.position.set(i - this.size.width / 2.0 + 0.5, 0.5, j - this.size.height / 2.0);
-                    this.object.add(wallObject);
+                    wallObject = new Elevator();
+                    this.elevators3D.push({object: wallObject, coordinates: [j, i]});
+                    wallObject.object.position.set(i - this.size.width / 2.0 + 0.5, 0.5, j - this.size.height / 2.0);
+                    this.object.add(wallObject.object);
                 }
                 if (this.map[j][i] == 7) {
-                    wallObject = this.elevator3D.object.clone();
-                    wallObject.rotateY(Math.PI / 2.0);
-                    wallObject.position.set(i - this.size.width / 2.0, 0.5, j - this.size.height / 2.0 + 0.5);
-                    this.object.add(wallObject);
+                    wallObject = new Elevator();
+                    this.elevators3D.push({object: wallObject, coordinates: [j, i]});
+                    wallObject.object.rotateY(Math.PI / 2.0);
+                    wallObject.object.position.set(i - this.size.width / 2.0, 0.5, j - this.size.height / 2.0 + 0.5);
+                    this.object.add(wallObject.object);
                 }
                 if (this.map[j][i] == 9) {
                     wallObject = this.bridge.object.clone();
@@ -232,12 +238,12 @@ export default class MazeLoad {
     }
 
     // find room by his coordinates using carthesian coordinates
-    findRoomByCoordinates(position) {
+    findRoomDoorByCoordinates(position) {
         const indices = this.cartesianToCell(position);
         if (this.rooms !== undefined) {
-            for (let room of this.rooms) {
-                if (room.coordinates.x == indices[0] && room.coordinates.y == indices[1]) {
-                    return room;
+            for (let room of this.doors) {
+                if (room.coordinates[0] == indices[0] && room.coordinates[1] == indices[1]) {
+                    return room.object;
                 }
             }
         }
@@ -248,9 +254,9 @@ export default class MazeLoad {
     findElevatorByCoordinates(position) {
         const indices = this.cartesianToCell(position);
         if (this.elevator !== undefined) {
-            for (let elevator of this.elevator) {
-                if (elevator.localization.coordinates.x == indices[0] && elevator.localization.coordinates.y == indices[1]) {
-                    return elevator;
+            for (let elevator of this.elevators3D) {
+                if (elevator.coordinates[0] == indices[0] && elevator.coordinates[1] == indices[1]) {
+                    return elevator.object;
                 }
             }
         }

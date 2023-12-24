@@ -132,8 +132,10 @@ export default class ThumbRaiser {
         this.statisticsCheckBox.checked = false;
         this.dynamicForm = document.getElementById("dynamicForm");
         this.dynamicForm.style.visibility = "visible";
-        //button of dynamic form
         this.dynamicFormSubmit = document.getElementById("dynamicFormSubmit");
+        this.elevatorDynamicForm = document.getElementById("elevatorDynamicForm");
+        this.elevatorDynamicForm.style.visibility = "hidden";
+        this.elevatorDynamicFormSubmit = document.getElementById("elevatorDynamicFormSubmit");
 
         // Build the help panel
         this.buildHelpPanel();
@@ -184,6 +186,7 @@ export default class ThumbRaiser {
         this.loadCheckBox.addEventListener("change", event => this.elementChange(event));
         this.statisticsCheckBox.addEventListener("change", event => this.elementChange(event));
         this.dynamicFormSubmit.addEventListener("click", event => this.elementChange(event));
+        this.elevatorDynamicFormSubmit.addEventListener("click", event => this.elementChange(event));
 
         // Register the event handler to be called on input button click
         this.reset.addEventListener("click", event => this.buttonClick(event));
@@ -222,6 +225,20 @@ export default class ThumbRaiser {
                 this.maps = data;
             })
             .catch(error => console.error('Erro ao obter JSON da API:', error));
+    }
+
+    buildElevatorDynamicForm(floors) {
+        const selectElement = document.getElementById('building2');
+
+        // Limpa as opções do select
+        selectElement.innerHTML = '';
+
+        floors.forEach(opcao => {
+            const optionElement = document.createElement('option');
+            optionElement.value = opcao.buildingCode + opcao.floorNumber;
+            optionElement.text = opcao.buildingCode + opcao.floorNumber;
+            selectElement.appendChild(optionElement);
+        });
     }
 
     displayPanel() {
@@ -525,6 +542,17 @@ export default class ThumbRaiser {
                 const floor = document.getElementById("building").value;
                 this.changeFloor(x, y, floor);
                 break;
+            case "elevatorDynamicFormSubmit":
+                //change scenario
+                const floorAccess = document.getElementById("building2").value;
+                const floorAccessInfo = this.getMapById(floorAccess);
+                const x2 = floorAccessInfo.elevator[0].localization.coordinates.x;
+                let y2 = floorAccessInfo.elevator[0].localization.coordinates.y;
+                if (y2 === this.maze.map.length - 1) {
+                    y2 = y2 - 1;
+                }
+                this.changeFloor(x2, y2, floorAccess);
+                this.elevatorDynamicForm.style.visibility = "hidden";
         }
     }
 
@@ -536,9 +564,9 @@ export default class ThumbRaiser {
         this.maze = mazeLoad;
         this.scene3D.add(this.maze.object);
         this.player.position = this.maze.cellToCartesian(pos);
-        //player to turn 180 degrees in radians
         this.player.direction = this.maze.initialDirection + Math.PI;
         this.floorLoaded = floor;
+        this.floorInfoLoaded = floorInfo;
     }
 
     getMapById(id) {
@@ -583,6 +611,14 @@ export default class ThumbRaiser {
                 return mapById.passageways[i];
             }
         }
+    }
+
+    getFloorsByBuildingCode(buildingCode) {
+        return this.maps.filter(map => map.buildingCode === buildingCode);
+    }
+
+    floorsWithElevator(floors) {
+        return floors.filter(floor => floor.elevator.length !== 0);
     }
 
     update() {
@@ -635,12 +671,17 @@ export default class ThumbRaiser {
                         this.animations.fadeToAction("Death", 0.2);
                     } else {
                         if (this.collisionDoor(newPosition)) {
-                            //TODO: check if the door is open or not and if it is open then go through it and if it is closed then play the animation
-                            this.animations.fadeToAction("Sitting", 0.2);
+                            this.maze.findRoomDoorByCoordinates(newPosition).openDoor();
+                            this.animations.fadeToAction(this.player.keyStates.run ? "Running" : "Walking", 0.2);
+                            this.player.position = newPosition;
                         } else {
                             if (this.collisionElevator(newPosition)) {
-                                //TODO: stop the player movement, do elevator animation and display a dynamic form to choose the floor
-                                console.log("Elevator");
+                                const elevator = this.maze.findElevatorByCoordinates(newPosition);
+                                elevator.toggleDoor();
+                                const floors = this.getFloorsByBuildingCode(this.floorInfoLoaded.buildingCode);
+                                const floorsAccess = this.floorsWithElevator(floors);
+                                this.buildElevatorDynamicForm(floorsAccess);
+                                this.elevatorDynamicForm.style.visibility = "visible";
                             } else {
                                 if (this.collisionBridge(newPosition)) {
                                     const bridge = this.maze.findPassagewayByCoordinates(newPosition);
@@ -678,15 +719,19 @@ export default class ThumbRaiser {
                         this.animations.fadeToAction("Death", 0.2);
                     } else {
                         if (this.collisionDoor(newPosition)) {
-                            //TODO: check if the door is open or not and if it is open then go through it and if it is closed then play the animation
-
+                            this.maze.findRoomDoorByCoordinates(newPosition).openDoor();
+                            this.animations.fadeToAction(this.player.keyStates.run ? "Running" : "Walking", 0.2);
+                            this.player.position = newPosition;
                         } else {
                             if (this.collisionElevator(newPosition)) {
-                                //TODO: do elevator animation and display a dynamic form to choose the floor
-                                console.log("Elevator");
+                                const elevator = this.maze.findElevatorByCoordinates(newPosition);
+                                elevator.toggleDoor();
+                                const floors = this.getFloorsByBuildingCode(this.floorInfoLoaded.buildingCode);
+                                const floorsAccess = this.floorsWithElevator(floors);
+                                this.buildElevatorDynamicForm(floorsAccess);
+                                this.elevatorDynamicForm.style.visibility = "visible";
                             } else {
                                 if (this.collisionBridge(newPosition)) {
-                                    //TODO: change the floor and make robot in the new floor in the right position
                                     const bridge = this.maze.findPassagewayByCoordinates(newPosition);
                                     const start = bridge.start;
                                     const end = bridge.end;
