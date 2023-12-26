@@ -39,6 +39,7 @@ export default class MazeLoad {
         this.rooms = floorInfo.rooms;
         this.passageways = floorInfo.passageways;
         this.elevator = floorInfo.elevator;
+        this.floorCode = floorInfo.buildingCode + floorInfo.floorNumber;
 
         this.updateMap();
 
@@ -66,13 +67,15 @@ export default class MazeLoad {
                     this.object.add(wallObject);
                 }
                 if (this.map[j][i] == 4) {
-                    wallObject = new Door("./textures/door.jpg", 0xffffff);
+                    const door = this.getRoomByCoordinates(j, i);
+                    wallObject = new Door("./textures/door.jpg", 0xffffff, door.name);
                     this.doors.push({object: wallObject, coordinates: [j, i]});
                     wallObject.object.position.set(i - this.size.width / 2.0 + 0.5, 0.5, j - this.size.height / 2.0);
                     this.object.add(wallObject.object);
                 }
                 if (this.map[j][i] == 5) {
-                    wallObject = new Door("./textures/door.jpg", 0xffffff);
+                    const door = this.getRoomByCoordinates(j, i);
+                    wallObject = new Door("./textures/door.jpg", 0xffffff, door.name);
                     this.doors.push({object: wallObject, coordinates: [j, i]});
                     wallObject.object.rotateY(Math.PI / 2.0);
                     wallObject.object.position.set(i - this.size.width / 2.0, 0.5, j - this.size.height / 2.0 + 0.5);
@@ -92,15 +95,33 @@ export default class MazeLoad {
                     this.object.add(wallObject.object);
                 }
                 if (this.map[j][i] == 9) {
-                    wallObject = this.bridge.object.clone();
-                    wallObject.position.set(i - this.size.width / 2.0 + 0.5, 0.5, j - this.size.height / 2.0);
-                    this.object.add(wallObject);
+                    const passageway = this.getPassegewayByCoordinates(j, i);
+                    let name = '';
+                    if (passageway !== undefined) {
+                        if (passageway.start === this.floorCode) {
+                            name = passageway.end;
+                        } else {
+                            name = passageway.start;
+                        }
+                    }
+                    wallObject = new Door("./textures/bridge.jpg", 0xe26751, name);
+                    wallObject.object.position.set(i - this.size.width / 2.0 + 0.5, 0.5, j - this.size.height / 2.0);
+                    this.object.add(wallObject.object);
                 }
                 if (this.map[j][i] == 8) {
-                    wallObject = this.bridge.object.clone();
-                    wallObject.rotateY(Math.PI / 2.0);
-                    wallObject.position.set(i - this.size.width / 2.0, 0.5, j - this.size.height / 2.0 + 0.5);
-                    this.object.add(wallObject);
+                    const passageway = this.getPassegewayByCoordinates(j, i);
+                    let name = '';
+                    if (passageway !== undefined) {
+                        if (passageway.start === this.floorCode) {
+                            name = passageway.end;
+                        } else {
+                            name = passageway.start;
+                        }
+                    }
+                    wallObject = new Door("./textures/bridge.jpg", 0xe26751, name);
+                    wallObject.object.rotateY(Math.PI / 2.0);
+                    wallObject.object.position.set(i - this.size.width / 2.0, 0.5, j - this.size.height / 2.0 + 0.5);
+                    this.object.add(wallObject.object);
                 }
             }
         }
@@ -111,7 +132,6 @@ export default class MazeLoad {
         // The cache must be enabled; additional information available at https://threejs.org/docs/api/en/loaders/FileLoader.html
         THREE.Cache.enabled = true;
     }
-
 
     // Convert cell [row, column] coordinates to cartesian (x, y, z) coordinates
     cellToCartesian(position) {
@@ -269,6 +289,28 @@ export default class MazeLoad {
         if (this.passageways !== undefined) {
             for (let passageway of this.passageways) {
                 if (passageway.localization.coordinates.x == indices[0] && passageway.localization.coordinates.y == indices[1]) {
+                    return passageway;
+                }
+            }
+        }
+        return undefined;
+    }
+
+    getRoomByCoordinates(j, i) {
+        if (this.rooms !== undefined) {
+            for (let room of this.rooms) {
+                if (room.door.coordinates.x === j && room.door.coordinates.y === i) {
+                    return room;
+                }
+            }
+        }
+        return undefined;
+    }
+
+    getPassegewayByCoordinates(j, i) {
+        if (this.passageways !== undefined) {
+            for (let passageway of this.passageways) {
+                if (passageway.localization.coordinates.x === j && passageway.localization.coordinates.y === i) {
                     return passageway;
                 }
             }
