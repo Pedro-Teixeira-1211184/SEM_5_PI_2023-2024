@@ -9,13 +9,13 @@
 :- use_module(graph_handling, [data/0, clear/0, parse_and_assert_matrix/1, cria_grafo/1]).
 :- use_module(search_algorithms, [path_between_floors/4, best_path/3, searchByDfsAlgorithm/3, searchByBestDfsAlgorithm/3, searchByBfsAlgorithm/3]).
 
-:- http_handler('/path', searchPath, [methods(get)]).
-:- http_handler('/pathLessElevators', searchPathLessElevators, [methods(get)]).
-
-:- http_handler('/pathPerFloorsDFS', searchPathPerFloor, [methods(post)]).
-:- http_handler('/pathPerFloorsBestDFS', searchPathPerFloorBest, [methods(post)]).
-:- http_handler('/pathPerFloorsBFS', searchPathPerFloorBFS, [methods(post)]).
-:- http_handler('/pathPerFloorsAStar', searchPathPerFloorAStar, [methods(post)]).
+% Corrected HTTP handlers
+:- http_handler('/path', searchPath, [method(get)]).
+:- http_handler('/pathLessElevators', searchPathLessElevators, [method(get)]).
+:- http_handler('/pathPerFloorsDFS', searchPathPerFloor, [method(post)]).
+:- http_handler('/pathPerFloorsBestDFS', searchPathPerFloorBest, [method(post)]).
+:- http_handler('/pathPerFloorsBFS', searchPathPerFloorBFS, [method(post)]).
+:- http_handler('/pathPerFloorsAStar', searchPathPerFloorAStar, [method(post)]).
 
 % Server management
 start_server(Port) :-
@@ -24,7 +24,7 @@ start_server(Port) :-
 % Request handling
 searchPath(Request) :- 
     data(),
-    http_parameters(Request, [floorA(FloorA, [list(json([]))]), floorB(FloorB, [list(json([]))])]),
+    http_parameters(Request, [floorA([FloorA|_]), floorB([FloorB|_])]),
     (path_between_floors(FloorA, FloorB, Buildings, Path) ->
         format_path2(Path, JsonObjects),
         Msg1 = json{buildings:Buildings, paths:JsonObjects},
@@ -36,7 +36,7 @@ searchPath(Request) :-
 
 searchPathLessElevators(Request) :-
     data(),
-    http_parameters(Request, [floorA(FloorA, [list(json([]))]), floorB(FloorB, [list(json([]))])]),
+    http_parameters(Request, [floorA([FloorA|_]), floorB([FloorB|_])]),
     (path_between_floors_less_elevators(FloorA, FloorB, Buildings, Path) ->
         format_path2(Path, JsonObjects),
         Msg1 = json{buildings:Buildings, paths:JsonObjects},
@@ -45,6 +45,7 @@ searchPathLessElevators(Request) :-
     ;   format('Content-type: application/json~n~n'),
         format('\nPath not found'), clear()
     ).
+
 
 searchPathPerFloor(Request) :-
     http_read_json_dict(Request, Data),
@@ -74,8 +75,8 @@ searchPathPerFloorBest(Request) :-
         format('Path not found'), clear()
     ).
 
-searchPathPerFloorBFS_dict(Request) :-
-    http_read_json(Request, Data),
+searchPathPerFloorBFS(Request) :-
+    http_read_json_dict(Request, Data),
     Data = json{matriz:Matriz, limits:Limits, origin:Origin, destination:Destination},
     parse_and_assert_matrix(Matriz),
     cria_grafo(Limits),

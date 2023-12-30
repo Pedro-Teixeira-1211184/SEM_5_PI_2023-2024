@@ -10,7 +10,6 @@ import {MapMapper} from "../mappers/MapMapper";
 import {Result} from "../core/logic/Result";
 import IPathDTO from "../dto/IPathDTO";
 import IPathResultDTO from "../dto/IPathResultDTO";
-import IPlantDTO from "../dto/IPlantDTO";
 
 @Service()
 
@@ -35,7 +34,7 @@ export default class MapController implements IMapController /* TODO: extends ..
     }
   }
 
-  public async loadMap(req: Request, res: Response, next: NextFunction){
+  /*public async loadMap(req: Request, res: Response, next: NextFunction){
     const buildingCode = String(req.params.buildingCode);
     const floorNumber = Number(req.params.floorNumber);
     try {
@@ -63,7 +62,7 @@ export default class MapController implements IMapController /* TODO: extends ..
     } catch (e) {
       return next(e);
     }
-  }
+  }*/
 
   public async pathBetweenFloors(req: Request, res: Response, next: NextFunction) {
     const origin = String(req.params.origin);
@@ -98,7 +97,7 @@ export default class MapController implements IMapController /* TODO: extends ..
   }
 
 
-  public async getAllPlants(req: Request, res: Response, next: NextFunction) {
+ /* public async getAllPlants(req: Request, res: Response, next: NextFunction) {
     try{
       const maps = await this.mapServiceInstance.getAll() as Result<IMapDTO[]>;
       if (maps.isFailure) {
@@ -116,5 +115,5 @@ export default class MapController implements IMapController /* TODO: extends ..
     }catch (e) {
       return next(e);
     }
-  }
+  }*/
 }

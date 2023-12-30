@@ -1,4 +1,7 @@
+import IBuildingDTO from "./IBuildingDTO";
+import IPathDTO from "./IPathDTO";
+
 export default interface IPathResultDTO {
-    pathBetweenFloors: string[];
-    pathPerFloor: number[];
-}
+    buildings: IBuildingDTO[];
+    paths: IPathDTO[][];
+  }

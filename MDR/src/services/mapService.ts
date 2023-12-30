@@ -11,7 +11,7 @@ import IRoomRepo from "./IRepos/IRoomRepo";
 import IPassagewayRepo from "./IRepos/IPassagewayRepo";
 import IElevatorRepo from "./IRepos/IElevatorRepo";
 import IBuildingRepo from "./IRepos/IBuildingRepo";
-import IPlantDTO from '../dto/IPlantDTO';
+//import IPlantDTO from '../dto/IPlantDTO';
 //import { http } from 'winston';
 import IPathDTO from '../dto/IPathDTO';
 import IPathResultDTO from '../dto/IPathResultDTO';
@@ -109,7 +109,7 @@ export default class MapService implements IMapService {
   }
 
 
-  public async  turnToPlant(mapDTO: IMapDTO): Promise<IPlantDTO> {
+  /*public async  turnToPlant(mapDTO: IMapDTO): Promise<IPlantDTO> {
     try {
       const plantDTO: IPlantDTO = {
         floorCode: `${mapDTO.buildingCode}${mapDTO.floorNumber}`,
@@ -188,7 +188,7 @@ export default class MapService implements IMapService {
     } catch (e) {
       throw e;
     }
-  }
+  }*/
 
   public async pathBetweenFloors(pathDTO: IPathDTO): Promise<IPathResultDTO | Result<IPathResultDTO>> {
     /*let pathBetweenFloors: string[];

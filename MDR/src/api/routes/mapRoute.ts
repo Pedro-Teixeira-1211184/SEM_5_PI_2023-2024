@@ -75,7 +75,7 @@ export default () => {
     ctrl.getAll(req, res, next);
   });
 
-  route.get('/allPlants', (req, res, next) => {
+  /*route.get('/allPlants', (req, res, next) => {
     console.log("Getting all Plants!");
     ctrl.getAllPlants(req, res, next);
   });
@@ -89,7 +89,7 @@ export default () => {
     console.log("Listing Maps!");
     ctrl.listMaps(req, res, next);
   });
-
+*/
   route.get('/path/:origin/:destination', (req, res, next) => {
     console.log("Finding path between floors!");
     ctrl.pathBetweenFloors(req, res, next);

@@ -47,7 +47,7 @@ path_between_buildings2(EdAct, EdDest, LEdPassed, LEdCam) :-
 %-----------------------------------------------------
 % Predicado para calcular o numero de utilizacoes de elevador em cada path
 elevator_sections(Path, Num) :-
-    aggregate_all(count, (member(Step, Path), elev(Step, _)), Num).
+    aggregate_all(count, (member(Step, Path), elevator(Step, _)), Num).
 
 % Predicado para selecionar o path com o menor numero de utilizacoes de elevador
 best_path(Origin, Destination, Path) :-

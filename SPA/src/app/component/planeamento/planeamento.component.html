@@ -1,82 +1,70 @@
-<form class="planeamento-form" [formGroup]="planeamentoForm">
-      <h1>Get Path</h1>
-      <!-- Origin -->
-      <div class="input-container">
-        <label for="buildingCode1">Origin Building Code</label>
-        <input type="text" id="buildingCode1" formControlName="buildingCode1" placeholder="Enter Building code" required>
-        <div *ngIf="!buildingCode1?.value && planeamentoForm.get('buildingCode1')?.touched" class="validation-error">
-          <p>Building Code is required!</p>
-        </div>
-      </div>
-    
-      <button type="button" (click)="getFloorsByBuildingCode()">Get Floors (Origin)</button>
-    
-      <div *ngIf="floors && floors.length > 0" class="floors-container">
-        <h2>Floors:</h2>
-        <ul>
-          <li *ngFor="let floor of floors">{{ floor | json }}</li>
-        </ul>
-      </div>
-      <div *ngIf="floors && floors.length === 0" class="no-floors-container">
-        <p>No floors found</p>
-      </div>
-    
-      <div class="input-container">
-        <label for="floorNumber1">Choose Origin Floor Number</label>
-        <input type="number" id="floorNumber1" formControlName="floorNumber1" placeholder="Enter Floor number" required>
-      </div>
-    
-      <button type="button" (click)="loadMapOrigin()">Load Map (Origin)</button>
+<form [formGroup]="planeamentoForm">
+  <h1>Get Path</h1>
 
-      <div *ngIf="originPlant" class="plant-info-container">
-        <h2>Origin Plant Information:</h2>
-        <p>{{ originPlant | json }}</p>
-      </div>
-    
-      <div class="input-container">
-        <label for="origin">Origin Coordinates (x,y)</label>
-        <input type="text" id="origin" formControlName="origin" placeholder="Please insert floorCode-col-lin (ex: A1-1-1)" required>
-      </div>
-    
-      <!-- Destination -->
-      <div class="input-container">
-        <label for="buildingCode2">Destination Building Code</label>
-        <input type="text" id="buildingCode2" formControlName="buildingCode2" placeholder="Enter Building code" required>
-        <div *ngIf="!buildingCode2?.value && planeamentoForm.get('buildingCode2')?.touched" class="validation-error">
-          <p>Building Code is required!</p>
-        </div>
-      </div>
-    
-      <button type="button" (click)="getFloorsByBuildingCode2()">Get Floors (Destination)</button>
-    
-      <div *ngIf="floors && floors.length > 0" class="floors-container">
-        <h2>Floors:</h2>
-        <ul>
-          <li *ngFor="let floor of floors">{{ floor | json }}</li>
-        </ul>
-      </div>
-      <div *ngIf="floors && floors.length === 0" class="no-floors-container">
-        <p>No floors found</p>
-      </div>
-    
-      <div class="input-container">
-        <label for="floorNumber2">Choose Destination Floor Number</label>
-        <input type="number" id="floorNumber2" formControlName="floorNumber2" placeholder="Enter Floor number" required>
-      </div>
-    
-      <button type="button" (click)="loadMapDestination()">Load Map (Destination)</button>
+  <!-- Origin Building Code -->
+  <div class="input-container">
+    <label for="buildingCode1">Origin Building Code</label>
+    <input type="text" id="buildingCode1" formControlName="buildingCode1" placeholder="Enter Building code" required>
+    <div *ngIf="!buildingCode1?.value && planeamentoForm.get('buildingCode1')?.touched" class="validation-error">
+      <p>Building Code is required!</p>
+    </div>
+  </div>
 
-      <div *ngIf="destinationPlant" class="plant-info-container">
-        <h2>Destination Plant Information:</h2>
-        <p>{{ destinationPlant | json }}</p>
-      </div>
-    
-      <div class="input-container">
-        <label for="destination">Destination Coordinates (x,y)</label>
-        <input type="text" id="destination" formControlName="destination" placeholder="Please insert floorCode-col-lin (ex: A1-1-1)" required>
-      </div>
-    
-      <!-- Calculate Path -->
-      <button type="button" (click)="definePath()">Calculate path</button>
-    </form>
-    
+  <!-- Get Floors (Origin) Button -->
+  <button type="button" (click)="getFloorsByBuildingCode()">Get Floors (Origin)</button>
+
+  <!-- Display Floors (Origin) -->
+  <div *ngIf="floors && floors.length > 0" class="floors-container">
+    <h2>Floors:</h2>
+    <ul>
+      <li *ngFor="let floor of floors">{{ floor | json }}</li>
+    </ul>
+  </div>
+  <div *ngIf="floors && floors.length === 0" class="no-floors-container">
+    <p>No floors found</p>
+  </div>
+
+  <!-- Choose Origin Floor Number -->
+  <div class="input-container">
+    <label for="origin">Choose Origin Floor Number</label>
+    <input type="number" id="origin" formControlName="origin" placeholder="Enter Floor number" required>
+  </div>
+
+  <!-- Destination Building Code -->
+  <div class="input-container">
+    <label for="buildingCode2">Destination Building Code</label>
+    <input type="text" id="buildingCode2" formControlName="buildingCode2" placeholder="Enter Building code" required>
+    <div *ngIf="!buildingCode2?.value && planeamentoForm.get('buildingCode2')?.touched" class="validation-error">
+      <p>Building Code is required!</p>
+    </div>
+  </div>
+
+  <!-- Get Floors (Destination) Button -->
+  <button type="button" (click)="getFloorsByBuildingCode2()">Get Floors (Destination)</button>
+
+  <!-- Display Floors (Destination) -->
+  <div *ngIf="floors && floors.length > 0" class="floors-container">
+    <h2>Floors:</h2>
+    <ul>
+      <li *ngFor="let floor of floors">{{ floor | json }}</li>
+    </ul>
+  </div>
+  <div *ngIf="floors && floors.length === 0" class="no-floors-container">
+    <p>No floors found</p>
+  </div>
+
+  <!-- Choose Destination Floor Number -->
+  <div class="input-container">
+    <label for="destination">Choose Destination Floor Number</label>
+    <input type="number" id="destination" formControlName="destination" placeholder="Enter Floor number" required>
+  </div>
+
+  <!-- Calculate Path Button -->
+  <button type="button" (click)="definePath()">Calculate path</button>
+
+  <!-- Display Calculated Path -->
+  <div *ngIf="result" class="calculated-path-container">
+    <h2>Calculated Path:</h2>
+    <p>{{ result | json }}</p>
+  </div>
+</form>

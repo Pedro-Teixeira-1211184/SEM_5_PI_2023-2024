@@ -15,11 +15,7 @@ export class PlaneamentoComponent {
   mapservice: MapService = inject(MapService);
   floorservice: FloorService = inject(FloorService);
   floors: IFloorDTO[] = [];
-  origin: string = '';  ////floorCode-col-lin 
-  destination: string = '';
-  originPlant: IPlantDTO = {} as IPlantDTO;
-  destinationPlant: IPlantDTO = {} as IPlantDTO;
-
+  result: any;
 
   constructor() {
 
@@ -41,42 +37,25 @@ export class PlaneamentoComponent {
     this.floors = await this.floorservice.getFloorsByBuildingCode(this.buildingCode2?.value) as IFloorDTO[];
   }
 
-  public async loadMapOrigin(){
-    if(this.floorNumber1?.value === '' || this.floorNumber1?.value === null || this.floorNumber1?.value === undefined){
-      alert ('Please choose a floor');
-      return;
-    }
-    this.originPlant = await this.mapservice.loadMap(this.buildingCode1?.value, this.floorNumber1?.value) as IPlantDTO;
-  }
 
-  public async loadMapDestination(){
-    if(this.floorNumber2?.value === '' || this.floorNumber2?.value === null || this.floorNumber2?.value === undefined){
-      alert ('Please choose a floor');
-      return;
-    }
-    console.log(this.buildingCode2?.value);
-    console.log(this.floorNumber2?.value);
-    this.destinationPlant = await this.mapservice.loadMap(this.buildingCode2?.value, this.floorNumber2?.value);
-  }
-
-  public async chooseOrigin(){
-    if(this.origin === '' || this.origin === null || this.origin === undefined){
-      alert ('Please insert floorCode-col-lin (ex: 1-1-1)');
+  public async chooseFloor1(){
+    if(this.origin?.value === '' || this.origin?.value === null || this.origin?.value === undefined){
+      alert ('Please insert a floor number');
       return;
     }
   }
 
-  public async chooseDestination(){
-    if(this.destination === '' || this.destination === null || this.destination === undefined){
-      alert ('Please insert floorCode-col-lin (ex: 1-1-1)');
+  public async chooseFloor2(){
+    if(this.destination?.value === '' || this.destination?.value === null || this.destination?.value === undefined){
+      alert ('Please insert a floor number');
       return;
     }
   }
 
   public async definePath() {
     // Get the values of the origin and destination form controls
-    const originValue = this.planeamentoForm.get('origin')?.value;
-    const destinationValue = this.planeamentoForm.get('destination')?.value;
+    const originValue = this.planeamentoForm.get('buildingCode1')?.value + this.planeamentoForm.get('origin')?.value;
+    const destinationValue = this.planeamentoForm.get('buildingCode2')?.value + this.planeamentoForm.get('destination')?.value;
   
     // Log the values to the console
     console.log('Origin:', originValue);
@@ -88,22 +67,16 @@ export class PlaneamentoComponent {
     }
   
     // Call the pathBetweenFloors method with the origin and destination values
-    const result = await this.mapservice.pathBetweenFloors(originValue, destinationValue);
-    console.log(result);
+    this.result = await this.mapservice.pathBetweenFloors(originValue, destinationValue);
+    console.log(this.result);
   }
   
-
-  public async listMaps(){
-    this.mapservice.listMaps();
-  }
 
   ngOnInit(): void {
     this.planeamentoForm = new FormGroup({
       buildingCode1: new FormControl('', [Validators.required]),
-      floorNumber1: new FormControl('', [Validators.required]),
       origin: new FormControl('', [Validators.required]),
       buildingCode2: new FormControl('', [Validators.required]),
-      floorNumber2: new FormControl('', [Validators.required]),
       destination: new FormControl('', [Validators.required]),
     });
   }
@@ -112,15 +85,15 @@ export class PlaneamentoComponent {
       return this.planeamentoForm.get('buildingCode1');
     }
 
-    get floorNumber1() {
-      return this.planeamentoForm.get('floorNumber1');
+    get origin() {
+      return this.planeamentoForm.get('origin');
     }
 
     get buildingCode2() {
       return this.planeamentoForm.get('buildingCode2');
     }
 
-    get floorNumber2() {
-      return this.planeamentoForm.get('floorNumber2');
+    get destination() {
+      return this.planeamentoForm.get('destination');
     }
   }
