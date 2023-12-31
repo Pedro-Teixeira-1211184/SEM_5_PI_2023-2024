@@ -63,6 +63,8 @@ namespace DDDSample1.Domain.Tasks
 
             // Commit changes to the database
             await this._unitOfWork.CommitAsync();
+            
+            taskDTO.Id = taskId;
 
             // Return the DTO with the id
             return taskDTO;

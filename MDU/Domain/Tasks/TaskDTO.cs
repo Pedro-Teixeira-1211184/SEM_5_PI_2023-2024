@@ -7,21 +7,14 @@ namespace DDDSample1.Domain.Tasks {
         public TaskId Id { get; set; }
         public string UserID { get; set; }
         public string UserEmail { get; set; }
-        
         public int StartX { get; set; }
-        
         public int StartY { get; set; }
-        
         public string StartFloorCode { get; set; }
-        
         public int EndX { get; set; }
-        
         public int EndY { get; set; }
-        
         public string EndFloorCode { get; set; }
         public string Description { get; set; }
         public string TaskType { get; set; }
-        
         public string RobotCode { get; set; }
         public string TaskState { get; set; }
 

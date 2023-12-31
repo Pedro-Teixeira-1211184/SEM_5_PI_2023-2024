@@ -26,10 +26,5 @@ namespace DDDSample1.Domain.SystemUser {
             NIF = nif;
             Role = role;
         }
-        
-        public void setPassword(string pass){
-            this.Password = pass;
-        }
-
     }
 }

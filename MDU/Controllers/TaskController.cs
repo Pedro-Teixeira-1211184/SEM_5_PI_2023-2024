@@ -10,7 +10,7 @@ using System.Linq;
 namespace DDDSample1.Controllers
 {
 
-    [Route("api/[controller]")]
+    [Route("api/task")]
     [ApiController]
     public class TaskController : ControllerBase
     {
@@ -39,15 +39,15 @@ namespace DDDSample1.Controllers
 
         //POST: Create a Task
         [HttpPost]
-        public async Task<ActionResult<TaskDTO>> CreateTask(TaskDTO createTaskDTO)
+        public async Task<TaskDTO> CreateTask(TaskDTO createTaskDTO)
         {
             var createdTask = await _taskService.AddAsync(createTaskDTO);
 
-            return CreatedAtAction(nameof(GetById), new { id = createdTask.Id }, createdTask);
+            return createdTask;
         }
 
-        //PATCH: /api/tasks/{id}/updateState
-        [HttpPatch("{id}/updateState")]
+        //PATCH: /api/tasks/{id}/state
+        [HttpPatch("{id}/state")]
         public async Task<ActionResult<TaskDTO>> UpdateTaskState(string id, [FromBody] string newTaskState)
         {
             var task = await _taskService.GetByIdAsync(new TaskId(id));
@@ -62,8 +62,8 @@ namespace DDDSample1.Controllers
             return updatedTask;
         }
 
-        //GET api/acceptedTasks
-        [HttpGet("acceptedTasks")]
+        //GET api/accepted
+        [HttpGet("accepted")]
         public async Task<ActionResult<IEnumerable<TaskDTO>>> GetAllAcceptedTasks()
         {
             var tasks = await _taskService.GetAcceptedTasksAsync();
@@ -76,8 +76,8 @@ namespace DDDSample1.Controllers
             return tasks;
         }
 
-        //GET api/pendingTasks
-        [HttpGet("pendingTasks")]
+        //GET api/task/pending
+        [HttpGet("pending")]
         public async Task<ActionResult<IEnumerable<TaskDTO>>> GetAllPendingTasks()
         {
             var tasks = await _taskService.GetPendingTasksAsync();
