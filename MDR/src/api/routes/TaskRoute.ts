@@ -21,6 +21,11 @@ export default () => {
     ctrl.createTaskType(req, res, next);
   });
 
+  route.get('/types', (req, res, next) => {
+    console.log("Getting all task types!");
+    ctrl.getAllTaskTypes(req, res, next);
+  });
+
   route.post('/', celebrate({
     body: Joi.object({
       username: Joi.string().required().error(new Error('Invalid user')),

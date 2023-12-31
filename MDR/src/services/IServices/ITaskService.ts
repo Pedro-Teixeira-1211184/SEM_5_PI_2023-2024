@@ -3,4 +3,6 @@ import ITaskTypeDTO from "../../dto/ITaskTypeDTO";
 
 export default interface IRobotService {
   createTaskType(taskTypeDTO: ITaskTypeDTO): Promise<Result<ITaskTypeDTO>>;
+
+  getAllTaskTypes(): Promise<Result<ITaskTypeDTO[]>>;
 }

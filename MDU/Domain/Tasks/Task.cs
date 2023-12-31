@@ -9,8 +9,6 @@ namespace DDDSample1.Domain.Tasks
     {
         public new TaskId Id { get; private set; }
 
-        public string UserID { get; private set; }
-
         public string UserEmail { get; private set; }
 
         public int StartX { get; private set; }
@@ -33,10 +31,9 @@ namespace DDDSample1.Domain.Tasks
 
         public string TaskState { get; set; }
 
-        public Task(TaskId taskId, string userID, string userEmail, int startX, int startY, string startFloorCode, int endX, int endY, string endFloorCode, string description, string taskType, string robotCode, string taskState)
+        public Task(TaskId taskId, string userEmail, int startX, int startY, string startFloorCode, int endX, int endY, string endFloorCode, string description, string taskType, string robotCode, string taskState)
         {
             this.Id = taskId;
-            this.UserID = userID;
             this.UserEmail = userEmail;
             this.StartX = startX;
             this.StartY = startY;

@@ -39,7 +39,9 @@ export default class Constants {
 
     //task
     public static readonly API_TASK_TYPE_CREATE_URL = Constants.API_BASE_URL + 'tasks/types';
+    public static readonly API_TASK_TYPE_GET_ALL_URL = Constants.API_BASE_URL + 'tasks/types';
     public static readonly API_TASK_REQUEST_CREATE_URL = Constants.API_BASE_URL + 'tasks/requests';
+    public static readonly API_TASK_REQUEST_CREATE = Constants.API_BASE_DOTNET_URL + 'api/task';
 
     //passageway
     public static readonly API_PASSAGEWAY_CREATE_URL = Constants.API_BASE_URL + 'passageways';

@@ -14,31 +14,44 @@ import IRobotTypeRepo from "./IRepos/IRobotTypeRepo";
 
 export default class TaskService implements ITaskService {
 
-    constructor(
-        @Inject(config.repos.taskType.name) private taskTypeRepo: ITaskTypeRepo,
-        @Inject(config.repos.robotType.name) private robotTypeRepo: IRobotTypeRepo,
-    ) {
-    }
+  constructor(
+    @Inject(config.repos.taskType.name) private taskTypeRepo: ITaskTypeRepo,
+    @Inject(config.repos.robotType.name) private robotTypeRepo: IRobotTypeRepo,
+  ) {
+  }
 
-    public async createTaskType(taskTypeDTO: ITaskTypeDTO): Promise<Result<ITaskTypeDTO>> {
-        try {
-            const robotType = await this.robotTypeRepo.findByDesignation(taskTypeDTO.robotType);
-            if (robotType == null) {
-                return Result.fail<ITaskTypeDTO>('Robot type does not exist');
-            }
-            const typeOrError = await TaskType.create(taskTypeDTO);
-            if (typeOrError.isFailure) {
-                return Result.fail<ITaskTypeDTO>('Task type is not valid');
-            }
-            const type = await this.taskTypeRepo.save(typeOrError.getValue());
-            if (type == null) {
-                return Result.fail<ITaskTypeDTO>('Task type already exists');
-            }
-            return Result.ok<ITaskTypeDTO>(TaskTypeMapper.toDTO(type));
-        } catch (e) {
-            throw e;
-        }
+  public async createTaskType(taskTypeDTO: ITaskTypeDTO): Promise<Result<ITaskTypeDTO>> {
+    try {
+      const robotType = await this.robotTypeRepo.findByDesignation(taskTypeDTO.robotType);
+      if (robotType == null) {
+        return Result.fail<ITaskTypeDTO>('Robot type does not exist');
+      }
+      const typeOrError = await TaskType.create(taskTypeDTO);
+      if (typeOrError.isFailure) {
+        return Result.fail<ITaskTypeDTO>('Task type is not valid');
+      }
+      const type = await this.taskTypeRepo.save(typeOrError.getValue());
+      if (type == null) {
+        return Result.fail<ITaskTypeDTO>('Task type already exists');
+      }
+      return Result.ok<ITaskTypeDTO>(TaskTypeMapper.toDTO(type));
+    } catch (e) {
+      throw e;
     }
+  }
+
+  public async getAllTaskTypes(): Promise<Result<ITaskTypeDTO[]>> {
+    try {
+      const types = await this.taskTypeRepo.findAll();
+      const typesDTO: ITaskTypeDTO[] = [];
+      for (let type of types) {
+        typesDTO.push(TaskTypeMapper.toDTO(type));
+      }
+      return Result.ok<ITaskTypeDTO[]>(typesDTO);
+    } catch (e) {
+      throw e;
+    }
+  }
 
 
 }

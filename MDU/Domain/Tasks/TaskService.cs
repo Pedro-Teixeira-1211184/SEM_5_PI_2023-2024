@@ -56,7 +56,7 @@ namespace DDDSample1.Domain.Tasks
             var taskId = TaskId.NewTaskId();
 
             // Create a new Task entity with the generated TaskId
-            var task = new Task(taskId, taskDTO.UserID, taskDTO.UserEmail, taskDTO.StartX, taskDTO.StartY, taskDTO.StartFloorCode, taskDTO.EndX, taskDTO.EndY, taskDTO.EndFloorCode, taskDTO.Description, taskDTO.TaskType, taskDTO.RobotCode, taskDTO.TaskState);
+            var task = new Task(taskId, taskDTO.UserEmail, taskDTO.StartX, taskDTO.StartY, taskDTO.StartFloorCode, taskDTO.EndX, taskDTO.EndY, taskDTO.EndFloorCode, taskDTO.Description, taskDTO.TaskType, taskDTO.RobotCode, taskDTO.TaskState);
 
             // Add the Task entity to the repository
             await this._repo.AddAsync(task);

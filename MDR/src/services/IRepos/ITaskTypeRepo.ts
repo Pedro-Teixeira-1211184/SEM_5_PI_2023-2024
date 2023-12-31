@@ -7,4 +7,5 @@ export default interface ITaskTypeRepo extends Repo<TaskType> {
      findByName(designation: string): Promise<TaskType>;
      delete(taskType: TaskType): Promise<void>;
      exists(taskType: TaskType): Promise<boolean>;
+     findAll(): Promise<TaskType[]>;
 }

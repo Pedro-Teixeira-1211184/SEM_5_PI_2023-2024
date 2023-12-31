@@ -1,1 +1,64 @@
-<p>task-request works!</p>
+<form class="task-form" id="taskForm" (ngSubmit)="submit()" [formGroup]="taskForm" #formDir="ngForm">
+  <h1>Request a task</h1>
+  <div class="input-container">
+    <label for="startFloorCode">Start</label>
+    <select id="startFloorCode" formControlName="startFloorCode" required>
+      <option *ngFor="let floorCode of floorsCode"
+              [value]="floorCode.code">{{ floorCode.code + " - " + floorCode.description }}
+      </option>
+    </select>
+    <div *ngIf="startFloorCode?.invalid && formDir.submitted" class="validation-error">
+      <p *ngIf="startFloorCode?.errors?.['required']">Floor Code is required!</p>
+    </div>
+    <label for="startX">X</label>
+    <input type="number" id="startX" formControlName="startX" required>
+    <div *ngIf="startX?.invalid && formDir.submitted" class="validation-error">
+      <p *ngIf="startX?.errors?.['required']">X is required!</p>
+    </div>
+    <label for="startY">Y</label>
+    <input type="number" id="startY" formControlName="startY" required>
+    <div *ngIf="startY?.invalid && formDir.submitted" class="validation-error">
+      <p *ngIf="startY?.errors?.['required']">Y is required!</p>
+    </div>
+    <label for="endFloorCode">Destination</label>
+    <select id="endFloorCode" formControlName="endFloorCode" required>
+      <option *ngFor="let floorCode of floorsCode"
+              [value]="floorCode.code">{{ floorCode.code + " - " + floorCode.description }}
+      </option>
+    </select>
+    <div *ngIf="endFloorCode?.invalid && formDir.submitted" class="validation-error">
+      <p *ngIf="endFloorCode?.errors?.['required']">Floor Code is required!</p>
+    </div>
+    <label for="endX">X</label>
+    <input type="number" id="endX" formControlName="endX" required>
+    <div *ngIf="endX?.invalid && formDir.submitted" class="validation-error">
+      <p *ngIf="endX?.errors?.['required']">X is required!</p>
+    </div>
+    <label for="endY">Y</label>
+    <input type="number" id="endY" formControlName="endY" required>
+    <div *ngIf="endY?.invalid && formDir.submitted" class="validation-error">
+      <p *ngIf="endY?.errors?.['required']">Y is required!</p>
+    </div>
+    <label for="taskType">Task Type</label>
+    <select id="taskType" formControlName="taskType" (change)="getAvailableRobots()" required>
+      <option *ngFor="let taskType of taskTypesPresented" [value]="taskType">{{ taskType }}</option>
+    </select>
+    <div *ngIf="taskType?.invalid && formDir.submitted" class="validation-error">
+      <p *ngIf="taskType?.errors?.['required']">Task Type is required!</p>
+    </div>
+    <label for="robot">Robot</label>
+    <select id="robot" formControlName="robotCode" required>
+      <option *ngFor="let robot of filteredRobots" [value]="robot.code">{{ robot.nickname + " - " + robot.code }}</option>
+    </select>
+    <div *ngIf="robotCode?.invalid && formDir.submitted" class="validation-error">
+      <p *ngIf="robotCode?.errors?.['required']">Robot is required!</p>
+    </div>
+    <label for="description">Description</label>
+    <textarea type="text" id="description" formControlName="description" placeholder="description" required></textarea>
+    <div *ngIf="description?.invalid && formDir.submitted" class="validation-error">
+      <p *ngIf="description?.errors?.['required']">Description is required!</p>
+    </div>
+  </div>
+  <button type="submit">Submit</button>
+</form>
+

@@ -5,7 +5,6 @@ namespace DDDSample1.Domain.Tasks {
     public class TaskDTO {
 
         public TaskId Id { get; set; }
-        public string UserID { get; set; }
         public string UserEmail { get; set; }
         public int StartX { get; set; }
         public int StartY { get; set; }
