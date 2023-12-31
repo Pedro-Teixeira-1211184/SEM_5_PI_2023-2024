@@ -206,7 +206,11 @@ export default class MapService implements IMapService {
           data += chunk;
         });
         resp.on('end', () => {
-          resolve(JSON.parse(data));
+          try {
+            resolve(JSON.parse(data));
+          } catch (e) {
+            reject(e);
+          }
         });
       }).on("error", (err) => {
         reject(err);
