@@ -9,6 +9,7 @@ import {ISignUpRequestDTO} from "../dto/ISignUpRequestDTO";
 interface UserProps {
   firstName: string;
   lastName: string;
+  nif: string;
   email: string;
   password: string;
 }
@@ -34,6 +35,10 @@ export class SignUpRequest extends AggregateRoot<UserProps> {
     return this.props.lastName;
   }
 
+  get nif(): string {
+    return this.props.nif;
+  }
+
   get password(): string {
     return this.props.password;
   }
@@ -49,12 +54,14 @@ export class SignUpRequest extends AggregateRoot<UserProps> {
   public static create(props: ISignUpRequestDTO, id?: UniqueEntityID): Result<SignUpRequest> {
     const firstName = props.firstName;
     const lastName = props.lastName;
+    const nif = props.nif;
     const email = props.email;
     const password = props.password;
 
     const user = new SignUpRequest({
       firstName: firstName,
       lastName: lastName,
+      nif: nif,
       email: email,
       password: password,
     }, id);

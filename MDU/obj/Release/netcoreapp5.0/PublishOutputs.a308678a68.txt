@@ -1,0 +1,16 @@
+C:\Users\PiKi_\Desktop\projeto_lapr\sem5pi-23-24-g40-3dg\dotnet\Implementation\bin\Release\netcoreapp5.0\publish\DDDNetCore.exe
+C:\Users\PiKi_\Desktop\projeto_lapr\sem5pi-23-24-g40-3dg\dotnet\Implementation\bin\Release\netcoreapp5.0\publish\appsettings.Development.json
+C:\Users\PiKi_\Desktop\projeto_lapr\sem5pi-23-24-g40-3dg\dotnet\Implementation\bin\Release\netcoreapp5.0\publish\appsettings.json
+C:\Users\PiKi_\Desktop\projeto_lapr\sem5pi-23-24-g40-3dg\dotnet\Implementation\bin\Release\netcoreapp5.0\publish\DDDNetCore.dll
+C:\Users\PiKi_\Desktop\projeto_lapr\sem5pi-23-24-g40-3dg\dotnet\Implementation\bin\Release\netcoreapp5.0\publish\DDDNetCore.runtimeconfig.json
+C:\Users\PiKi_\Desktop\projeto_lapr\sem5pi-23-24-g40-3dg\dotnet\Implementation\bin\Release\netcoreapp5.0\publish\DDDNetCore.pdb
+C:\Users\PiKi_\Desktop\projeto_lapr\sem5pi-23-24-g40-3dg\dotnet\Implementation\bin\Release\netcoreapp5.0\publish\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\PiKi_\Desktop\projeto_lapr\sem5pi-23-24-g40-3dg\dotnet\Implementation\bin\Release\netcoreapp5.0\publish\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\PiKi_\Desktop\projeto_lapr\sem5pi-23-24-g40-3dg\dotnet\Implementation\bin\Release\netcoreapp5.0\publish\Microsoft.EntityFrameworkCore.dll
+C:\Users\PiKi_\Desktop\projeto_lapr\sem5pi-23-24-g40-3dg\dotnet\Implementation\bin\Release\netcoreapp5.0\publish\Microsoft.EntityFrameworkCore.Abstractions.dll
+C:\Users\PiKi_\Desktop\projeto_lapr\sem5pi-23-24-g40-3dg\dotnet\Implementation\bin\Release\netcoreapp5.0\publish\Microsoft.EntityFrameworkCore.InMemory.dll
+C:\Users\PiKi_\Desktop\projeto_lapr\sem5pi-23-24-g40-3dg\dotnet\Implementation\bin\Release\netcoreapp5.0\publish\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\PiKi_\Desktop\projeto_lapr\sem5pi-23-24-g40-3dg\dotnet\Implementation\bin\Release\netcoreapp5.0\publish\Microsoft.EntityFrameworkCore.Relational.Design.dll
+C:\Users\PiKi_\Desktop\projeto_lapr\sem5pi-23-24-g40-3dg\dotnet\Implementation\bin\Release\netcoreapp5.0\publish\Newtonsoft.Json.dll
+C:\Users\PiKi_\Desktop\projeto_lapr\sem5pi-23-24-g40-3dg\dotnet\Implementation\bin\Release\netcoreapp5.0\publish\Newtonsoft.Json.Bson.dll
+C:\Users\PiKi_\Desktop\projeto_lapr\sem5pi-23-24-g40-3dg\dotnet\Implementation\bin\Release\netcoreapp5.0\publish\DDDNetCore.deps.json

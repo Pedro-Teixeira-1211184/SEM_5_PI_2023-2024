@@ -10,6 +10,7 @@ export class SignUpRequestMap extends Mapper<SignUpRequest> {
       //id: user.id.toString(),
       firstName: request.firstName,
       lastName: request.lastName,
+      nif: request.nif,
       email: request.email,
       password: request.password,
     } as ISignUpRequestDTO;
@@ -21,6 +22,7 @@ export class SignUpRequestMap extends Mapper<SignUpRequest> {
         domainId: raw.signUpRequestDomainId,
         firstName: raw.signUpRequestFirstName,
         lastName: raw.signUpRequestLastName,
+        nif: raw.signUpRequestNif,
         email: raw.signUpRequestEmail,
         password: raw.signUpRequestPassword
       },
@@ -38,7 +40,8 @@ export class SignUpRequestMap extends Mapper<SignUpRequest> {
       signUpRequestEmail: user.email,
       signUpRequestPassword: user.password,
       signUpRequestFirstName: user.firstName,
-      signUpRequestLastName: user.lastName
+      signUpRequestLastName: user.lastName,
+      signUpRequestNif: user.nif
     };
   }
 }

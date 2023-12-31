@@ -12,6 +12,7 @@ import {IUserDTO} from "../dto/IUserDTO";
 interface UserProps {
   firstName: string;
   lastName: string;
+  nif: string;
   email: string;
   password: string;
   role: string;
@@ -38,6 +39,14 @@ export class User extends AggregateRoot<UserProps> {
     return this.props.lastName;
   }
 
+  get nif(): string {
+    return this.props.nif;
+  }
+
+  set nif(value: string) {
+    this.props.nif = value;
+  }
+
   get password(): string {
     return this.props.password;
   }
@@ -61,6 +70,7 @@ export class User extends AggregateRoot<UserProps> {
   public static create(props: IUserDTO, id?: UniqueEntityID): Result<User> {
     const firstName = props.firstName;
     const lastName = props.lastName;
+    const nif = props.nif;
     const email = props.email;
     const password = props.password;
     const role = props.role;
@@ -68,6 +78,7 @@ export class User extends AggregateRoot<UserProps> {
     const user = new User({
       firstName: firstName,
       lastName: lastName,
+      nif: nif,
       email: email,
       password: password,
       role: role

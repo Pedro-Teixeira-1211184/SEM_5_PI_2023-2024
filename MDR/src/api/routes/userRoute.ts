@@ -18,6 +18,7 @@ export default (app: Router) => {
       body: Joi.object({
         firstName: Joi.string().required(),
         lastName: Joi.string().required(),
+        nif: Joi.string().required(),
         email: Joi.string().required(),
         password: Joi.string().required()
       }),
@@ -45,6 +46,7 @@ export default (app: Router) => {
       body: Joi.object({
         firstName: Joi.string().required(),
         lastName: Joi.string().required(),
+        nif: Joi.string().required(),
         email: Joi.string().required(),
         password: Joi.string().required(),
         role: Joi.string().required()

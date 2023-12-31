@@ -9,6 +9,8 @@ const User = new mongoose.Schema(
 
     lastName: {type: String, required: [true, 'Please enter last name']},
 
+    nif: {type: String, required: [true, 'Please enter nif']},
+
     email: {type: String, lowercase: true, unique: true},
 
     password: {type: String, required: [true, 'Please enter password']},

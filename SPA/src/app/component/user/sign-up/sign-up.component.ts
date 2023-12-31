@@ -16,6 +16,7 @@ export class SignUpComponent implements OnInit {
     this.form = new FormGroup({
       firstName: new FormControl('', Validators.required),
       lastName: new FormControl('', Validators.required),
+      nif: new FormControl('', Validators.required),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', Validators.required),
       role: new FormControl('', Validators.required)
@@ -49,6 +50,10 @@ export class SignUpComponent implements OnInit {
     return this.form.get('lastName');
   }
 
+  get nif() {
+    return this.form.get('nif');
+  }
+
   get email() {
     return this.form.get('email');
   }
@@ -62,7 +67,7 @@ export class SignUpComponent implements OnInit {
   }
 
   public async submit() {
-    await this.service.signUp(this.firstName?.value, this.lastName?.value, this.email?.value, this.password?.value, this.role?.value);
+    await this.service.signUp(this.firstName?.value, this.lastName?.value, this.nif?.value, this.email?.value, this.password?.value, this.role?.value);
   }
 
   accept() {

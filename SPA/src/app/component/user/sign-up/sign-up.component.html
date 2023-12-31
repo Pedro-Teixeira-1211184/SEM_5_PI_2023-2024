@@ -11,6 +11,11 @@
     <div *ngIf="lastName?.invalid && formDir.submitted" class="validation-error">
       <p *ngIf="lastName?.errors?.['required']">Last name is required!</p>
     </div>
+    <label for="nif">NIF</label>
+    <input type="text" id="nif" formControlName="nif" placeholder="NIF" required>
+    <div *ngIf="nif?.invalid && formDir.submitted" class="validation-error">
+      <p *ngIf="nif?.errors?.['required']">NIF is required!</p>
+    </div>
     <label for="email">Email</label>
     <input type="email" id="email" formControlName="email" placeholder="Email" required>
     <div *ngIf="email?.invalid && formDir.submitted" class="validation-error">

@@ -19,6 +19,7 @@ export class UserMap extends Mapper<User> {
             //id: user.id.toString(),
             firstName: user.firstName,
             lastName: user.lastName,
+            nif: user.nif,
             email: user.email,
             password: "",
             role: user.role
@@ -26,16 +27,14 @@ export class UserMap extends Mapper<User> {
     }
 
     public static async toDomain(raw: any): Promise<User> {
-        const userOrError = User.create(
-            {
-                firstName: raw.firstName,
-                lastName: raw.lastName,
-                email: raw.email,
-                password: raw.password,
-                role: raw.role
-            },
-            new UniqueEntityID(raw.domainId)
-        );
+        const userOrError = User.create({
+          firstName: raw.firstName,
+          lastName: raw.lastName,
+          nif: raw.nif,
+          email: raw.email,
+          password: raw.password,
+          role: raw.role
+        }, new UniqueEntityID(raw.domainId));
 
         userOrError.isFailure ? console.log(userOrError.error) : '';
 
@@ -49,6 +48,7 @@ export class UserMap extends Mapper<User> {
             password: user.password,
             firstName: user.firstName,
             lastName: user.lastName,
+            nif: user.nif,
             role: user.role
         }
         return a;

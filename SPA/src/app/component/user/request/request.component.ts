@@ -36,7 +36,7 @@ export class RequestComponent implements OnInit {
 
   public async accept(request: ISignUpRequestDTO & { role: string }): Promise<void> {
     if (request.role != null || request.role != undefined) {
-      await this.auth_service.signUp(request.firstName, request.lastName, request.email, request.password, request.role);
+      await this.auth_service.signUp(request.firstName, request.lastName, request.nif , request.email, request.password, request.role);
     }
     //refresh content
     this.requests = [];
