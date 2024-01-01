@@ -1,0 +1,14 @@
+<div class="container">
+  <div *ngFor="let request of requests" class="cube">
+    <p>Email: {{ request.userEmail }}</p>
+    <p>Path: {{ request.startFloorCode + " --> " + request.endFloorCode }}</p>
+    <p>Task type: {{ request.taskType }}</p>
+    <p>Robot: {{ request.robotCode }}</p>
+    <p>Description: {{ request.description }}</p>
+    <div class="button-container">
+      <button id="approve-but" (click)="accept(request)">Accept</button>
+      <button id="deny-but" (click)="deny(request)">Deny</button>
+    </div>
+  </div>
+</div>
+

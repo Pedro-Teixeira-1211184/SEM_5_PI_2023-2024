@@ -37,6 +37,7 @@ import { DeleteComponent } from './component/user/delete/delete.component';
 import { DownloadComponent } from './component/user/download/download.component';
 import { RequestComponent } from './component/user/request/request.component';
 import { TaskRequestComponent } from './component/task/task-request/task-request.component';
+import { TaskRequestUpdateComponent } from './component/task/task-request-update/task-request-update.component';
 
 
 @NgModule({
@@ -69,7 +70,8 @@ import { TaskRequestComponent } from './component/task/task-request/task-request
     DeleteComponent,
     DownloadComponent,
     RequestComponent,
-    TaskRequestComponent
+    TaskRequestComponent,
+    TaskRequestUpdateComponent
   ],
   imports: [
     BrowserModule,

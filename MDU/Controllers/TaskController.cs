@@ -23,7 +23,7 @@ namespace DDDSample1.Controllers
             _logger = logger;
         }
 
-        //GET: api/tasks/{id}
+        //GET: api/task/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<TaskDTO>> GetById(string id)
         {
@@ -46,9 +46,9 @@ namespace DDDSample1.Controllers
             return createdTask;
         }
 
-        //PATCH: /api/tasks/{id}/state
-        [HttpPatch("{id}/state")]
-        public async Task<ActionResult<TaskDTO>> UpdateTaskState(string id, [FromBody] string newTaskState)
+        //PATCH: /api/task/{id}/state
+        [HttpPatch("{id}/{newTaskState}")]
+        public async Task<ActionResult<TaskDTO>> UpdateTaskState(string id, string newTaskState)
         {
             var task = await _taskService.GetByIdAsync(new TaskId(id));
 
@@ -62,7 +62,7 @@ namespace DDDSample1.Controllers
             return updatedTask;
         }
 
-        //GET api/accepted
+        //GET api/task/accepted
         [HttpGet("accepted")]
         public async Task<ActionResult<IEnumerable<TaskDTO>>> GetAllAcceptedTasks()
         {
@@ -81,6 +81,20 @@ namespace DDDSample1.Controllers
         public async Task<ActionResult<IEnumerable<TaskDTO>>> GetAllPendingTasks()
         {
             var tasks = await _taskService.GetPendingTasksAsync();
+
+            if (tasks == null || !tasks.Any())
+            {
+                return NoContent(); // Return 204 No Content if there are no tasks
+            }
+
+            return tasks;
+        }
+        
+        //GET api/task/notapproved
+        [HttpGet("notapproved")]
+        public async Task<ActionResult<IEnumerable<TaskDTO>>> GetAllNotApprovedTasks()
+        {
+            var tasks = await _taskService.GetNotApprovedTasksAsync();
 
             if (tasks == null || !tasks.Any())
             {

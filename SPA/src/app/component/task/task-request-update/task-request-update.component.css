@@ -1,0 +1,65 @@
+.container {
+  margin-top: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start;
+}
+
+.cube {
+  width: 270px;
+  height: 250px; /* Aumentei a altura para acomodar o novo espaçamento vertical */
+  border: 3px solid #ccc;
+  border-radius: 10px;
+  margin: 10px;
+  padding: 10px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  background-color: lightblue;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cube:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.cube p {
+  margin: 5px 0;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-around; /* Espaçamento entre os botões */
+}
+
+#approve-but,
+#deny-but {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#approve-but {
+  background-color: #4caf50;
+  color: white;
+}
+
+#deny-but {
+  background-color: #f44336;
+  color: white;
+}
+
+#approve-but:hover {
+  background-color: #3e8e41;
+}
+
+#deny-but:hover {
+  background-color: #c0392b;
+}

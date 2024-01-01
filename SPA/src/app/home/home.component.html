@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <header>
-  <title>{{title}}</title>
+  <title>{{ title }}</title>
 </header>
 <body>
 <div class="topnav">
@@ -36,6 +36,8 @@
 </div>
 <div *ngIf="isTaskManager" class="sidebar" id="sidebar">
   <a (click)="planeamentoForm()">Get Path</a>
+  <a (click)="updateTaskForm()">Handle task requests</a>
+  <a (click)="taskRequestForm()">Request task</a>
 </div>
 <div *ngIf="isAdministrator" class="sidebar" id="sidebar">
   <a (click)="signUpRequestForm()">Handle requests</a>
@@ -110,6 +112,9 @@
 </div>
 <div *ngIf="taskRequest" id="content">
   <app-task-request></app-task-request>
+</div>
+<div *ngIf="updateTask" id="content">
+  <app-task-request-update></app-task-request-update>
 </div>
 </body>
 </html>

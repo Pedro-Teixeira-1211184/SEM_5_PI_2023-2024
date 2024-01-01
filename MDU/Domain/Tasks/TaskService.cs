@@ -205,6 +205,70 @@ namespace DDDSample1.Domain.Tasks
 
             return listDenied;
         }
+        
+        //Return all tasks with state: DENIED or PENDING
+        public async Task<List<TaskDTO>> GetNotApprovedTasksAsync()
+        {
+            var list = await this._repo.GetAllAsync();
+
+            List<TaskDTO> listDTO = list.ConvertAll<TaskDTO>(
+                task =>
+                new TaskDTO
+                {
+                    Id = task.Id,
+                    UserEmail = task.UserEmail,
+                    StartX = task.StartX,
+                    StartY = task.StartY,
+                    StartFloorCode = task.StartFloorCode,
+                    EndX = task.EndX,
+                    EndY = task.EndY,
+                    EndFloorCode = task.EndFloorCode,
+                    Description = task.Description,
+                    TaskType = task.TaskType,
+                    RobotCode = task.RobotCode,
+                    TaskState = task.TaskState
+                }
+            );
+
+            List<TaskDTO> listNotApproved = new List<TaskDTO>();
+
+            foreach (TaskDTO task in listDTO)
+            {
+                if (task.TaskState == "DENIED" || task.TaskState == "PENDING")
+                {
+                    listNotApproved.Add(task);
+                }
+            }
+
+            return listNotApproved;
+        }
+        
+        //Return all tasks
+        public async Task<List<TaskDTO>> GetAllTasksAsync()
+        {
+            var list = await this._repo.GetAllAsync();
+
+            List<TaskDTO> listDTO = list.ConvertAll<TaskDTO>(
+                task =>
+                new TaskDTO
+                {
+                    Id = task.Id,
+                    UserEmail = task.UserEmail,
+                    StartX = task.StartX,
+                    StartY = task.StartY,
+                    StartFloorCode = task.StartFloorCode,
+                    EndX = task.EndX,
+                    EndY = task.EndY,
+                    EndFloorCode = task.EndFloorCode,
+                    Description = task.Description,
+                    TaskType = task.TaskType,
+                    RobotCode = task.RobotCode,
+                    TaskState = task.TaskState
+                }
+            );
+
+            return listDTO;
+        }
 
         //Update Task State given Task and new TaskState
         public async Task<TaskDTO> UpdateTaskStateAsync(TaskDTO taskDTO, string newTaskState)
