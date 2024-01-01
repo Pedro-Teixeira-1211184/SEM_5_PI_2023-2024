@@ -38,6 +38,7 @@ import { DownloadComponent } from './component/user/download/download.component'
 import { RequestComponent } from './component/user/request/request.component';
 import { TaskRequestComponent } from './component/task/task-request/task-request.component';
 import { TaskRequestUpdateComponent } from './component/task/task-request-update/task-request-update.component';
+import { NotApprovedTaskComponent } from './component/task/not-approved-task/not-approved-task.component';
 
 
 @NgModule({
@@ -71,7 +72,8 @@ import { TaskRequestUpdateComponent } from './component/task/task-request-update
     DownloadComponent,
     RequestComponent,
     TaskRequestComponent,
-    TaskRequestUpdateComponent
+    TaskRequestUpdateComponent,
+    NotApprovedTaskComponent
   ],
   imports: [
     BrowserModule,

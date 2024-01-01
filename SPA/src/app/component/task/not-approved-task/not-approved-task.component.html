@@ -1,0 +1,25 @@
+<table>
+  <thead>
+  <tr>
+    <th>Email</th>
+    <th>Start</th>
+    <th>Destination</th>
+    <th>Task type</th>
+    <th>Robot code</th>
+    <th>Description</th>
+    <th>Status</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let item of tasks">
+    <td>{{ item.userEmail }}</td>
+    <td>{{ item.startFloorCode }}</td>
+    <td>{{ item.endFloorCode }}</td>
+    <td>{{ item.taskType }}</td>
+    <td>{{ item.robotCode }}</td>
+    <td>{{ item.description }}</td>
+    <td [ngClass]="{ 'text-red': item.taskState === 'DENIED', 'text-blue': item.taskState === 'PENDING' }">{{ item.taskState }}</td>
+  </tr>
+  </tbody>
+</table>
+
