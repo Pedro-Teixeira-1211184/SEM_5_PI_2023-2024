@@ -12,4 +12,6 @@ export default interface IRobotService {
   getAll(): Promise<Result<Array<IRobotDTO>>>;
 
   getAllTypes(): Promise<Result<Array<IRobotTypeDTO>>>;
+
+  getRobotByCode(robot_code: string): Promise<Result<IRobotDTO>>;
 }

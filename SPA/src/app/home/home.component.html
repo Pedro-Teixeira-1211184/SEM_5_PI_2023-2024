@@ -37,6 +37,7 @@
 <div *ngIf="isTaskManager" class="sidebar" id="sidebar">
   <a (click)="planeamentoForm()">Get Path</a>
   <a (click)="updateTaskForm()">Handle task requests</a>
+  <a (click)="listAllTasksForm()">List all tasks</a>
   <a (click)="listNotApprovedTasksForm()">List not approved tasks</a>
   <a (click)="taskRequestForm()">Request task</a>
 </div>
@@ -119,6 +120,9 @@
 </div>
 <div *ngIf="listNotApprovedTasks" id="content">
   <app-not-approved-task></app-not-approved-task>
+</div>
+<div *ngIf="listAllTasks" id="content">
+  <app-list-tasks></app-list-tasks>
 </div>
 </body>
 </html>

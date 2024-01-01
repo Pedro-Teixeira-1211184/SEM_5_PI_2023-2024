@@ -7,6 +7,8 @@ import e, {NextFunction, Request, Response} from "express";
 import IRobotDTO from "../dto/IRobotDTO";
 import {Result} from "../core/logic/Result";
 import IRobotTypeDTO from "../dto/IRobotTypeDTO";
+import {ParamsDictionary} from 'express-serve-static-core';
+import {ParsedQs} from 'qs';
 
 
 @Service()
@@ -73,6 +75,22 @@ export default class RobotController implements IRobotController /* TODO: extend
 
       return res.status(StatusCodes.OK).json(robotsDTO);
 
+    } catch (e) {
+      return next(e);
+    }
+  }
+
+  public async getRobotByCode(req: Request, res: Response, next: NextFunction) {
+    try {
+      const robot = await this.robotServiceInstance.getRobotByCode(req.params.robot_code);
+
+      if (robot.isFailure) {
+        return res.status(StatusCodes.BAD_REQUEST).json(robot.errorValue());
+      }
+
+      const robotDTO = robot.getValue();
+
+      return res.status(StatusCodes.OK).json(robotDTO);
     } catch (e) {
       return next(e);
     }

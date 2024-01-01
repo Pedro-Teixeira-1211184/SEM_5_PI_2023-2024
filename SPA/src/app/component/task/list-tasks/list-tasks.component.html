@@ -1,0 +1,48 @@
+<form class="form" id="sform" [formGroup]="form" #formDir="ngForm">
+  <div class="input-container">
+    <label for="code1">User email</label>
+    <br>
+    <select id="code1" formControlName="user" (change)="emailSearch()" required>
+      <option *ngFor="let email of emails" [value]="email">{{ email }}</option>
+    </select>
+    <br>
+    <label for="code2">Robot type</label>
+    <br>
+    <select id="code2" formControlName="robotType" (change)="robotTypeSearch()" required>
+      <option *ngFor="let type of types" [value]="type">{{ type }}</option>
+    </select>
+    <br>
+    <label for="code3">State</label>
+    <br>
+    <select id="code3" formControlName="state" (change)="stateSearch()" required>
+      <option *ngFor="let state of states" [value]="state">{{ state }}</option>
+    </select>
+  </div>
+</form>
+<table>
+  <thead>
+  <tr>
+    <th>Email</th>
+    <th>Start</th>
+    <th>Destination</th>
+    <th>Task type</th>
+    <th>Robot code</th>
+    <th>Description</th>
+    <th>Status</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let item of tasksPresented">
+    <td>{{ item.taskRequest.userEmail }}</td>
+    <td>{{ item.taskRequest.startFloorCode }}</td>
+    <td>{{ item.taskRequest.endFloorCode }}</td>
+    <td>{{ item.taskRequest.taskType }}</td>
+    <td>{{ item.taskRequest.robotCode }}</td>
+    <td>{{ item.taskRequest.description }}</td>
+    <td
+      [ngClass]="{ 'text-red': item.taskRequest.taskState === 'DENIED', 'text-blue': item.taskRequest.taskState === 'PENDING', 'text-green': item.taskRequest.taskState === 'ACCEPTED' }">{{ item.taskRequest.taskState }}
+    </td>
+  </tr>
+  </tbody>
+</table>
+

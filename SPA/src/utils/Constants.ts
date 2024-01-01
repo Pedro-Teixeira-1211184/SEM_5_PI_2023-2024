@@ -32,6 +32,7 @@ export default class Constants {
   public static readonly API_ROBOT_CREATE_URL = Constants.API_BASE_URL + 'robots';
   public static readonly API_ROBOT_GET_ALL_URL = Constants.API_BASE_URL + 'robots';
   public static readonly API_ROBOT_UPDATE_STATUS_URL = Constants.API_BASE_URL + 'robots/';
+  public static readonly API_ROBOT_GET_BY_CODE_URL = Constants.API_BASE_URL + 'robots/';
 
   //robot type
   public static readonly API_ROBOT_TYPE_CREATE_URL = Constants.API_BASE_URL + 'robots/types';
@@ -44,6 +45,7 @@ export default class Constants {
   public static readonly API_TASK_REQUEST_GET_PENDING_URL = Constants.API_BASE_DOTNET_URL + 'api/task/pending';
   public static readonly API_TASK_REQUEST_GET_NOT_APPROVED_URL = Constants.API_BASE_DOTNET_URL + 'api/task/notapproved';
   public static readonly API_TASK_REQUEST_UPDATE_URL = Constants.API_BASE_DOTNET_URL + 'api/task/';
+  public static readonly API_TASK_REQUEST_GET_ALL_URL = Constants.API_BASE_DOTNET_URL + 'api/task';
 
   //passageway
   public static readonly API_PASSAGEWAY_CREATE_URL = Constants.API_BASE_URL + 'passageways';

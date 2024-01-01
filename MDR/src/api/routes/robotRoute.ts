@@ -56,5 +56,10 @@ export default () => {
         ctrl.getAllRobots(req, res, next);
     });
 
+    route.get('/:robot_code', (req, res, next) => {
+        console.log("Getting a robot!");
+        ctrl.getRobotByCode(req, res, next);
+    });
+
     return route;
 }

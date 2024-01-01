@@ -23,6 +23,21 @@ export default class RobotService implements IRobotService {
   ) {
   }
 
+  public async getRobotByCode(robot_code: string): Promise<Result<IRobotDTO>> {
+    try {
+      const robot = await this.robotRepo.findByCode(robot_code);
+
+      if (robot === null) {
+        return Result.fail<IRobotDTO>('Robot does not exist');
+      }
+
+      const robotDTOResult = RobotMapper.toDTO(robot);
+      return Result.ok<IRobotDTO>(robotDTOResult)
+    } catch (e) {
+      throw e;
+    }
+  }
+
   public async getAllTypes(): Promise<Result<Array<IRobotTypeDTO>>> {
     try {
       const robots = await this.robotTypeRepo.getAll();

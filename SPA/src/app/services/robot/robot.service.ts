@@ -83,4 +83,25 @@ export class RobotService {
             console.log(e);
         }
     }
+
+    public async getRobotByCode(robotCode: string): Promise<any> {
+        try {
+            const response = await fetch(Constants.API_ROBOT_GET_BY_CODE_URL + robotCode, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const json = await response.json();
+
+            if (response.status === 200) {
+                return json;
+            } else {
+                alert(json);
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
 }

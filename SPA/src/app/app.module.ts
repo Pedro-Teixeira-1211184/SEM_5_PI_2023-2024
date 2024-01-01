@@ -39,6 +39,7 @@ import { RequestComponent } from './component/user/request/request.component';
 import { TaskRequestComponent } from './component/task/task-request/task-request.component';
 import { TaskRequestUpdateComponent } from './component/task/task-request-update/task-request-update.component';
 import { NotApprovedTaskComponent } from './component/task/not-approved-task/not-approved-task.component';
+import { ListTasksComponent } from './component/task/list-tasks/list-tasks.component';
 
 
 @NgModule({
@@ -73,7 +74,8 @@ import { NotApprovedTaskComponent } from './component/task/not-approved-task/not
     RequestComponent,
     TaskRequestComponent,
     TaskRequestUpdateComponent,
-    NotApprovedTaskComponent
+    NotApprovedTaskComponent,
+    ListTasksComponent
   ],
   imports: [
     BrowserModule,

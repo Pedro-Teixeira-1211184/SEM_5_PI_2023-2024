@@ -126,6 +126,38 @@ export class TaskService {
     }
   }
 
+  public async getAllTaskRequests(): Promise<any> {
+    try {
+      let requests: ITaskRequestDTO[] = [];
+      return fetch(Constants.API_TASK_REQUEST_GET_ALL_URL, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(response => response.json()).then(x => {
+        for (let i = 0; i < x.length; i++) {
+          requests.push({
+            id: x[i].id.value,
+            userEmail: x[i].userEmail,
+            startX: x[i].startX,
+            startY: x[i].startY,
+            startFloorCode: x[i].startFloorCode,
+            endX: x[i].endX,
+            endY: x[i].endY,
+            endFloorCode: x[i].endFloorCode,
+            description: x[i].description,
+            taskType: x[i].taskType,
+            robotCode: x[i].robotCode,
+            taskState: x[i].taskState
+          });
+        }
+        return requests;
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   public async updateTaskRequest(id: { value: string }, state: string): Promise<void> {
     try {
       const response = await fetch(Constants.API_TASK_REQUEST_UPDATE_URL + id + "/" + state, {

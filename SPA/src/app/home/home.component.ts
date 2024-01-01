@@ -43,6 +43,7 @@ export class HomeComponent implements OnInit {
   taskRequest: boolean = false;
   updateTask: boolean = false;
   listNotApprovedTasks: boolean = false;
+  listAllTasks: boolean = false;
 
 
   constructor(auth: AuthService) {
@@ -158,6 +159,7 @@ export class HomeComponent implements OnInit {
     this.taskRequest = false;
     this.updateTask = false;
     this.listNotApprovedTasks = false;
+    this.listAllTasks = false;
   }
 
   floorsByBuildingCodeList() {
@@ -186,6 +188,7 @@ export class HomeComponent implements OnInit {
     this.taskRequest = false;
     this.updateTask = false;
     this.listNotApprovedTasks = false;
+    this.listAllTasks = false;
   }
 
   buildingCreateForm() {
@@ -214,6 +217,7 @@ export class HomeComponent implements OnInit {
     this.taskRequest = false;
     this.updateTask = false;
     this.listNotApprovedTasks = false;
+    this.listAllTasks = false;
   }
 
   floorCreateForm() {
@@ -242,6 +246,7 @@ export class HomeComponent implements OnInit {
     this.taskRequest = false;
     this.updateTask = false;
     this.listNotApprovedTasks = false;
+    this.listAllTasks = false;
   }
 
   buildingEditForm() {
@@ -270,6 +275,7 @@ export class HomeComponent implements OnInit {
     this.taskRequest = false;
     this.updateTask = false;
     this.listNotApprovedTasks = false;
+    this.listAllTasks = false;
   }
 
   buildingList() {
@@ -298,6 +304,7 @@ export class HomeComponent implements OnInit {
     this.taskRequest = false;
     this.updateTask = false;
     this.listNotApprovedTasks = false;
+    this.listAllTasks = false;
   }
 
   deactivateRobotForm() {
@@ -326,6 +333,7 @@ export class HomeComponent implements OnInit {
     this.taskRequest = false;
     this.updateTask = false;
     this.listNotApprovedTasks = false;
+    this.listAllTasks = false;
   }
 
   createRobotTypeForm() {
@@ -354,6 +362,7 @@ export class HomeComponent implements OnInit {
     this.taskRequest = false;
     this.updateTask = false;
     this.listNotApprovedTasks = false;
+    this.listAllTasks = false;
   }
 
   passagewayCreateForm() {
@@ -382,6 +391,7 @@ export class HomeComponent implements OnInit {
     this.taskRequest = false;
     this.updateTask = false;
     this.listNotApprovedTasks = false;
+    this.listAllTasks = false;
   }
 
   patchMapForm() {
@@ -410,6 +420,7 @@ export class HomeComponent implements OnInit {
     this.taskRequest = false;
     this.updateTask = false;
     this.listNotApprovedTasks = false;
+    this.listAllTasks = false;
   }
 
 
@@ -439,6 +450,7 @@ export class HomeComponent implements OnInit {
     this.taskRequest = false;
     this.updateTask = false;
     this.listNotApprovedTasks = false;
+    this.listAllTasks = false;
   }
 
   createElevatorForm() {
@@ -467,6 +479,7 @@ export class HomeComponent implements OnInit {
     this.taskRequest = false;
     this.updateTask = false;
     this.listNotApprovedTasks = false;
+    this.listAllTasks = false;
   }
 
   listPassagewaysBetween2BuildingsForm() {
@@ -495,6 +508,7 @@ export class HomeComponent implements OnInit {
     this.taskRequest = false;
     this.updateTask = false;
     this.listNotApprovedTasks = false;
+    this.listAllTasks = false;
   }
 
   createRobotForm() {
@@ -523,6 +537,7 @@ export class HomeComponent implements OnInit {
     this.taskRequest = false;
     this.updateTask = false;
     this.listNotApprovedTasks = false;
+    this.listAllTasks = false;
   }
 
   editPassagewayForm() {
@@ -551,6 +566,7 @@ export class HomeComponent implements OnInit {
     this.taskRequest = false;
     this.updateTask = false;
     this.listNotApprovedTasks = false;
+    this.listAllTasks = false;
   }
 
   floorsWithPassagewayForm() {
@@ -579,6 +595,7 @@ export class HomeComponent implements OnInit {
     this.taskRequest = false;
     this.updateTask = false;
     this.listNotApprovedTasks = false;
+    this.listAllTasks = false;
   }
 
   buildingsByFloorRangeForm() {
@@ -607,6 +624,7 @@ export class HomeComponent implements OnInit {
     this.taskRequest = false;
     this.updateTask = false;
     this.listNotApprovedTasks = false;
+    this.listAllTasks = false;
   }
 
   createRoomForm() {
@@ -634,6 +652,7 @@ export class HomeComponent implements OnInit {
     this.taskRequest = false;
     this.updateTask = false;
     this.listNotApprovedTasks = false;
+    this.listAllTasks = false;
   }
 
 
@@ -663,6 +682,7 @@ export class HomeComponent implements OnInit {
     this.taskRequest = false;
     this.updateTask = false;
     this.listNotApprovedTasks = false;
+    this.listAllTasks = false;
   }
 
   signUpForm() {
@@ -691,6 +711,7 @@ export class HomeComponent implements OnInit {
     this.taskRequest = false;
     this.updateTask = false;
     this.listNotApprovedTasks = false;
+    this.listAllTasks = false;
   }
 
   signUpRequestForm() {
@@ -719,6 +740,7 @@ export class HomeComponent implements OnInit {
     this.taskRequest = false;
     this.updateTask = false;
     this.listNotApprovedTasks = false;
+    this.listAllTasks = false;
   }
 
   taskRequestForm() {
@@ -747,6 +769,7 @@ export class HomeComponent implements OnInit {
     this.taskRequest = true;
     this.updateTask = false;
     this.listNotApprovedTasks = false;
+    this.listAllTasks = false;
   }
 
   updateTaskForm() {
@@ -775,6 +798,7 @@ export class HomeComponent implements OnInit {
     this.taskRequest = false;
     this.updateTask = true;
     this.listNotApprovedTasks = false;
+    this.listAllTasks = false;
   }
 
   listNotApprovedTasksForm() {
@@ -803,6 +827,36 @@ export class HomeComponent implements OnInit {
     this.taskRequest = false;
     this.updateTask = false;
     this.listNotApprovedTasks = true;
+    this.listAllTasks = false;
+  }
+
+  listAllTasksForm() {
+    this.home_body = false;
+    this.createBuilding = false;
+    this.createFloor = false;
+    this.editBuilding = false;
+    this.listBuilding = false;
+    this.deactivateRobot = false;
+    this.floorsByBuildingCode = false;
+    this.createRobotType = false;
+    this.createPassageway = false;
+    this.patchMap = false;
+    this.editFloor = false;
+    this.listPassagewaysBetween2Buildings = false;
+    this.createElevator = false;
+    this.createRobot = false;
+    this.editPassageway = false;
+    this.floorsWithPassageway = false;
+    this.buildingsByFloorRange = false;
+    this.getMap = false;
+    this.pathBetweenFloors = false;
+    this.createRoom = false;
+    this.signUp = false;
+    this.signUpRequest = false;
+    this.taskRequest = false;
+    this.updateTask = false;
+    this.listNotApprovedTasks = false;
+    this.listAllTasks = true;
   }
 
 }

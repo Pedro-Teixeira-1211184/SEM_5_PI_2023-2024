@@ -46,7 +46,7 @@ namespace DDDSample1.Controllers
             return createdTask;
         }
 
-        //PATCH: /api/task/{id}/state
+        //PATCH: /api/task/{id}/{state}
         [HttpPatch("{id}/{newTaskState}")]
         public async Task<ActionResult<TaskDTO>> UpdateTaskState(string id, string newTaskState)
         {
@@ -60,6 +60,20 @@ namespace DDDSample1.Controllers
             var updatedTask = await _taskService.UpdateTaskStateAsync(task, newTaskState);
 
             return updatedTask;
+        }
+        
+        //GET api/task
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<TaskDTO>>> GetAllTasks()
+        {
+            var tasks = await _taskService.GetAllAsync();
+
+            if (tasks == null || !tasks.Any())
+            {
+                return NoContent(); // Return 204 No Content if there are no tasks
+            }
+
+            return tasks;
         }
 
         //GET api/task/accepted

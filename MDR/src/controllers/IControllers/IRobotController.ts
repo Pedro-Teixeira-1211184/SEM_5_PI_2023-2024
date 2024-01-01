@@ -11,4 +11,6 @@ export default interface IRobotController {
   getAllRobots(req: Request, res: Response, next: NextFunction);
 
   getRobotType(req: Request, res: Response, next: NextFunction);
+
+  getRobotByCode(req: Request, res: Response, next: NextFunction);
 }
