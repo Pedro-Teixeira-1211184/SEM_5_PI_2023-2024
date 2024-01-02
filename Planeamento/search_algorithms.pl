@@ -1,29 +1,45 @@
-:- module(search_algorithms, [path_between_floors/4, best_path/3, searchByDfsAlgorithm/3, searchByBestDfsAlgorithm/3, searchByBestBfsAlgorithm/3, aStar/4]).
+:- module(search_algorithms, [
+    path_between_floors/4,
+    best_path/3,
+    searchByDfsAlgorithm/3,
+    searchByBestDfsAlgorithm/3,
+    searchByBestBfsAlgorithm/3
+]).
+
 :- use_module(graph_handling, [data/0]).
 
 % path_between_floors(+StartFloor, +EndFloor, +ListaEdificiosCaminho, +ListaLigacoes)
 % Devolve uma lista com os edificios que fazem parte do caminho entre dois pisos
 path_between_floors(StartFloor, EndFloor, LEdCam, LLig) :-
+    writeln('Starting path_between_floors...'), % Debug message
     graph_handling:floors(EdOr, _),
     member(StartFloor, EdOr),
     graph_handling:floors(EdDest, _),
     member(EndFloor, EdDest),
     path_between_buildings(EdOr, EdDest, LEdCam),
-    segue_pisos(StartFloor, EndFloor, LEdCam, LLig).
+    segue_pisos(StartFloor, EndFloor, LEdCam, LLig),
+    writeln('Ending path_between_floors.'). % Debug message
 
 segue_pisos(StartFloor, EndFloor, _, []) :-
-    StartFloor = EndFloor.
+    StartFloor = EndFloor,
+    writeln('Reached the same floor in segue_pisos.'). %Debug message
 
 segue_pisos(StartFloor1, EndFloor, [EdDest], [elevator(StartFloor1, EndFloor)]) :-
     StartFloor1 \= EndFloor,
     graph_handling:elevators(EndFloor, LPisos),
     member(StartFloor1, LPisos),
-    member(EndFloor, LPisos).
+    member(EndFloor, LPisos),
+    writeln('Constructed elevator connection in segue_pisos.'). %Debug message
 
 segue_pisos(PisoAct, EndFloor, [EdAct, EdDest|LEdCam], [passageway(PisoAct, PisoSeg)|LOutrasLig]) :-
-    (graph_handling:passageways(EdAct, EdDest, PisoAct, PisoSeg);
-    graph_handling:passageways(EdSeg, EdAct, PisoSeg, PisoAct)),
-    segue_pisos(PisoSeg, EndFloor, [EdSeg|LOutrosEd], LOutrasLig).
+    (graph_handling:passageways(EdAct, EdDest, PisoAct, PisoSeg)
+     -> writeln('Constructed passageway connection in segue_pisos.') % Remove the extra semicolon
+     ; graph_handling:passageways(EdSeg, EdAct, PisoSeg, PisoAct),
+       writeln('Constructed reverse passageway connection in segue_pisos.')
+    ),
+    segue_pisos(PisoSeg, EndFloor, [EdSeg|LOutrosEd], LOutrasLig),
+    writeln('Constructed passageway connection in segue_pisos.').
+
 
 segue_pisos(PisoAct, EndFloor, [EdAct, EdDest|LEdCam], [elevator(PisoAct, PisoAct1), passageway(PisoAct1, PisoSeg) | LOutrasLig]) :-
     (graph_handling:passageways(EdAct, EdSeg, PisoAct1, PisoSeg);
@@ -33,16 +49,21 @@ segue_pisos(PisoAct, EndFloor, [EdAct, EdDest|LEdCam], [elevator(PisoAct, PisoAc
     member(PisoAct, LPisos),
     member(PisoAct1, LPisos),
     segue_pisos(PisoSeg, EndFloor, [EdSeg|LOutrosEd], LOutrasLig).
+    writeln('Constructed elevator and passageway connection in segue_pisos.'). %Debug message
 
 path_between_buildings(EdOr, EdDest, LEdCam) :-
-    path_between_buildings2(EdOr, EdDest, [EdOr], LEdCam).
+    writeln('Starting path_between_buildings...'), % Debug message
+    path_between_buildings2(EdOr, EdDest, [EdOr], LEdCam),
+    writeln('Ending path_between_buildings.'). % Debug message
 
-path_between_buildings2(EdX, EdX, LEdInv, LEdCam) :- !, reverse(LEdInv, LEdCam).
+path_between_buildings2(Dest, Dest, LA, Cam) :- !,
+    reverse(LA, Cam),
+    writeln('Reached destination in path_between_buildings2.'). % Debug message
 path_between_buildings2(EdAct, EdDest, LEdPassed, LEdCam) :-
-    (graph_handling:connections(EdAct, EdInt);
-    graph_handling:connections(EdInt, EdAct)),
+    (graph_handling:connections(EdAct, EdInt); graph_handling:connections(EdInt, EdAct)),
     \+ member(EdInt, LEdPassed),
-    path_between_buildings2(EdInt, EdDest, [EdInt|LEdPassed], LEdCam).
+    path_between_buildings2(EdInt, EdDest, [EdInt|LEdPassed], LEdCam),
+    writeln('Continuing path_between_buildings2...'). % Debug message
 
 %-----------------------------------------------------
 % Predicado para calcular o numero de utilizacoes de elevador em cada path
