@@ -34,6 +34,7 @@ export class AuthService {
         localStorage.setItem('email', data.userDTO.email);
         localStorage.setItem('firstName', data.userDTO.firstName);
         localStorage.setItem('lastName', data.userDTO.lastName);
+        localStorage.setItem('nif', data.userDTO.nif);
         window.location.href = '/home';
       } else {
         alert('Invalid credentials');
@@ -208,12 +209,42 @@ export class AuthService {
     }
   }
 
+  public async update(email: string, firstName: string, lastName: string, nif: string): Promise<void> {
+    try {
+      const response = await fetch(Constants.API_UPDATE_USER_URL + localStorage.getItem('email'), {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          nif: nif
+        })
+      });
+
+      if (response.status === 200) {
+        alert('Update successful');
+        localStorage.setItem('firstName', firstName);
+        localStorage.setItem('lastName', lastName);
+        localStorage.setItem('nif', nif);
+        localStorage.setItem('email', email);
+      } else {
+        alert('Update failed');
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   clearLocalStorage(): void {
     localStorage.removeItem('token')
     localStorage.removeItem('role')
     localStorage.removeItem('email')
     localStorage.removeItem('firstName')
     localStorage.removeItem('lastName')
+    localStorage.removeItem('nif')
   }
 
 }

@@ -20,4 +20,6 @@ export default interface IUserService {
   getAllUserRequests(): Promise<Result<ISignUpRequestDTO[]>>;
 
   deleteUserRequest(email: string): Promise<Result<boolean>>;
+
+  updateUser(user: IUserDTO, email: string): Promise<Result<IUserDTO>>;
 }

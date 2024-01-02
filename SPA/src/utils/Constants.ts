@@ -13,6 +13,7 @@ export default class Constants {
   public static readonly API_AUTH_GET_USER_BY_EMAIL = Constants.API_BASE_URL + 'api/auth/';
   public static readonly API_REQUEST_GET_ALL_URL = Constants.API_BASE_URL + 'api/auth/request';
   public static readonly API_REQUEST_DELETE_URL = Constants.API_BASE_URL + 'api/auth/request/';
+  public static readonly API_UPDATE_USER_URL = Constants.API_BASE_URL + 'api/auth/';
 
   //building
   public static readonly API_BUILDING_CREATE_URL = Constants.API_BASE_URL + 'buildings';

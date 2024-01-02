@@ -29,15 +29,15 @@ export default (app: Router) => {
   );
 
   route.get('/request', async (req: Request, res: Response, next: NextFunction) => {
-    console.log("Getting all User Requests!");
-    ctrl.getAllUserRequests(req, res, next);
-  }
+      console.log("Getting all User Requests!");
+      ctrl.getAllUserRequests(req, res, next);
+    }
   );
 
   route.delete('/request/:email', async (req: Request, res: Response, next: NextFunction) => {
-    console.log("Deleting a User Request!");
-    ctrl.deleteUserRequest(req, res, next);
-  }
+      console.log("Deleting a User Request!");
+      ctrl.deleteUserRequest(req, res, next);
+    }
   );
 
   route.post(
@@ -96,6 +96,11 @@ export default (app: Router) => {
   route.get('/:email', async (req: Request, res: Response, next: NextFunction) => {
     console.log("Getting a User!");
     ctrl.getUser(req, res, next);
+  });
+
+  route.put('/:email', async (req: Request, res: Response, next: NextFunction) => {
+    console.log("Updating a User!");
+    ctrl.updateUser(req, res, next);
   });
 
 };

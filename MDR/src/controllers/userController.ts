@@ -6,6 +6,8 @@ import e, {NextFunction, Request, Response} from "express";
 import {IUserDTO} from "../dto/IUserDTO";
 import {Result} from "../core/logic/Result";
 import {ISignUpRequestDTO} from "../dto/ISignUpRequestDTO";
+import {ParamsDictionary} from "express-serve-static-core";
+import {ParsedQs} from "qs";
 
 @Service()
 export default class UserController implements IUserController /* TODO: extends ../core/infra/BaseController */ {
@@ -15,6 +17,18 @@ export default class UserController implements IUserController /* TODO: extends 
   constructor(
     @Inject(config.services.user.name) private userServiceInstance: IUserService
   ) {
+  }
+
+  public async updateUser(req: Request, res: Response, next: NextFunction) {
+    try {
+      const userOrError = await this.userServiceInstance.updateUser(req.body, req.params.email) as Result<IUserDTO>;
+      if (userOrError.isFailure) {
+        return res.status(403).json(userOrError.errorValue());
+      }
+      return res.status(200).json(userOrError.getValue());
+    } catch (e) {
+      return next(e);
+    }
   }
 
   public async getAllUserRequests(req: Request, res: Response, next: NextFunction) {

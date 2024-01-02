@@ -18,4 +18,6 @@ export default interface IUserController {
   getAllUserRequests(req: Request, res: Response, next: NextFunction);
 
   deleteUserRequest(req: Request, res: Response, next: NextFunction);
+
+  updateUser(req: Request, res: Response, next: NextFunction);
 }

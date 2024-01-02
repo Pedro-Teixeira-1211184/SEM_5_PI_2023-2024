@@ -1,13 +1,11 @@
 <div class="div-template">
-    <h2>User Information</h2>
-    <p><strong>First Name:</strong> {{ user.firstName }}</p>
-    <p><strong>Last Name:</strong> {{ user.lastName }}</p>
-    <p><strong>Email:</strong> {{ user.email }}</p>
-    <p><strong>Role:</strong> {{ user.role }}</p>
-    <button (click)="deleteAccount()">Delete Account</button>
+  <app-update></app-update>
 </div>
 <div class="div-template">
-    <app-download></app-download>
+  <app-download></app-download>
+</div>
+<div class="div-template">
+    <button (click)="deleteAccount()">Delete Account</button>
 </div>
 <div class="div-template">
   <button class="logout bottom-logout" (click)="logout()">
