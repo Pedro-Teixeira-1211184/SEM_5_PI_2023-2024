@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/a17982b6-f4c8-4833-948a-731d8e8e2571/resourceGroups/RobDroneGo-AppService/providers/Microsoft.Web/sites/mdr-robdronego",
+    "appService.deploySubpath": "src"
+}
