@@ -7,7 +7,8 @@
     cria_grafo/1,
     clear/0,
     create_matrices/0,
-    create_graph/0
+    create_graph/0,
+    tasks_data/0
 ]).
 
 :- use_module(utils, [is_member/2]).
@@ -26,6 +27,10 @@
 :- dynamic connections/2.
 :- dynamic ligacel/2.
 :- dynamic x/5.
+:- dynamic task/1.
+:- dynamic timeBetweenTasks/3.
+%:- node/3.
+%:- edge/3.
 
 % Data retrieval
 data() :-
@@ -262,8 +267,8 @@ cria_grafo(Col, Lin) :-
 
 cria_grafo_lin(-1, _) :- !.
 cria_grafo_lin(Col, Lin) :-
-    x(Col, Lin, 0),
-    assertz(ligacel(cel(Col, Lin), cel(Col, Lin))), % Added this line
+    x(_, _, Col, Lin, 0), % Updated this line to use x/5
+    assertz(ligacel(cel(Col, Lin), cel(Col, Lin))),
     writeln('Asserted connection for cell: '),
     writeln(cel(Col, Lin)),
     ColS is Col + 1,
@@ -271,15 +276,15 @@ cria_grafo_lin(Col, Lin) :-
     LinS is Lin + 1,
     LinA is Lin - 1,
 
-    ((x(ColS, Lin, 0), assertz(ligacel(cel(Col, Lin), cel(ColS, Lin)))) ; true),
-    ((x(ColA, Lin, 0), assertz(ligacel(cel(Col, Lin), cel(ColA, Lin)))) ; true),
-    ((x(Col, LinS, 0), assertz(ligacel(cel(Col, Lin), cel(Col, LinS)))) ; true),
-    ((x(Col, LinA, 0), assertz(ligacel(cel(Col, Lin), cel(Col, LinA)))) ; true),
+    ((x(_, _, ColS, Lin, 0), assertz(ligacel(cel(Col, Lin), cel(ColS, Lin)))) ; true),
+    ((x(_, _, ColA, Lin, 0), assertz(ligacel(cel(Col, Lin), cel(ColA, Lin)))) ; true),
+    ((x(_, _, Col, LinS, 0), assertz(ligacel(cel(Col, Lin), cel(Col, LinS)))) ; true),
+    ((x(_, _, Col, LinA, 0), assertz(ligacel(cel(Col, Lin), cel(Col, LinA)))) ; true),
     % Diagonal connections
-    ((x(ColS, LinS, 0), assertz(ligacel(cel(Col, Lin), cel(ColS, LinS)))) ; true),
-    ((x(ColA, LinS, 0), assertz(ligacel(cel(Col, Lin), cel(ColA, LinS)))) ; true),
-    ((x(ColS, LinA, 0), assertz(ligacel(cel(Col, Lin), cel(ColS, LinA)))) ; true),
-    ((x(ColA, LinA, 0), assertz(ligacel(cel(Col, Lin), cel(ColA, LinA)))) ; true),
+    ((x(_, _, ColS, LinS, 0), assertz(ligacel(cel(Col, Lin), cel(ColS, LinS)))) ; true),
+    ((x(_, _, ColA, LinS, 0), assertz(ligacel(cel(Col, Lin), cel(ColA, LinS)))) ; true),
+    ((x(_, _, ColS, LinA, 0), assertz(ligacel(cel(Col, Lin), cel(ColS, LinA)))) ; true),
+    ((x(_, _, ColA, LinA, 0), assertz(ligacel(cel(Col, Lin), cel(ColA, LinA)))) ; true),
 
     Col1 is Col - 1,
     cria_grafo_lin(Col1, Lin).
@@ -287,6 +292,7 @@ cria_grafo_lin(Col, Lin) :-
 cria_grafo_lin(Col, Lin) :-
     Col1 is Col - 1,
     cria_grafo_lin(Col1, Lin).
+
 
 
 % Matrix parsing and assertion
@@ -317,6 +323,46 @@ parse_and_assert_matrix_row([Cell|Rest], X, Y) :-
     X1 is X + 1,
     parse_and_assert_matrix_row(Rest, X1, Y).
 
+%Tasks
+tasks_data():-
+    %write("adding building data"),
+    http_open('http://localhost:5050/tasks', Stream, []),
+    json_read(Stream, Term,Options),
+    update_knowledge_base_tasks(Term).
+
+update_knowledge_base_tasks([]).
+update_knowledge_base_tasks([Tasks|Rest]) :-
+    assert_tasks(Tasks),
+    update_knowledge_base_tasks(Rest).
+
+task_already_exists(Task) :-
+    task(Task).
+
+    assert_tasks(Tasks):-
+    extract_task_code(Tasks,InicialTask,NextTask,Time),
+    assert(timeBetweenTasks(InicialTask,NextTask,Time)),
+    (task_already_exists(InicialTask);assert(task(InicialTask))),
+    (task_already_exists(NextTask);assert(task(NextTask))).
+
+extract_task_code(JsonString,InicialTask,NextTask,Time) :-
+    JsonString = json(TasksProperties), 
+    member(inicialTask=InicialTask, TasksProperties),
+    member(nextTask=NextTask, TasksProperties),
+    member(time=Time, TasksProperties).
+
+assert_taskCodes([]).
+assert_taskCodes(TaskCode|Rest):-
+    assert(task(TaskCode)),
+    assert_taskCodes(Rest).
+
+assert_timeBetweenTasks([]).
+assert_timeBetweenTasks([task1,task2,time]|Rest):-
+    assert(timeBetweenTasks(task1,task2,time)),
+    assert_timeBetweenTasks(Rest).
+
+
+
+
 % Clear the knowledge base
 clear() :-
     retractall(building(_)),
@@ -326,3 +372,8 @@ clear() :-
     retractall(connections(_, _)),
     retractall(ligacel(_, _)),
     retractall(x(_, _, _)).
+    %retractall(task(_)).
+    %retractall(timeBetweenTasks(_,_,_)).
+    %retractall(map(_, _, _, _)).
+    %retractall(node(_, _, _)).
+    %retractall(edge(_, _, _)).
