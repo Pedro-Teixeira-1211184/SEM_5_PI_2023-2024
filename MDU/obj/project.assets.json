@@ -8118,11 +8118,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "G:\\Faculdade\\Faculdade\\3_ano\\SEM_5_PI_2023-2024\\MDU\\MDU.csproj",
+      "projectUniqueName": "C:\\Users\\pepet\\Desktop\\Faculdade\\3ºano\\SEM_5_PI_2023-2024\\MDU\\MDU.csproj",
       "projectName": "MDU",
-      "projectPath": "G:\\Faculdade\\Faculdade\\3_ano\\SEM_5_PI_2023-2024\\MDU\\MDU.csproj",
+      "projectPath": "C:\\Users\\pepet\\Desktop\\Faculdade\\3ºano\\SEM_5_PI_2023-2024\\MDU\\MDU.csproj",
       "packagesPath": "C:\\Users\\pepet\\.nuget\\packages\\",
-      "outputPath": "G:\\Faculdade\\Faculdade\\3_ano\\SEM_5_PI_2023-2024\\MDU\\obj\\",
+      "outputPath": "C:\\Users\\pepet\\Desktop\\Faculdade\\3ºano\\SEM_5_PI_2023-2024\\MDU\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\pepet\\AppData\\Roaming\\NuGet\\NuGet.Config"
