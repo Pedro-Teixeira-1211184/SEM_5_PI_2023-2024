@@ -110,4 +110,5 @@ Focar em resolver problemas de conexão entre os módulos, especialmente nas use
 
 Concluir as user stories em andamento, especialmente as que estão na fase de teste.
 Abordar as questões pendentes, como o problema na conexão entre os módulos (720, 740) e as falhas em PLANEAMENTO (1410, 1420).
-Reforçar a colaboração e comunicação entre os membros da equipe para evitar problemas recorrentes.
+Reforçar a colaboração e comunicação entre os membros da equipa para evitar problemas recorrentes.
+Focar na disponiblização dos recursos em ambiente cloud.
