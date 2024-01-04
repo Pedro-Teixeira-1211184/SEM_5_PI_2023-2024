@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "YET/vLObEZBVdPv1VMTR5WgCiW57/KdSkotZBv6w9FdH/37PTlr3QVCyWwCkt8PfBXMdyFey/Gw/9MvESFIxEQ==",
+  "dgSpecHash": "TZMSIzo1hNL7lBpvlzlza182SkYZvILl2bqVsEsvWipcLs7vs6oBLw1Hd6ZVu6pAAkrQRRGV7dicChUEfWX89Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\pepet\\Desktop\\Faculdade\\3ºano\\SEM_5_PI_2023-2024\\MDU\\MDU.csproj",
+  "projectFilePath": "G:\\Faculdade\\Faculdade\\3_ano\\SEM_5_PI_2023-2024\\MDU\\MDU.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\pepet\\.nuget\\packages\\bouncycastle.netcore\\1.8.5\\bouncycastle.netcore.1.8.5.nupkg.sha512",
     "C:\\Users\\pepet\\.nuget\\packages\\castle.core\\5.1.0\\castle.core.5.1.0.nupkg.sha512",
