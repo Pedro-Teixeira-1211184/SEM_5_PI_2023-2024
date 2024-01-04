@@ -1,198 +1,185 @@
-:- module(search_algorithms, [
-    path_between_floors/4,
-    best_path/3,
-    searchByDfsAlgorithm/3,
-    searchByBestDfsAlgorithm/3,
-    searchByBestBfsAlgorithm/3
-]).
+:-module(search_algorithms,[melhor_sequencia_forca_bruta/1,searchSequencebyGeneticAlgorithm/5,caminho_pisos/4,melhor_caminho_pisos/3,searchByDfsAlgorithm/3,searchByBestDfsAlgorithm/3,searchByBfsAlgorithm/3,searchByAstarAlgorithm/4]).
+:-use_module(graph_handling,data/0).
 
-:- use_module(graph_handling, [data/0]).
+%DFS, BFS, AStar e AG -> moodle ALGAV
 
-% path_between_floors(+StartFloor, +EndFloor, +listEdificiosCaminho, +listLigacoes)
-% Devolve uma list com os edificios que fazem parte do caminho entre dois pisos
-path_between_floors(StartFloor, StartFloor, [], []).
-path_between_floors(StartFloor, EndFloor, Buildings, Path) :-
-    StartFloor \= EndFloor,
-    path_between_floors_aux(StartFloor, EndFloor, Buildings, Path).
-
-path_between_floors_aux(StartFloor, EndFloor, Buildings, Path) :-
-    graph_handling:floors(Building, _),
-    path_between_buildings(Building, Building, Buildings),
-    path_between_floors_aux2(StartFloor, EndFloor, Building, Path).
-
-path_between_floors_aux2(StartFloor, EndFloor, Building, Path) :-
-    path_between_floors_aux3(StartFloor, EndFloor, Building, Path),
-    reverse(Path, PathReversed),
-    format('Found path between floors ~w and ~w: ~w~n', [StartFloor, EndFloor, PathReversed]).
-
-path_between_floors_aux3(StartFloor, EndFloor, Building, Path) :-
-    (graph_handling:elevators(Building, _) ->
-        best_path(StartFloor, EndFloor, Path)
-    ;   searchByBestDfsAlgorithm([StartFloor, Building], [EndFloor, Building], Path)
-    ).
-
-segue_pisos(StartFloor, EndFloor, _, []) :-
-    StartFloor = EndFloor,
-    writeln('Reached the same floor in segue_pisos.'). %Debug message
-
-segue_pisos(StartFloor1, EndFloor, [EdDest], [elevator(StartFloor1, EndFloor)]) :-
-    StartFloor1 \= EndFloor,
-    graph_handling:elevators(EndFloor, LPisos),
-    member(StartFloor1, LPisos),
-    member(EndFloor, LPisos),
-    writeln('Constructed elevator connection in segue_pisos.'). %Debug message
-
-segue_pisos(PisoAct, EndFloor, [EdAct, EdDest|LEdCam], [passageway(PisoAct, PisoSeg)|LOutrasLig]) :-
-    (graph_handling:passageways(EdAct, EdDest, PisoAct, PisoSeg)
-     -> writeln('Constructed passageway connection in segue_pisos.') % Remove the extra semicolon
-     ; graph_handling:passageways(EdSeg, EdAct, PisoSeg, PisoAct),
-       writeln('Constructed reverse passageway connection in segue_pisos.')
-    ),
-    segue_pisos(PisoSeg, EndFloor, [EdSeg|LOutrosEd], LOutrasLig),
-    writeln('Constructed passageway connection in segue_pisos.').
+caminho_pisos(PisoOr,PisoDest,LEdCam,LLig):-
+       
+    graph_handling:floors(EdOr,LPisosOr),
+    member(PisoOr,LPisosOr),
+    graph_handling:floors(EdDest,LPisosDest),
+    member(PisoDest,LPisosDest),
+    caminho_edificios(EdOr,EdDest,LEdCam),
+    segue_pisos(PisoOr,PisoDest,LEdCam,LLig).  
 
 
-segue_pisos(PisoAct, EndFloor, [EdAct, EdDest|LEdCam], [elevator(PisoAct, PisoAct1), passageway(PisoAct1, PisoSeg) | LOutrasLig]) :-
-    (graph_handling:passageways(EdAct, EdSeg, PisoAct1, PisoSeg);
-    graph_handling:passageways(EdSeg, EdAct, PisoSeg, PisoAct1)),
-    PisoAct1 \== PisoAct,
-    graph_handling:elevators(EdAct, LPisos),
-    member(PisoAct, LPisos),
-    member(PisoAct1, LPisos),
-    segue_pisos(PisoSeg, EndFloor, [EdSeg|LOutrosEd], LOutrasLig).
-    writeln('Constructed elevator and passageway connection in segue_pisos.'). %Debug message
+segue_pisos(PisoDest,PisoDest,_,[]).
 
-path_between_buildings(EdOr, EdDest, LEdCam) :-
-    writeln('Starting path_between_buildings...'), % Debug message
-    path_between_buildings2(EdOr, EdDest, [EdOr], LEdCam),
-    writeln('Ending path_between_buildings.'). % Debug message
+segue_pisos(PisoDest1,PisoDest,[EdDest],[elev(PisoDest1,PisoDest)]):-
+    
+    PisoDest\==PisoDest1,
+    graph_handling:elevators(EdDest,LPisos),
+    member(PisoDest1,LPisos), 
+    member(PisoDest,LPisos).
 
-path_between_buildings2(Dest, Dest, LA, Cam) :- !,
-    reverse(LA, Cam),
-    writeln('Reached destination in path_between_buildings2.'). % Debug message
-path_between_buildings2(EdAct, EdDest, LEdPassed, LEdCam) :-
-    (graph_handling:connections(EdAct, EdInt); graph_handling:connections(EdInt, EdAct)),
-    \+ member(EdInt, LEdPassed),
-    path_between_buildings2(EdInt, EdDest, [EdInt|LEdPassed], LEdCam),
-    writeln('Continuing path_between_buildings2...'). % Debug message
+segue_pisos(PisoAct,PisoDest,[EdAct,EdSeg|LOutrosEd],[cor(PisoAct,PisoSeg)|LOutrasLig]):-
+    
+    (graph_handling:passageways(EdAct,EdSeg,PisoAct,PisoSeg);graph_handling:passageways(EdSeg,EdAct,PisoSeg,PisoAct)),
+    segue_pisos(PisoSeg,PisoDest,[EdSeg|LOutrosEd],LOutrasLig).
 
-%-----------------------------------------------------
-% Predicado para calcular o numero de utilizacoes de elevador em cada path
-elevator_sections(Path, Num) :-
-    aggregate_all(count, (member(Step, Path), elevator(Step, _)), Num).
 
-% Predicado para selecionar o path com o menor numero de utilizacoes de elevador
-best_path(Origin, Destination, Path) :-
-    % Gerar todos os paths desde origin até destination
-    all_dfs(Origin, Destination, Paths),
-    % Iterar sobre estes paths
-    best_path(Paths, [], Path).
+segue_pisos(PisoAct,PisoDest,[EdAct,EdSeg|LOutrosEd],[elev(PisoAct,PisoAct1),cor(PisoAct1,PisoSeg)|LOutrasLig]):-
+    
+    (graph_handling:passageways(EdAct,EdSeg,PisoAct1,PisoSeg);graph_handling:passageways(EdSeg,EdAct,PisoSeg,PisoAct1)),
+    PisoAct1\==PisoAct,
+    graph_handling:elevators(EdAct,LPisos),member(PisoAct,LPisos),member(PisoAct1,LPisos),
+    segue_pisos(PisoSeg,PisoDest,[EdSeg|LOutrosEd],LOutrasLig).
 
-% Predicado auxiliar
-best_path([], BestPath, BestPath).
-best_path([Path|Paths], BestPath, BestPath) :-
-    % Calcular o numero de utilizacoes de elevador no current path
-    elevator_sections(Path, Num),
-    % Se o numero de utilizacoes de elevador for menor do que no melhor path até agora,
-    % atualiza o best path
-    (  Num < BestNum
-    -> best_path(Paths, Path, BestPath)
-    ;  best_path(Paths, BestPath, BestPath)
-    ).
 
-% DFS
-searchByDfsAlgorithm([Ox,Oy],[Dx,Dy],Result) :-
+caminho_edificios(EdOr,EdDest,Result):-
+    findall(LEdCam,caminho_edificios2(EdOr,EdDest,[EdOr],LEdCam),AllPaths),
+    leastBuildings(AllPaths,Result).
+
+caminho_edificios2(EdX,EdX,LEdInv,LEdCam):-!,
+    reverse(LEdInv,LEdCam).
+
+caminho_edificios2(EdAct,EdDest,LEdPassou,LEdCam):-
+    (graph_handling:connections(EdAct,EdInt);graph_handling:connections(EdInt,EdAct)),
+    \+member(EdInt,LEdPassou),
+    caminho_edificios2(EdInt,EdDest,[EdInt|LEdPassou],LEdCam).
+
+
+%Limitar o numero de buildings
+leastBuildings([Array], Array).
+leastBuildings([Array1, Array2 | Rest], MinArray) :-
+    length(Array1, Len1),
+    length(Array2, Len2),
+    Len1 =< Len2,
+    leastBuildings([Array1 | Rest], MinArray).
+leastBuildings([Array1, Array2 | Rest], MinArray) :-
+    length(Array1, Len1),
+    length(Array2, Len2),
+    Len1 > Len2,
+    leastBuildings([Array2 | Rest], MinArray).
+
+
+%Limitar o numero de elevadores
+melhor_caminho_pisos(PisoOr,PisoDest,LLigMelhor):-
+    findall(LLig,caminho_pisos(PisoOr,PisoDest,_,LLig),LLLig),
+    menos_elevadores(LLLig,LLigMelhor,_,_).
+
+menos_elevadores([LLig],LLig,NElev,NCor):-
+    conta(LLig,NElev,NCor).
+menos_elevadores([LLig|OutrosLLig],LLigR,NElevR,NCorR):-
+    menos_elevadores(OutrosLLig,LLigM,NElev,NCor),
+    conta(LLig,NElev1,NCor1),
+    (((NElev1<NElev ; (NElev1==NElev,NCor1<NCor)),
+    !,
+    NElevR is NElev1, NCorR is NCor1,LLigR=LLig);
+    (NElevR is NElev,NCorR is NCor,LLigR=LLigM)).
+    
+    
+    
+conta([],0,0).
+conta([elev(_,_)|L],NElev,NCor):-
+    conta(L,NElevL,NCor),
+    NElev is NElevL+1.
+conta([cor(_,_)|L],NElev,NCor):-
+    conta(L,NElev,NCorL),
+    NCor is NCorL+1.
+
+
+
+%DFS
+searchByDfsAlgorithm([Ox,Oy],[Dx,Dy],Result):-
     dfs(cel(Ox,Oy),cel(Dx,Dy),Result).
 
-dfs(Orig,Dest,Cam) :-
+dfs(Orig,Dest,Cam):-
     dfs2(Orig,Dest,[Orig],Cam).
 
-dfs2(Dest,Dest,LA,Cam) :-
+dfs2(Dest,Dest,LA,Cam):-
     reverse(LA,Cam).
 
-dfs2(Dest,[Act|T],LA,Cam) :-
+dfs2(Act,Dest,LA,Cam):-
     graph_handling:ligacel(Act,X),
     \+ member(X,LA),
-    dfs2(Dest,X,[X|LA],Cam).
+    dfs2(X,Dest,[X|LA],Cam).
 
-all_dfs(Orig,Dest,LCam) :-
+all_dfs(Orig,Dest,LCam):-
     findall(Cam,dfs(Orig,Dest,Cam),LCam).
 
-% Best DFS
-searchByBestDfsAlgorithm([Ox,Oy],[Dx,Dy],Result) :-
+
+
+%Better DFS
+searchByBestDfsAlgorithm([Ox,Oy],[Dx,Dy],Result):-
     better_dfs(cel(Ox,Oy),cel(Dx,Dy),Result).
 
-better_dfs(Orig,Dest,Cam) :-
+better_dfs(Orig,Dest,Cam):-
     all_dfs(Orig,Dest,LCam),
     shortlist(LCam,Cam,_).
 
-shortlist([L],L,N) :-
+shortlist([L],L,N):-
+    !,
     length(L,N).
 
-shortlist([L|LL],Lm,Nm) :-
+shortlist([L|LL],Lm,Nm):-
     shortlist(LL,Lm1,Nm1),
     length(L,NL),
     ((NL<Nm1,!,Lm=L,Nm is NL);(Lm=Lm1,Nm is Nm1)).
 
-% Best BFS
-searchByBestBfsAlgorithm([Ox,Oy],[Dx,Dy],Result) :-
+
+
+%BFS
+searchByBfsAlgorithm([Ox,Oy],[Dx,Dy],Result):-
     bfs(cel(Ox,Oy),cel(Dx,Dy),Result).
 
-bfs(Orig,Dest,Cam) :-
+bfs(Orig,Dest,Cam):-
     bfs2(Dest,[[Orig]],Cam).
-
-bfs2(Dest,[[Dest|T]|_],Cam) :-
+bfs2(Dest,[[Dest|T]|_],Cam):-
     reverse([Dest|T],Cam).
-
-bfs2(Dest,[LA|Outros],Cam) :-
+bfs2(Dest,[LA|Outros],Cam):-
     LA=[Act|_],
     findall([X|LA],
     (Dest\==Act,graph_handling:ligacel(Act,X),\+ member(X,LA)),Novos),
     append(Outros,Novos,Todos),
     bfs2(Dest,Todos,Cam).
 
-% A*
-aStar(Orig, Dest, Cam, Custo) :-
-    aStar2(Dest, [(_, 0, [Orig])], Cam, Custo).
 
-aStar2(Dest, [(_, Custo, [Dest | T]) | _], Cam, Custo) :-
-    reverse([Dest | T], Cam).
+%AStar
+searchByAstarAlgorithm([Ox,Oy],[Dx,Dy],Result,Custo):-
+    aStar(cel(Ox,Oy),cel(Dx,Dy),Result,Custo).
 
-aStar2(Dest, [(_, Ca, LA) | Outros], Cam, Custo) :-
-    LA = [Act | _],
-    findall((CEX, CaX, [X | LA]),
-            (Dest \== Act,
-             graph_handling:ligacel(Act, X),
-             \+ member(X, LA),
-             graph_handling:x(X, X1, Y1),
-             graph_handling:x(Dest, X2, Y2),
-             EstX is sqrt((X1 - X2)**2 + (Y1 - Y2)**2),
-             CaX is Ca + 1,
-             CEX is CaX + EstX),
-            Novos),
-    append(Outros, Novos, Todos),
-    sort(Todos, TodosOrd),
-    aStar2(Dest, TodosOrd, Cam, Custo).
+aStar(Orig,Dest,Cam,Custo):-
+    aStar2(Dest,[(_,0,[Orig])],Cam,Custo).
 
+aStar2(Dest,[(_,Custo,[Dest|T])|_],Cam,Custo):-
+    reverse([Dest|T],Cam).
 
-% Estimativa heurística para o A*
-estimativa(Nodo1,Nodo2,Estimativa) :-
-    graph_handling:x(Nodo1,X1,Y1),
-    graph_handling:x(Nodo2,X2,Y2),
+aStar2(Dest,[(_,Ca,LA)|Outros],Cam,Custo):-
+    LA=[Act|_],
+    findall((CEX,CaX,[X|LA]),
+    (Dest\==Act,graph_handling:edge(Act,X,CustoX),\+ member(X,LA),CaX is CustoX + Ca, estimativa(X,Dest,EstX),
+    CEX is CaX +EstX),Novos),
+    append(Outros,Novos,Todos),
+    sort(Todos,TodosOrd),
+    aStar2(Dest,TodosOrd,Cam,Custo).
+estimativa(Nodo1,Nodo2,Estimativa):-
+    graph_handling:node(Nodo1,X1,Y1),
+    graph_handling:node(Nodo2,X2,Y2),
     Estimativa is sqrt((X1-X2)^2+(Y1-Y2)^2).
 
 
 % Predicate to find all tasks
-find_tasks(Tasks) :-
-    findall(Task, dataService:task(Task), Tasks).
+all_tasks(Tasks) :-
+    findall(Task, graph_handling:task(Task), Tasks).
 
 % Predicate to count the number of tasks
 count_tasks(Count) :-
-    find_tasks(Tasks),
+    all_tasks(Tasks),
     length(Tasks, Count).
-% tasks(Ntasks).
+% tarefas(NTarefas).
 
-tasks(Count):-
+tarefas(Count):-
     count_tasks(Count).
 
 % parameterização
@@ -215,28 +202,28 @@ searchSequencebyGeneticAlgorithm(NG,DP,PC,PM,PopOrd):-
 
 gera_populacao(Pop):-
     populacao(TamPop),
-    tasks(NumT),
-    findall(Tarefa,dataService:task(Tarefa),listtasks),
-    gera_populacao(TamPop,listtasks,NumT,Pop).
+    tarefas(NumT),
+    findall(Tarefa,graph_handling:task(Tarefa),ListaTarefas),
+    gera_populacao(TamPop,ListaTarefas,NumT,Pop).
     gera_populacao(0,_,_,[]):-!.
 
-gera_populacao(TamPop,listtasks,NumT,[Ind|Resto]):-
+gera_populacao(TamPop,ListaTarefas,NumT,[Ind|Resto]):-
     TamPop1 is TamPop-1,
-    gera_populacao(TamPop1,listtasks,NumT,Resto),
-    gera_individuo(listtasks,NumT,Ind),
+    gera_populacao(TamPop1,ListaTarefas,NumT,Resto),
+    gera_individuo(ListaTarefas,NumT,Ind),
     not(member(Ind,Resto)).
 
-gera_populacao(TamPop,listtasks,NumT,L):-
-    gera_populacao(TamPop,listtasks,NumT,L).
+gera_populacao(TamPop,ListaTarefas,NumT,L):-
+    gera_populacao(TamPop,ListaTarefas,NumT,L).
 
 
 gera_individuo([G],1,[G]):-!.
-gera_individuo(listtasks,NumT,[G|Resto]):-
+gera_individuo(ListaTarefas,NumT,[G|Resto]):-
     NumTemp is NumT + 1, % para usar com random
     random(1,NumTemp,N),
-    retira(N,listtasks,G,Novalist),
+    retira(N,ListaTarefas,G,NovaLista),
     NumT1 is NumT-1,
-    gera_individuo(Novalist,NumT1,Resto).
+    gera_individuo(NovaLista,NumT1,Resto).
     retira(1,[G|Resto],G,Resto).
 
 retira(N,[G1|Resto],G,[G1|Resto1]):-
@@ -257,7 +244,7 @@ avalia([ ],Inst,Inst).
 avalia([T1|[]],Inst,Inst):-!.
 
 avalia([T1,T2|Resto],Inst,V):-
-    dataService:timeBetweenTasks(T1,T2,Tempo),
+    graph_handling:timeBetweenTasks(T1,T2,Tempo),
     InstFinal is Inst + Tempo,
     avalia([T2|Resto],InstFinal,V).
 
@@ -293,6 +280,7 @@ selecaoRandom([X1|Rest], Len,[X|Rest1]):-
     NewLen is Len - 1,
     selecaoRandom(Rest, NewLen, Rest1).
 
+
 gera_geracao(G,G,Pop):-!.
 
 gera_geracao(N,G,[F|Pop]):-
@@ -310,7 +298,7 @@ gerar_pontos_cruzamento(P1,P2):-
     gerar_pontos_cruzamento1(P1,P2).
 
 gerar_pontos_cruzamento1(P1,P2):-
-    tasks(N),
+    tarefas(N),
     NTemp is N+1,
     random(1,NTemp,P11),
     random(1,NTemp,P21),
@@ -336,22 +324,22 @@ cruzamento([Ind1*_,Ind2*_|Resto],[NInd1,NInd2,Ind1,Ind2|Resto1]):-
 preencheh([_|R1],[h|R2]):-
     preencheh(R1,R2).
 
-sublist(L1,I1,I2,L):-I1 < I2,!,
-    sublist1(L1,I1,I2,L).
+sublista(L1,I1,I2,L):-I1 < I2,!,
+    sublista1(L1,I1,I2,L).
 
-sublist(L1,I1,I2,L):-
-    sublist1(L1,I2,I1,L).
+sublista(L1,I1,I2,L):-
+    sublista1(L1,I2,I1,L).
 
-sublist1([X|R1],1,1,[X|H]):-!, preencheh(R1,H).
+sublista1([X|R1],1,1,[X|H]):-!, preencheh(R1,H).
 
-sublist1([X|R1],1,N2,[X|R2]):-!,N3 is N2 - 1,
-    sublist1(R1,1,N3,R2).
+sublista1([X|R1],1,N2,[X|R2]):-!,N3 is N2 - 1,
+    sublista1(R1,1,N3,R2).
     
-sublist1([_|R1],N1,N2,[h|R2]):-N3 is N1 - 1,
+sublista1([_|R1],N1,N2,[h|R2]):-N3 is N1 - 1,
     N4 is N2 - 1,
-    sublist1(R1,N3,N4,R2).
+    sublista1(R1,N3,N4,R2).
 
-rotate_right(L,K,L1):- tasks(N),
+rotate_right(L,K,L1):- tarefas(N),
     T is N - K,
     rr(T,L,L1).
     rr(0,L,L):-!.
@@ -370,7 +358,7 @@ elimina([_|R1],L,R2):-
 insere([],L,_,L):-!.
 
 insere([X|R],L,N,L2):-
-    tasks(T),
+    tarefas(T),
     ((N>T,!,N1 is N mod T);N1 = N),
     insere1(X,N1,L,L1),
     N2 is N + 1,
@@ -383,8 +371,8 @@ insere1(X,1,L,[X|L]):-!.
 
 
 cruzar(Ind1,Ind2,P1,P2,NInd11):-
-    sublist(Ind1,P1,P2,Sub1),
-    tasks(NumT),
+    sublista(Ind1,P1,P2,Sub1),
+    tarefas(NumT),
     R is NumT-P2,
     rotate_right(Ind2,R,Ind21),
     elimina(Ind21,Sub1,Sub2),
@@ -422,23 +410,26 @@ mutacao23(G1,P,[G|Ind],G2,[G|NInd]):-
     P1 is P-1,
     mutacao23(G1,P1,Ind,G2,NInd).
 
+
+
+
 % Exemplo de função para avaliar a pontuação de uma sequência
-evaluate(Sequencia, Pontuacao) :-
+avalia_sequencia(Sequencia, Pontuacao) :-
     avalia(Sequencia,Pontuacao).
 
 % Exemplo de como encontrar a melhor sequência entre várias
 avaliarSequencias([],MelhorSequencia,MelhorTempo,MelhorSequencia).
 avaliarSequencias([Sequencia|Resto],MelhorSequencia,MelhorTempo,Result) :-
-    evaluate(Sequencia,Tempo),
+    avalia_sequencia(Sequencia,Tempo),
     ((MelhorTempo = Tempo,NovoMelhorTempo = MelhorTempo , MelhorSequencia=Sequencia,NovaMelhorSequencia = MelhorSequencia) ;
     (Tempo<MelhorTempo -> NovoMelhorTempo = Tempo,NovaMelhorSequencia = Sequencia);true),
     avaliarSequencias(Resto,NovaMelhorSequencia,NovoMelhorTempo,Result).
 
 
-melhor_brute_force(Result) :-
-    findall(Tarefa,dataService:task(Tarefa),listOriginal),
-    gera_permutacoes(listOriginal,Permutacoes),
+melhor_sequencia_forca_bruta(Result) :-
+    findall(Tarefa,graph_handling:task(Tarefa),ListaOriginal),
+    gera_permutacoes(ListaOriginal,Permutacoes),
     avaliarSequencias(Permutacoes, MelhorSeq,MelhorTempo,Result).
 
-gera_permutacoes(list, Permutacoes) :-
-    findall(Perm, permutation(list, Perm), Permutacoes).    
+gera_permutacoes(Lista, Permutacoes) :-
+    findall(Perm, permutation(Lista, Perm), Permutacoes).

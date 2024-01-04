@@ -1,28 +1,35 @@
-:- module(utils, [is_member/2, format_floorPath/2, format_path2/2]).
+:-module(utils,[is_member/2,format_insideFloorPath/2,format_caminho2/2]).
 
-% is_member/2
-is_member(_, []) :- false.
-is_member(X, [X|_]).
-is_member(X, [N|REST]) :- is_member(X, REST).
+is_member(Element, []):-false.
+is_member(Element, [Element|_]):-!.
+is_member(Element, Element):-!.
+is_member(Element, [N|REST]) :-
+    is_member(Element, REST).
 
-% format_floorPath/2
-format_floorPath(Path2, JsonObjects) :-
-    format_floorPath(Path2, [], JsonObjects).
 
-format_floorPath([], Acc, Result) :- reverse(Acc, Result).
-format_floorPath([cel(X,Y)|REST], Acc, Result) :-
-    OK = json{cel:[X,Y]},
-    format_floorPath(REST, [OK|Acc], Result).
+format_insideFloorPath(Caminho2, JsonObjects) :-
+    format_insideFloorPath(Caminho2, [], JsonObjects).
 
-% format_path2/2
-format_path2(Path2, JsonObjects) :-
-    format_path2(Path2, [], JsonObjects).
+% Helper predicate to format each element of Caminho2
+format_insideFloorPath([], Acc, Result):-reverse(Acc,Result).
+format_insideFloorPath([cel(X, Y) | Rest], Acc, Result) :-
+    OK = json([cel=[X, Y]]),
+    format_insideFloorPath(Rest, [OK | Acc], Result).
 
-format_path2([], Acc, Result) :- reverse(Acc, Result).
-format_path2([elevador(X,Y)|REST], Acc, Result) :-
-    OK = json{elevador:[X,Y]},
-    format_path2(REST, [OK|Acc], Result).
+format_caminho2(Caminho2,JsonObjects):-
+    format_caminho2(Caminho2,[],JsonObjects).
 
-format_path2([corredor(X,Y)|REST], Acc, Result) :-
-    OK = json{corredor:[X,Y]},
-    format_path2(REST, [OK|Acc], Result).
+% Helper predicate to format each element of Caminho2
+
+format_caminho2(Caminho2, JsonObjects) :-
+    format_caminho2(Caminho2, [], JsonObjects).
+
+% Helper predicate to format each element of Caminho2
+format_caminho2([], Acc, Result):-reverse(Acc,Result).
+format_caminho2([elev(X, Y) | Rest], Acc, Result) :-
+    OK = json([elev=[X, Y]]),
+    format_caminho2(Rest, [OK | Acc], Result).
+
+format_caminho2([cor(X, Y) | Rest], Acc, Result) :-
+    OK = json([cor=[X, Y]]),
+    format_caminho2(Rest, [OK | Acc], Result).
