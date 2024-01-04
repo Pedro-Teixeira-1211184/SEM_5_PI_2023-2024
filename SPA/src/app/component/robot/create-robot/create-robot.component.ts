@@ -11,7 +11,10 @@ export class CreateRobotComponent {
   robotForm!: FormGroup;
   service: RobotService = inject(RobotService);
 
+  types: { id: string, designation: string }[] = [];
+
   constructor() {
+    this.getTypes();
   }
 
   public async submit() {
@@ -64,5 +67,9 @@ export class CreateRobotComponent {
 
   get isActive() {
     return this.robotForm.get('isActive');
+  }
+
+  private async getTypes() {
+    this.types = await this.service.getRobotTypes();
   }
 }

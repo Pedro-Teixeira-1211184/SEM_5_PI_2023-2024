@@ -1,8 +1,10 @@
 <form class="robot-form" id="robotForm" (ngSubmit)="submit()" [formGroup]="robotForm" #formDir="ngForm">
     <h1>Create a Robot</h1>
     <div class="input-container">
-      <label for="robotType">Robot Type</label>
-      <input type="text" id="robotType" formControlName="robotType" placeholder="Robot Type" required>
+      <label for="code1">User email</label>
+      <select id="code1" formControlName="robotType" required>
+        <option *ngFor="let type of types" [value]="type.designation">{{ type.designation }}</option>
+      </select>
       <div *ngIf="robotType?.invalid && formDir.submitted" class="validation-error">
         <p *ngIf="robotType?.errors?.['required']">Robot Type is required!</p>
       </div>
