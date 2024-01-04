@@ -85,10 +85,10 @@ DoD - issues completed and tested, with no errors or bugs, and with no problems 
 DoR - issues partially completed, with some errors or bugs, and with some problems in the connection between modules. Work with some problems or in need of alterations.
 
 ## Retrospective
-Total de US: 78
-US Done: 62
+Total de US: 98
+US Done: 80
 
-Percentagem de US concluídas: (62 / 78) * 100 ≈ 79,49%
+Percentagem de US concluídas: (80 / 98) * 100 ≈ 81,63%
 
 - Pontos Positivos:
 

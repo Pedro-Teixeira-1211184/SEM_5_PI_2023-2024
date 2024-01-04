@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\pepet\\Desktop\\Faculdade\\3ºano\\SEM_5_PI_2023-2024\\MDU\\MDU.csproj": {}
+    "G:\\Faculdade\\Faculdade\\3_ano\\SEM_5_PI_2023-2024\\MDU\\MDU.csproj": {}
   },
   "projects": {
-    "C:\\Users\\pepet\\Desktop\\Faculdade\\3ºano\\SEM_5_PI_2023-2024\\MDU\\MDU.csproj": {
+    "G:\\Faculdade\\Faculdade\\3_ano\\SEM_5_PI_2023-2024\\MDU\\MDU.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\pepet\\Desktop\\Faculdade\\3ºano\\SEM_5_PI_2023-2024\\MDU\\MDU.csproj",
+        "projectUniqueName": "G:\\Faculdade\\Faculdade\\3_ano\\SEM_5_PI_2023-2024\\MDU\\MDU.csproj",
         "projectName": "MDU",
-        "projectPath": "C:\\Users\\pepet\\Desktop\\Faculdade\\3ºano\\SEM_5_PI_2023-2024\\MDU\\MDU.csproj",
+        "projectPath": "G:\\Faculdade\\Faculdade\\3_ano\\SEM_5_PI_2023-2024\\MDU\\MDU.csproj",
         "packagesPath": "C:\\Users\\pepet\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\pepet\\Desktop\\Faculdade\\3ºano\\SEM_5_PI_2023-2024\\MDU\\obj\\",
+        "outputPath": "G:\\Faculdade\\Faculdade\\3_ano\\SEM_5_PI_2023-2024\\MDU\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\pepet\\AppData\\Roaming\\NuGet\\NuGet.Config"
