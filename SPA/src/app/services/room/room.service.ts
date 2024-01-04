@@ -43,5 +43,13 @@ export class RoomService {
         name: name
       })
       })
+
+    const room = await response.json();
+
+    if (response.status == 500) {
+      alert("Error creating room!");
+      return;
+    }
+    alert("Room created successfully!");
     };
 }
